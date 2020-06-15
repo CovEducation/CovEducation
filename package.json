@@ -1,0 +1,17 @@
+{
+  "name": "coved",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "lerna run start --stream",
+    "build": "lerna run build --stream",
+    "preproduction": "npm run build",
+    "production": "NODE_ENV=production node packages/server/bin/www"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  }
+}
