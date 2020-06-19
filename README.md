@@ -4,6 +4,7 @@
 
   <strong>Built with 💖</strong>
 </div>
+
 [![Build Status](https://travis-ci.com/CovEducation/CovEducation.svg?branch=master)](https://travis-ci.com/CovEducation/CovEducation)
 
 ## About
