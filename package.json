@@ -6,6 +6,7 @@
   "scripts": {
     "start": "lerna run start --stream",
     "build": "lerna run build --stream",
+    "test": "lerna run test --stream",
     "preproduction": "npm run build",
     "production": "NODE_ENV=production node packages/server/bin/www"
   },

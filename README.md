@@ -1,6 +1,6 @@
 <div align="center">
 
-  <h1><code>Coved V2</code></h1>
+  <h1><code>CovEducation</code></h1>
 
   <strong>Built with 💖</strong>
 </div>
@@ -32,5 +32,14 @@ This will build the client and start the server in production mode
 $ npm run production
 ```
 
+### 🧪Testing
+Run the following command to run all tests
+```
+$ npm test
+```
+
 ## 🔋 Batteries Included
-...
+* ExpressJS
+* MongoDB
+* ReactJS
+* Testing with Jest and Supertest (read about it [here](https://www.albertgao.xyz/2017/05/24/how-to-test-expressjs-with-jest-and-supertest/))
