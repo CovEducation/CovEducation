@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - 12
+cache:
+  directories:
+    - "node_modules"
+install: npx lerna bootstrap
+jobs:
+  include:
+    - stage: test
+      script:
+        - npx lerna run --scope coved-client test
+        - npx lerna run --scope coved-server test
