@@ -10,7 +10,7 @@ const app = express();
 
 // disable logging when running unit tests
 if (process.env.NODE_ENV !== "test") {
-    app.use(logger('dev', {skip}));
+    app.use(logger('dev'));
 }
 
 app.use(express.json());
