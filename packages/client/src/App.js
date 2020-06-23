@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import Button from "./components/Button";
 
 function App() {
-
   var [apiStatus, setApiStatus] = useState(null);
 
   useEffect(() => {
     fetch("/heartbeat")
-      .then(res => res.text())
-      .then(data => setApiStatus(data))
-      .catch(err => console.log(err));
+      .then((res) => res.text())
+      .then((data) => setApiStatus(data))
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -28,7 +28,10 @@ function App() {
         >
           Learn React
         </a>
-        { apiStatus }
+        <Button theme="default" size="md" onClick={() => alert("hello")}>
+          Click me
+        </Button>
+        {apiStatus}
       </header>
     </div>
   );
