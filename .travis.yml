@@ -11,6 +11,7 @@ jobs:
       script:
         - npx lerna run --scope coved-server test
         - npx lerna run --scope coved-client test
+        - npx lerna run lint
     - stage: publish
       if: branch = master
       script:
