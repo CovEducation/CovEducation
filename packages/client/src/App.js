@@ -3,14 +3,13 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
-
   var [apiStatus, setApiStatus] = useState(null);
 
   useEffect(() => {
-    fetch("/heartbeat")
-      .then(res => res.text())
-      .then(data => setApiStatus(data))
-      .catch(err => console.log(err));
+    fetch('/heartbeat')
+      .then((res) => res.text())
+      .then((data) => setApiStatus(data))
+      .catch((err) => console.log(err));
   }, []);
 
   return (
@@ -28,7 +27,7 @@ function App() {
         >
           Learn React
         </a>
-        { apiStatus }
+        {apiStatus}
       </header>
     </div>
   );

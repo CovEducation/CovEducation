@@ -18,7 +18,17 @@
     "lint": "npx eslint src/**/*.js"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ]
+    }
   },
   "proxy": "http://localhost:8080",
   "browserslist": {
