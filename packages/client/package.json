@@ -16,10 +16,21 @@
     "start": "react-scripts start",
     "build": "npx react-scripts build",
     "test": "npx react-scripts test --watchAll=false",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "npx eslint src/**/*.js"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "rules": {
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "object-curly-spacing": [
+        "error",
+        "always"
+      ]
+    }
   },
   "proxy": "http://localhost:8080",
   "browserslist": {
