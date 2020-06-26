@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Button from './components/Button';
 
 function App() {
   var [apiStatus, setApiStatus] = useState(null);
@@ -27,6 +28,9 @@ function App() {
         >
           Learn React
         </a>
+        <Button theme="default" size="md" onClick={() => alert('hello')}>
+          Click me
+        </Button>
         {apiStatus}
       </header>
     </div>
