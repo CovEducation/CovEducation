@@ -48,7 +48,7 @@ function App() {
         <Button theme="default" size="md" onClick={() => alert("hello")}>
           Click me
         </Button>
-        <Modal text="test" title="ahh" trigger={<Button> Modal Button </Button>}> <Wizard content={Wiz_content} /> </Modal>
+        <Modal title="ahh" trigger={<Button> Modal Button </Button>}> <Wizard content={Wiz_content} /> </Modal>
         {apiStatus}
       </header>
     </div>
