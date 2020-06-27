@@ -2,6 +2,23 @@ import React, { useState, useEffect } from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Button from "./components/Button";
+import Modal from "./components/Modal";
+import Wizard from "./components/Wizard"
+
+const Wiz_content = [
+  {
+    key: 0,
+    value: "page1"
+  },
+  {
+    key: 1,
+    value: "page2"
+  },
+  {
+    key: 2,
+    value: "AHHHH"
+  }
+]
 
 function App() {
   var [apiStatus, setApiStatus] = useState(null);
@@ -31,6 +48,7 @@ function App() {
         <Button theme="default" size="md" onClick={() => alert("hello")}>
           Click me
         </Button>
+        <Modal text="test" title="ahh" trigger={<Button> Modal Button </Button>}> <Wizard content={Wiz_content} /> </Modal>
         {apiStatus}
       </header>
     </div>
