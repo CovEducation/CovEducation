@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Button from './components/Button';
-import TextFields from './components/TextBox/demo';
+import TextFields from './components/TextBox';
+import VTabs from './components/Tabs';
 
 function App() {
   var [apiStatus, setApiStatus] = useState(null);
@@ -28,6 +29,8 @@ function App() {
           Click me
         </Button>
         <TextFields label="type here or die" type="standard-basic"/>
+        <br/>
+        <VTabs values={[1, 2, 3, 4]}texts={['One, ', 'Two, ', 'Three... ', 'Counting is FUN!']}/>
         <br/>
         {apiStatus}
     </div>
