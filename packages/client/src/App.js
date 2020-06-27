@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Button from './components/Button';
-import BasicTextFields from './components/TextBox/demo';
+import TextFields from './components/TextBox/demo';
 
 function App() {
   var [apiStatus, setApiStatus] = useState(null);
@@ -20,18 +20,15 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
           Learn React
         </a>
+        <br/><br/>
         <Button theme="default" size="md" onClick={() => alert('hello')}>
           Click me
         </Button>
-        <BasicTextFields label="standard" type="standard-basic"/>
+        <TextFields label="type here or die" type="standard-basic"/>
+        <br/>
         {apiStatus}
     </div>
   );
