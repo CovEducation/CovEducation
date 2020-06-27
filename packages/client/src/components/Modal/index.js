@@ -71,12 +71,10 @@ export default function Modal(props) {
 }
 
 Modal.propTypes = {
-  text: PropTypes.string,
   title: PropTypes.string,
 };
 
 Modal.defaultProps = {
-  text: "text",
   title: "title",
   trigger: <a> Click here to Open Modal </a>
 };
