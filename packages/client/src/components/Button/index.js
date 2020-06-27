@@ -1,11 +1,11 @@
-import React from "react";
-import PropTypes from "prop-types";
-import styled, { css } from "styled-components";
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 const ButtonThemes = {
   backgroundColor: {
-    default: "grey",
-    accent: "orange",
+    default: 'grey',
+    accent: 'orange',
   },
   width: {
     sm: 80,
@@ -59,8 +59,8 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
-  theme: "default",
-  size: "md",
+  theme: 'default',
+  size: 'md',
 };
 
 export default Button;

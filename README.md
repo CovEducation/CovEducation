@@ -8,7 +8,7 @@
 [![Build Status](https://travis-ci.com/CovEducation/CovEducation.svg?branch=master)](https://travis-ci.com/CovEducation/CovEducation)
 
 ## About
-...
+This repository contains the frontend and backend code for CovEd's revamped website. The website is built using ReactJS, Firebase, and MongoDB.
 
 ## 🚴 Usage
 
