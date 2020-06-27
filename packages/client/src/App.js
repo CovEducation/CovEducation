@@ -31,6 +31,13 @@ function App() {
         <Button theme="default" size="md" onClick={() => alert('hello')}>
           Click me
         </Button>
+        <Button theme="accent" basic onClick={() => alert('hello')}>
+          Click me
+        </Button>
+
+        <Button size="sm" onClick={() => alert('hello')}>
+          Click me
+        </Button>
         {apiStatus}
       </header>
     </div>
