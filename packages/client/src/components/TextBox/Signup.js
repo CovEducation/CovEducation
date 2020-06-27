@@ -61,6 +61,7 @@ export default function SignUp(props) {
                 {/* add a switch case for mentors vs. parents */}
                 <form className={classes.form} noValidate>
                     <div>
+                        {/* logic for mentor vs. parent */}
                         {props.isMentor ? (
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6}>
@@ -194,18 +195,12 @@ export default function SignUp(props) {
                             </Grid>
                         )}
                     </div>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
+                    <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                         Sign Up
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            {/* disabled for now until hosted website */}
+                            {/* disabled for now */}
                             <Link href="#" variant="body2">
                                 Already have an account? Sign in.
                             </Link>
