@@ -1,7 +1,9 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
+// potentially use created button? I am just using the material ui component for now as it has all the features I want. :)
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
+// potentially use created text field? I am just using the material ui component for now as it has all the features I want. :)
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -60,8 +62,9 @@ export default function SignIn() {
                     <LockOutlinedIcon/>
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Sign In
                 </Typography>
+                {/* noValidate means that the form does not check anything */}
                 <form className={classes.form} noValidate>
                     {/* add text fields as needed*/}
                     <TextField
@@ -87,15 +90,9 @@ export default function SignIn() {
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary"/>}
-                        label="Remember me"
+                        label="Remember me?"
                     />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
+                    <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                         Sign In
                     </Button>
                     <Grid container>
