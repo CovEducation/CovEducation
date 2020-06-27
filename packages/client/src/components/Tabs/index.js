@@ -80,7 +80,7 @@ export default function VTabs(props) {
                     values.map(
                         value => (
                             // need to add a way to change the label (string)
-                            <Tab label="Item" {...a11yProps({value})} />
+                            <Tab label="Item" {...a11yProps({ value })} />
                         )
                     )
                 }
