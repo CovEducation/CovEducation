@@ -61,7 +61,6 @@ const Button = ({
   basic = false,
   onClick,
 }) => {
-  console.log(theme);
   return (
     <ButtonStyled theme={theme} size={size} basic={basic} onClick={onClick}>
       {children}
