@@ -4,6 +4,7 @@ import './App.css';
 import Button from './components/Button';
 import TextFields from './components/TextBox';
 import VTabs from './components/Tabs';
+import SignUp from './components/TextBox/Signup';
 
 function App() {
   var [apiStatus, setApiStatus] = useState(null);
@@ -18,9 +19,9 @@ function App() {
   return (
     <div className="App">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
+        <h2>
           Edit <code>src/App.js</code> and save to reload.
-        </p>
+        </h2>
         <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
           Learn React
         </a>
@@ -28,9 +29,15 @@ function App() {
         <Button theme="default" size="md" onClick={() => alert('hello')}>
           Click me
         </Button>
-        <TextFields label="type here or die" type="standard-basic"/>
+        <TextFields label="Sample Standard TextBox" type="standard-basic"/>
         <br/>
-        <VTabs values={[1, 2, 3, 4]}texts={['One, ', 'Two, ', 'Three... ', 'Counting is FUN!']}/>
+        <VTabs values={[1, 2, 3, 4]}texts={['Sample Tabs', 'One, Two, Three, Four, ', 'Five, Six, Seven, Eight, ', 'Nine, and Ten. Counting is FUN!']}/>
+        <br/>
+        <h1>Mentor Sign-up</h1>
+        <SignUp isMentor={true}/>
+        <br/>
+        <h1>Parent Sign-up</h1>
+        <SignUp isMentor={false}/>
         <br/>
         {apiStatus}
     </div>
