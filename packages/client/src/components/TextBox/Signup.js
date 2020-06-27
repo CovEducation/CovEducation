@@ -1,7 +1,9 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
+// TODO: potentially use created button? I am just using the material ui component for now as it has all the features I want. :)
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
+// TODO: potentially use created text field? I am just using the material ui component for now as it has all the features I want. :)
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -47,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 // tested on App.js
 export default function SignUp(props) {
     const classes = useStyles();
-    //  Add a menu for isMentor with onClick
+    //  TODO: Add a menu for isMentor with onClick
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
