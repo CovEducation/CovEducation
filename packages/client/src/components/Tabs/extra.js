@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box';
 import { useGatsbyNestedMenuStyles } from '@mui-treasury/styles/nestedMenu/gatsby';
 import NestedMenu from '@mui-treasury/components/menu/nested';
 
-const NestedMenu = () => {
+const NestedMenus = () => {
     return (
         <Box minWidth={343}>
             <NestedMenu menus={getMenus()} useStyles={useGatsbyNestedMenuStyles} />
@@ -143,4 +143,4 @@ const getMenus = () => [
     },
 ];
 
-export default NestedMenu;
+export default NestedMenus;
