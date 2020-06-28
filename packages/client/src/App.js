@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Button from './components/Button';
+import Accordion, { AccordionRow } from './components/Accordion';
 
 function App() {
   var [apiStatus, setApiStatus] = useState(null);
@@ -38,6 +39,11 @@ function App() {
         <Button size="sm" onClick={() => alert('hello')}>
           Click me
         </Button>
+        <Accordion>
+          <AccordionRow title="Some hidden content">
+            <p>Hello!</p>
+          </AccordionRow>
+        </Accordion>
         {apiStatus}
       </header>
     </div>
