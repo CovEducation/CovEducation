@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Button from './components/Button';
+import VTabs from "./components/Tabs";
+import SignIn from "./components/TextBox/Signin";
+import SignUp from "./components/TextBox/Signup";
 
 function App() {
   var [apiStatus, setApiStatus] = useState(null);
@@ -15,7 +18,6 @@ function App() {
 
   return (
     <div className="App">
-      <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -38,8 +40,16 @@ function App() {
         <Button size="sm" onClick={() => alert('hello')}>
           Click me
         </Button>
+
+        <VTabs values={[1, 2, 3, 4]} texts={["1", "2", "3", "Counting is cool."]}/>
+        <br/>
+        <SignIn />
+        <br/>
+        <SignUp isMentor={true} />
+        <br/>
+        <SignUp isMentor={false} />
+        <br/>
         {apiStatus}
-      </header>
     </div>
   );
 }

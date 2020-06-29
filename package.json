@@ -14,5 +14,10 @@
   "license": "ISC",
   "devDependencies": {
     "lerna": "^3.22.1"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.10.2",
+    "@material-ui/icons": "^4.9.1",
+    "react": "^16.13.1"
   }
 }

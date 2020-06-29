@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-// TODO: not yet tested on App.js
+// TODO: tested on App.js
 export default function SignIn() {
     const classes = useStyles();
 
