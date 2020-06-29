@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Button from './components/Button';
-import VTabs from "./components/Tabs";
-import SignIn from "./components/TextBox/Signin";
-import SignUp from "./components/TextBox/Signup";
+import VTabs from './components/Tabs';
+import SignIn from './components/TextBox/Signin';
+import SignUp from './components/TextBox/Signup';
 
 function App() {
   var [apiStatus, setApiStatus] = useState(null);
@@ -41,7 +41,7 @@ function App() {
           Click me
         </Button>
 
-        <VTabs values={[1, 2, 3, 4]} texts={["1", "2", "3", "Counting is cool."]}/>
+        <VTabs values={[1, 2, 3, 4]} texts={['1', '2', '3', 'Counting is cool.']}/>
         <br/>
         <SignIn />
         <br/>
