@@ -17,7 +17,11 @@ export default function TextFields(props) {
     return (
         <form className={classes.root} noValidate autoComplete="off">
             {/*[type is either standard-basic + label is the name of the text field]*/}
+<<<<<<< HEAD
             <TextField id={props.type} label={props.label} />
+=======
+            <TextField variant={props.type} label={props.label} />
+>>>>>>> textbox
         </form>
     );
 }
