@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Button from './components/Button';
-import VTabs from "./components/Tabs";
+import VTabs from './components/Tabs';
 
 function App() {
   var [apiStatus, setApiStatus] = useState(null);
