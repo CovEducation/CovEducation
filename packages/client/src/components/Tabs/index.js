@@ -60,7 +60,7 @@ export default function VTabs(props) {
     };
 
     // number of tabs --> creates indices
-    const values = props.values;
+    const values = [1, 2, 3, 4];
     // The text inside each
     const texts = props.texts;
 
