@@ -1,13 +1,13 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import Button from ".";
+import React from 'react';
+import { render, fireEvent } from '@testing-library/react';
+import Button from '.';
 
-test("renders", () => {
+test('renders', () => {
   const { container } = render(<Button>Hello World</Button>);
-  expect(container.textContent).toEqual("Hello World");
+  expect(container.textContent).toEqual('Hello World');
 });
 
-test("onClick prop gets called when component clicked", () => {
+test('onClick prop gets called when component clicked', () => {
   const mock = jest.fn();
   const { getByText } = render(<Button onClick={mock}>Hello World</Button>);
 

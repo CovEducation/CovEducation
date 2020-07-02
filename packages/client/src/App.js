@@ -24,7 +24,7 @@ function App() {
   var [apiStatus, setApiStatus] = useState(null);
 
   useEffect(() => {
-    fetch("/heartbeat")
+    fetch('/heartbeat')
       .then((res) => res.text())
       .then((data) => setApiStatus(data))
       .catch((err) => console.log(err));
@@ -45,7 +45,14 @@ function App() {
         >
           Learn React
         </a>
-        <Button theme="default" size="md" onClick={() => alert("hello")}>
+        <Button theme="default" size="md" onClick={() => alert('hello')}>
+          Click me
+        </Button>
+        <Button theme="accent" basic onClick={() => alert('hello')}>
+          Click me
+        </Button>
+
+        <Button size="sm" onClick={() => alert('hello')}>
           Click me
         </Button>
         <Modal title="ahh" trigger={<Button> Modal Button </Button>}> <Wizard content={Wiz_content} /> </Modal>
