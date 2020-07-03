@@ -57,6 +57,12 @@ Run the following command to run all tests
 ```bash
 $ npm test
 ```
+#### Linting
+If there are a lot of errors regarding the linter, run the following command to run it locally 
+```bash
+npx lerna run lint
+```
+**Caveat:** Do NOT attempt to install `eslint` as a package as it will break the code. Use the above code, but install all necessary extensions (most code editors already support it).
 
 ## 🔋 Batteries Included
 * ExpressJS
