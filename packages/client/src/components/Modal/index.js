@@ -14,7 +14,7 @@ const styles = theme => ({
     padding: theme.spacing(2)
   },
   closeButton: {
-    position: "absolute",
+    position: 'absolute',
     right: theme.spacing(1),
     top: theme.spacing(1),
     color: theme.palette.grey[500]
@@ -57,7 +57,7 @@ export default function Modal(props) {
 
   return (
     <div>
-      { props.trigger && cloneElement(props.trigger,{onClick: handleClickOpen}) } 
+      { props.trigger && cloneElement(props.trigger,{ onClick: handleClickOpen }) } 
       <Dialog aria-labelledby="customized-dialog-title" open={open}>
         <ModalTitle id="customized-dialog-title" onClose={handleClose}>
           {props.title}

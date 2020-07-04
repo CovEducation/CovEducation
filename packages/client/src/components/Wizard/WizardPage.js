@@ -1,8 +1,7 @@
-import React from "react";
-import Typography from "@material-ui/core/Typography";
+import React from 'react';
 
 export default function WizardPage(props) {
-  if (props.activeStep != props.id) {
+  if (props.activeStep !== props.id) {
     return (<></>)
   } else {
   return (

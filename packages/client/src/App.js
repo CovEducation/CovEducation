@@ -43,6 +43,7 @@ function App() {
       <br />
       <VTabs texts={['1', '2', '3', 'counting is fun']} values={[1, 2, 3, 4]}/>
       <br />
+      <Modal title="test title" trigger={<Button> Wow. A Button </Button>}> Model Content is here yay. </Modal>
     </div>
   );
 }
