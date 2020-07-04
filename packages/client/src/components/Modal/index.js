@@ -1,12 +1,12 @@
-import React, { cloneElement} from "react";
-import { withStyles } from "@material-ui/core/styles";
-import Dialog from "@material-ui/core/Dialog";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import MuiDialogContent from "@material-ui/core/DialogContent";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import Typography from "@material-ui/core/Typography";
-import PropTypes from "prop-types";
+import React, { cloneElement } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Dialog from '@material-ui/core/Dialog';
+import MuiDialogTitle from '@material-ui/core/DialogTitle';
+import MuiDialogContent from '@material-ui/core/DialogContent';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Typography from '@material-ui/core/Typography';
+import PropTypes from 'prop-types';
 
 const styles = theme => ({
   root: {
@@ -57,7 +57,7 @@ export default function Modal(props) {
 
   return (
     <div>
-      {props.trigger && cloneElement(props.trigger,{onClick: handleClickOpen})} 
+      { props.trigger && cloneElement(props.trigger,{onClick: handleClickOpen}) } 
       <Dialog aria-labelledby="customized-dialog-title" open={open}>
         <ModalTitle id="customized-dialog-title" onClose={handleClose}>
           {props.title}
@@ -75,6 +75,6 @@ Modal.propTypes = {
 };
 
 Modal.defaultProps = {
-  title: "title",
-  trigger: <a> Click here to Open Modal </a>
+  title: 'title',
+  trigger: <button> Use Button Component as trigger! </button>
 };
