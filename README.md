@@ -20,10 +20,10 @@ $ npm install
 $ npx lerna bootstrap
 ```
 
-#### Dependency Errors
+#### Adding New Dependencies
 
 ##### Not found in `package.json`
-Ensure that you install from the `/packages/client/` directory, NOT the root directory. All dependecies and packages should be added on to either `client` or `server`. 
+Ensure that you install from the `/packages/client/` directory, NOT the root directory. All dependecies and packages should be added on to either `client` or `server`.
 
 ```bash
 $ npm uninstall <all new packages>
@@ -38,7 +38,7 @@ $ npm uninstall <all new packages>
 $ npm install <all packages>
 ```
 
-### 🛠️ Build 
+### 🛠️ Build
 
 #### Development Server
 This will start the live reload servers for both the backend api and the react client.
@@ -47,7 +47,7 @@ $ npm start
 ```
 
 #### Production Mode
-This will build the client and start the server in production mode 
+This will build the client and start the server in production mode
 ```bash
 $ npm run production
 ```
@@ -58,7 +58,7 @@ Run the following command to run all tests
 $ npm test
 ```
 #### Linting
-If there are a lot of errors regarding the linter, run the following command to run it locally 
+If there are a lot of errors regarding the linter, run the following command to run it locally
 ```bash
 npx lerna run lint
 ```
