@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import Button from './components/Button';
 import VTabs from './components/Tabs';
+import Section from './components/Section';
 
 function App() {
   var [apiStatus, setApiStatus] = useState(null);
@@ -39,10 +40,13 @@ function App() {
       <Button size="sm" onClick={() => alert('hello')}>
         Click me
       </Button>
+      <Section backgroundColor='lightblue' m={10} textAlign='left'>
+        Section example
+      </Section>
       <br />
-      <VTabs texts={['1', '2', '3', 'counting is fun']} values={[1, 2, 3, 4]}/>
+      <VTabs texts={['1', '2', '3', 'counting is fun']} values={[1, 2, 3, 4]} />
       <br />
-    </div>
+    </div >
   );
 }
 
