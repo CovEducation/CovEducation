@@ -65,19 +65,4 @@ function Dropdown({ title, items, multiSelect = false }) {
 //     handleClickOutside: () => Dropdown.handleClickOutside,
 // };
 
-const items = [
-    {
-        id: 1,
-        value: 'Elementary',
-    },
-    {
-        id: 2,
-        value: 'Middle',
-    },
-    {
-        id: 3,
-        value: 'High',
-    },
-];
-
 export default Dropdown;
