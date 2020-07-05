@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { Router, Link } from '@reach/router';
+import { Router } from '@reach/router';
 import './App.css';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
