@@ -4,6 +4,9 @@ import './App.css';
 import Button from './components/Button';
 import Modal from './components/Modal';
 import VTabs from './components/Tabs';
+import Wizard from './components/Wizard';
+
+const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
 
 function App() {
   var [apiStatus, setApiStatus] = useState(null);
@@ -17,6 +20,7 @@ function App() {
 
   return (
     <div className="App">
+
       <img src={logo} className="App-logo" alt="logo" />
       <p>
         Edit <code>src/App.js</code> and save to reload.
@@ -43,7 +47,7 @@ function App() {
       <br />
       <VTabs texts={['1', '2', '3', 'counting is fun']} values={[1, 2, 3, 4]}/>
       <br />
-      <Modal title="test title" trigger={<Button> Wow. A Button </Button>}> Model Content is here yay. </Modal>
+      <Modal title="test title" trigger={<Button> Wow. A Button </Button>}> <Wizard content={Wiz_content} /> </Modal>
     </div>
   );
 }
