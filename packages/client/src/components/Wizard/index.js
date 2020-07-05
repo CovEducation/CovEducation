@@ -1,6 +1,6 @@
-import React from "react";
-import ProgressMobileStepper from "./ProgressBar.js"
-import WizardPage from "./WizardPage.js"
+import React from 'react';
+import ProgressMobileStepper from './ProgressBar'
+import WizardPage from './WizardPage'
 
 export default function Wizard(props) {
 
