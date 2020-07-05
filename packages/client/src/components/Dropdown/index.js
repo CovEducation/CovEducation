@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import './index.scss';
-// import onClickOutside from 'react-onclickoutside';
+import { globalStyle } from "./global";
 
 function Dropdown({ title, items, multiSelect = false }) {
     const [open, setOpen] = useState(false);
     const [selection, setSelection] = useState([]);
     const toggle = () => setOpen(!open);
-    Dropdown.handleClickOutside = () => setOpen(false);
 
     function handleOnClick(item) {
         if (!selection.some(current => current.id === item.id)) {
@@ -31,6 +30,7 @@ function Dropdown({ title, items, multiSelect = false }) {
 
     return (
         <div className="dd-wrapper">
+            <globalStyle />
             <div
                 tabIndex={0}
                 className="dd-header"
@@ -61,8 +61,6 @@ function Dropdown({ title, items, multiSelect = false }) {
     );
 }
 
-// const clickOutsideConfig = {
-//     handleClickOutside: () => Dropdown.handleClickOutside,
-// };
+
 
 export default Dropdown;
