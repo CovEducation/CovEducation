@@ -14,8 +14,8 @@ const HomePage = () => {
       <HomepageHeader>
         <h1>CovEducation</h1>
         <p>{t('home.subtitle')}</p>
-        <Button theme="accent">{t('home.forMenteesButton')}</Button>
-        <Button theme="accent">{t('home.forMentorsButton')}</Button>
+        <Button theme="accent" size="md" round>{t('home.forMenteesButton')}</Button>
+        <Button theme="accent" size="md" round>{t('home.forMentorsButton')}</Button>
       </HomepageHeader>
       <HomepageHeader>
         <h2>{t('home.whyBePartOfCovEd')}</h2>
