@@ -8,7 +8,7 @@
 [![Build Status](https://travis-ci.com/CovEducation/CovEducation.svg?branch=master)](https://travis-ci.com/CovEducation/CovEducation)
 
 ## About
-This repository contains the frontend and backend code for CovEd's revamped website. The website is built using ReactJS, Firebase, and MongoDB.
+This repository contains the front-end and back-end code for CovEd's revamped website. The website is built using ReactJS, Firebase, and MongoDB.
 
 ## 🚴 Usage
 
@@ -23,7 +23,7 @@ $ npx lerna bootstrap
 #### Adding New Dependencies
 
 ##### Not found in `package.json`
-Ensure that you install from the `/packages/client/` directory, NOT the root directory. All dependecies and packages should be added on to either `client` or `server`.
+Ensure that you install from the `/packages/client/` directory, NOT the root directory. All dependencies and packages should be added on to either `client` or `server`.
 
 ```bash
 $ npm uninstall <all new packages>
@@ -41,7 +41,7 @@ $ npm install <all packages>
 ### 🛠️ Build
 
 #### Development Server
-This will start the live reload servers for both the backend api and the react client.
+This will start the live reload servers for both the back-end API and the react client.
 ```bash
 $ npm start
 ```
@@ -58,9 +58,9 @@ Run the following command to run all tests
 $ npm test
 ```
 #### Linting
-If there are a lot of errors regarding the linter, run the following command to run it locally
+If there are a lot of errors regarding the linting, run the following command to run it locally
 ```bash
-npx lerna run lint
+$ npx lerna run lint
 ```
 **Caveat:** Do NOT attempt to install `eslint` as a package as it will break the code. Use the above code, but install all necessary extensions (most code editors already support it).
 
