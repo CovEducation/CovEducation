@@ -22,7 +22,7 @@ export default function Text(props) {
                 label={props.label}
                 placeholder={props.placeholder}
                 /* keep the heading text floating to match wireframe */
-                InputLabelProps={{shrink: true}}
+                InputLabelProps={{ shrink: true }}
                 value = {props.value}
                 onChange={props.onChange}
             />
