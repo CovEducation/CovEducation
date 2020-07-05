@@ -4,22 +4,9 @@ import './App.css';
 import Button from './components/Button';
 import Modal from './components/Modal';
 import VTabs from './components/Tabs';
-import Wizard from "./components/Wizard"
+import Wizard from './components/Wizard';
 
-const Wiz_content = [
-  {
-    key: 0,
-    value: "page1"
-  },
-  {
-    key: 1,
-    value: "page2"
-  },
-  {
-    key: 2,
-    value: "AHHHH"
-  }
-]
+const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
 
 function App() {
   var [apiStatus, setApiStatus] = useState(null);
