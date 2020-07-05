@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './index.scss';
-import { globalStyle } from "./global";
+import { globalStyle } from './global';
 
 function Dropdown({ title, items, multiSelect = false }) {
     const [open, setOpen] = useState(false);
