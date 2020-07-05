@@ -59,10 +59,10 @@ export default function VTabs(props) {
         setValue(newValue);
     };
 
-    // number of tabs --> creates indices
-    const values = props.values;
-    // The text inside each
+    // the text inside each
     const texts = props.texts;
+    // the labels of each
+    const labels = props.labels;
 
     return (
         <div className={classes.root}>
@@ -77,10 +77,9 @@ export default function VTabs(props) {
                 className={classes.tabs}
             >
                 {
-                    values.map(
-                        value => (
-                            // need to add a way to change the label (string)
-                            <Tab label="Item" {...a11yProps({ value })} />
+                    labels.map(
+                        label => (
+                            <Tab label={label} {...a11yProps({ value })} />
                         )
                     )
                 }
