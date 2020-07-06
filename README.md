@@ -8,7 +8,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/powered-by-oxygen.svg)](https://forthebadge.com)
 
-[![Build Status](https://travis-ci.com/CovEducation/CovEducation.svg?branch=master)](https://travis-ci.com/CovEducation/CovEducation)
+![Build Status](https://img.shields.io/travis/com/CovEducation/CovEducation/master?style=for-the-badge)
 
 ## About
 This repository contains the front-end and back-end code for CovEd's revamped website. The website is built using ReactJS, Firebase, and MongoDB.
