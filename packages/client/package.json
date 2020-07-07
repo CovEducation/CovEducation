@@ -17,6 +17,9 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-i18next": "^11.7.0",
+    "classnames": "^2.2.6",
+    "lodash-node": "^3.10.2",
+    "node-sass": "^4.14.1",
     "react-scripts": "3.4.0",
     "styled-components": "^5.1.1"
   },
@@ -52,6 +55,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {}
+  }
 }
