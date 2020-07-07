@@ -5,9 +5,9 @@ import Button from './components/Button';
 import VTabs from './components/Tabs';
 
 function App() {
-  var [apiStatus, setApiStatus] = useState(null);
+    const [apiStatus, setApiStatus] = useState(null);
 
-  useEffect(() => {
+    useEffect(() => {
     fetch('/heartbeat')
       .then((res) => res.text())
       .then((data) => setApiStatus(data))
@@ -40,7 +40,8 @@ function App() {
         Click me
       </Button>
       <br />
-      <VTabs texts={['1', '2', '3', 'counting is fun']} values={[1, 2, 3, 4]}/>
+      <VTabs texts={['1', '2', '3', 'counting is fun']} labels={['Uno', 'Dos', 'Tres', 'Oh boi']} class="dash"/>
+      <VTabs texts={['1', '2', '3', 'counting is fun']} labels={['Uno', 'Dos', 'Tres', 'Oh boi']} class="process"/>
       <br />
     </div>
   );
