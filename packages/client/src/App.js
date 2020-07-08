@@ -7,6 +7,7 @@ import DropDown from './components/Dropdown';
 import Modal from './components/Modal';
 import VTabs from './components/Tabs';
 import Wizard from './components/Wizard';
+import NavBar from './components/NavBar';
 
 const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
 const items = [
@@ -40,6 +41,7 @@ function App() {
 
     return (
         <div className="App">
+            <NavBar></NavBar>
             <img src={logo} className="App-logo" alt="logo" />
             <p>
               Edit <code>src/App.js</code> and save to reload.
@@ -63,6 +65,7 @@ function App() {
             <VTabs texts={['oh', 'my', 'god']} values={[0]} labels={['Uno', 'Dos', 'Tres']}/>
             <br/>
             <Modal title="test title" trigger={<Button> Wow. A Modal </Button>}> <Wizard content={Wiz_content} /> </Modal>
+            
         </div>
     );
 }
