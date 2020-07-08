@@ -86,18 +86,6 @@ const defaultColor = {
     '--text': '#003c5e'
 };
 
-const DashTabs = withStyles({
-    indicator: {
-        display: 'flex',
-        justifyContent: 'center',
-        backgroundColor: '#F2BE32',
-        '& > span': {
-            maxWidth: 40,
-            width: '100%'
-        }
-    }
-})(Tabs);
-
 export default function VTabs(props) {
     const classes = useStyles();
     const [color, setColor] = React.useState(defaultColor);
@@ -108,76 +96,39 @@ export default function VTabs(props) {
         setColor(selected);
     };
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-
     // number of tabs --> creates indices
     const labels = props.labels;
     // the text inside each
     const texts = props.texts;
 
-    if (props.class === 'dash') {
-        return (
-            <div className={classes.root}>
-                <DashTabs
-                    /* sets horizontal or vertical tabs */
-                    orientation="vertical"
-                    /* changes type of tab feature if tabs > height*/
-                    // variant="scrollable"
-                    indicatorColor="primary"
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="Tabs Example"
-                    className={classes.tabs}
-                >
-                    {labels.map((label, index) => (
-                        <Tab
-                            key={index}
-                            label={label}
-                            style={color}
-                            className={classes.dash}
-                            {...a11yProps({ index })}
-                        />
-                    ))}
-                </DashTabs>
-                {texts.map((text, index) => (
-                    <TabPanel value={value} index={index} key={index}>
-                        {text}
-                    </TabPanel>
+    return (
+        <div className={classes.root}>
+            <ProcessTabs
+                /* sets horizontal or vertical tabs */
+                orientation="vertical"
+                /* changes type of tab feature if tabs > height*/
+                // variant="scrollable"
+                indicatorColor="primary"
+                value={value}
+                onChange={handleSelect}
+                aria-label="Tabs Example"
+                className={classes.tabs}
+            >
+                {labels.map((label, index) => (
+                    <Tab
+                        key={index}
+                        label={label}
+                        style={index === value ? color : defaultColor}
+                        className={classes.process}
+                        {...a11yProps({ index })}
+                    />
                 ))}
-            </div>
-        );
-    } else if (props.class === 'process') {
-        return (
-            <div className={classes.root}>
-                <ProcessTabs
-                    /* sets horizontal or vertical tabs */
-                    orientation="vertical"
-                    /* changes type of tab feature if tabs > height*/
-                    // variant="scrollable"
-                    indicatorColor="primary"
-                    value={value}
-                    onChange={handleSelect}
-                    aria-label="Tabs Example"
-                    className={classes.tabs}
-                >
-                    {labels.map((label, index) => (
-                        <Tab
-                            key={index}
-                            label={label}
-                            style={index === value ? color : defaultColor}
-                            className={classes.process}
-                            {...a11yProps({ index })}
-                        />
-                    ))}
-                </ProcessTabs>
-                {texts.map((text, index) => (
-                    <TabPanel value={text} index={index} key={index}>
-                        {text}
-                    </TabPanel>
-                ))}
-            </div>
-        );
-    }
+            </ProcessTabs>
+            {texts.map((text, index) => (
+                <TabPanel value={text} index={index} key={index}>
+                    {text}
+                </TabPanel>
+            ))}
+        </div>
+    );
 }

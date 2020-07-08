@@ -40,7 +40,6 @@ function App() {
         Click me
       </Button>
       <br />
-      <VTabs texts={['1', '2', '3', 'counting is fun']} labels={['Uno', 'Dos', 'Tres', 'Oh boi']} class="dash"/>
       <VTabs texts={['1', '2', '3', 'counting is fun']} labels={['Uno', 'Dos', 'Tres', 'Oh boi']} class="process"/>
       <br />
     </div>
