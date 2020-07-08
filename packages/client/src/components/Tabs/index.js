@@ -166,7 +166,7 @@ export default function VTabs(props) {
                         <Tab
                             key={index}
                             label={label}
-                            style={color}
+                            style={index === value ? color : defaultColor}
                             className={classes.process}
                             {...a11yProps({ index })}
                         />
