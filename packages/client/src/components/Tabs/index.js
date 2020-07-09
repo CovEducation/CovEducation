@@ -96,10 +96,10 @@ export default function VTabs(props) {
         setColor(selected);
     };
 
-    // number of tabs --> creates indices
-    const labels = props.labels;
     // the text inside each
     const texts = props.texts;
+    // the labels of each
+    const labels = props.labels;
 
     return (
         <div className={classes.root}>
