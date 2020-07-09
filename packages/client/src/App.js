@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Button from './components/Button';
+import Accordion, { AccordionRow } from './components/Accordion';
 import Text from './components/TextBox';
 import DropDown from './components/Dropdown';
 import Modal from './components/Modal';
@@ -63,6 +64,9 @@ function App() {
             <VTabs texts={['oh', 'my', 'god']} values={[0]} labels={['Uno', 'Dos', 'Tres']}/>
             <br/>
             <Modal title="test title" trigger={<Button> Wow. A Modal </Button>}> <Wizard content={Wiz_content} /> </Modal>
+            <Accordion>
+              <AccordionRow title="Hidden content click me"><h1>Hello</h1><Button>button</Button></AccordionRow>
+            </Accordion>
         </div>
     );
 }
