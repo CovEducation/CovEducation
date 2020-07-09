@@ -116,6 +116,7 @@ export default function VTabs(props) {
             >
                 {labels.map((label, index) => (
                     <Tab
+                        disableRipple={ true }
                         key={index}
                         label={label}
                         style={index === value ? color : defaultColor}
