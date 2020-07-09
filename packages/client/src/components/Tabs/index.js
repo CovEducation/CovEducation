@@ -51,7 +51,7 @@ const ProcessTabs = withStyles({
     }
 })(Tabs);
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     root: {
         flexGrow: 1,
         backgroundColor: 'transparent',
@@ -59,7 +59,7 @@ const useStyles = makeStyles(theme => ({
         height: 448
     },
     tabs: {
-        borderRight: `1px solid ${theme.palette.divider}`
+        borderRight: '1px solid rgba(0, 0, 0, 0.12)'
     },
     process: {
         textTransform: 'none',
@@ -69,12 +69,8 @@ const useStyles = makeStyles(theme => ({
         borderLeft: '3px solid #F2BE32',
         borderTop: '3px solid #F2BE32',
         borderBottom: '3px solid #F2BE32'
-    },
-    dash: {
-        textTransform: 'none',
-        color: '#003c5e'
     }
-}));
+});
 
 const selected = {
     '--background': '#F2BE32',
@@ -88,12 +84,10 @@ const defaultColor = {
 
 export default function VTabs(props) {
     const classes = useStyles();
-    const [color, setColor] = React.useState(defaultColor);
     const [value, setValue] = React.useState(0);
 
-    const handleSelect = (event, newValue) => {
+    const handleChange = (event, newValue) => {
         setValue(newValue);
-        setColor(selected);
     };
 
     // the text inside each
@@ -110,7 +104,7 @@ export default function VTabs(props) {
                 // variant="scrollable"
                 indicatorColor="primary"
                 value={value}
-                onChange={handleSelect}
+                onChange={handleChange}
                 aria-label="Tabs Example"
                 className={classes.tabs}
             >
@@ -119,7 +113,7 @@ export default function VTabs(props) {
                         disableRipple={ true }
                         key={index}
                         label={label}
-                        style={index === value ? color : defaultColor}
+                        style={index === value ? selected : defaultColor}
                         className={classes.process}
                         {...a11yProps({ index })}
                     />
