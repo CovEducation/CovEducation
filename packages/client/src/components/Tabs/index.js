@@ -100,8 +100,6 @@ export default function VTabs(props) {
             <ProcessTabs
                 /* sets horizontal or vertical tabs */
                 orientation="vertical"
-                /* changes type of tab feature if tabs > height*/
-                // variant="scrollable"
                 indicatorColor="primary"
                 value={value}
                 onChange={handleChange}
