@@ -10,12 +10,12 @@ const ButtonThemes = {
   },
   width: {
     sm: 120,
-    md: 200,
+    md: 206,
     lg: 264,
   },
   height: {
     sm: 30,
-    md: 60,
+    md: 50,
     lg: 60,
   },
   fontSize: {
@@ -41,8 +41,8 @@ const ButtonStyled = styled.button`
   cursor: pointer;
   background-color: ${(props) =>
     props.basic ? COLORS.white : ButtonThemes.backgroundColor[props.theme]};
-  border-radius: ${(props) =>
-    ButtonThemes.borderRadius[props.theme] ||
+  border-radius: ${(props) => props.round ?
+    ButtonThemes.borderRadius.round :
     ButtonThemes.borderRadius.default}px;
 
   &:focus {
@@ -60,9 +60,10 @@ const Button = ({
   size = 'md',
   basic = false,
   onClick,
+  round = false,
 }) => {
   return (
-    <ButtonStyled theme={theme} size={size} basic={basic} onClick={onClick}>
+    <ButtonStyled theme={theme} size={size} basic={basic} onClick={onClick} round={round}>
       {children}
     </ButtonStyled>
   );
