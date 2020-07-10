@@ -1,5 +1,10 @@
 import React, { Suspense } from 'react';
-import { Router } from '@reach/router';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
 import './App.css';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
@@ -9,8 +14,14 @@ function App() {
     <Suspense fallback="loading">
       {/* Add Navbar component on this line */}
       <Router>
-        <HomePage path="/" />
-        <ProfilePage path="/profile" />
+        <Switch>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          <Route>
+            <ProfilePage path="/profile" />
+          </Route>
+        </Switch>
       </Router>
     </Suspense>
   );
