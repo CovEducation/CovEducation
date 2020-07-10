@@ -23,7 +23,7 @@ export function AuthProvider({ children }) {
         <authContext.Provider value={auth}>
             <authContext.Consumer>
                { value => value.user == null ? "Put Loading screen here" : children }
-           </authContext.Consumer>
+            </authContext.Consumer>
         </authContext.Provider>
     )
 }
