@@ -61,7 +61,7 @@ function App() {
             <br/>
             <DropDown title="Select Grade Level" items={items}/>
             <DropDown title="Select Grade Level (Multiselect)" items={items} multiSelect={true}/>
-            <VTabs texts={['oh', 'my', 'god']} values={[0]} labels={['Uno', 'Dos', 'Tres']}/>
+            <VTabs texts={['1', '2', '3', 'counting is fun']} labels={['Uno', 'Dos', 'Tres', 'Oh boi']} class="process"/>
             <br/>
             <Modal title="test title" trigger={<Button> Wow. A Modal </Button>}> <Wizard content={Wiz_content} /> </Modal>
             <Accordion>
