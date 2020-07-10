@@ -54,9 +54,9 @@ function App() {
               Click me
             </Button>
             {/*The Text now floats, has a placeholder, and its value can be stored */}
-            <Text label="Input Text" type="standard" placeholder="Text Here" value={text} onChange={handleChange}/>
-            <Text label="Mirrored Text" type="standard" placeholder="Text Here" value={text} onChange={handleChange}/>
-            <Text label="Not Mirrored Text" type="standard-uncontrolled" placeholder="Text Here" />
+            <Text label="Input Text" id="standard" placeholder="Text Here" value={text} onChange={handleChange}/>
+            <Text label="Mirrored Text" id="standard" placeholder="Text Here" value={text} onChange={handleChange}/>
+            <Text label="Not Mirrored Text" id="standard-uncontrolled" placeholder="Text Here" />
             <br/>
             <DropDown title="Select Grade Level" items={items}/>
             <DropDown title="Select Grade Level (Multiselect)" items={items} multiSelect={true}/>
