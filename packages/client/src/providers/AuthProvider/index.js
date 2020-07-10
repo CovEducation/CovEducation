@@ -31,13 +31,12 @@ export function useAuth() {
 export function useAuthProvider() {
     const [user, setUser] = useState(null);
 
+    const signup = (email, password) => {
+        return firebase.createUserWithEmailAndPassword(email, password);
+    }
+
     const signin = (email, password) => {
-        firebase.auth()
-        .signInWithEmailAndPassword(email, password)
-        .then((res) => {
-            setUser(res.user);
-            return user; 
-        });
+        return firebase.auth().signInWithEmailAndPassword(email, password);
     };
 
     const signout = () => {
@@ -60,8 +59,9 @@ export function useAuthProvider() {
     }, []);
 
     return {
-        user, 
-        signin, 
+        user,
+        signup,
+        signin,
         signout
     }
 }

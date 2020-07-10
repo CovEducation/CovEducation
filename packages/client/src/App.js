@@ -8,6 +8,8 @@ import DropDown from './components/Dropdown';
 import Modal from './components/Modal';
 import VTabs from './components/Tabs';
 import Wizard from './components/Wizard';
+import { AuthProvider } from './providers/AuthProvider'
+import { SignIn } from './components/SignIn';
 
 const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
 const items = [
@@ -40,6 +42,7 @@ function App() {
     }, []);
 
     return (
+        <AuthProvider>
         <div className="App">
             <img src={logo} className="App-logo" alt="logo" />
             <p>
@@ -51,6 +54,7 @@ function App() {
             <br />
             {apiStatus}
             <br/><br/>
+            <SignIn />
             <Button theme="default" size="md" onClick={() => alert('hello')}>
               Click me
             </Button>
@@ -68,6 +72,7 @@ function App() {
               <AccordionRow title="Hidden content click me"><h1>Hello</h1><Button>button</Button></AccordionRow>
             </Accordion>
         </div>
+        </AuthProvider>
     );
 }
 
