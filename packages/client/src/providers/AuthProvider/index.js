@@ -20,7 +20,11 @@ export function AuthProvider({ children }) {
     const auth = useAuthProvider();
 
     return (
-        <authContext.Provider value={auth}>{children}</authContext.Provider>
+        <authContext.Provider value={auth}>
+            <authContext.Consumer>
+               { value => value.user == null ? "Put Loading screen here" : children }
+           </authContext.Consumer>
+        </authContext.Provider>
     )
 }
 
