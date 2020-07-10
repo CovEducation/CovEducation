@@ -98,7 +98,6 @@ export default function VTabs(props) {
     return (
         <div className={classes.root}>
             <ProcessTabs
-                /* sets horizontal or vertical tabs */
                 orientation="vertical"
                 indicatorColor="primary"
                 value={value}
