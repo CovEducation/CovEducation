@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
     return (
         <authContext.Provider value={auth}>
             <authContext.Consumer>
-               { value => value.user == null ? "Put Loading screen here" : children }
+               { value => value.initialized ? children : "Put Loading screen here" }
             </authContext.Consumer>
         </authContext.Provider>
     )
@@ -34,6 +34,7 @@ export function useAuth() {
 
 export function useAuthProvider() {
     const [user, setUser] = useState(null);
+    const [initialized, setInitialized] = useState(false);
 
     const signup = (email, password) => {
         return firebase.createUserWithEmailAndPassword(email, password);
@@ -57,6 +58,7 @@ export function useAuthProvider() {
             } else {
                 setUser(false);
             }
+            setInitialized(true);
         });
 
         return () => unsubscribe()
@@ -64,6 +66,7 @@ export function useAuthProvider() {
 
     return {
         user,
+        initialized,
         signup,
         signin,
         signout
