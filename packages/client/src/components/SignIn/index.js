@@ -10,7 +10,7 @@ export function SignIn() {
     const [ password, setPassword ] = useState('');
 
     const handleChange = (event) => {
-        if (event.target.id === "email") {
+        if (event.target.id === 'email') {
             setEmail(event.target.value);
         } else {
             setPassword(event.target.value);
