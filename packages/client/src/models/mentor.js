@@ -1,4 +1,4 @@
-import { Db } from './firebase';
+import { Db } from '../providers/FirebaseProvider/firebase';
 
 const MentorCollectionRef = Db.collection('mentors');
 
@@ -35,7 +35,7 @@ export default class Mentor {
 
     validate() {
         if (!this.name) throw Error('Mentor must have a name');
-        if (!this.email) throw Error('Mentor must have a name');
+        if (!this.email) throw Error('Mentor must have an email');
         if (!this.timezone) throw Error('Mentor must have timezone');
     }
 
@@ -58,7 +58,7 @@ export default class Mentor {
                 return null;
             }
         } catch(err) {
-            console.log(err);
+            // TODO: use error boundaries
             return null;
         }
     }

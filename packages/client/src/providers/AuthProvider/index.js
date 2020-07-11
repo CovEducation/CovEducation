@@ -20,6 +20,8 @@ const useAuth = () => {
     return useContext(authContext);
 }
 
+export const LOGGED_OUT = "LOGGED_OUT";
+
 const useAuthProvider = () => {
     const [user, setUser] = useState(null);
     const [initialized, setInitialized] = useState(false);
@@ -36,7 +38,7 @@ const useAuthProvider = () => {
     const signout = () => {
         Auth.signOut()
         .then(() => {
-            setUser(null)
+            setUser(LOGGED_OUT)
         });
     };
 
@@ -49,12 +51,11 @@ const useAuthProvider = () => {
                     );
                     setUser({ auth, mentor, mentee });
                 } catch (err) {
-                    console.log(err);
-                    setUser(null);
+                    setUser(LOGGED_OUT);
                 }
 
             } else {
-                setUser(null);
+                setUser(LOGGED_OUT);
             }
             setInitialized(true);
         });
