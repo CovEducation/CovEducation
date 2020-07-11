@@ -14,6 +14,7 @@ import Wizard from '../Wizard';
 import Button from '../Button';
 import styled from 'styled-components';
 import { COLORS } from '../../constants';
+import { withStyles } from "@material-ui/styles";
 
 
 const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
@@ -26,12 +27,36 @@ const TextThemes = {
 }
 
 const useStyles = makeStyles({
-  fontFamily: 'Aspira', 
-  fontFamily: 'sans-serif', 
-  paddingRight: '40px', 
-  color: COLORS.blue, 
-  fontSize: TextThemes['fontSize']['sm'], 
+  fontFamily: 'Aspira',
+  fontFamily: 'sans-serif',
+  paddingRight: '40px',
+  color: COLORS.blue,
+  fontSize: TextThemes['fontSize']['sm'],
   fontWeight: 'normal'
+});
+
+const styles = theme => ({
+  root: {
+    fontFamily: 'Aspira', 
+    fontFamily: 'sans-serif', 
+    paddingRight: '40px', 
+    color: COLORS.blue, 
+    fontSize: TextThemes['fontSize']['sm'], 
+    fontWeight: 'normal'
+  },
+  closeButton: {
+    position: 'absolute',
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500]
+  }
+});
+
+const styleLink = withStyles(styles)(props =>{
+  const{ children, classes, ...other} = props;
+  return(
+    <Link></Link>
+  );
 });
 
 const styledLink = styled('Link') ({
@@ -87,7 +112,7 @@ export default function NavBar(props)  {
       <>
         <Link style={{fontFamily: 'Aspira', fontFamily:'sans-serif', paddingRight: '40px', color: COLORS.blue, fontSize: TextThemes['fontSize']['sm'], fontWeight: 'normal'}} href="/login">Login</Link>
         <div/>
-        <Modal title="Sign Up" trigger={<Button theme='accent' size='sm'> Sign Up </Button>}> <Wizard content={Wiz_content} /> </Modal>
+        <Modal title="Sign Up" trigger={<Button theme='accent' size='smmd'> Sign Up </Button>}> <Wizard content={Wiz_content} /> </Modal>
       </>
     );
   } else {
@@ -185,4 +210,3 @@ NavBar.defaultProps = {
   ],
   position: 'absolute'
 }
-// export default NavBar;

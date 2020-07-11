@@ -10,16 +10,19 @@ const ButtonThemes = {
   },
   width: {
     sm: 120,
+    smmd: 140,
     md: 200,
     lg: 264,
   },
   height: {
     sm: 30,
+    smmd: 40,
     md: 60,
     lg: 60,
   },
   fontSize: {
     sm: 14,
+    smmd: 18,
     md: 18,
     lg: 18,
   },
