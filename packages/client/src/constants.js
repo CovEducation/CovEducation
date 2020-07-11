@@ -4,6 +4,9 @@ export const COLORS = {
   white: '#F8F8F8',
   darkblue: '#0F3C61',
   grey: '#D2D2D2',
+  lightgray: '#EDEDED',
+  lightorange: '#FFF6DE',
+  lightblue: '#E7F2FB',
 };
 
 export const FONTS = {
