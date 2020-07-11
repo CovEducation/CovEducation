@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Text from '../TextBox';
-import Button from '../Button';
+import Text from '../../components/TextBox';
+import Button from '../../components/Button';
 
-import { useAuth } from '../../providers/AuthProvider'
+import useAuth from '../../providers/AuthProvider'
 
-export function SignIn() {
+const SignInPage = () => {
     const { user, signin, signout } = useAuth();
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
@@ -31,3 +31,5 @@ export function SignIn() {
         </>
     )
 }
+
+export default SignInPage

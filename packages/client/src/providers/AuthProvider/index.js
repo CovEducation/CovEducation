@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
-import * as firebase from 'firebase/app';
+import firebase from 'firebase/app';
 import 'firebase/auth';
 
 const firebaseConfig = {
@@ -14,30 +14,30 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const authContext = createContext();
+const authContext = createContext(null);
 
-export function AuthProvider({ children }) {
+const AuthProvider = ({ children, fallback }) => {
     const auth = useAuthProvider();
 
     return (
         <authContext.Provider value={auth}>
             <authContext.Consumer>
-               { value => value.initialized ? children : "Put Loading screen here" }
+               { value => value.initialized ? children : fallback }
             </authContext.Consumer>
         </authContext.Provider>
     )
 }
 
-export function useAuth() {
+const useAuth = () => {
     return useContext(authContext);
 }
 
-export function useAuthProvider() {
+const useAuthProvider = () => {
     const [user, setUser] = useState(null);
     const [initialized, setInitialized] = useState(false);
 
     const signup = (email, password) => {
-        return firebase.createUserWithEmailAndPassword(email, password);
+        return firebase.auth().createUserWithEmailAndPassword(email, password);
     }
 
     const signin = (email, password) => {
@@ -72,3 +72,5 @@ export function useAuthProvider() {
         signout
     }
 }
+
+export { useAuth as default, AuthProvider };
