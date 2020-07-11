@@ -8,7 +8,7 @@ import './App.css';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
 import SignInPage from './pages/SignIn';
-import { AuthProvider } from "./providers/AuthProvider";
+import { AuthProvider } from './providers/AuthProvider';
 
 function App() {
   return (
