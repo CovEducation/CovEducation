@@ -18,7 +18,7 @@ export default function Text(props) {
         <form className={classes.root} noValidate autoComplete="off">
             {/*[type is either standard-basic + label is the name of the text field]*/}
             <TextField
-                id={props.type}
+                id={props.id}
                 label={props.label}
                 placeholder={props.placeholder}
                 /* keep the heading text floating to match wireframe */
