@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 
-import { Auth, Mentor } from "../FirebaseProvider";
+import { Auth, Mentor } from '../FirebaseProvider';
 
 const authContext = createContext(null);
 
@@ -47,7 +47,7 @@ const useAuthProvider = () => {
                     const [mentor, mentee] = await Promise.all(
                         [Mentor.get(auth.uid), Promise.resolve(undefined)]
                     );
-                    setUser({auth, mentor, mentee});
+                    setUser({ auth, mentor, mentee });
                 } catch (err) {
                     console.log(err);
                     setUser(null);

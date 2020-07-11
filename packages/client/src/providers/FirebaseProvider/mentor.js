@@ -1,6 +1,6 @@
 import { Db } from './firebase';
 
-const MentorCollectionRef = Db.collection("mentors");
+const MentorCollectionRef = Db.collection('mentors');
 
 const MentorConverter = {
     toFirestore: (mentor) => {
@@ -34,9 +34,9 @@ export default class Mentor {
     }
 
     validate() {
-        if (!this.name) throw Error("Mentor must have a name");
-        if (!this.email) throw Error("Mentor must have a name");
-        if (!this.timezone) throw Error("Mentor must have timezone");
+        if (!this.name) throw Error('Mentor must have a name');
+        if (!this.email) throw Error('Mentor must have a name');
+        if (!this.timezone) throw Error('Mentor must have timezone');
     }
 
     save(id) {
