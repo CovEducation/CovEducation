@@ -19,7 +19,7 @@ const SignInPage = () => {
 
     return (
         <>
-        { JSON.stringify(user) }
+        { JSON.stringify(user, null, 4) }
         <Text label="Email" id="email" placeholder="Email" value={email} onChange={handleChange}/>
         <Text label="Password" id="password" placeholder="Password" value={password} onChange={handleChange}/>
         <Button theme="default" size="md" onClick={() => signin(email, password)}>

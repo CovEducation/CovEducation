@@ -1,18 +1,6 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
-import firebase from 'firebase/app';
-import 'firebase/auth';
 
-const firebaseConfig = {
-    apiKey: 'AIzaSyCSyjSnzA5mp8Y3ro904vg_wxMsG3ELsek',
-    authDomain: 'coved-test.firebaseapp.com',
-    databaseURL: 'https://coved-test.firebaseio.com',
-    projectId: 'coved-test',
-    storageBucket: 'coved-test.appspot.com',
-    messagingSenderId: '779651794617',
-    appId: '1:779651794617:web:8b9bf2f99882b58d337d68'
-};
-
-firebase.initializeApp(firebaseConfig);
+import { Auth, Mentor } from "../FirebaseProvider";
 
 const authContext = createContext(null);
 
@@ -37,26 +25,36 @@ const useAuthProvider = () => {
     const [initialized, setInitialized] = useState(false);
 
     const signup = (email, password) => {
-        return firebase.auth().createUserWithEmailAndPassword(email, password);
+        return Auth.createUserWithEmailAndPassword(email, password);
     }
 
     const signin = (email, password) => {
-        return firebase.auth().signInWithEmailAndPassword(email, password);
+        return Auth.signInWithEmailAndPassword(email, password);
     };
 
+
     const signout = () => {
-        firebase.auth().signOut()
+        Auth.signOut()
         .then(() => {
-            setUser(false)
+            setUser(null)
         });
     };
 
     useEffect(() => {
-        const unsubscribe = firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                setUser(user);
+        const unsubscribe = Auth.onAuthStateChanged(async (auth) => {
+            if (auth) {
+                try {
+                    const [mentor, mentee] = await Promise.all(
+                        [Mentor.get(auth.uid), Promise.resolve(undefined)]
+                    );
+                    setUser({auth, mentor, mentee});
+                } catch (err) {
+                    console.log(err);
+                    setUser(null);
+                }
+
             } else {
-                setUser(false);
+                setUser(null);
             }
             setInitialized(true);
         });
