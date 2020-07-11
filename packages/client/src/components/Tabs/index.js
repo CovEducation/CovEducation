@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
@@ -29,27 +29,58 @@ function TabPanel(props) {
 TabPanel.propTypes = {
     children: PropTypes.node,
     index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired
 };
 
 function a11yProps(index) {
     return {
         id: `tab-${index}`,
-        'aria-controls': `tabpanel-${index}`,
+        'aria-controls': `tabpanel-${index}`
     };
 }
 
-const useStyles = makeStyles((theme) => ({
+const ProcessTabs = withStyles({
+    indicator: {
+        display: 'flex',
+        backgroundColor: '#F2BE32',
+        justifyContent: 'center',
+        '& > span': {
+            maxWidth: 40,
+            width: '100%'
+        }
+    }
+})(Tabs);
+
+const useStyles = makeStyles({
     root: {
         flexGrow: 1,
-        backgroundColor: theme.palette.background.paper,
+        backgroundColor: 'transparent',
         display: 'flex',
-        height: 448,
+        height: 448
     },
     tabs: {
-        borderRight: `1px solid ${theme.palette.divider}`,
+        borderRight: '1px solid rgba(0, 0, 0, 0.12)'
     },
-}));
+    process: {
+        textTransform: 'none',
+        color: 'var(--text)',
+        backgroundColor: 'var(--background)',
+        borderRight: '3px solid #F2BE32',
+        borderLeft: '3px solid #F2BE32',
+        borderTop: '3px solid #F2BE32',
+        borderBottom: '3px solid #F2BE32'
+    }
+});
+
+const selected = {
+    '--background': '#F2BE32',
+    '--text': '#fff'
+};
+
+const defaultColor = {
+    '--background': '#ffffff',
+    '--text': '#003c5e'
+};
 
 export default function VTabs(props) {
     const classes = useStyles();
@@ -59,42 +90,37 @@ export default function VTabs(props) {
         setValue(newValue);
     };
 
-    // number of tabs --> creates indices
-    const values = props.values;
-    // The text inside each
+    // the text inside each
     const texts = props.texts;
+    // the labels of each
+    const labels = props.labels;
 
     return (
         <div className={classes.root}>
-            <Tabs
-                /* sets horizontal or vertical tabs */
+            <ProcessTabs
                 orientation="vertical"
-                /* changes type of tab feature if tabs > height*/
-                // variant="scrollable"
+                indicatorColor="primary"
                 value={value}
                 onChange={handleChange}
                 aria-label="Tabs Example"
                 className={classes.tabs}
             >
-                {
-                    values.map(
-                        value => (
-                            // need to add a way to change the label (string)
-                            <Tab label="Item" {...a11yProps({ value })} />
-                        )
-                    )
-                }
-
-            </Tabs>
-            {
-                texts.map(
-                    (text, index) => (
-                        <TabPanel value={value} index={index}>
-                            {text}
-                        </TabPanel>
-                    )
-                )
-            }
+                {labels.map((label, index) => (
+                    <Tab
+                        disableRipple={ true }
+                        key={index}
+                        label={label}
+                        style={index === value ? selected : defaultColor}
+                        className={classes.process}
+                        {...a11yProps({ index })}
+                    />
+                ))}
+            </ProcessTabs>
+            {texts.map((text, index) => (
+                <TabPanel value={text} index={index} key={index}>
+                    {text}
+                </TabPanel>
+            ))}
         </div>
     );
 }
