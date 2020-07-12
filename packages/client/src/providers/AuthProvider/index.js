@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 
-import { Auth, Mentor } from '../FirebaseProvider';
+import { Auth } from '../FirebaseProvider';
+import { Mentor, Parent } from '../../models';
 
 const authContext = createContext(null);
 
@@ -20,6 +21,7 @@ const useAuth = () => {
     return useContext(authContext);
 }
 
+// TODO: possibly create a enum struct or flag
 export const LOGGED_OUT = "LOGGED_OUT";
 
 const useAuthProvider = () => {
@@ -28,12 +30,11 @@ const useAuthProvider = () => {
 
     const signup = (email, password) => {
         return Auth.createUserWithEmailAndPassword(email, password);
-    }
+    };
 
     const signin = (email, password) => {
         return Auth.signInWithEmailAndPassword(email, password);
     };
-
 
     const signout = () => {
         Auth.signOut()
@@ -46,14 +47,14 @@ const useAuthProvider = () => {
         const unsubscribe = Auth.onAuthStateChanged(async (auth) => {
             if (auth) {
                 try {
-                    const [mentor, mentee] = await Promise.all(
-                        [Mentor.get(auth.uid), Promise.resolve(undefined)]
+                    // only one of the promises should resolve
+                    const [mentor, parent] = await Promise.all(
+                        [Mentor.get(auth.uid), Parent.get(auth.uid)]
                     );
-                    setUser({ auth, mentor, mentee });
+                    setUser({ auth, mentor, parent });
                 } catch (err) {
                     setUser(LOGGED_OUT);
                 }
-
             } else {
                 setUser(LOGGED_OUT);
             }
@@ -69,7 +70,7 @@ const useAuthProvider = () => {
         signup,
         signin,
         signout
-    }
+    };
 }
 
 export { useAuth as default, AuthProvider };

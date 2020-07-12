@@ -1,4 +1,4 @@
-import { Db } from '../providers/FirebaseProvider/firebase';
+import { Db } from '../providers/FirebaseProvider';
 
 const MentorCollectionRef = Db.collection('mentors');
 
@@ -16,7 +16,14 @@ const MentorConverter = {
 
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
-        return new Mentor(data.name, data.email, data.timezone, data.about, data.subjects, data.tags);
+        return new Mentor(
+            data.name,
+            data.email,
+            data.timezone,
+            data.about,
+            data.subjects,
+            data.tags
+        );
     }
 };
 
@@ -49,13 +56,13 @@ export default class Mentor {
     static async get(id) {
         try {
             const mentor = await MentorCollectionRef.doc(id)
-                        .withConverter(MentorConverter)
-                        .get();
+                .withConverter(MentorConverter)
+                .get();
 
             if (mentor.exists) {
                 return mentor.data();
             } else {
-                return null;
+                throw Error(`Mentor data doesn't exist for user ${id}`);
             }
         } catch(err) {
             // TODO: use error boundaries
