@@ -7,10 +7,22 @@ import Button from '../Button';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core/styles';
 
 // TODO: Learn how to create test + create test for this component
 
+const useStyles = makeStyles((theme) => ({
+    texts: {
+        '& > *': {
+            margin: theme.spacing(1),
+            width: '40ch',
+        },
+    },
+}));
+
+
 const Signin = () => {
+    const classes = useStyles();
     const { user, signin } = useAuth();
     const [values, setValues] = React.useState({
         email: '',
@@ -21,20 +33,12 @@ const Signin = () => {
     });
 
     const handleChange = (prop) => (event) => {
-
-        if (prop === 'email') {
-            if ((values.email.includes('@') && values.email.includes('.co')) || values.email.length === 0)  {
-                setValues({ ...values, email: event.target.value });
-                setValues({ ...values, errorText: "" });
-            } else {
-                setValues({ ...values, email: event.target.value });
-                setValues({ ...values, errorText: "Please use a valid email address." });
-            }
+        if (prop === 'remember') {
+            setValues({ ...values, [prop]: !values.remember });
         } else {
             setValues({ ...values, [prop]: event.target.value });
         }
     }
-
     const handleClickShowPassword = () => {
         setValues({ ...values, showPassword: !values.showPassword });
     };
@@ -59,6 +63,9 @@ const Signin = () => {
                     helperText = {values.errorText}
                     error = {false}
                     required = {true}
+                    endAdornment = {{
+                        className: classes.texts
+                    }}
                 />
             </div>
 
@@ -71,6 +78,7 @@ const Signin = () => {
                     onChange = {handleChange('password')}
                     required = {true}
                     endAdornment = {{
+                        className: classes.texts,
                         endAdornment:
                             <InputAdornment position="end">
                                 <IconButton
@@ -88,6 +96,7 @@ const Signin = () => {
                 <FormControlLabel
                     control={
                         <Checkbox
+                            id="checkbox"
                             onChange={handleChange('remember')}
                             value={values.remember}
                             name="remember"
@@ -105,7 +114,12 @@ const Signin = () => {
                     }
                 `}
             </style>
-            <Button theme="default" size="md" onClick={() => signin(values.email, values.password)}>
+            <Button theme="default" size="md"
+                    onClick={() => {
+                        signin(values.email, values.password);
+                        console.log("remember: " + values.remember)
+                    }}
+            >
                 Sign In
             </Button>
             <p className="forgot-password text-right">
