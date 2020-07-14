@@ -35,80 +35,83 @@ const Signin = () => {
     };
 
     return (
-        <form>
-            <br />
-            { JSON.stringify(user) }
-            <br />
-            <h1>Sign In</h1>
+        <>
+            { JSON.stringify(user.auth) }
+            <form>
+                <br />
+                { JSON.stringify(user) }
+                <br />
+                <h1>Sign In</h1>
 
-            <div className="form-group">
-                <Text
-                    autoFocus = {true}
-                    id = 'email'
-                    placeholder = "Email"
-                    value = {values.email}
-                    onChange = {handleChange('email')}
-                    required = {true}
-                />
-            </div>
+                <div className="form-group">
+                    <Text
+                        autoFocus = {true}
+                        id = 'email'
+                        placeholder = "Email"
+                        value = {values.email}
+                        onChange = {handleChange('email')}
+                        required = {true}
+                    />
+                </div>
 
-            <div className="form-group">
-                <Text
-                    id = "password"
-                    placeholder = "Password"
-                    type = {values.showPassword ? 'text' : 'password'}
-                    value = {values.password}
-                    onChange = {handleChange('password')}
-                    required = {true}
-                    endAdornment = {{
-                        endAdornment:
-                            <InputAdornment position="end">
-                                <IconButton
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                >
-                                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                                </IconButton>
-                            </InputAdornment>
-                    }}
-                />
-            </div>
+                <div className="form-group">
+                    <Text
+                        id = "password"
+                        placeholder = "Password"
+                        type = {values.showPassword ? 'text' : 'password'}
+                        value = {values.password}
+                        onChange = {handleChange('password')}
+                        required = {true}
+                        endAdornment = {{
+                            endAdornment:
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                    >
+                                        {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                        }}
+                    />
+                </div>
 
-            <div className="form-group">
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            id="checkbox"
-                            onChange={handleChange('remember')}
-                            value={values.remember}
-                            name="remember"
-                            color="primary"
-                        />
-                    }
-                    label="Remember Me"
-                />
-            </div>
-            <style type="text/css">
-                {`
-                    .btn-coved {
-                      background-color: #00568C;
-                      color: white;
-                    }
-                `}
-            </style>
-            <br />
-            <Button theme="default" size="md"
-                    onClick={() => {
-                        signin(values.email, values.password);
-                        console.log("remember: " + values.remember)
-                    }}
-            >
-                Sign In
-            </Button>
-            <p className="forgot-password text-right">
-                Forgot <a href="/forgot-password">password?</a>
-            </p>
-        </form>
+                <div className="form-group">
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                id="checkbox"
+                                onChange={handleChange('remember')}
+                                value={values.remember}
+                                name="remember"
+                                color="primary"
+                            />
+                        }
+                        label="Remember Me"
+                    />
+                </div>
+                <style type="text/css">
+                    {`
+                        .btn-coved {
+                          background-color: #00568C;
+                          color: white;
+                        }
+                    `}
+                </style>
+                <br />
+                <Button theme="default" size="md"
+                        onClick={() => {
+                            signin(values.email, values.password);
+                            console.log("remember: " + values.remember)
+                        }}
+                >
+                    Sign In
+                </Button>
+                <p className="forgot-password text-right">
+                    Forgot <a href="/forgot-password">password?</a>
+                </p>
+            </form>
+        </>
     );
 }
 

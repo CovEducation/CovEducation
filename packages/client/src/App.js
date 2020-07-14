@@ -26,6 +26,9 @@ function App() {
               <Route path="/signin">
                 <SignInPage/>
               </Route>
+              <Route path="/forgot-password">
+                <SignInPage/>
+              </Route>
               <Route path="/sign-in" component={Signin} />
             </Switch>
           </div>
