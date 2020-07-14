@@ -22,6 +22,7 @@ function formatParams(params) {
   // convert a fetch result to a JSON object with error handling for fetch and json errors
   function convertToJSON(res) {
     if (!res.ok) {
+      // expects error object
       throw `API request failed with response status ${res.status} and text: ${res.statusText}`;
     }
   
@@ -31,6 +32,7 @@ function formatParams(params) {
       .catch((error) => {
         // throw an error containing the text that couldn't be converted to JSON
         return res.text().then((text) => {
+          // expects error object
           throw `API request's result could not be converted to a JSON object: \n${text}`;
         });
       });
@@ -44,6 +46,7 @@ function formatParams(params) {
       .then(convertToJSON)
       .catch((error) => {
         // give a useful error message
+        // expects error object
         throw `GET request to ${fullPath} failed with error:\n${error}`;
       });
   }
@@ -59,6 +62,7 @@ function formatParams(params) {
       .then(convertToJSON) // convert result to JSON object
       .catch((error) => {
         // give a useful error message
+        // expects error object
         throw `POST request to ${endpoint} failed with error:\n${error}`;
       });
   }
