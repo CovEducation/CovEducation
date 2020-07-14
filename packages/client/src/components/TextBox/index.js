@@ -1,12 +1,13 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-// import Input from '@material-ui/core/Input';
-
 
 export default function Text(props) {
     return (
         <TextField
+            style={{
+                margin: '12px',
+                width: '35ch',
+            }}
             autoFocus={props.autoFocus}
             id={props.id}
             label={props.label}

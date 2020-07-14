@@ -7,22 +7,10 @@ import Button from '../Button';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import { makeStyles } from '@material-ui/core/styles';
 
 // TODO: Learn how to create test + create test for this component
 
-const useStyles = makeStyles((theme) => ({
-    texts: {
-        '& > *': {
-            margin: theme.spacing(1),
-            width: '40ch',
-        },
-    },
-}));
-
-
 const Signin = () => {
-    const classes = useStyles();
     const { user, signin } = useAuth();
     const [values, setValues] = React.useState({
         email: '',
@@ -51,7 +39,7 @@ const Signin = () => {
             <br />
             { JSON.stringify(user) }
             <br />
-            <h3>Sign In</h3>
+            <h1>Sign In</h1>
 
             <div className="form-group">
                 <Text
@@ -60,12 +48,7 @@ const Signin = () => {
                     placeholder = "Email"
                     value = {values.email}
                     onChange = {handleChange('email')}
-                    helperText = {values.errorText}
-                    error = {false}
                     required = {true}
-                    endAdornment = {{
-                        className: classes.texts
-                    }}
                 />
             </div>
 
@@ -78,7 +61,6 @@ const Signin = () => {
                     onChange = {handleChange('password')}
                     required = {true}
                     endAdornment = {{
-                        className: classes.texts,
                         endAdornment:
                             <InputAdornment position="end">
                                 <IconButton
@@ -114,6 +96,7 @@ const Signin = () => {
                     }
                 `}
             </style>
+            <br />
             <Button theme="default" size="md"
                     onClick={() => {
                         signin(values.email, values.password);
@@ -123,7 +106,7 @@ const Signin = () => {
                 Sign In
             </Button>
             <p className="forgot-password text-right">
-                Forgot <a href="https://#">password?</a>
+                Forgot <a href="/forgot-password">password?</a>
             </p>
         </form>
     );
