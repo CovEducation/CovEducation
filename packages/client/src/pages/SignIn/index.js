@@ -18,15 +18,15 @@ const SignInPage = () => {
 
     return (
         <>
-            { JSON.stringify(user.auth) }
+            { JSON.stringify(user) }
             <Text label="Email" id="email" placeholder="Email" value={email} onChange={handleChange}/>
             <Text label="Password" id="password" placeholder="Password" value={password} onChange={handleChange}/>
             <Button theme="default" size="md" onClick={() => signin(email, password)}>
                 Sign In
             </Button>
-            {/*<Button theme="default" size="md" onClick={() => signout()}>*/}
-            {/*    Sign Out*/}
-            {/*</Button>*/}
+            <Button theme="default" size="md" onClick={() => signout()}>
+                Sign Out
+            </Button>
         </>
     )
 }
