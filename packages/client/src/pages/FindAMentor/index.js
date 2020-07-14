@@ -1,9 +1,31 @@
 import React, { useState } from 'react';
-import useAuth from "../../providers/AuthProvider";
-import { get } from "../../utilities.js";
+import styled from 'styled-components';
 
-import Mentor from "./Mentor.js";
-import Modal from "../../components/Modal";
+
+import Mentor from './Mentor';
+import MentorFilters from './MentorFilters';
+import MentorRequestFrame from './MentorRequestFrame';
+import Modal from '../../components/Modal';
+import useAuth from '../../providers/AuthProvider';
+
+const FindAMentorWrapper = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: "sidebar main main";
+
+    // remove the following lines after we have the rest of dashboard built.
+    // these are just to make it look approximately like mockups
+    margin-top: 300px;
+    margin-left: 400px;
+`;
+
+const FindAMentorSidebarWrapper = styled.div`
+    grid-area: sidebar;
+`;
+
+const FindAMentorMainWrapper = styled.div`
+    grid-area: main;
+`;
 
 // Purpose:
 //      Display a list of available mentors to parents and send mentorship requests.
@@ -17,10 +39,10 @@ const FindAMentorPage = () => {
 
     const { user } = useAuth();
     const { tags, setTags } = useState([]);
-    const { subjects, setSubjects} = useState([]);
+    const { subjects, setSubjects } = useState([]);
     const handleMentorshipRequest = (event) => {
         // TODO(johanc): Implement.
-        
+
     };
 
     const openModal = (mentor) => {
@@ -28,10 +50,10 @@ const FindAMentorPage = () => {
     }
     const FilterColumn = () => {
         // TODO: Implement - should use setTags() to update the state.
-        <a onClick={() => setTags([])}>Placeholder filter component.</a>
+        return <a onClick={() => setTags([])}>Placeholder filter component.</a>
     };
 
-    const mentors = await get("/api/mentors", {tags: tags, subjects: subjects});
+    const mentors = [];
     const MentorColumn = () => {
         // A grid of mentor components.
         return (
@@ -45,16 +67,14 @@ const FindAMentorPage = () => {
     }
 
     return (
-        <>
-            <div className="container">
-                <div className="col-md-4">
-                    <FilterColumn/>
-                </div>
-                <div className="col-md-8">
-                    <MentorColumn/>
-                </div>
-            </div>  
-        </>
+        <FindAMentorWrapper>
+            <FindAMentorSidebarWrapper>
+                <MentorFilters />
+            </FindAMentorSidebarWrapper>
+            <FindAMentorMainWrapper>
+                <MentorColumn/>
+            </FindAMentorMainWrapper>
+        </FindAMentorWrapper>
     )
 }
 

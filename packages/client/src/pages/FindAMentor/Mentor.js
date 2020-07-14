@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 // Displays the picture, name, and major of a mentor.
 const Mentor = (mentor) => {
@@ -24,3 +24,5 @@ const validateMentorData = (mentor) => {
     // TODO(johancc) - Implement a more through validation if needed.
     return true;
 }
+
+export default Mentor;
