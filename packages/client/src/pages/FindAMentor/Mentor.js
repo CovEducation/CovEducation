@@ -2,27 +2,25 @@ import React from "react";
 
 // Displays the picture, name, and major of a mentor.
 const Mentor = (mentor) => {
-    if (!validateMentorData(mentor)) return (<></>);
-    
-    return (
-        <div className="container">
-            <div className="row">
-                <img alt="profile-pic" width="100%" height="100%"src={mentor.profilePicture}/>
+    if (!validateMentorData(mentor)) {
+        return (<></>);
+    } else {
+        return (
+            <div className="container">
+                <h1>{mentor.name}</h1>
+                <img width="175px"
+                     src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
+                     alt="profile-pic"/>
+                <h2>{mentor.major}</h2>
+                <h3>{mentor.subjects}</h3>
             </div>
-            <div className="row">
-                {mentor.name}
-                {mentor.major}
-                {mentor.subjects}
-            </div>
-        </div>
-    )
-    
+        )
+    }
 }
 
 const validateMentorData = (mentor) => {
-    if (mentor === undefined || mentor === null) return false;
+    return !(mentor === undefined || mentor === null);
     // TODO(johancc) - Implement a more through validation if needed.
-    return true;
 }
 
 export default Mentor;

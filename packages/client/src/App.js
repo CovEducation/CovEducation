@@ -21,7 +21,7 @@ function App() {
             <HomePage />
           </Route>
           <Route path="/find-a-mentor">
-            <FindAMentorPage /> />
+            <FindAMentorPage />
           </Route>
           <Route path="/profile">
             <ProfilePage />
