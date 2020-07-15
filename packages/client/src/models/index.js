@@ -1,2 +1,2 @@
 export { default as Mentor } from "./mentor";
-export { default as Parent } from "./parent";
+export { default as Parent, Mentee } from "./parent";
