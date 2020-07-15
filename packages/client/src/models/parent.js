@@ -53,7 +53,7 @@ export class Mentee {
     }
 }
 
-/** Firebase model for Parent data */
+/** Firebase Parent Object */
 export default class Parent {
     constructor(name, email, timezone, mentees) {
         this.id = undefined;
@@ -81,7 +81,7 @@ export default class Parent {
         this.validate();
 
         if (!this.id) {
-            return Promise.reject("Parent update failed: not initialized with firebase uid");
+            return Promise.reject('Parent update failed: not initialized with firebase uid');
         }
 
         return ParentCollectionRef.doc(this.id)

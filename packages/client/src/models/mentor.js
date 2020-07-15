@@ -66,7 +66,7 @@ export default class Mentor {
         this.validate();
 
         if (!this.id) {
-            return Promise.reject("Mentor update failed: not intialized with firebase uid");
+            return Promise.reject('Mentor update failed: not intialized with firebase uid');
         }
 
         return MentorCollectionRef.doc(this.id)
