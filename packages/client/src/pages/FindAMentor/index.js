@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+
 
 import Mentor from './Mentor';
 import MentorFilters from './MentorFilters';
 import MentorRequestFrame from './MentorRequestFrame';
 import Modal from '../../components/Modal';
-// import useAuth from '../../providers/AuthProvider';
+import useAuth from '../../providers/AuthProvider';
 
 const FindAMentorWrapper = styled.div`
     display: grid;
@@ -36,20 +37,38 @@ const FindAMentorPage = () => {
     //     the mentor results. The tags set by the user should propagate to the mentorship
     //     column - the only shared state component.
 
-    // const { user } = useAuth();
-    // const { tags, setTags } = useState([]);
-    // const { subjects, setSubjects } = useState([]);
-    // const handleMentorshipRequest = (event) => {
-    //     // TODO(johanc): Implement.
-    // };
-    //
-    // const openModal = (mentor) => {
-    //     // TODO(johanc): Implement.
-    // }
-    // const FilterColumn = () => {
-    //     // TODO: Implement - should use setTags() to update the state.
-    //     return <a onClick={() => setTags([])}>Placeholder filter component.</a>
-    // };
+    const { user } = useAuth();
+    const { tags, setTags } = useState([]);
+    const { subjects, setSubjects } = useState([]);
+
+    // Lazily initialize the filter settings
+    const [filters, setFilters] = useState({
+        'gradeLevel': {},
+        'subject': {},
+        'specialNeeds': {},
+    });
+    const handleMentorshipRequest = (event) => {
+        // TODO(johanc): Implement.
+
+    };
+
+    const openModal = (mentor) => {
+        // TODO(johanc): Implement.
+    }
+
+    const handleFilterChange = (filterCategory, change) => {
+        console.log(filterCategory, change);
+        if (filters[filterCategory]) {
+            const currentCategoryFilters = filters[filterCategory];
+            setFilters({
+                ...filters,
+                [filterCategory]: {
+                    ...currentCategoryFilters,
+                    [change.name]: change.checked
+                }
+            })
+        }
+    }
 
     const mentors = [];
     const MentorColumn = () => {
@@ -67,7 +86,7 @@ const FindAMentorPage = () => {
     return (
         <FindAMentorWrapper>
             <FindAMentorSidebarWrapper>
-                <MentorFilters />
+                <MentorFilters onChange={handleFilterChange} />
             </FindAMentorSidebarWrapper>
             <FindAMentorMainWrapper>
                 <MentorColumn/>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Displays the picture, name, and major of a mentor.
 const Mentor = (mentor) => {

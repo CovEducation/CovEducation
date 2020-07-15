@@ -35,25 +35,43 @@ const CheckboxLabel = styled.div`
   padding-left: 10px;
 `;
 
+/**
+ * A basic checkbox component
+ *
+ * When the checked state changes, the onChange prop
+ * will be called with the following object:
+ *
+ *    {
+ *      name: <name from props>,
+ *      checked: <checked state>
+ *    }
+ *
+ */
 const Checkbox = ({ name, value, label, onChange, ...rest }) => {
   const [checked, setChecked] = useState(false);
+  const handleCheck = (event) => {
+    const target = event.target;
+    const isCheck = target.checked;
+    setChecked(isCheck);
 
-  const handleCheck = () => {
-    console.log('handle check')
-    setChecked(!checked);
-    onChange({
-      name,
-      checked: !checked,
-    });
+    if (onChange instanceof Function) {
+      onChange({
+        name,
+        checked: isCheck,
+      });
+    }
   }
 
   return (
     <CheckboxWrapper>
       <label htmlFor={name}>
+        <CustomCheckbox>
+          {checked && <Checkmark width={14} height={14} />}
+        </CustomCheckbox>
         <CheckboxHiddenInput
           checked={checked}
           onChange={handleCheck}
-          type="checkbox"
+          type='checkbox'
           value={value}
           name={name}
           {...rest}
