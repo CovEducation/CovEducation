@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-
 
 import Mentor from './Mentor';
 import MentorFilters from './MentorFilters';
 import MentorRequestFrame from './MentorRequestFrame';
 import Modal from '../../components/Modal';
-import useAuth from '../../providers/AuthProvider';
+// import useAuth from '../../providers/AuthProvider';
 
 const FindAMentorWrapper = styled.div`
     display: grid;
@@ -37,21 +36,20 @@ const FindAMentorPage = () => {
     //     the mentor results. The tags set by the user should propagate to the mentorship
     //     column - the only shared state component.
 
-    const { user } = useAuth();
-    const { tags, setTags } = useState([]);
-    const { subjects, setSubjects } = useState([]);
-    const handleMentorshipRequest = (event) => {
-        // TODO(johanc): Implement.
-
-    };
-
-    const openModal = (mentor) => {
-        // TODO(johanc): Implement.
-    }
-    const FilterColumn = () => {
-        // TODO: Implement - should use setTags() to update the state.
-        return <a onClick={() => setTags([])}>Placeholder filter component.</a>
-    };
+    // const { user } = useAuth();
+    // const { tags, setTags } = useState([]);
+    // const { subjects, setSubjects } = useState([]);
+    // const handleMentorshipRequest = (event) => {
+    //     // TODO(johanc): Implement.
+    // };
+    //
+    // const openModal = (mentor) => {
+    //     // TODO(johanc): Implement.
+    // }
+    // const FilterColumn = () => {
+    //     // TODO: Implement - should use setTags() to update the state.
+    //     return <a onClick={() => setTags([])}>Placeholder filter component.</a>
+    // };
 
     const mentors = [];
     const MentorColumn = () => {
