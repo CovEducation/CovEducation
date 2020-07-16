@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import './mentor.scss'
 
 // Displays the picture, name, and major of a mentor.
@@ -6,18 +6,18 @@ const Mentor = ({ mentor }) => {
     if (!validateMentorData(mentor)) return (<></>);
 
     const relevantInformation = [
-        ["subjects", "Subjects"],
-        ["location", "Location"],
-        ["grade_levels_to_mentor", "Grades"],
-        ["timezone", "Timezone"],
-        ["languages_spoken", "Languages"],
-        ["email", "Email"]
+        ['subjects', 'Subjects'],
+        ['location', 'Location'],
+        ['grade_levels_to_mentor', 'Grades'],
+        ['timezone', 'Timezone'],
+        ['languages_spoken', 'Languages'],
+        ['email', 'Email']
     ];
-    
+
     return (
         <div className="mentor-card-container">
             <div className="mentor-card">
-                <img src={mentor.avatar} alt="Profile picture" />
+                <img src={mentor.avatar} alt='Profile' />
                 <div>
                     <h3>{mentor.name}</h3>
                     <h4>{mentor.school}</h4>
@@ -46,7 +46,7 @@ const validateMentorData = (mentor) => {
 const displayField = (field, mentor) => {
     let mentorInfo = mentor[field[0]];
     if (Array.isArray(mentorInfo)) {
-        mentorInfo = mentorInfo.join(", ");
+        mentorInfo = mentorInfo.join(', ');
     }
     return (
         <div>
