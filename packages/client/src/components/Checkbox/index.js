@@ -76,9 +76,6 @@ const Checkbox = ({ name, value, label, onChange, ...rest }) => {
           name={name}
           {...rest}
         />
-        <CustomCheckbox>
-          {checked && <Checkmark width={14} height={14} />}
-        </CustomCheckbox>
       </label>
       <CheckboxLabel>{label}</CheckboxLabel>
     </CheckboxWrapper>
