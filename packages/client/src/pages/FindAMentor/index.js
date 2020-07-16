@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-// import useAuth from "../../providers/AuthProvider";
-import { get } from "../../utilities.js";
-import MentorRequestFrame from "./MentorRequestFrame.js";
-import Mentor from "./Mentor.js";
-import Modal from "../../components/Modal";
+// import useAuth from '../../providers/AuthProvider';
+import { get } from '../../utilities.js';
+import MentorRequestFrame from './MentorRequestFrame.js';
+import Mentor from './Mentor.js';
+import Modal from '../../components/Modal';
 import Button from '../../components/Button';
 
 // Purpose:
@@ -33,22 +33,22 @@ const FindAMentorPage = () => {
     // const FilterColumn = () => {
     //
     //     return (
-    //         <a href="#" onClick={() => setTags([])}>Placeholder filter component.</a>
+    //         <a href='#' onClick={() => setTags([])}>Placeholder filter component.</a>
     //     )
     // };
 
-    // const mentors = get("/api/mentors", { tags: tags, subjects: subjects });
+    // const mentors = get('/api/mentors', { tags: tags, subjects: subjects });
     const mentors = [
         {
-            name: "John Doe",
-            major: "Psychology",
-            subjects: ["Math", "Social Studies"],
-            tags: ["ESL"],
+            name: 'John Doe',
+            major: 'Psychology',
+            subjects: ['Math', 'Social Studies'],
+            tags: ['ESL'],
         },
         {
-            name: "Barbara Lee",
-            major: "Dentistry",
-            subjects: ["Science", "Magic"],
+            name: 'Barbara Lee',
+            major: 'Dentistry',
+            subjects: ['Science', 'Magic'],
             tags: [],
         }
     ];
@@ -68,7 +68,7 @@ const FindAMentorPage = () => {
                 {/*    <FilterColumn/>*/}
                 {/*</div>*/}
                 <div className="col-md-8">
-                    <Modal title="JOHN DOE" trigger={<Button> John</Button>}>
+                    <Modal title='JOHN DOE' trigger={<Button> John</Button>}>
                         ahoy
                     </Modal>
                     <MentorColumn/>

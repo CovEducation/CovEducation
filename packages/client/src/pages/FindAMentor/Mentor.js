@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 // Displays the picture, name, and major of a mentor.
 const Mentor = (mentor) => {
