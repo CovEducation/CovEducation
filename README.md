@@ -32,14 +32,18 @@ $ cd packages/client
 $ npm install <all new packages>
 ```
 
-##### `dev-dependecies`
-Ensure that the package is part of `dependencies` not `dev-dependecies`. To fix it:
+##### `dev-dependencies`
+Ensure that non-development (test frameworks, linting, etc) packages are part of `dependencies` and not `dev-dependecies`. To fix it:
 ```bash
 $ npm uninstall <all new packages>
 $ npm install <all packages>
 ```
 
 ### 🛠️ Build
+
+#### `.env` files
+In `packages/client`, there is a `.env.development` file which contains configuration for Firebase. These lines are injected when developing locally, and can be referenced in code like so: `process.env.REACT_APP_FIREBASE_API_KEY`. During build time, these references are replaced with actual values by the CI server in the final output bundle. More documentation here: https://create-react-app.dev/docs/adding-custom-environment-variables/
+
 
 #### Development Server
 This will start the live reload servers for both the back-end API and the react client.
