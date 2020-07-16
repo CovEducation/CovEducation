@@ -2,10 +2,10 @@ import React  from 'react';
 import Mentor from './Mentor';
 
 // Shows more detailed mentor information and allows parents to request mentors.
-const MentorRequestFrame = ({mentor}) => {
+const MentorRequestFrame = ({ mentor }) => {
     // TODO(johanc) - Implement.
     return (
-        <Mentor mentor={mentor} />
+        <Mentor mentor={ mentor } />
     );
 }
 
