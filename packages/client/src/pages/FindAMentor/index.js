@@ -41,12 +41,14 @@ const FindAMentorPage = () => {
     const mentors = [
         {
             name: 'John Doe',
+            avatar: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
             major: 'Psychology',
             subjects: ['Math', 'Social Studies'],
             tags: ['ESL'],
         },
         {
             name: 'Barbara Lee',
+            avatar: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
             major: 'Dentistry',
             subjects: ['Science', 'Magic'],
             tags: [],
@@ -56,7 +58,7 @@ const FindAMentorPage = () => {
         // A grid of mentor components.
         return (
             mentors.map((mentor) =>
-                (<Modal text={mentor.name} title={mentor.name} trigger={<Mentor mentor={mentor}/>}>
+                (<Modal text={mentor.name} title={mentor.name} trigger={<Button> {mentor.name} </Button>}>
                     <MentorRequestFrame mentor={mentor}/>
                 </Modal>))
         )
@@ -68,9 +70,6 @@ const FindAMentorPage = () => {
                 {/*    <FilterColumn/>*/}
                 {/*</div>*/}
                 <div className="col-md-8">
-                    <Modal title='JOHN DOE' trigger={<Button> John</Button>}>
-                        ahoy
-                    </Modal>
                     <MentorColumn/>
                 </div>
             </div>
