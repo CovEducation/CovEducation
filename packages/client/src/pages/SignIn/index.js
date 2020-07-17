@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Text from '../../components/TextBox';
 import Button from '../../components/Button';
 
@@ -10,7 +10,7 @@ const SignInPage = () => {
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
 
-    const { user, signin, signout, signup } = useAuth();
+    const { auth, user, signin, signout, signup } = useAuth();
 
     const handleSignUp = () => {
         signup("sanjay.yepuri@gmail.com", "abc123", new Mentor(
@@ -48,6 +48,7 @@ const SignInPage = () => {
 
     return (
         <>
+        { JSON.stringify(auth) }
         { JSON.stringify(user) }
         <Text label="Email" id="email" placeholder="Email" value={email} onChange={handleChange}/>
         <Text label="Password" id="password" placeholder="Password" value={password} onChange={handleChange}/>

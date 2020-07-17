@@ -66,41 +66,43 @@ export default class Mentor {
         this.validate();
 
         if (!this.id) {
-            return Promise.reject('Mentor update failed: not intialized with firebase uid');
+            return Promise.reject('Mentor update failed: not initialized with firebase uid');
         }
 
         return MentorCollectionRef.doc(this.id)
             .withConverter(MentorConverter)
-            .update();
+            .update(this);
     }
 
     /**
      * Publishes the current mentor instance to firebase
-     * @param {string} the firebase auth uid. DO NOT use any other value.
+     * @param {firebase.auth.UserCredential} the firebase user object
      *
      * @return {Promise<void>} a promise indicating successful creation.
      */
-    create(id) {
+    create(user) {
         this.validate();
-        this.id = id; // Saving the id in the object so update can be called.
-        return MentorCollectionRef.doc(id)
+        this.id = user.uid; // Saving the id in the object so update can be called.
+        return MentorCollectionRef.doc(this.id)
             .withConverter(MentorConverter)
             .set(this);
     }
 
     /**
      * Reads the Mentor object from firebase.
-     * @param {string} the firebase auth uid of the mentor
+     * @param {firebase.auth.UserCredential} the firebase auth uid of the mentor
      *
      * @return {Promise<Mentor>} the mentor with the corresponding uid
      */
-    static async get(id) {
-        const mentor = await MentorCollectionRef.doc(id)
+    static async get(user) {
+        const mentorRes = await MentorCollectionRef.doc(user.uid)
             .withConverter(MentorConverter)
             .get();
 
-        if (mentor.exists) {
-            return mentor.data();
+        if (mentorRes.exists) {
+            const mentor = mentorRes.data();
+            mentor.id = user.uid;
+            return mentor;
         } else {
             return undefined;
             // TODO throw Error(`Mentor data doesn't exist for user ${id}`);

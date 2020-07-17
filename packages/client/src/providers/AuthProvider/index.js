@@ -15,7 +15,7 @@ const AuthProvider = ({ children, fallback }) => {
     return (
         <authContext.Provider value={auth}>
             <authContext.Consumer>
-               { value => value.initialized ? children : fallback }
+               { value => value.auth !== AUTH_STATE.UNINITIALIZED ? children : fallback }
             </authContext.Consumer>
         </authContext.Provider>
     )
@@ -26,11 +26,16 @@ const useAuth = () => {
 }
 
 // TODO: possibly create a enum struct or flag
-export const LOGGED_OUT = "LOGGED_OUT";
+export const AUTH_STATE  = {
+    LOGGED_OUT: 'LOGGED_OUT',
+    LOGGED_IN:  'LOGGED_IN',
+    UNINITIALIZED: 'UNINITIALIZED'
+};
+
 
 const useAuthProvider = () => {
+    const [auth, setAuth] = useState(AUTH_STATE.UNINITIALIZED);
     const [user, setUser] = useState(null);
-    const [initialized, setInitialized] = useState(false);
 
     /**
      * Signs a user up.
@@ -41,9 +46,23 @@ const useAuthProvider = () => {
      * @return {Promise<void>} indicates successful account creation.
      */
     const signup = (email, password, user) => {
+        let userType = '';
+        if (user instanceof Mentor) {
+            userType = 'mentor';
+        } else if (user instanceof Parent) {
+            userType = 'parent';
+        } else {
+            return Promise.reject(`Error creating account: Unexpected user type: ${userType}`);
+        }
+
         return Auth.createUserWithEmailAndPassword(email, password)
             .then(() => {
-                return user.create(Auth.currentUser.uid);
+                const updateDisplayName = Auth.currentUser.updateProfile({displayName: userType});
+                return Promise.all([user.create(Auth.currentUser), updateDisplayName]);
+            })
+            .then(() => {
+                // since the database updates were successful we don't have to query again
+                setUser(user);
             })
     };
 
@@ -64,39 +83,69 @@ const useAuthProvider = () => {
     const signout = () => {
         Auth.signOut()
         .then(() => {
-            setUser(LOGGED_OUT)
+            setAuth(AUTH_STATE.LOGGED_OUT);
+            setUser(null);
         });
     };
 
-    // this handles updating the application user state
+    /**
+     * Gets the current user if possible
+     *
+     * @return {Promise<Mentor|Parent>} the current logged in user
+     */
+    const getCurrentUser = () => {
+        if (auth === AUTH_STATE.UNINITIALIZED || auth === AUTH_STATE.LOGGED_OUT) {
+            return Promise.reject('No user currently logged in.');
+        } else {
+            // query user for user data if already not cached
+            if (user) {
+                return Promise.resolve(user);
+            }
+
+            let userProm;
+            if (auth.displayName === 'mentor') {
+                userProm = Mentor.get(auth);
+            } else if (auth.displayName === 'parent') {
+                userProm = Parent.get(auth);
+            } else {
+                return Promise.reject('Unexpected user type.');
+            }
+
+            return userProm.then((userData) => {
+                    return userData;
+                });
+        }
+    };
+
+    // register firebase state handler
+    // note that this only gets called once on mount
     useEffect(() => {
         const unsubscribe = Auth.onAuthStateChanged(async (auth) => {
             if (auth) {
-                try {
-                    const [mentor, parent] = await Promise.all([Mentor.get(auth.uid), Parent.get(auth.uid)]);
-                    setUser({
-                        auth,
-                        mentor,
-                        parent
-                    });
-
-                } catch (err) {
-                    // TODO throw an error to be caught by Error Boundaries
-                    console.log(err);
-                    signout();
-                }
+                setAuth(auth);
             } else {
-                setUser(LOGGED_OUT);
+                setAuth(AUTH_STATE.LOGGED_OUT);
             }
-            setInitialized(true);
         });
 
-        return () => unsubscribe()
+        return () => unsubscribe();
     }, []);
 
+    // attempt to fetch the user on update
+    useEffect(() => {
+        getCurrentUser()
+            .then((user) => {
+                setUser(user)
+            })
+            .catch((err) => {
+                console.log(err);
+                setUser(null);
+            });
+    });
+
     return {
+        auth,
         user,
-        initialized,
         signup,
         signin,
         signout

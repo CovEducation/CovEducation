@@ -92,31 +92,33 @@ export default class Parent {
     /**
      * Publishes the current parent instance to firebase. If a parent
      * with the firebase uid already exists the record is updated.
-     * @param {string} the firebase auth uid. DO NOT use any other value.
+     * @param {firebase.auth.UserCredential} the firebase auth user object
      *
      * @return {Promise<void>} a promise indicating successful creation.
      */
-    create(id) {
+    create(user) {
         this.validate();
-
-        return ParentCollectionRef.doc(id)
+        this.id = user.uid;
+        return ParentCollectionRef.doc(this.id)
             .withConverter(ParentConverter)
             .set(this);
     }
 
     /**
      * Reads the Parent object from firebase.
-     * @param {string} the firebase auth uid of the parent
+     * @param {firebase.auth.UserCredential} the firebase auth uid of the parent
      *
      * @return {Promise<Parent>} the parent with the corresponding uid
      */
-    static async get(id) {
-        const parent = await ParentCollectionRef.doc(id)
+    static async get(user) {
+        const parentRes = await ParentCollectionRef.doc(user.uid)
             .withConverter(ParentConverter)
             .get();
 
-        if (parent.exists) {
-            return parent.data();
+        if (parentRes.exists) {
+            const parent = parentRes.data();
+            parent.id = user.uid;
+            return parent;
         } else {
             return undefined;
             // throw Error(`Parent data doesn't exist for user ${id}`);
