@@ -1,5 +1,21 @@
 import React from 'react';
-import './mentor.scss'
+import styled from 'styled-components';
+
+const MentorContainer = styled.div`
+    padding: 0 5rem;
+`;
+
+const MentorHeader = styled.div`
+    display: flex;
+    flex-direction: row;
+`;
+
+const MentorInformation = styled.div`
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+`;
+
+
 
 // Displays the picture, name, and major of a mentor.
 const Mentor = ({ mentor }) => {
@@ -15,25 +31,25 @@ const Mentor = ({ mentor }) => {
     ];
 
     return (
-        <div className="mentor-card-container">
-            <div className="mentor-card">
+        <MentorContainer>
+            <MentorHeader>
                 <img src={mentor.avatar} alt='Profile' />
                 <div>
                     <h3>{mentor.name}</h3>
                     <h4>{mentor.school}</h4>
                     <h4>{mentor.major}</h4>
                 </div>
-            </div>
+            </MentorHeader>
             {mentor.bio !== null &&
                 <div>
                     <p>Bio</p>
                     <p>{mentor.bio}</p>
                 </div>
             }
-            <div className="mentor-information">
+            <MentorInformation>
                 {relevantInformation.map(field => displayField(field, mentor))}
-            </div>
-        </div>
+            </MentorInformation>
+        </MentorContainer>
     )
 }
 
