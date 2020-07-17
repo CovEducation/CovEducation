@@ -6,6 +6,7 @@ const MentorCardContainer = styled.div`
     flex-direction: column;
     align-items: center;
     max-width: 280px;
+    min-width: 180px;
     margin: 0.75rem;
 `
 
