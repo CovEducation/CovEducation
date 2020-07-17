@@ -33,7 +33,7 @@ const MentorProfile = ({ mentor }) => {
     return (
         <MentorProfileContainer>
             <MentorProfileHeader>
-                <img src={mentor.avatar || `stock-profile.png`} alt='Profile' />
+                <img src={mentor.avatar || 'stock-profile.png'} alt='Profile' />
                 <div>
                     <h3>{mentor.name}</h3>
                     <h4>{mentor.school}</h4>
