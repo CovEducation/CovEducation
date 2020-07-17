@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import Button from '../../components/Button';
 import LinesBackground from './LinesBackground';
 import { COLORS, FONTS } from '../../constants';
+import Section from '../../components/Section';
 
 const HomeWrapper = styled.div`
   text-align: center;
@@ -54,18 +55,18 @@ const HomePage = () => {
           <Button theme="accent" size="md" round>{t('home.forMentorsButton')}</Button>
         </div>
       </HomepageSection>
-      <div>
+      <Section p="100px">
         <h2>{t('home.whyBePartOfCovEd')}</h2>
-      </div>
-      <div>
+      </Section>
+      <Section backgroundColor='lightorange' p="100px">
         <h2>{t('home.howCovEdWorks')}</h2>
-      </div>
-      <div>
+      </Section>
+      <Section p="100px">
         <h2>{t('home.findTutors')}</h2>
-      </div>
-      <div>
+      </Section>
+      <Section backgroundColor='lightblue' p="100px">
         <h2>{t('home.questions')}</h2>
-      </div>
+      </Section>
     </HomeWrapper>
   )
 }
