@@ -36,18 +36,18 @@ export const TERMSCONDITIONS = [
     num: '5',
     title: 'Acceptable Use',
     body: <><p>CovEd hereby grants you permission to use the Services provided such use is in compliance with these Terms. You further specifically agree that you will not to use the Services:
-           <li>In any way that violates any federal, state, local, or international law or regulation.</li>
-           <li>To engage in any activity or send, knowingly receive, upload, download, use, or re-use any content that is harmful, abusive, offensive, defamatory, or restricts or inhibits anyone's use or enjoyment of the Services.</li>
-           <li>For the purpose of exploiting, harming, or attempting to exploit or harm any minor in any way, including but not limited to by exposing them to any inappropriate content.</li>
-           <li>To transmit, or procure the sending of, any advertising or promotional material, including any "junk mail," "chain letter," "spam," or any other similar solicitation.</li>
-           <li>To impersonate or attempt to impersonate CovEd, a CovEd Mentor or Mentee, another user, or any other person or entity (including, without limitation, by using email addresses associated with any of the foregoing).</li>
-           </p>
-           <p>Additionally, you agree not to:
+          <ul><li>In any way that violates any federal, state, local, or international law or regulation.</li>
+          <li>To engage in any activity or send, knowingly receive, upload, download, use, or re-use any content that is harmful, abusive, offensive, defamatory, or restricts or inhibits anyone's use or enjoyment of the Services.</li>
+          <li>For the purpose of exploiting, harming, or attempting to exploit or harm any minor in any way, including but not limited to by exposing them to any inappropriate content.</li>
+          <li>To transmit, or procure the sending of, any advertising or promotional material, including any "junk mail," "chain letter," "spam," or any other similar solicitation.</li>
+          <li>To impersonate or attempt to impersonate CovEd, a CovEd Mentor or Mentee, another user, or any other person or entity (including, without limitation, by using email addresses associated with any of the foregoing).</li>
+          </ul></p>
+          <p>Additionally, you agree not to:<ul>
              <li>Use the Services in any manner that could disable, overburden, damage, or impair the web-application or interfere with any other party's use of the web-application.</li>
              <li>Use any robot, spider, or other automatic means to access the Services for any purpose without the express consent of CovEd.</li>
              <li>Attempt to gain unauthorized access to, interfere with, damage, or disrupt any parts of the Website, the server on which the Website is stored, or any server, computer, or database connected to the Website.</li>
              <li>Otherwise attempt to interfere with the proper working of the Services.</li>
-           </p></>,
+          </ul></p></>,
   },
   {
     num: '6',
@@ -142,11 +142,11 @@ export const PRIVACY = [
     subsection: [{
       num: '1',
       title: 'Information Collected for All Users',
-      body: <><p>Automatically Collected Information<br />
+      body: <><p><b>Automatically Collected Information</b><br />
       Whenever you interact with our Services, we automatically receive and record information from your browser or your device which may that is transmitted as part of standard Internet traffic. This includes your IP address, what type of device and browser you’re using, the previous page you were on, and the page or feature you requested. You may be able to change the preferences on your browser or device to prevent or limit your device’s disclosure of information, but this may prevent you from taking advantage of some of our features.</p>
-      <p>Cookies<br />
+      <p><b>Cookies</b><br />
       In order to keep you logged into the Services, CovEd may use “cookies,” or small files that CovEd can send to your browser for storage on your device. They make the use of these Services easier to navigate by saving preferences, remembering your login information, and recalling other aspects of your use of these Services. While most browsers allow you to disable cookies, we recommend that you leave cookies enabled so as not to interfere with the full functionality of these Services.</p>
-      <p>Voluntarily Disclosed Information<br />
+      <p><b>Voluntarily Disclosed Information</b><br />
       When you use the Services, you will have the opportunity to provide us with some information directly. For example, some functions of the Services require you to register for an account, where we will ask you for information that may include your email address and desired password. We may also collect other information you directly give us as you build your Mentor or Mentee profile or verify your identity on the Services.<br />
       A very limited portion of the Services allow you to post or transmit content (“User Content”). For example, a Mentor will submit User Content in order to build a profile, and a Mentee can send a short message to a Mentor when requesting their tutoring. You may post User Content at your sole discretion, but please note that some User Content may be publicly available or viewable to others. Do not post any sensitive personal information as User Content.</p>
       </>
@@ -157,6 +157,8 @@ export const PRIVACY = [
       body: <><p><b>Information Collected at Registration</b><br />
       As set forth in our <a href='/termsandconditions'>Terms of Service</a>, only a parent or guardian may sign up a Mentee under the age of 18. At registration, CovEd collects a parent or guardian’s name and email address as an identifier, and requests the user to create a password in order to establish a user account. We also collect your time zone, the Mentee’s name and email address, and level of educational background, subjects in which they seek tutoring, and other educational instructions.<br />
       When you select a Mentor, this information along with your message to the Mentor will be provided to the Mentor to help them make sure they can provide appropriate tutoring services to the Mentee. This may also be used to help identify other Mentors that are best suited for your child or children and to facilitate contact once a paring has been established.</p>
+      <p><b>Information Collected During and After Mentorship Sessions</b><br />
+      CovEd is a matchmaking service, and does not participate in meetings between Mentors and Mentees. Mentors are instructed to follow the CovEd Mentor Agreement , which requires Mentors to not disclose any personally-identifiable information about a Mentee except limited circumstances. Mentors send a report following sessions to CovEd after a session occurs, which discloses the Mentee involved, the duration of the meeting, and their feedback from the experience. This is used by CovEd to develop and improve the Services and ensure compliance with CovEd’s Terms.</p>
       </>
     }]
   },
@@ -170,12 +172,13 @@ export const PRIVACY = [
     num: '4',
     title: 'Disclosure of Information',
     body: <p>CovEd may disclose the information above in the following circumstances:
+    <ul>
     <li><i>Third-Party Services and Contractors</i> — CovEd may employ other companies and people to perform tasks on our behalf and, from time to time, may need to share your information with them to provide services to you. For example, we may use third-party services to host our web application and store user data. Any information shared for such purposes will be limited and will only include what is needed to provide the service, and CovEd has worked to confirm that these service providers do not disclose information to others except as is consistent with this Policy.</li>
     <li><i>Public Information</i> — a very limited amount of User Content is made available on the Services, including information a Mentor provides for their profile. Please note that any information you submit in a public portion of the site will be viewable by others. Accordingly, only include information in such submissions that you are comfortable sharing with third parties or the general public</li>
     <li><i>Business Transfers</i> — if CovEd is acquired by another company, goes into dissolution, or otherwise transfers ownership or assets, CovEd may transfer the information it has as part of that transaction.</li>
     <li><i>Aggregate Usage Information and Analytics</i> — We may de-identify your personal information so that you are not identified as an individual and use that information for any business purpose, including for analyzing demographic and usage information or to help identify new partners and companion services</li>
     <li><i>Legal Compliance</i> — We reserve the right to access, read, and disclose any information that we believe in our sole discretion is necessary to comply with law or court order; enforce or apply our <a href='/termsandconditions'>Terms of Service</a> and other agreements; or protect the rights, property, or safety of CovEd, our members, our users, or others</li>
-    </p>
+    </ul></p>
   },
   {
     num: '5',
@@ -192,11 +195,11 @@ export const PRIVACY = [
     num: '7',
     title: 'Parental Rights under COPPA',
     body: <><p>CovEd does not require a child or a child’s parents or guardians to disclose more information about the child than is reasonably necessary to participate in any part of the Services, and does not share personally identifiable information of a child with third parties who are not part of the Services except as provided in section 4 above. Parents and guardians, with a child or children under the age of 13, have certain rights that include the right to:
-    <li>Review their child’s personal information collected by CovEd;</li>
+    <ul><li>Review their child’s personal information collected by CovEd;</li>
     <li>Request that CovEd delete collected information about their child;</li>
     <li>Request that CovEd no longer collect or use information about their child;</li>
     <li>Request that CovEd no longer share information about their child with third parties that are not part of Services.</li>
-    </p>
+    </ul></p>
     <p>Parents may exercise any of these rights listed above by contacting CovEd at <a href="mailto:coved.management@gmail.com">coved.management@gmail.com</a>.</p></>
   },
   {

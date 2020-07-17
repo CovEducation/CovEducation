@@ -25,6 +25,7 @@ const HomepageTitle = styled.h1`
   font-size: 96px;
   margin: 0;
   color: ${COLORS.darkblue};
+  font-weight: normal;
 
   span {
     font-weight: normal;
