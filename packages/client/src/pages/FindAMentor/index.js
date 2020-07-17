@@ -1,7 +1,28 @@
 import React, { useState } from 'react';
-import useAuth from '../../providers/AuthProvider';
 import { get } from '../../utilities.js';
+import MentorFilters from './MentorFilters';
 import MentorColumn from './MentorColumn';
+import styled from 'styled-components';
+import useAuth from '../../providers/AuthProvider';
+
+const FindAMentorWrapper = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-areas: "sidebar main main";
+
+    // remove the following lines after we have the rest of dashboard built.
+    // these are just to make it look approximately like mockups
+    margin-top: 300px;
+    margin-left: 400px;
+`;
+
+const FindAMentorSidebarWrapper = styled.div`
+    grid-area: sidebar;
+`;
+
+const FindAMentorMainWrapper = styled.div`
+    grid-area: main;
+`;
 
 // Purpose:
 //      Display a list of available mentors to parents and send mentorship requests.
@@ -16,6 +37,13 @@ const FindAMentorPage = () => {
     const { user } = useAuth();
     const { tags, setTags } = useState([]);
     const { subjects, setSubjects } = useState([]);
+
+    // Lazily initialize the filter settings
+    const [filters, setFilters] = useState({
+        'gradeLevel': {},
+        'subject': {},
+        'specialNeeds': {},
+    });
     const handleMentorshipRequest = (event) => {
         // TODO(johanc): Implement.
 
@@ -24,22 +52,30 @@ const FindAMentorPage = () => {
     const openModal = (mentor) => {
         // TODO(johanc): Implement.
     }
-    const FilterColumn = () => {
-        // TODO: Implement - should use setTags() to update the state.
-        // <a onClick={() => setTags([])}>Placeholder filter component.</a>
-    };
+
+    const handleFilterChange = (filterCategory, change) => {
+        console.log(filterCategory, change);
+        if (filters[filterCategory]) {
+            const currentCategoryFilters = filters[filterCategory];
+            setFilters({
+                ...filters,
+                [filterCategory]: {
+                    ...currentCategoryFilters,
+                    [change.name]: change.checked
+                }
+            })
+        }
+    }
 
     return (
-        <>
-            <div className="container">
-                {/* <div className="col-md-4">
-                    <FilterColumn/>
-                </div> */}
-                <div className="col-md-8">
-                    <MentorColumn/>
-                </div>
-            </div>
-        </>
+        <FindAMentorWrapper>
+            <FindAMentorSidebarWrapper>
+                <MentorFilters onChange={handleFilterChange} />
+            </FindAMentorSidebarWrapper>
+            <FindAMentorMainWrapper>
+                <MentorColumn/>
+            </FindAMentorMainWrapper>
+        </FindAMentorWrapper>
     )
 }
 
