@@ -8,6 +8,8 @@ import {
 import './App.css';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
+import TermsAndConditions from './pages/TermsAndConditions';
+import Privacy from './pages/Privacy';
 
 function App() {
   return (
@@ -18,8 +20,14 @@ function App() {
           <Route path="/" exact>
             <HomePage />
           </Route>
-          <Route>
+          {/* <Route>
             <ProfilePage path="/profile" />
+          </Route> */}
+          {/* <Route>
+            <TermsAndConditions path="/termsandconditions" />
+          </Route> */}
+          <Route>
+            <Privacy path="/privacy" />
           </Route>
         </Switch>
       </Router>
