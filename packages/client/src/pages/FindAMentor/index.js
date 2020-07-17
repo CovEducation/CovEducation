@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
 import useAuth from '../../providers/AuthProvider';
 import { get } from '../../utilities.js';
-
-import MentorRequestFrame from './MentorRequestFrame.js';
-import Mentor from './Mentor.js';
-import Modal from '../../components/Modal';
+import MentorColumn from './MentorColumn';
 
 // Purpose:
 //      Display a list of available mentors to parents and send mentorship requests.
@@ -32,26 +29,12 @@ const FindAMentorPage = () => {
         // <a onClick={() => setTags([])}>Placeholder filter component.</a>
     };
 
-    // const mentors = await get("/api/mentors", {tags: tags, subjects: subjects});
-    const mentors = [];
-    const MentorColumn = () => {
-        // A grid of mentor components.
-        return (
-            <>
-                {mentors.map((mentor) =>
-                    (<Modal text={mentor.name} title={mentor.name} trigger={<Mentor mentor={mentor}/>}>
-                        <MentorRequestFrame mentor={mentor}/>
-                    </Modal>))}
-            </>
-        )
-    }
-
     return (
         <>
             <div className="container">
-                // <div className="col-md-4">
-                //     <FilterColumn/>
-                // </div>
+                {/* <div className="col-md-4">
+                    <FilterColumn/>
+                </div> */}
                 <div className="col-md-8">
                     <MentorColumn/>
                 </div>

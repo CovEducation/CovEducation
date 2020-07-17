@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const MentorContainer = styled.div`
+const MentorProfileContainer = styled.div`
     padding: 0 5rem;
 `;
 
-const MentorHeader = styled.div`
+const MentorProfileHeader = styled.div`
     display: flex;
     flex-direction: row;
 `;
 
-const MentorInformation = styled.div`
+const MentorProfileInformation = styled.div`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 `;
@@ -18,7 +18,7 @@ const MentorInformation = styled.div`
 
 
 // Displays the picture, name, and major of a mentor.
-const Mentor = ({ mentor }) => {
+const MentorProfile = ({ mentor }) => {
     if (!validateMentorData(mentor)) return (<></>);
 
     const relevantInformation = [
@@ -31,25 +31,25 @@ const Mentor = ({ mentor }) => {
     ];
 
     return (
-        <MentorContainer>
-            <MentorHeader>
-                <img src={mentor.avatar} alt='Profile' />
+        <MentorProfileContainer>
+            <MentorProfileHeader>
+                <img src={mentor.avatar || `stock-profile.png`} alt='Profile' />
                 <div>
                     <h3>{mentor.name}</h3>
                     <h4>{mentor.school}</h4>
                     <h4>{mentor.major}</h4>
                 </div>
-            </MentorHeader>
+            </MentorProfileHeader>
             {mentor.bio !== null &&
                 <div>
                     <p>Bio</p>
                     <p>{mentor.bio}</p>
                 </div>
             }
-            <MentorInformation>
+            <MentorProfileInformation>
                 {relevantInformation.map(field => displayField(field, mentor))}
-            </MentorInformation>
-        </MentorContainer>
+            </MentorProfileInformation>
+        </MentorProfileContainer>
     )
 }
 
@@ -72,4 +72,4 @@ const displayField = (field, mentor) => {
     )
 };
 
-export default Mentor;
+export default MentorProfile;
