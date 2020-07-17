@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import MentorProfile from './MentorProfile';
 
 // Shows more detailed mentor information and allows parents to request mentors.
-const MentorRequestFrame = (mentor) => {
+const MentorRequestFrame = ({ mentor }) => {
     // TODO(johanc) - Implement.\
-    return <MentorProfile />;
+    return <MentorProfile mentor={mentor}/>;
 }
 
 export default MentorRequestFrame;

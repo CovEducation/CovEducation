@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { get } from '../../utilities.js';
 import MentorFilters from './MentorFilters';
-import MentorColumn from './MentorColumn';
+import MentorGrid from './MentorGrid';
 import styled from 'styled-components';
 import useAuth from '../../providers/AuthProvider';
 
@@ -73,7 +73,7 @@ const FindAMentorPage = () => {
                 <MentorFilters onChange={handleFilterChange} />
             </FindAMentorSidebarWrapper>
             <FindAMentorMainWrapper>
-                <MentorColumn/>
+                <MentorGrid/>
             </FindAMentorMainWrapper>
         </FindAMentorWrapper>
     )

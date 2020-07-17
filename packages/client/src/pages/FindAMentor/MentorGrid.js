@@ -62,23 +62,22 @@ const mentors = [
     // }
 ];
 
-const MentorColumnContainer = styled.div`
+const MentorGridContainer = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
 `
 
-const MentorColumn = () => {
+const MentorGrid = () => {
     // A grid of mentor components.
     return (
-        <MentorColumnContainer>
-            {mentors.map((mentor) =>
-                (<Modal text={mentor.name} title={mentor.name} trigger={<MentorCard mentor={mentor}/>}>
-                    <MentorRequestFrame mentor={mentor}/>
-                </Modal>))}
-        </MentorColumnContainer>
+        <MentorGridContainer>
+            <Modal title={mentors[0].name} trigger={<div><MentorCard mentor={mentors[0]} /></div>}>
+                <MentorRequestFrame mentor={mentors[0]}/>
+            </Modal>
+        </MentorGridContainer>
     )
 }
 
-export default MentorColumn;
+export default MentorGrid;

@@ -15,6 +15,14 @@ const MentorProfileInformation = styled.div`
     grid-template-columns: repeat(2, 1fr);
 `;
 
+const MentorProfilePicture = styled.img`
+    width: 30%;
+    margin-right: 1rem;
+`
+
+const MentorProfileText = styled.p`
+    margin-right: 0.5rem;
+`
 
 
 // Displays the picture, name, and major of a mentor.
@@ -33,7 +41,7 @@ const MentorProfile = ({ mentor }) => {
     return (
         <MentorProfileContainer>
             <MentorProfileHeader>
-                <img src={mentor.avatar || 'stock-profile.png'} alt='Profile' />
+                <MentorProfilePicture src={mentor.avatar || 'stock-profile.png'} alt='Profile' />
                 <div>
                     <h3>{mentor.name}</h3>
                     <h4>{mentor.school}</h4>
@@ -66,8 +74,8 @@ const displayField = (field, mentor) => {
     }
     return (
         <div>
-            <p>{field[1]}</p>
-            <p>{mentorInfo}</p>
+            <MentorProfileText>{field[1]}</MentorProfileText>
+            <MentorProfileText>{mentorInfo}</MentorProfileText>
         </div>
     )
 };
