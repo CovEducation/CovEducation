@@ -1,4 +1,4 @@
-import Parent, { Mentee } from './Parent';
+import Parent, { Mentee } from './parent';
 
 jest.mock('../providers/FirebaseProvider');
 
