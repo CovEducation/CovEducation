@@ -8,6 +8,7 @@ const MentorCardContainer = styled.div`
     max-width: 280px;
     min-width: 180px;
     margin: 0.75rem;
+    cursor: pointer;
 `
 
 const MentorCardText = styled.p`
