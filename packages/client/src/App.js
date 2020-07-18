@@ -14,8 +14,6 @@ function App() {
     <AuthProvider fallback="loading">
       {/* Add Navbar component on this line */}
       <Router>
-        <div className="auth-wrapper">
-          <div className="auth-inner">
             <Switch>
               <Route path="/" exact>
                 <HomePage />
@@ -27,12 +25,10 @@ function App() {
                 <SignInPage/>
               </Route>
               <Route path="/forgot-password">
-                <SignInPage/>
+                <br/>
               </Route>
               <Route path="/sign-in" component={Signin} />
             </Switch>
-          </div>
-        </div>
       </Router>
     </AuthProvider>
   );
