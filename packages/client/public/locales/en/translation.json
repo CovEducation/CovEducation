@@ -3,9 +3,14 @@
     "subtitle": "Continuing K-12 education in the US during the COVID-19 outbreak",
     "forMentorsButton": "For Mentors",
     "forMenteesButton": "For Mentees",
+    "MenteesLearnMoreButton": "Learn More (for Mentees)",
+    "MentorsLearnMoreButton": "Learn More (for Mentors)",
     "whyBePartOfCovEd": "Why Be Part of CovEd?",
     "howCovEdWorks": "How CovEd Works",
     "findTutors": "Find Online Tutors in Any Subject",
-    "questions": "Questions?"
+    "questions": "Questions?",
+    "questionsans": "Check out our FAQ page to see if we've already answered your question or Contact Us!",
+    "quote":" I am so grateful for how much my CovEd mentor has taught me! Where would I have been without him, I truly don't know! Thanks CovEducation!",
+    "quoteauth": "John Smith"
   }
 }

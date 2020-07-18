@@ -42,19 +42,21 @@ const HomepageSubtitle = styled.p`
   color: ${COLORS.darkblue};
 `;
 
-const HomepageQuote = styled.p`
-  font-size: min(3vw, 24px);
-  font-weight: 300;
-  font-family:${FONTS.font2};
-  color: ${COLORS.darkblue};
-  padding-left: 10vw;
-  padding-right: 10vw;
-  h3 {
-    font-size: min(3.5vw, 36px);
+const HomepageBody = styled.div`
+  p{
+    font-family: ${FONTS.font2};
+    font-weight: 300;
+  }
+  h2 {
+    font-family: ${FONTS.font1};
+    font-weight: 500;
+  }
+  span {
+    font-size: min(3.5vw, 24px);
     font-weight: 400;
+    font-family: ${FONTS.font2};
   }
 `;
-
 
 const HomePage = () => {
   const { t } = useTranslation();
@@ -69,24 +71,31 @@ const HomePage = () => {
           <Button theme="accent" size="md" round>{t('home.forMentorsButton')}</Button>
         </div>
       </HomepageSection>
-      <Section p="100px">
-        <h2>{t('home.whyBePartOfCovEd')}</h2>
-      </Section>
-      <Section backgroundColor='lightorange' p="100px">
-        <h2>{t('home.howCovEdWorks')}</h2>
-      </Section>
-      <Section p="100px">
-      Statistics
-      </Section>
-      <Section backgroundColor='lightblue' p="100px">
-      <HomepageQuote><h3>" I am so grateful for how much my CovEd mentor has taught me! Where would I have been without him, I truly don't know! Thanks CovEducation! "</h3><br /><p>- John Smith</p></HomepageQuote>
-      </Section>
-      <Section p="100px">
-        <h2>{t('home.findTutors')}</h2>
-      </Section>
-      <Section backgroundColor='lightorange' p="100px">
-        <h2>{t('home.questions')}</h2>
-      </Section>
+      <HomepageBody>
+        <Section p="100px">
+          <h2>{t('home.whyBePartOfCovEd')}</h2>
+        </Section>
+        <Section backgroundColor='lightorange' p="100px">
+          <h2>{t('home.howCovEdWorks')}</h2>
+          <Button theme="accent" size="md">{t('home.MenteesLearnMoreButton')}</Button>
+          <Button theme="accent" size="md">{t('home.MentorsLearnMoreButton')}</Button>
+        </Section>
+        <Section p="100px">
+          Statistics
+        </Section>
+        <Section backgroundColor='lightblue' p="100px">
+          <span>"{t('home.quote')}"</span>
+          <br />
+          <p>- {t('home.quoteauth')}</p>
+        </Section>
+        <Section p="100px">
+          <h2>{t('home.findTutors')}</h2>
+        </Section>
+        <Section backgroundColor='lightorange' p="100px">
+          <h2>{t('home.questions')}</h2>
+          <p>{t('home.questionsans')}</p>
+        </Section>
+      </HomepageBody>
     </HomeWrapper>
   )
 }
