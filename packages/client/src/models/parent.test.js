@@ -11,7 +11,7 @@ beforeEach(() => {
         'CST',
         [new Mentee('testm', 'testm@email.com', 12, ['Math'])]
     );
-})
+});
 
 test('constructor', () => {
     expect(parent.name).toBe('test');
@@ -24,11 +24,9 @@ test('constructor', () => {
     expect(mentee.subjects[0]).toBe('Math');
 });
 
-
 test('validation', () => {
     // TODO: need to integrate Yup first
 });
-
 
 test('update', () => {
     // test to ensure the invalid cases fail

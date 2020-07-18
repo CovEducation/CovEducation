@@ -1,6 +1,5 @@
 import { } from '../providers/FirebaseProvider';
 import Mentor from './mentor';
-
 jest.mock('../providers/FirebaseProvider');
 
 let mentor;
@@ -14,7 +13,7 @@ beforeEach(() => {
         ['Math'],
         []
     );
-})
+});
 
 test('constructor', () => {
     expect(mentor.name).toBe('test');
@@ -26,11 +25,9 @@ test('constructor', () => {
     expect(mentor.tags.length).toBe(0);
 });
 
-
 test('validation', () => {
     // TODO: need to integrate Yup first
 });
-
 
 test('update', () => {
     // test to ensure the invalid cases fail
