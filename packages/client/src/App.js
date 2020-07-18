@@ -8,6 +8,7 @@ import {
 import './App.css';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
+import FAQsPage from './pages/FAQs';
 
 function App() {
   return (
@@ -18,8 +19,11 @@ function App() {
           <Route path="/" exact>
             <HomePage />
           </Route>
-          <Route>
-            <ProfilePage path="/profile" />
+          <Route path="/profile">
+            <ProfilePage />
+          </Route>
+          <Route path="/faqs">
+            <FAQsPage />
           </Route>
         </Switch>
       </Router>
