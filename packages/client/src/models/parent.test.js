@@ -38,7 +38,7 @@ test('update', () => {
 
 test('create', () => {
     try {
-        const auth = {uid: 'this-is-a-uid'};
+        const auth = { uid: 'this-is-a-uid' };
         parent.create(auth);
     } catch (err) {
         // this will be an undefined error since we mocked firebase

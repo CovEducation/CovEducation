@@ -1,4 +1,4 @@
-import { Db } from '../providers/FirebaseProvider';
+import { } from '../providers/FirebaseProvider';
 import Mentor from './mentor';
 
 jest.mock('../providers/FirebaseProvider');
@@ -11,7 +11,7 @@ beforeEach(() => {
         'test@email.com',
         'CST',
         'hello',
-        ["Math"],
+        ['Math'],
         []
     );
 })
@@ -40,7 +40,7 @@ test('update', () => {
 
 test('create', () => {
     try {
-        const auth = {uid: 'this-is-a-uid'};
+        const auth = { uid: 'this-is-a-uid' };
         mentor.create(auth);
     } catch (err) {
         // this will be a undefined error since we mocked firebase
