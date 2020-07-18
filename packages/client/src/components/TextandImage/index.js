@@ -42,18 +42,18 @@ const vertGrid = (list) => {
       <Grid item xs container direction="column" spacing={2}>
         <Grid item xs>
           <Typography gutterBottom variant="subtitle1">
-            TITLE GOES HERE
+            {list.title}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Description goes here! It should wrap around within this box if it is a longer description. Or the person's job for the profile card
+            {list.description}
           </Typography>
           <Typography variant="body2">
-            third line if we need it? idk
+            {list.thirdline}
           </Typography>
         </Grid>
         <Grid item>
           <Typography variant="body2" style={{ cursor: 'pointer' }}>
-            numbered icon maybe?
+            {list.numberedicon}
           </Typography>
         </Grid>
       </Grid>
@@ -67,18 +67,18 @@ const horizGrid = (list) => {
       <Grid item xs container direction="row" spacing={2}>
         <Grid item xs>
           <Typography gutterBottom variant="subtitle1">
-            TITLE GOES HERE
+            {list.title}
           </Typography>
           <Typography variant="body2" gutterBottom>
-            Description goes here! It should wrap around within this box if it is a longer description. Or the person's job for the prfile card
+            {list.description}
           </Typography>
           <Typography variant="body2">
-            third line if we need it? idk
+            {list.thirdline}
           </Typography>
         </Grid>
         <Grid item>
           <Typography variant="body2" style={{ cursor: 'pointer' }}>
-            numbered icon maybe?
+            {list.numberedicon}
           </Typography>
         </Grid>
       </Grid>
@@ -98,7 +98,8 @@ export default function ComplexGrid() {
               <img className={classes.img} alt="image" src="/km.jpg" />
             </ButtonBase>
           </Grid>
-            vertGrid() or horizGrid()
+          // not sure how to have it decide between horiz or vert grid
+          //   {vertGrid(resourceinfo)}  {horizGrid(resourceinfo)}
             <Grid item>
               <Typography variant="subtitle1">anythingig</Typography>
             </Grid>
