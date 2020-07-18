@@ -69,17 +69,13 @@ const MentorGridContainer = styled.div`
     align-items: center;
 `
 
-const MentorCardContainer = styled.div`
-    cursor: pointer;
-`
-
 const MentorGrid = () => {
     // A grid of mentor components.
     return (
         <MentorGridContainer>
             {mentors.map(mentor => {
                 return (
-                    <Modal title={mentor.name} trigger={<MentorCardContainer><MentorCard mentor={mentor} /></MentorCardContainer>}>
+                    <Modal title={mentor.name} trigger={<div><MentorCard mentor={mentor} /></div>}>
                         <MentorRequestFrame mentor={mentor}/>
                     </Modal>
                 );
