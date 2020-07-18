@@ -111,9 +111,7 @@ const useAuthProvider = () => {
                 return Promise.reject('Unexpected user type.');
             }
 
-            return userProm.then((userData) => {
-                    return userData;
-                });
+            return userProm;
         }
     };
 
