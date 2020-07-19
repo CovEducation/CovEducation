@@ -5,8 +5,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 
-import MentorWizard from './wizards/MentorWizard.js';
-import ParentWizard from './wizards/ParentWizard.js';
+import MentorWizard from './wizards/MentorWizard';
+import ParentWizard from './wizards/ParentWizard';
 
 
 const SignUpPageWrapper = styled.div`
