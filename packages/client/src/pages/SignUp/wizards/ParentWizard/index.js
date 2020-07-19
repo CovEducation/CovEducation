@@ -28,6 +28,16 @@ const WizardInput = styled.div`
     min-width: 120px;
 `;
 
+const SELECT_ITEM_HEIGHT = 48;
+const SELECT_ITEM_PADDING_TOP = 8;
+const SelectMenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: SELECT_ITEM_HEIGHT * 4.5 + SELECT_ITEM_PADDING_TOP,
+        },
+    },
+};
+
 let signUpData = {
     timeZone: timeZones[0].timezone,
     gradeLevel: tags[0].label,
@@ -93,6 +103,7 @@ const ParentWizard = () => {
                         displayEmpty
                         fullWidth
                         labelId="wizard-preferred-subjects"
+                        MenuProps={SelectMenuProps}
                         name="timeZone"
                         onChange={handleChange}
                         value={signUpData.timeZone}
@@ -163,6 +174,7 @@ const ParentWizard = () => {
                         children={gradeLevelMenuItems}
                         fullWidth
                         labelId="wizard-student-grade-level"
+                        MenuProps={SelectMenuProps}
                         name="gradeLevel"
                         onChange={handleChange}
                         value={signUpData.gradeLevel}
@@ -174,6 +186,7 @@ const ParentWizard = () => {
                     <Select
                         children={subjectsMenuItems}
                         fullWidth
+                        MenuProps={SelectMenuProps}
                         multiple
                         name='selectedSubjects'
                         onChange={handleChange}

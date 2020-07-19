@@ -29,6 +29,16 @@ const WizardInput = styled.div`
     min-width: 120px;
 `;
 
+const SELECT_ITEM_HEIGHT = 48;
+const SELECT_ITEM_PADDING_TOP = 8;
+const SelectMenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: SELECT_ITEM_HEIGHT * 4.5 + SELECT_ITEM_PADDING_TOP,
+        },
+    },
+};
+
 let signUpData = {
     preferredGradeLevel: subjects[0].value,
 };
@@ -100,6 +110,7 @@ const MentorWizard = () => {
                         displayEmpty
                         fullWidth
                         labelId="wizard-preferred-grade-level"
+                        MenuProps={SelectMenuProps}
                         name="preferredGradeLevel"
                         onChange={handleChange}
                         value={signUpData.preferredGradeLevel}
@@ -113,6 +124,7 @@ const MentorWizard = () => {
                         displayEmpty
                         fullWidth
                         labelId="wizard-preferred-subjects"
+                        MenuProps={SelectMenuProps}
                         name="preferredSubjects"
                         onChange={handleChange}
                         value={signUpData.preferredSubjects}
