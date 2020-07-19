@@ -33,6 +33,7 @@ let signUpData = {
     gradeLevel: tags[0].label,
     selectedSubjects: [],
 };
+
 const updateSignUpData = (data) => {
     signUpData = { ...signUpData, ...data };
 }
