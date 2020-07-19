@@ -51,6 +51,88 @@ const MentorWizard = () => {
 
     const FirstPage = () => {
 
+        const [state, setState] = useState({});
+
+        const handleChange = (event) => {
+            setState({ ...state, [event.target.name]: event.target.value });
+            updateSignUpData({ [event.target.name]: event.target.value });
+        };
+
+        return (
+            <SignUpChildWrapper>
+                {JSON.stringify(signUpData)}
+                <WizardInput>
+                    <TextField
+                        fullWidth
+                        label="Username"
+                        name="username"
+                        onChange={handleChange}
+                        value={signUpData.username}
+                        required
+                    />
+                </WizardInput>
+                <WizardInput>
+                    <TextField fullWidth
+                        label="Password"
+                        name="password1"
+                        onChange={handleChange}
+                        value={signUpData.password1}
+                        required
+                    />
+                </WizardInput>
+                <WizardInput>
+                    <TextField fullWidth
+                        label="Confirm Password"
+                        name="password2"
+                        onChange={handleChange}
+                        value={signUpData.password2}
+                        required
+                    />
+                </WizardInput>
+            </SignUpChildWrapper>
+        );
+    }
+
+    const SecondPage = () => {
+
+        const [state, setState] = useState({});
+
+        const handleChange = (event) => {
+            setState({ ...state, [event.target.name]: event.target.value });
+            updateSignUpData({ ...state, [event.target.name]: event.target.value });
+        }
+
+        return (
+            <SignUpChildWrapper>
+                {JSON.stringify(signUpData)}
+                <WizardInput>
+                    <TextField
+                        fullWidth
+                        label="Major"
+                        name="major"
+                        onChange={handleChange}
+                        value={signUpData.major}
+                        required
+                    />
+                </WizardInput>
+                <WizardInput>
+                    <TextField
+                        fullWidth
+                        label="Introduce Yourself"
+                        multiline
+                        name="introduction"
+                        onChange={handleChange}
+                        rows={4}
+                        value={signUpData.introduction}
+                        required
+                    />
+                </WizardInput>
+            </SignUpChildWrapper>
+        );
+    }
+
+    const ThirdPage = () => {
+
         const [state, setState] = useState({
             selectedSubjects: signUpData.selectedSubjects ?? [],
         });
@@ -128,88 +210,6 @@ const MentorWizard = () => {
                         name="preferredSubjects"
                         onChange={handleChange}
                         value={signUpData.preferredSubjects}
-                        required
-                    />
-                </WizardInput>
-            </SignUpChildWrapper>
-        );
-    }
-
-    const SecondPage = () => {
-
-        const [state, setState] = useState({});
-
-        const handleChange = (event) => {
-            setState({ ...state, [event.target.name]: event.target.value });
-            updateSignUpData({ ...state, [event.target.name]: event.target.value });
-        }
-
-        return (
-            <SignUpChildWrapper>
-                {JSON.stringify(signUpData)}
-                <WizardInput>
-                    <TextField
-                        fullWidth
-                        label="Major"
-                        name="major"
-                        onChange={handleChange}
-                        value={signUpData.major}
-                        required
-                    />
-                </WizardInput>
-                <WizardInput>
-                    <TextField
-                        fullWidth
-                        label="Introduce Yourself"
-                        multiline
-                        name="introduction"
-                        onChange={handleChange}
-                        rows={4}
-                        value={signUpData.introduction}
-                        required
-                    />
-                </WizardInput>
-            </SignUpChildWrapper>
-        );
-    }
-
-    const ThirdPage = () => {
-
-        const [state, setState] = useState({});
-
-        const handleChange = (event) => {
-            setState({ ...state, [event.target.name]: event.target.value });
-            updateSignUpData({ [event.target.name]: event.target.value });
-        };
-
-        return (
-            <SignUpChildWrapper>
-                {JSON.stringify(signUpData)}
-                <WizardInput>
-                    <TextField
-                        fullWidth
-                        label="Username"
-                        name="username"
-                        onChange={handleChange}
-                        value={signUpData.username}
-                        required
-                    />
-                </WizardInput>
-                <WizardInput>
-                    <TextField fullWidth
-                        label="Password"
-                        name="password1"
-                        onChange={handleChange}
-                        value={signUpData.password1}
-                        required
-                    />
-                </WizardInput>
-                <WizardInput>
-                    <TextField fullWidth
-                        label="Confirm Password"
-                        name="password2"
-                        onChange={handleChange}
-                        value={signUpData.password2}
                         required
                     />
                 </WizardInput>

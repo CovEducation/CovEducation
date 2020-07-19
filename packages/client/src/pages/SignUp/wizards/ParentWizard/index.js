@@ -54,10 +54,6 @@ const ParentWizard = () => {
     const FirstPage = () => {
 
         const [state, setState] = useState({});
-        
-        const timeZoneMenuItems = timeZones.map(item => {
-            return <MenuItem key={item.value} value={item.timezone}>{item.timezone}</MenuItem>;
-        });
 
         const handleChange = (event) => {
             setState({ ...state, [event.target.name]: event.target.value });
@@ -70,45 +66,32 @@ const ParentWizard = () => {
                 <WizardInput>
                     <TextField
                         fullWidth
-                        label="Parent Name"
-                        name="parentName"
+                        label="Username"
+                        name="username"
                         onChange={handleChange}
-                        value={signUpData.parentName}
+                        value={signUpData.username}
                         required
                     />
                 </WizardInput>
                 <WizardInput>
                     <TextField
                         fullWidth
-                        label="Parent Email" 
-                        name="parentEmail"
+                        label="Password"
+                        name="password1"
                         onChange={handleChange}
-                        value={signUpData.parentEmail}
+                        type="password"
+                        value={signUpData.password1}
                         required
                     />
                 </WizardInput>
                 <WizardInput>
                     <TextField
                         fullWidth
-                        label="Parent Phone Number" 
-                        name="parentPhoneNumber"
+                        label="Confirm Password"
+                        name="password2"
                         onChange={handleChange}
-                        value={signUpData.parentPhoneNumber}
-                        required
-                    />
-                </WizardInput>
-                <WizardInput>
-                    <InputLabel id="wizard-time-zone" required>Time Zone</InputLabel>
-                    <Select
-                        children={timeZoneMenuItems}
-                        displayEmpty
-                        fullWidth
-                        labelId="wizard-preferred-subjects"
-                        MenuProps={SelectMenuProps}
-                        name="timeZone"
-                        onChange={handleChange}
-                        renderValue={(selected) => selected}
-                        value={signUpData.timeZone}
+                        type="password"
+                        value={signUpData.password2}
                         required
                     />
                 </WizardInput>
@@ -205,6 +188,10 @@ const ParentWizard = () => {
 
         const [state, setState] = useState({});
 
+        const timeZoneMenuItems = timeZones.map(item => {
+            return <MenuItem key={item.value} value={item.timezone}>{item.timezone}</MenuItem>;
+        });
+
         const handleChange = (event) => {
             setState({ ...state, [event.target.name]: event.target.value });
             updateSignUpData({ [event.target.name]: event.target.value });
@@ -216,32 +203,45 @@ const ParentWizard = () => {
                 <WizardInput>
                     <TextField
                         fullWidth
-                        label="Username"
-                        name="username"
+                        label="Parent Name"
+                        name="parentName"
                         onChange={handleChange}
-                        value={signUpData.username}
+                        value={signUpData.parentName}
                         required
                     />
                 </WizardInput>
                 <WizardInput>
                     <TextField
                         fullWidth
-                        label="Password"
-                        name="password1"
+                        label="Parent Email"
+                        name="parentEmail"
                         onChange={handleChange}
-                        type="password"
-                        value={signUpData.password1}
+                        value={signUpData.parentEmail}
                         required
                     />
                 </WizardInput>
                 <WizardInput>
                     <TextField
                         fullWidth
-                        label="Confirm Password"
-                        name="password2"
+                        label="Parent Phone Number"
+                        name="parentPhoneNumber"
                         onChange={handleChange}
-                        type="password"
-                        value={signUpData.password2}
+                        value={signUpData.parentPhoneNumber}
+                        required
+                    />
+                </WizardInput>
+                <WizardInput>
+                    <InputLabel id="wizard-time-zone" required>Time Zone</InputLabel>
+                    <Select
+                        children={timeZoneMenuItems}
+                        displayEmpty
+                        fullWidth
+                        labelId="wizard-preferred-subjects"
+                        MenuProps={SelectMenuProps}
+                        name="timeZone"
+                        onChange={handleChange}
+                        renderValue={(selected) => selected}
+                        value={signUpData.timeZone}
                         required
                     />
                 </WizardInput>
