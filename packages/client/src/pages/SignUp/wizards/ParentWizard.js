@@ -9,7 +9,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
-import ListItemText from '@material-ui/core/ListItemText';
 
 import { timeZones, tags, subjects } from '../../../constants.js';
 
@@ -29,42 +28,40 @@ const WizardInput = styled.div`
     min-width: 120px;
 `;
 
+let signUpData = {
+    timeZone: timeZones[0].timezone,
+    gradeLevel: tags[0].label,
+    selectedSubjects: [],
+};
+const updateSignUpData = (data) => {
+    signUpData = { ...signUpData, ...data };
+}
 
-let globalData = {};
-
-const ParentWizard = (props) => {
+const ParentWizard = () => {
 
     const FirstPage = () => {
 
-        const [state, setState] = useState({
-            parentName: '',
-            parentEmail: '',
-            parentPhoneNumber: '',
-            timeZone: '',
-        });
-
-        const { parentName, parentEmail, parentPhoneNumber, timeZone } = state;
+        const [state, setState] = useState({});
         
-        const timeZoneMenuItems = timeZones.map((item, index) => {
-            return <MenuItem key={index} value={item.timezone}>{item.timezone}</MenuItem>;
+        const timeZoneMenuItems = timeZones.map(item => {
+            return <MenuItem key={item.value} value={item.timezone}>{item.timezone}</MenuItem>;
         });
 
         const handleChange = (event) => {
-            setState({ ...state, [event.target.name]: event.target.value })
-        }
+            setState({ ...state, [event.target.name]: event.target.value });
+            updateSignUpData({ [event.target.name]: event.target.value });
+        };
 
         return (
             <SignUpChildWrapper>
-                <div>
-                    {JSON.stringify(state)}
-                </div>
+                {JSON.stringify(signUpData)}
                 <WizardInput>
                     <TextField
                         fullWidth
                         label="Parent Name"
                         name="parentName"
                         onChange={handleChange}
-                        value={parentName}
+                        value={signUpData.parentName}
                         required
                     />
                 </WizardInput>
@@ -74,7 +71,7 @@ const ParentWizard = (props) => {
                         label="Parent Email" 
                         name="parentEmail"
                         onChange={handleChange}
-                        value={parentEmail}
+                        value={signUpData.parentEmail}
                         required
                     />
                 </WizardInput>
@@ -84,7 +81,7 @@ const ParentWizard = (props) => {
                         label="Parent Phone Number" 
                         name="parentPhoneNumber"
                         onChange={handleChange}
-                        value={parentPhoneNumber}
+                        value={signUpData.parentPhoneNumber}
                         required
                     />
                 </WizardInput>
@@ -92,11 +89,12 @@ const ParentWizard = (props) => {
                     <InputLabel id="wizard-time-zone" required>Time Zone</InputLabel>
                     <Select
                         children={timeZoneMenuItems}
+                        displayEmpty
                         fullWidth
                         labelId="wizard-preferred-subjects"
                         name="timeZone"
                         onChange={handleChange}
-                        value={timeZone}
+                        value={signUpData.timeZone}
                         required
                     />
                 </WizardInput>
@@ -107,13 +105,10 @@ const ParentWizard = (props) => {
     const SecondPage = () => {
 
         const [state, setState] = useState({
-            studentName: '',
-            studentEmail: '',
-            gradeLevel: '',
-            selectedSubjects: [],
+            selectedSubjects: signUpData.selectedSubjects ?? [],
         });
 
-        const { studentName, studentEmail, gradeLevel, selectedSubjects } = state;
+        const { selectedSubjects } = state;
 
         const gradeLevelMenuItems = tags.map((item, index) => (
             <MenuItem
@@ -133,29 +128,21 @@ const ParentWizard = (props) => {
             </MenuItem>
         ));
 
-        const selectedSubjectsString = Object.entries(selectedSubjects).map((item, index) => {
-            return item[1];
-        }).join(', ');
-
         const handleChange = (event) => {
             setState({ ...state, [event.target.name]: event.target.value });
+            updateSignUpData({ ...state, [event.target.name]: event.target.value });
         } 
 
         return (
             <SignUpChildWrapper>
-                <div>
-                    {studentName}<br />
-                    {studentEmail}<br />
-                    {gradeLevel}<br />
-                    {selectedSubjectsString}
-                </div>
+                {JSON.stringify(signUpData)}
                 <WizardInput>
                     <TextField
                         fullWidth
                         label="Student Name"
                         name="studentName"
                         onChange={handleChange}
-                        value={studentName}
+                        value={signUpData.studentName}
                         required
                     />
                 </WizardInput>
@@ -165,7 +152,7 @@ const ParentWizard = (props) => {
                         label="Student Email"
                         name="studentEmail"
                         onChange={handleChange}
-                        value={studentEmail}
+                        value={signUpData.studentEmail}
                         required
                     />
                 </WizardInput>
@@ -177,7 +164,7 @@ const ParentWizard = (props) => {
                         labelId="wizard-student-grade-level"
                         name="gradeLevel"
                         onChange={handleChange}
-                        value={gradeLevel}
+                        value={signUpData.gradeLevel}
                         required
                     />
                 </WizardInput>
@@ -190,7 +177,7 @@ const ParentWizard = (props) => {
                         name='selectedSubjects'
                         onChange={handleChange}
                         renderValue={(selected) => selected.join(', ')}
-                        value={selectedSubjects}
+                        value={signUpData.selectedSubjects}
                         required
                     />
                 </WizardInput>
@@ -200,58 +187,45 @@ const ParentWizard = (props) => {
 
     const ThirdPage = () => {
 
-        const [state, setState] = useState({
-            username: '',
-            password1: '',
-            password1Error: false,
-            password2: '',
-            password2Error: false,
-        });
-
-        const { username, password1, password1Error, password2, password2Error} = state;
+        const [state, setState] = useState({});
 
         const handleChange = (event) => {
             setState({ ...state, [event.target.name]: event.target.value });
+            updateSignUpData({ [event.target.name]: event.target.value });
         };
 
         return (
             <SignUpChildWrapper>
-                <div>
-                    {username}<br />
-                    {password1}<br />
-                    {password2}<br />
-                </div>
+                {JSON.stringify(signUpData)}
                 <WizardInput>
                     <TextField
                         fullWidth
                         label="Username"
                         name="username"
                         onChange={handleChange}
-                        value={username}
+                        value={signUpData.username}
                         required
                     />
                 </WizardInput>
                 <WizardInput>
                     <TextField
-                        error={password1Error}
                         fullWidth
                         label="Password"
                         name="password1"
                         onChange={handleChange}
                         type="password"
-                        value={password1}
+                        value={signUpData.password1}
                         required
                     />
                 </WizardInput>
                 <WizardInput>
                     <TextField
-                        error={password2Error}
                         fullWidth
                         label="Confirm Password"
                         name="password2"
                         onChange={handleChange}
                         type="password"
-                        value={password2}
+                        value={signUpData.password2}
                         required
                     />
                 </WizardInput>
@@ -260,38 +234,32 @@ const ParentWizard = (props) => {
     }
 
     const FourthPage = () => {
-        
-        const [state, setState] = useState({
-            agreedTermsOfService: false,
-            agreedPrivacyPolicy: false,
-        });
 
-        const { agreedTermsOfService, agreedPrivacyPolicy } = state;
-        const handleChange = (event) => {
+        const [state, setState] = useState({});
+
+        const handleCheck = (event) => {
             setState({ ...state, [event.target.name]: event.target.checked });
-        }
-
+            updateSignUpData({ [event.target.name]: event.target.checked });
+        };
+        
         return (
             <SignUpChildWrapper>
-                <div>
-                    {agreedTermsOfService ? 'true' : 'false'}<br />
-                    {agreedPrivacyPolicy ? 'true' : 'false'}
-                </div>
+                {JSON.stringify(signUpData)}
                 <FormControlLabel
                     control={
                         <Checkbox
-                            checked={agreedTermsOfService}
+                            checked={signUpData.agreedTermsOfService}
                             name="agreedTermsOfService"
-                            onChange={handleChange}
+                            onChange={handleCheck}
                         />
                     }
                     label="I agree to the CovEd Terms of Service." />
                 <FormControlLabel
                     control={
                         <Checkbox
-                            checked={agreedPrivacyPolicy}
+                            checked={signUpData.agreedPrivacyPolicy}
                             name="agreedPrivacyPolicy"
-                            onChange={handleChange}
+                            onChange={handleCheck}
                         />
                     }
                     label="I agree to the CovEd Privacy Policy." />
@@ -302,11 +270,7 @@ const ParentWizard = (props) => {
 
     const children = [<FirstPage />, <SecondPage />, <ThirdPage />, <FourthPage />];
     
-    return (
-        <div>
-            <Wizard content={children} />
-        </div>
-    );
+    return <Wizard content={children} />;
 }
 
 export default ParentWizard;

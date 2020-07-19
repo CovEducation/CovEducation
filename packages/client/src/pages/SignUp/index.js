@@ -57,9 +57,9 @@ const TabManager = (tabChildren) => {
 
 const SignUpPage = () => {
 
-    let tabChildren = [<ParentWizard  />, <MentorWizard />];
-    let tabManager = TabManager(tabChildren);
-    
+    const tabChildren = [<ParentWizard />, <MentorWizard />];
+    const tabManager = TabManager(tabChildren);
+
     return (
         <SignUpPageWrapper>
             <SignUpWizardWrapper>
