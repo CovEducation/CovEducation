@@ -30,9 +30,7 @@ const WizardInput = styled.div`
 `;
 
 let signUpData = {
-    timeZone: timeZones[0].timezone,
-    gradeLevel: tags[0].label,
-    selectedSubjects: [],
+    preferredGradeLevel: subjects[0].value,
 };
 
 const updateSignUpData = (data) => {
@@ -43,15 +41,29 @@ const MentorWizard = () => {
 
     const FirstPage = () => {
 
-        const [state, setState] = useState({});
-
-        const gradeLevelMenuItems = tags.map((item, index) => {
-            return <MenuItem key={index} value={item.id}>{item.value}</MenuItem>;
+        const [state, setState] = useState({
+            selectedSubjects: signUpData.selectedSubjects ?? [],
         });
 
-        const subjectMenuItems = subjects.map((item, index) => {
-            return <MenuItem key={index} value={item.id}>{item.value}</MenuItem>;
-        });
+        const { selectedSubjects } = state;
+
+        const gradeLevelMenuItems = tags.map((item, index) => (
+            <MenuItem
+                children={item.label}
+                key={index}
+                value={item.value}
+            />
+        ));
+
+        const subjectsMenuItems = subjects.map((item, index) => (
+            <MenuItem
+                key={index}
+                value={item.value}
+            >
+                <Checkbox value={item.value} checked={selectedSubjects.indexOf(item.value) > -1} />
+                {item.label}
+            </MenuItem>
+        ));
 
         const handleChange = (event) => {
             setState({ ...state, [event.target.name]: event.target.value });
@@ -97,7 +109,7 @@ const MentorWizard = () => {
                 <WizardInput>
                     <InputLabel id="wizard-preferred-subjects">Preferred Subjects</InputLabel>
                     <Select
-                        children={subjectMenuItems}
+                        children={subjectsMenuItems}
                         displayEmpty
                         fullWidth
                         labelId="wizard-preferred-subjects"
