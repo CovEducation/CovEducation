@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
+import ListItemText from '@material-ui/core/ListItemText';
 
 import { timeZones, tags, subjects } from '../../../../constants.js';
 
@@ -39,8 +40,8 @@ const SelectMenuProps = {
 };
 
 let signUpData = {
-    timeZone: timeZones[0].timezone,
-    gradeLevel: tags[0].label,
+    timeZone: '',
+    gradeLevel: '',
     selectedSubjects: [],
 };
 
@@ -106,6 +107,7 @@ const ParentWizard = () => {
                         MenuProps={SelectMenuProps}
                         name="timeZone"
                         onChange={handleChange}
+                        renderValue={(selected) => selected}
                         value={signUpData.timeZone}
                         required
                     />
@@ -131,12 +133,12 @@ const ParentWizard = () => {
         ));
 
         const subjectsMenuItems = subjects.map((item, index) => (
-            <MenuItem
-                key={index}
-                value={item.value}
-            >
-                <Checkbox value={item.value} checked={selectedSubjects.indexOf(item.value) > -1} />
-                {item.label}
+            <MenuItem key={index} value={item.value}>
+                <Checkbox
+                    checked={selectedSubjects.indexOf(item.value) > -1}
+                    value={item.value}
+                />
+                <ListItemText primary={item.label} />
             </MenuItem>
         ));
 
