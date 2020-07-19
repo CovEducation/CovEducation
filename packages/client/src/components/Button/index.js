@@ -35,12 +35,20 @@ const ButtonStyled = styled.button`
   min-height: ${(props) => ButtonThemes.height[props.size]}px;
   font-size: ${(props) => ButtonThemes.fontSize[props.size]}px;
   margin: 10px;
-  border: 1px solid ${(props) => ButtonThemes.backgroundColor[props.theme]};
+  border: 1px solid ${(props) => 
+    props.disabled
+      ? COLORS.grey
+      : ButtonThemes.backgroundColor[props.theme]
+  };
   color: ${(props) =>
     props.basic ? ButtonThemes.backgroundColor[props.theme] : '#ffffff'};
   cursor: pointer;
   background-color: ${(props) =>
-    props.basic ? COLORS.white : ButtonThemes.backgroundColor[props.theme]};
+  props.basic ? COLORS.white
+    : (props.disabled
+      ? COLORS.grey
+      : ButtonThemes.backgroundColor[props.theme]
+    )};
   border-radius: ${(props) => props.round ?
     ButtonThemes.borderRadius.round :
     ButtonThemes.borderRadius.default}px;
@@ -50,7 +58,8 @@ const ButtonStyled = styled.button`
   }
 
   &:hover {
-    opacity: 0.9;
+    cursor: ${(props) => props.disabled ? "not-allowed" : "pointer"};
+    opacity: ${(props) => props.disabled ? "1.0" : "0.9"};
   }
 `;
 
@@ -61,9 +70,10 @@ const Button = ({
   basic = false,
   onClick,
   round = false,
+  disabled = false,
 }) => {
   return (
-    <ButtonStyled theme={theme} size={size} basic={basic} onClick={onClick} round={round}>
+    <ButtonStyled theme={theme} size={size} basic={basic} onClick={onClick} round={round} disabled={disabled}>
       {children}
     </ButtonStyled>
   );
@@ -74,5 +84,6 @@ Button.propTypes = {
   onClick: PropTypes.func,
   size: PropTypes.string,
   basic: PropTypes.bool,
+  disabled: PropTypes.bool,
 };
 export default Button;

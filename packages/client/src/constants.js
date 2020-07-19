@@ -4,6 +4,7 @@ export const COLORS = {
   white: '#F8F8F8',
   darkblue: '#0F3C61',
   grey: '#D2D2D2',
+  black: '#000000',
 };
 
 export const timeZones = [

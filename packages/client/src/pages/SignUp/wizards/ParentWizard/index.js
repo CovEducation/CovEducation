@@ -257,7 +257,8 @@ const ParentWizard = () => {
             setState({ ...state, [event.target.name]: event.target.checked });
             updateSignUpData({ [event.target.name]: event.target.checked });
         };
-        
+
+        const isDisabled = !(signUpData.agreedTermsOfService && signUpData.agreedPrivacyPolicy);
         return (
             <SignUpChildWrapper>
                 {JSON.stringify(signUpData)}
@@ -279,7 +280,10 @@ const ParentWizard = () => {
                         />
                     }
                     label="I agree to the CovEd Privacy Policy." />
-                <Button children={<div>Sign Up</div>} theme="accent" />
+                <Button
+                    children={<div>Sign Up</div>}
+                    disabled={isDisabled}
+                />
             </SignUpChildWrapper>
         );
     }

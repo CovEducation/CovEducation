@@ -236,7 +236,6 @@ const MentorWizard = () => {
         const termsOfServiceControl = (
             <FormControlLabel
                 control={termsOfServiceCheckbox}
-                fullWidth
                 label="I agree to the CovEd Terms of Service."
                 required
             />
@@ -257,13 +256,17 @@ const MentorWizard = () => {
             />
         );
 
+        const isDisabled = !(signUpData.termsOfService && signUpData.privacyPolicy);
         return (
             <SignUpChildWrapper>
                 {JSON.stringify(signUpData)}
                 <FormGroup>
                     {termsOfServiceControl}
                     {privacyPolicyControl}
-                    <Button children={<div>Submit</div>} theme="accent" />
+                    <Button
+                        disabled={isDisabled}
+                        children={<div>Submit</div>}
+                    />
                 </FormGroup>
             </SignUpChildWrapper>
         );
