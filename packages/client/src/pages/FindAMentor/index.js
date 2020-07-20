@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
-
-import Mentor from './Mentor';
+import React, { useState } from 'react';
+import { get } from '../../utilities.js';
 import MentorFilters from './MentorFilters';
-import MentorRequestFrame from './MentorRequestFrame';
-import Modal from '../../components/Modal';
+import MentorGrid from './MentorGrid';
+import styled from 'styled-components';
 import useAuth from '../../providers/AuthProvider';
 
 const FindAMentorWrapper = styled.div`
@@ -70,26 +67,13 @@ const FindAMentorPage = () => {
         }
     }
 
-    const mentors = [];
-    const MentorColumn = () => {
-        // A grid of mentor components.
-        return (
-            <>
-                {mentors.map((mentor) =>
-                    (<Modal text={mentor.name} title={mentor.name} trigger={<Mentor mentor={mentor}/>}>
-                        <MentorRequestFrame mentor={mentor}/>
-                    </Modal>))}
-            </>
-        )
-    }
-
     return (
         <FindAMentorWrapper>
             <FindAMentorSidebarWrapper>
                 <MentorFilters onChange={handleFilterChange} />
             </FindAMentorSidebarWrapper>
             <FindAMentorMainWrapper>
-                <MentorColumn/>
+                <MentorGrid/>
             </FindAMentorMainWrapper>
         </FindAMentorWrapper>
     )
