@@ -8,6 +8,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import styled from 'styled-components';
+import Notifications from '../Notification/Notifications'
 import "./index.css"
 
 const AuthInner = styled.div`
@@ -19,7 +20,6 @@ const AuthInner = styled.div`
     border-radius: 15px;
     transition: all .3s;
 `
-
 const AuthWrapper = styled.div`
     display: flex;
     justify-content: center;
@@ -37,8 +37,6 @@ const AuthWrapper = styled.div`
         padding-bottom: 20px;
     }
 `
-
-// TODO: Learn how to create test + create test for this component
 
 const Signin = () => {
     const { signin } = useAuth();
@@ -131,7 +129,12 @@ const Signin = () => {
                     <Button theme="default" size="md"
                             onClick={async () => {
                                 try {
-                                    signin(values.email, values.password)
+                                    if (values.email.includes("@") && values.email.includes(".") && values.email.length > 0) {
+                                        signin(values.email, values.password)
+                                    } else {
+                                        showNotification();
+                                    }
+
                                 } catch (error) {
                                     console.log(error);
                                     setValues({ ...values, errorText: error });
@@ -141,6 +144,7 @@ const Signin = () => {
                     >
                         Sign In
                     </Button>
+                    {values.error ? <Notifications id="email" /> : null}
                     <p className="forgot-password text-right">
                         Forgot <a href="/forgot-password">password?</a>
                     </p>
