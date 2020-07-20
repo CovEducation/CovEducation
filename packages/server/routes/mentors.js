@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-// Firebase
+// Firebase boilerplate.
 const admin = require('firebase-admin');
 
 const serviceAccount = require('../serviceAccount.json');

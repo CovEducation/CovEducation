@@ -4,8 +4,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const mentorsRouter = require('./routes/mentors');
+const usersRouter = require('./routes/users'); // For getting the data of the current user.
+const mentorsRouter = require('./routes/mentors'); // For querying our mentor database.
 
 const app = express();
 
