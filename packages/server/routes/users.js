@@ -6,6 +6,7 @@
 const express = require('express');
 
 const router = express.Router();
+
 // Firebase boilerplate.
 const admin = require('firebase-admin');
 
@@ -21,7 +22,7 @@ const parentRef = db.collection('parents');
 
 const mentorRef = db.collection('mentors');
 
-const userRef = db.collection('users');
+const userRef = db.collection('users'); // Mapping of Firebase UID -> Type of user (MENTOR / PARENT).
 
 const getUser = (firebaseUid) => userRef.where('firebase_uid', '==', firebaseUid).limit(1);
 
