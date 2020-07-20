@@ -2,20 +2,34 @@ const express = require('express');
 
 const router = express.Router();
 
-// Utils.
+// Firebase
+const admin = require('firebase-admin');
 
-const getMentors = (tags, subjects) => {
-  if (tags !== undefined && subjects !== undefined) return [];
-  return [];
+const serviceAccount = require('../serviceAccount.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
+const db = admin.firestore();
+
+const mentorsRef = db.collection('mentors');
+
+const getMentors = async (gradeLevel, subjects, specialNeeds) => {
+  mentorsRef.where('subjects', 'array-contains', subjects)
+    .where('gradeLevel', 'array-contains', gradeLevel)
+    .where('subjects', 'array-contains', specialNeeds);
 };
 
 // Gets a list of mentors, optionally accepts tags and subject filters.
-router.get('/mentors', (req, res) => {
-  const tags = req.query.tags || [];
+router.get('/', (req, res) => {
+  const gradeLevel = req.query.gradeLevel || [];
   const subjects = req.query.subjects || [];
-  // TODO(johancc) - Integrate with firebase to get a list of mentors.
-  const mentors = getMentors(tags, subjects);
-  res.send(mentors);
+  const specialNeeds = req.query.specialNeeds || [];
+
+  getMentors(gradeLevel, subjects, specialNeeds).then((mentors) => {
+    res.send(mentors);
+  }).catch((err) => res.sendStatus(500).json(err));
 });
 
 module.exports = router;
