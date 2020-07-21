@@ -8,8 +8,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import styled from 'styled-components';
-import Notifications from '../Notification/Notifications'
-import "./index.css"
+import Notification from '../Notification'
 
 const AuthInner = styled.div`
     width: 450px;
@@ -37,6 +36,17 @@ const AuthWrapper = styled.div`
         padding-bottom: 20px;
     }
 `
+const PassForget = styled.p`
+    text-align: right;
+    font-size: 13px;
+    padding-top: 10px;
+    color: #7f7d7d;
+    margin: 0;
+    
+    a {
+        color: #00568C;
+    }
+`
 
 const Signin = () => {
     const { signin } = useAuth();
@@ -45,13 +55,19 @@ const Signin = () => {
         password: '',
         remember: false,
         showPassword: false,
+        emailError: false,
+        passwordError: false,
         error: false,
-        errorText: ''
+        serverError: false,
     });
 
     const handleChange = (prop) => (event) => {
         if (prop === 'remember') {
             setValues({ ...values, [prop]: !values.remember });
+        } else if (prop === 'emailError') {
+            setValues({ ...values, [prop]: !values.emailError });
+        } else if (prop === 'passwordError') {
+            setValues({ ...values, [prop]: !values.passwordError });
         } else {
             setValues({ ...values, [prop]: event.target.value });
         }
@@ -63,23 +79,34 @@ const Signin = () => {
         event.preventDefault();
     };
 
+    const checkValidation = () => {
+        if (!(values.email.includes('@') && values.email.includes('.') && values.email.length > 0)) {
+            setValues({ ...values, emailError: true });
+            setValues({ ...values, serverError: true });
+        }
+        if (!(values.password.length > 5)) {
+            setValues({...values, passwordError: true });
+            setValues({ ...values, emailError: true });
+        }
+        return values.emailError === false && values.passwordError === false;
+    }
+
     return (
         <AuthWrapper>
             <AuthInner>
                 <form>
                     <h1>Sign In</h1>
-
                     <div className="form-group">
                         <Text
                             autoFocus = {true}
                             id = 'email'
+                            border = {values.emailError ? 'red' : 'blue'}
                             placeholder = "Email"
                             value = {values.email}
                             onChange = {handleChange('email')}
                             required = {true}
                         />
                     </div>
-
                     <div className="form-group">
                         <Text
                             id = "password"
@@ -101,7 +128,6 @@ const Signin = () => {
                             }}
                         />
                     </div>
-
                     <div className="form-group">
                         <FormControlLabel
                             control={
@@ -116,38 +142,33 @@ const Signin = () => {
                             label="Remember Me"
                         />
                     </div>
-                    {/* TODO: add to styled components */}
-                    <style type="text/css">
-                        {`
-                            .btn-coved {
-                              background-color: #00568C;
-                              color: white;
-                            }
-                        `}
-                    </style>
                     <br />
-                    <Button theme="default" size="md"
-                            onClick={async () => {
-                                try {
-                                    if (values.email.includes("@") && values.email.includes(".") && values.email.length > 0) {
-                                        signin(values.email, values.password)
-                                    } else {
-                                        showNotification();
-                                    }
-
-                                } catch (error) {
-                                    console.log(error);
-                                    setValues({ ...values, errorText: error });
-                                    setValues({ ...values, error: true });
+                    <Button theme="default" size="md" type="button"
+                            onClick={ () => {
+                                if (checkValidation()) {
+                                    signin(values.email, values.password).catch(() => {
+                                        setValues({...values, error: true});
+                                        console.log(values);
+                                    });
+                                }
+                                if (values.emailError === true || values.passwordError === true) {
+                                    setValues({...values, serverError: true});
+                                }
+                                if (values.error === false && values.emailError === false && values.passwordError === false) {
+                                    window.location.reload();
+                                    console.log("accept");
                                 }
                             }}
                     >
                         Sign In
                     </Button>
-                    {values.error ? <Notifications id="email" /> : null}
-                    <p className="forgot-password text-right">
+                    <br />
+                    {
+                        values.serverError ? <Notification id="sign-in" /> : null
+                    }
+                    <PassForget>
                         Forgot <a href="/forgot-password">password?</a>
-                    </p>
+                    </PassForget>
                 </form>
             </AuthInner>
         </AuthWrapper>
