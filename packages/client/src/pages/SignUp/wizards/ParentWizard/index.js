@@ -3,15 +3,10 @@ import styled from 'styled-components';
 import Wizard from '../../../../components/Wizard';
 import Button from '../../../../components/Button';
 
-import Select from '@material-ui/core/Select';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import TextField from '@material-ui/core/TextField';
-import Checkbox from '@material-ui/core/Checkbox';
-import ListItemText from '@material-ui/core/ListItemText';
-
-import { timeZones, tags, subjects } from '../../../../constants.js';
+import FirstPageForm from './forms/FirstPageForm.js';
+import SecondPageForm from './forms/SecondPageForm.js';
+import ThirdPageForm from './forms/ThirdPageForm.js';
+import FourthPageForm from './forms/FourthPageForm.js';
 
 const SignUpChildWrapper = styled.div`
     display: flex;
@@ -24,29 +19,29 @@ const SignUpChildWrapper = styled.div`
     color: black;
 `;
 
-const WizardInput = styled.div`
-    margin-bottom: 1em;
-    min-width: 120px;
+const ChildSignUpButtonWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 `;
-
-const SELECT_ITEM_HEIGHT = 48;
-const SELECT_ITEM_PADDING_TOP = 8;
-const SelectMenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: SELECT_ITEM_HEIGHT * 4.5 + SELECT_ITEM_PADDING_TOP,
-        },
-    },
-};
 
 let signUpData = {
     timeZone: '',
-    gradeLevel: '',
-    selectedSubjects: [],
+    registeredChildren: [{
+        selectedSubjects: [],
+        gradeLevel: '',
+    }],
 };
 
 const updateSignUpData = (data) => {
     signUpData = { ...signUpData, ...data };
+}
+
+const updateRegisteredChild = (index, data) => {
+    let childRegistrationInfo = signUpData.registeredChildren[index];
+    let mergedChildRegistration = { ...childRegistrationInfo, ...data };
+    signUpData.registeredChildren[index] = mergedChildRegistration;
 }
 
 const ParentWizard = () => {
@@ -62,124 +57,48 @@ const ParentWizard = () => {
 
         return (
             <SignUpChildWrapper>
-                {JSON.stringify(signUpData)}
-                <WizardInput>
-                    <TextField
-                        fullWidth
-                        label="Username"
-                        name="username"
-                        onChange={handleChange}
-                        value={signUpData.username}
-                        required
-                    />
-                </WizardInput>
-                <WizardInput>
-                    <TextField
-                        fullWidth
-                        label="Password"
-                        name="password1"
-                        onChange={handleChange}
-                        type="password"
-                        value={signUpData.password1}
-                        required
-                    />
-                </WizardInput>
-                <WizardInput>
-                    <TextField
-                        fullWidth
-                        label="Confirm Password"
-                        name="password2"
-                        onChange={handleChange}
-                        type="password"
-                        value={signUpData.password2}
-                        required
-                    />
-                </WizardInput>
+                <FirstPageForm data={signUpData} handleChange={handleChange} />
             </SignUpChildWrapper>
         );
     }
 
     const SecondPage = () => {
 
-        const [state, setState] = useState({
-            selectedSubjects: signUpData.selectedSubjects ?? [],
+        const [state, setState] = useState({});
+
+        let children = signUpData.registeredChildren.map((item, index) => {
+            return <SecondPageForm data={signUpData} index={index} updateRegisteredChild={updateRegisteredChild} />;
         });
 
-        const { selectedSubjects } = state;
+        const handleAddClick = (event) => {
+            event.preventDefault();
+            signUpData.registeredChildren.push({
+                selectedSubjects: [],
+                gradeLevel: '',
+            });
+            setState({ ...state });
+        }
 
-        const gradeLevelMenuItems = tags.map((item, index) => (
-            <MenuItem
-                children={item.label}
-                key={index}
-                value={item.value}
-            />
-        ));
+        const handleRemoveClick = (event) => {
+            event.preventDefault();
+            signUpData.registeredChildren.pop();
+            setState({ ...state });
+        }
 
-        const subjectsMenuItems = subjects.map((item, index) => (
-            <MenuItem key={index} value={item.value}>
-                <Checkbox
-                    checked={selectedSubjects.indexOf(item.value) > -1}
-                    value={item.value}
-                />
-                <ListItemText primary={item.label} />
-            </MenuItem>
-        ));
-
-        const handleChange = (event) => {
-            setState({ ...state, [event.target.name]: event.target.value });
-            updateSignUpData({ ...state, [event.target.name]: event.target.value });
-        } 
+        const showRemoveChildButton = signUpData.registeredChildren.length > 1;
 
         return (
             <SignUpChildWrapper>
-                {JSON.stringify(signUpData)}
-                <WizardInput>
-                    <TextField
-                        fullWidth
-                        label="Student Name"
-                        name="studentName"
-                        onChange={handleChange}
-                        value={signUpData.studentName}
-                        required
-                    />
-                </WizardInput>
-                <WizardInput>
-                    <TextField
-                        fullWidth
-                        label="Student Email"
-                        name="studentEmail"
-                        onChange={handleChange}
-                        value={signUpData.studentEmail}
-                        required
-                    />
-                </WizardInput>
-                <WizardInput>
-                    <InputLabel id="wizard-time-zone" required>Grade Level</InputLabel>
-                    <Select
-                        children={gradeLevelMenuItems}
-                        fullWidth
-                        labelId="wizard-student-grade-level"
-                        MenuProps={SelectMenuProps}
-                        name="gradeLevel"
-                        onChange={handleChange}
-                        value={signUpData.gradeLevel}
-                        required
-                    />
-                </WizardInput>
-                <WizardInput>
-                    <InputLabel id="wizard-time-zone" required>Student Seeking Assistance In</InputLabel>
-                    <Select
-                        children={subjectsMenuItems}
-                        fullWidth
-                        MenuProps={SelectMenuProps}
-                        multiple
-                        name='selectedSubjects'
-                        onChange={handleChange}
-                        renderValue={(selected) => selected.join(', ')}
-                        value={signUpData.selectedSubjects}
-                        required
-                    />
-                </WizardInput>
+                {children}
+                <ChildSignUpButtonWrapper>
+                    <Button onClick={handleAddClick}>
+                        Add Child
+                    </Button>
+                    {showRemoveChildButton ?
+                        <Button onClick={handleRemoveClick}>
+                            Remove Child
+                        </Button> : null}
+                </ChildSignUpButtonWrapper>
             </SignUpChildWrapper>
         );
     }
@@ -188,10 +107,6 @@ const ParentWizard = () => {
 
         const [state, setState] = useState({});
 
-        const timeZoneMenuItems = timeZones.map(item => {
-            return <MenuItem key={item.value} value={item.timezone}>{item.timezone}</MenuItem>;
-        });
-
         const handleChange = (event) => {
             setState({ ...state, [event.target.name]: event.target.value });
             updateSignUpData({ [event.target.name]: event.target.value });
@@ -199,52 +114,7 @@ const ParentWizard = () => {
 
         return (
             <SignUpChildWrapper>
-                {JSON.stringify(signUpData)}
-                <WizardInput>
-                    <TextField
-                        fullWidth
-                        label="Parent Name"
-                        name="parentName"
-                        onChange={handleChange}
-                        value={signUpData.parentName}
-                        required
-                    />
-                </WizardInput>
-                <WizardInput>
-                    <TextField
-                        fullWidth
-                        label="Parent Email"
-                        name="parentEmail"
-                        onChange={handleChange}
-                        value={signUpData.parentEmail}
-                        required
-                    />
-                </WizardInput>
-                <WizardInput>
-                    <TextField
-                        fullWidth
-                        label="Parent Phone Number"
-                        name="parentPhoneNumber"
-                        onChange={handleChange}
-                        value={signUpData.parentPhoneNumber}
-                        required
-                    />
-                </WizardInput>
-                <WizardInput>
-                    <InputLabel id="wizard-time-zone" required>Time Zone</InputLabel>
-                    <Select
-                        children={timeZoneMenuItems}
-                        displayEmpty
-                        fullWidth
-                        labelId="wizard-preferred-subjects"
-                        MenuProps={SelectMenuProps}
-                        name="timeZone"
-                        onChange={handleChange}
-                        renderValue={(selected) => selected}
-                        value={signUpData.timeZone}
-                        required
-                    />
-                </WizardInput>
+                <ThirdPageForm data={signUpData} handleChange={handleChange}/>
             </SignUpChildWrapper>
         );
     }
@@ -257,33 +127,10 @@ const ParentWizard = () => {
             setState({ ...state, [event.target.name]: event.target.checked });
             updateSignUpData({ [event.target.name]: event.target.checked });
         };
-
-        const isDisabled = !(signUpData.agreedTermsOfService && signUpData.agreedPrivacyPolicy);
+        
         return (
             <SignUpChildWrapper>
-                {JSON.stringify(signUpData)}
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={signUpData.agreedTermsOfService}
-                            name="agreedTermsOfService"
-                            onChange={handleCheck}
-                        />
-                    }
-                    label="I agree to the CovEd Terms of Service." />
-                <FormControlLabel
-                    control={
-                        <Checkbox
-                            checked={signUpData.agreedPrivacyPolicy}
-                            name="agreedPrivacyPolicy"
-                            onChange={handleCheck}
-                        />
-                    }
-                    label="I agree to the CovEd Privacy Policy." />
-                <Button
-                    children={<div>Sign Up</div>}
-                    disabled={isDisabled}
-                />
+                <FourthPageForm data={signUpData} handleCheck={handleCheck}/>
             </SignUpChildWrapper>
         );
     }
