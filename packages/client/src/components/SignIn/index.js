@@ -79,6 +79,7 @@ const Signin = () => {
         event.preventDefault();
     };
 
+    // TODO: fix validation
     const checkValidation = () => {
         if (!(values.email.includes('@') && values.email.includes('.') && values.email.length > 0)) {
             setValues({ ...values, emailError: true });
