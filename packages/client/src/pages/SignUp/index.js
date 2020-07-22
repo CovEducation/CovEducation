@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-
 import MentorWizard from './wizards/MentorWizard';
 import ParentWizard from './wizards/ParentWizard';
-
 
 const SignUpPageWrapper = styled.div`
     align-items: center;
@@ -22,11 +19,7 @@ const SignUpWizardWrapper = styled.div`
 
 function TabPanel(props) {
     const { children, value, index } = props;
-    return (value === index) ? (
-        <div>
-            {children}
-        </div>
-    ) : null;
+    return (value === index) ? children : null;
 }
 
 const TabManager = (tabChildren) => {
@@ -59,14 +52,13 @@ const SignUpPage = () => {
 
     const tabChildren = [<ParentWizard />, <MentorWizard />];
     const tabManager = TabManager(tabChildren);
-
     return (
         <SignUpPageWrapper>
             <SignUpWizardWrapper>
                 {tabManager}
             </SignUpWizardWrapper>
         </SignUpPageWrapper>
-    )
+    );
 }
 
 export default SignUpPage;

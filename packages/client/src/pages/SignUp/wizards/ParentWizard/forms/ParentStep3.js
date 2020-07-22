@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
+import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
-import Select from '@material-ui/core/Select';
+import Checkbox from '@material-ui/core/Checkbox';
+import ListItemText from '@material-ui/core/ListItemText';
 
-import { timeZones } from '../../../../../constants.js';
+import { tags, subjects } from '../../../../../constants.js';
 
 const WizardInput = styled.div`
     margin-bottom: 1em;
@@ -25,10 +27,32 @@ const SelectMenuProps = {
 
 const ParentStep3 = (props) => {
 
-    const timeZoneMenuItems = timeZones.map(item => {
-        return <MenuItem key={item.value} value={item.timezone}>{item.timezone}</MenuItem>;
+    const [state, setState] = useState({
+        selectedSubjects: [],
     });
 
+    const { selectedSubjects } = state;
+
+    const gradeLevelMenuItems = tags.map((item, index) => (
+        <MenuItem key={index}>
+            <ListItemText primary={item.label} />
+        </MenuItem>
+    ));
+
+    const subjectsMenuItems = subjects.map((item, index) => (
+        <MenuItem key={index} value={item.value}>
+            <Checkbox
+                checked={selectedSubjects.indexOf(item.value) > -1}
+                value={item.value}
+            />
+            <ListItemText primary={item.label} />
+        </MenuItem>
+    ));
+
+    const handleChange = (event) => {
+        setState({ ...state, [event.target.name]: event.target.value });
+        props.updateRegisteredChild(props.index, { ...state, [event.target.name]: event.target.value });
+    }
 
     return (
         <div>
@@ -36,45 +60,45 @@ const ParentStep3 = (props) => {
             <WizardInput>
                 <TextField
                     fullWidth
-                    label="Parent Name"
-                    name="parentName"
-                    onChange={props.handleChange}
-                    value={props.data.parentName}
+                    label="Student Name"
+                    name="studentName"
+                    onChange={handleChange}
+                    value={props.data.registeredChildren[props.index].studentName}
                     required
                 />
             </WizardInput>
             <WizardInput>
                 <TextField
                     fullWidth
-                    label="Parent Email"
-                    name="parentEmail"
-                    onChange={props.handleChange}
-                    value={props.data.parentEmail}
+                    label="Student Email"
+                    name="studentEmail"
+                    onChange={handleChange}
+                    value={props.data.registeredChildren[props.index].studentEmail}
                     required
                 />
             </WizardInput>
             <WizardInput>
-                <TextField
-                    fullWidth
-                    label="Parent Phone Number"
-                    name="parentPhoneNumber"
-                    onChange={props.handleChange}
-                    value={props.data.parentPhoneNumber}
-                    required
-                />
-            </WizardInput>
-            <WizardInput>
-                <InputLabel id="wizard-time-zone" required>Time Zone</InputLabel>
+                <InputLabel id="wizard-time-zone" required>Grade Level</InputLabel>
                 <Select
-                    children={timeZoneMenuItems}
-                    displayEmpty
+                    children={gradeLevelMenuItems}
                     fullWidth
-                    labelId="wizard-preferred-subjects"
+                    name="gradeLevel"
+                    onChange={handleChange}
+                    value={props.data.registeredChildren[props.index].gradeLevel}
+                    required
+                />
+            </WizardInput>
+            <WizardInput>
+                <InputLabel id="wizard-time-zone" required>Student Seeking Assistance In</InputLabel>
+                <Select
+                    children={subjectsMenuItems}
+                    fullWidth
                     MenuProps={SelectMenuProps}
-                    name="timeZone"
-                    onChange={props.handleChange}
-                    renderValue={(selected) => selected}
-                    value={props.data.timeZone}
+                    multiple
+                    name='selectedSubjects'
+                    onChange={handleChange}
+                    renderValue={(selected) => selected.join(', ')}
+                    value={props.data.registeredChildren[props.index].selectedSubjects}
                     required
                 />
             </WizardInput>

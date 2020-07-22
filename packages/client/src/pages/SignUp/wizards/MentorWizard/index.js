@@ -24,15 +24,15 @@ let mentorWizardSignUpData = {
     password1: undefined,
     password2: undefined,
 
-    // Page 2
-    major: undefined,
-    introduction: undefined,
-
-    //Page 3
+    //Page 2
     mentorName: undefined,
     mentorEmail: undefined,
     selectedGradeLevels: [],
     selectedSubjects: [],
+
+    // Page 3
+    major: undefined,
+    introduction: undefined,
 
     //Page 4
     agreeTermsOfServce: undefined,

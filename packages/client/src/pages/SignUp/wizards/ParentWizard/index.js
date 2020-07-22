@@ -32,19 +32,19 @@ let parentWizardSignUpData = {
     password1: undefined,
     password2: undefined,
 
-    // Page 2
+    //Page 2
+    parentName: undefined,
+    parentEmail: undefined,
+    parentPhoneNumber: undefined,
+    timeZone: '',
+
+    // Page 3
     registeredChildren: [{
         studentName: undefined,
         studentEmail: undefined,
         gradeLevel: '',
         selectedSubjects: [],
     }],
-
-    //Page 3
-    parentName: undefined,
-    parentEmail: undefined,
-    parentPhoneNumber: undefined,
-    timeZone: '',
 
     //Page 4
     agreeTermsOfServce: undefined,
@@ -81,8 +81,24 @@ const SecondPage = () => {
 
     const [state, setState] = useState({});
 
+    const handleChange = (event) => {
+        setState({ ...state, [event.target.name]: event.target.value });
+        updateParentWizardSignUpData({ [event.target.name]: event.target.value });
+    };
+
+    return (
+        <SignUpChildWrapper>
+            <ParentStep2 data={parentWizardSignUpData} handleChange={handleChange} />
+        </SignUpChildWrapper>
+    );
+}
+
+const ThirdPage = () => {
+
+    const [state, setState] = useState({});
+
     let children = parentWizardSignUpData.registeredChildren.map((item, index) => {
-        return <ParentStep2 data={parentWizardSignUpData} index={index} updateRegisteredChild={updateRegisteredChild} />;
+        return <ParentStep3 key={index} index={index} data={parentWizardSignUpData} updateRegisteredChild={updateRegisteredChild} />;
     });
 
     const handleAddClick = (event) => {
@@ -112,24 +128,8 @@ const SecondPage = () => {
                 {showRemoveChildButton ?
                     <Button onClick={handleRemoveClick}>
                         Remove Child
-                        </Button> : null}
+                    </Button> : null}
             </ChildSignUpButtonWrapper>
-        </SignUpChildWrapper>
-    );
-}
-
-const ThirdPage = () => {
-
-    const [state, setState] = useState({});
-
-    const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.value });
-        updateParentWizardSignUpData({ [event.target.name]: event.target.value });
-    };
-
-    return (
-        <SignUpChildWrapper>
-            <ParentStep3 data={parentWizardSignUpData} handleChange={handleChange} />
         </SignUpChildWrapper>
     );
 }
