@@ -58,8 +58,6 @@ const Signin = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     let error = false;
-    const [emailError, setEmailError] = useState(false);
-    const [passwordError, setPasswordError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [serverError, setServerError] = useState(false);
     const [remember, setRemember] = useState(false);
@@ -67,10 +65,6 @@ const Signin = () => {
     const handleChange = (prop) => {
         if (prop === 'remember') {
             setRemember(!remember);
-        } else if (prop === 'emailError') {
-            setEmailError(!emailError);
-        } else if (prop === 'passwordError') {
-            setPasswordError(!passwordError);
         } else if (prop === 'serverError') {
             setServerError(!serverError);
         } else if (prop === 'email') {
@@ -86,25 +80,7 @@ const Signin = () => {
     };
     // TODO: fix validation
     const checkValidation = () => {
-        if (email.length > 0 && password.length > 0) {
-            if (email.includes('@') && email.includes('.')) {
-                setEmailError(false);
-            } else {
-                setEmailError(true);
-                error = true;
-            }
-            if (password.length > 5) {
-                setPasswordError(false);
-            } else {
-                setPasswordError(false);
-                error = true;
-            }
-        } else {
-            error = true;
-        }
-        if (serverError === true) {
-            error = true;
-        }
+        error = !(email.length > 0 && email.includes('@') && email.includes('.') && password.length > 5);
     }
 
     return (
@@ -116,7 +92,6 @@ const Signin = () => {
                         <Text
                             autoFocus = {true}
                             id = 'email'
-                            border = {emailError ? 'red' : 'blue'}
                             placeholder = "Email"
                             value = {email}
                             onChange = {handleChange('email')}
@@ -162,15 +137,15 @@ const Signin = () => {
                     <Button theme="default" size="md" type="button"
                             onClick={ () => {
                                 checkValidation();
-                                if (emailError === false && passwordError === false) {
+                                if (error === false) {
                                     signin(email, password).catch(() => {
-                                        error = true;
                                         setServerError(true);
+                                        if (serverError === true) {
+                                            error = true;
+                                        }
                                     });
-                                } else {
-                                    error = true;
                                 }
-                                if (error === false && emailError === false && passwordError === false && serverError === false) {
+                                if (error === false && serverError === false) {
                                     window.location.reload();
                                     console.log('accept');
                                 }
@@ -182,6 +157,9 @@ const Signin = () => {
                     <br />
                     {
                         error ? <Notification id="sign-in" /> : null
+                    }
+                    {
+                        serverError ? <Notification id="auth" /> : null
                     }
                     <PassForget>
                         Forgot <a href="/forgot-password">password?</a>
