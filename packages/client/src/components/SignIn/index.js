@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { useState }  from 'react';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Text from '../../components/TextBox';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -48,48 +48,63 @@ const PassForget = styled.p`
     }
 `
 
+const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+};
+
+
 const Signin = () => {
     const { signin } = useAuth();
-    const [values, setValues] = React.useState({
-        email: '',
-        password: '',
-        remember: false,
-        showPassword: false,
-        emailError: false,
-        passwordError: false,
-        error: false,
-        serverError: false,
-    });
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    let error = false;
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [serverError, setServerError] = useState(false);
+    const [remember, setRemember] = useState(false);
 
-    const handleChange = (prop) => (event) => {
+    const handleChange = (prop) => {
         if (prop === 'remember') {
-            setValues({ ...values, [prop]: !values.remember });
+            setRemember(!remember);
         } else if (prop === 'emailError') {
-            setValues({ ...values, [prop]: !values.emailError });
+            setEmailError(!emailError);
         } else if (prop === 'passwordError') {
-            setValues({ ...values, [prop]: !values.passwordError });
-        } else {
-            setValues({ ...values, [prop]: event.target.value });
+            setPasswordError(!passwordError);
+        } else if (prop === 'serverError') {
+            setServerError(!serverError);
+        } else if (prop === 'email') {
+            setEmail(!email);
+        } else if (prop === 'password') {
+            setPassword(!password);
+        } else if (prop === 'error') {
+            error = !error;
         }
     }
     const handleClickShowPassword = () => {
-        setValues({ ...values, showPassword: !values.showPassword });
+        setShowPassword(!showPassword);
     };
-    const handleMouseDownPassword = (event) => {
-        event.preventDefault();
-    };
-
     // TODO: fix validation
     const checkValidation = () => {
-        if (!(values.email.includes('@') && values.email.includes('.') && values.email.length > 0)) {
-            setValues({ ...values, emailError: true });
-            setValues({ ...values, serverError: true });
+        if (email.length > 0 && password.length > 0) {
+            if (email.includes('@') && email.includes('.')) {
+                setEmailError(false);
+            } else {
+                setEmailError(true);
+                error = true;
+            }
+            if (password.length > 5) {
+                setPasswordError(false);
+            } else {
+                setPasswordError(false);
+                error = true;
+            }
+        } else {
+            error = true;
         }
-        if (!(values.password.length > 5)) {
-            setValues({...values, passwordError: true });
-            setValues({ ...values, emailError: true });
+        if (serverError === true) {
+            error = true;
         }
-        return values.emailError === false && values.passwordError === false;
     }
 
     return (
@@ -101,9 +116,9 @@ const Signin = () => {
                         <Text
                             autoFocus = {true}
                             id = 'email'
-                            border = {values.emailError ? 'red' : 'blue'}
+                            border = {emailError ? 'red' : 'blue'}
                             placeholder = "Email"
-                            value = {values.email}
+                            value = {email}
                             onChange = {handleChange('email')}
                             required = {true}
                         />
@@ -112,18 +127,18 @@ const Signin = () => {
                         <Text
                             id = "password"
                             placeholder = "Password"
-                            type = {values.showPassword ? 'text' : 'password'}
-                            value = {values.password}
-                            onChange = {handleChange('password')}
+                            type = {showPassword ? 'text' : 'password'}
+                            value = {password}
+                            onChange = {() => handleChange('password')}
                             required = {true}
                             endAdornment = {{
                                 endAdornment:
                                     <InputAdornment position="end">
                                         <IconButton
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
+                                            onClick={() => handleClickShowPassword}
+                                            onMouseDown={() => handleMouseDownPassword}
                                         >
-                                            {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                                            {showPassword ? <Visibility /> : <VisibilityOff />}
                                         </IconButton>
                                     </InputAdornment>
                             }}
@@ -134,8 +149,8 @@ const Signin = () => {
                             control={
                                 <Checkbox
                                     id="checkbox"
-                                    onChange={handleChange('remember')}
-                                    value={values.remember}
+                                    onChange={() => handleChange('remember')}
+                                    value={remember}
                                     name="remember"
                                     color="primary"
                                 />
@@ -146,26 +161,27 @@ const Signin = () => {
                     <br />
                     <Button theme="default" size="md" type="button"
                             onClick={ () => {
-                                if (checkValidation()) {
-                                    signin(values.email, values.password).catch(() => {
-                                        setValues({...values, error: true});
-                                        console.log(values);
+                                checkValidation();
+                                if (emailError === false && passwordError === false) {
+                                    signin(email, password).catch(() => {
+                                        error = true;
+                                        setServerError(true);
                                     });
+                                } else {
+                                    error = true;
                                 }
-                                if (values.emailError === true || values.passwordError === true) {
-                                    setValues({...values, serverError: true});
-                                }
-                                if (values.error === false && values.emailError === false && values.passwordError === false) {
+                                if (error === false && emailError === false && passwordError === false && serverError === false) {
                                     window.location.reload();
-                                    console.log("accept");
+                                    console.log('accept');
                                 }
+                                console.log(error);
                             }}
                     >
                         Sign In
                     </Button>
                     <br />
                     {
-                        values.serverError ? <Notification id="sign-in" /> : null
+                        error ? <Notification id="sign-in" /> : null
                     }
                     <PassForget>
                         Forgot <a href="/forgot-password">password?</a>

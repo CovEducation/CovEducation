@@ -1,6 +1,6 @@
-import React from "react";
-import "./Notifications.css"
-import UncontrolledAlert from "./UncontrolledAlert"
+import React from 'react';
+import './Notifications.css';
+import UncontrolledAlert from './UncontrolledAlert';
 
 function Notification (props) {
     if (props.id === 'sign-in') {
@@ -12,7 +12,7 @@ function Notification (props) {
                 </span>
             </UncontrolledAlert>
         );
-    } else if (props.id === "email") {
+    } else if (props.id === 'email') {
         return (
             <UncontrolledAlert className="alert" color="danger">
                 <span>
@@ -21,7 +21,7 @@ function Notification (props) {
                 </span>
             </UncontrolledAlert>
         );
-    } else if (props.id === "password") {
+    } else if (props.id === 'password') {
         return (
             <UncontrolledAlert className="alert" color="danger">
                 <span>
