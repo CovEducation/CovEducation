@@ -35,10 +35,7 @@ const SecondPageForm = (props) => {
     const { selectedSubjects } = state;
 
     const gradeLevelMenuItems = tags.map((item, index) => (
-        <MenuItem
-            key={index}
-            value={item.value}
-        >
+        <MenuItem key={index}>
             <ListItemText primary={item.label} />
         </MenuItem>
     ));

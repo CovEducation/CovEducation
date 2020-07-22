@@ -26,22 +26,39 @@ const ChildSignUpButtonWrapper = styled.div`
     align-items: center;
 `;
 
-let signUpData = {
-    timeZone: '',
+let parentWizardSignUpData = {
+    // Page 1
+    username: undefined,
+    password1: undefined,
+    password2: undefined,
+
+    // Page 2
     registeredChildren: [{
-        selectedSubjects: [],
+        studentName: undefined,
+        studentEmail: undefined,
         gradeLevel: '',
+        selectedSubjects: [],
     }],
+
+    //Page 3
+    parentName: undefined,
+    parentEmail: undefined,
+    parentPhoneNumber: undefined,
+    timeZone: '',
+
+    //Page 4
+    agreeTermsOfServce: undefined,
+    agreePrivacyPolicy: undefined,
 };
 
-const updateSignUpData = (data) => {
-    signUpData = { ...signUpData, ...data };
+const updateParentWizardSignUpData = (data) => {
+    parentWizardSignUpData = { ...parentWizardSignUpData, ...data };
 }
 
 const updateRegisteredChild = (index, data) => {
-    let childRegistrationInfo = signUpData.registeredChildren[index];
+    let childRegistrationInfo = parentWizardSignUpData.registeredChildren[index];
     let mergedChildRegistration = { ...childRegistrationInfo, ...data };
-    signUpData.registeredChildren[index] = mergedChildRegistration;
+    parentWizardSignUpData.registeredChildren[index] = mergedChildRegistration;
 }
 
 const ParentWizard = () => {
@@ -52,12 +69,12 @@ const ParentWizard = () => {
 
         const handleChange = (event) => {
             setState({ ...state, [event.target.name]: event.target.value });
-            updateSignUpData({ [event.target.name]: event.target.value });
+            updateParentWizardSignUpData({ [event.target.name]: event.target.value });
         };
 
         return (
             <SignUpChildWrapper>
-                <FirstPageForm data={signUpData} handleChange={handleChange} />
+                <FirstPageForm data={parentWizardSignUpData} handleChange={handleChange} />
             </SignUpChildWrapper>
         );
     }
@@ -66,13 +83,13 @@ const ParentWizard = () => {
 
         const [state, setState] = useState({});
 
-        let children = signUpData.registeredChildren.map((item, index) => {
-            return <SecondPageForm data={signUpData} index={index} updateRegisteredChild={updateRegisteredChild} />;
+        let children = parentWizardSignUpData.registeredChildren.map((item, index) => {
+            return <SecondPageForm data={parentWizardSignUpData} index={index} updateRegisteredChild={updateRegisteredChild} />;
         });
 
         const handleAddClick = (event) => {
             event.preventDefault();
-            signUpData.registeredChildren.push({
+            parentWizardSignUpData.registeredChildren.push({
                 selectedSubjects: [],
                 gradeLevel: '',
             });
@@ -81,11 +98,11 @@ const ParentWizard = () => {
 
         const handleRemoveClick = (event) => {
             event.preventDefault();
-            signUpData.registeredChildren.pop();
+            parentWizardSignUpData.registeredChildren.pop();
             setState({ ...state });
         }
 
-        const showRemoveChildButton = signUpData.registeredChildren.length > 1;
+        const showRemoveChildButton = parentWizardSignUpData.registeredChildren.length > 1;
 
         return (
             <SignUpChildWrapper>
@@ -109,12 +126,12 @@ const ParentWizard = () => {
 
         const handleChange = (event) => {
             setState({ ...state, [event.target.name]: event.target.value });
-            updateSignUpData({ [event.target.name]: event.target.value });
+            updateParentWizardSignUpData({ [event.target.name]: event.target.value });
         };
 
         return (
             <SignUpChildWrapper>
-                <ThirdPageForm data={signUpData} handleChange={handleChange}/>
+                <ThirdPageForm data={parentWizardSignUpData} handleChange={handleChange}/>
             </SignUpChildWrapper>
         );
     }
@@ -125,12 +142,12 @@ const ParentWizard = () => {
 
         const handleCheck = (event) => {
             setState({ ...state, [event.target.name]: event.target.checked });
-            updateSignUpData({ [event.target.name]: event.target.checked });
+            updateParentWizardSignUpData({ [event.target.name]: event.target.checked });
         };
         
         return (
             <SignUpChildWrapper>
-                <FourthPageForm data={signUpData} handleCheck={handleCheck}/>
+                <FourthPageForm data={parentWizardSignUpData} handleCheck={handleCheck}/>
             </SignUpChildWrapper>
         );
     }

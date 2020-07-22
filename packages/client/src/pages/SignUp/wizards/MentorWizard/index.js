@@ -19,12 +19,30 @@ const SignUpChildWrapper = styled.div`
     color: black;
 `;
 
-let signUpData = {
-    preferredGradeLevel: subjects[0].value,
+let mentorWizardSignUpData = {
+    // Page 1
+    username: undefined,
+    password1: undefined,
+    password2: undefined,
+
+    // Page 2
+    major: undefined,
+    introduction: undefined,
+
+    //Page 3
+    mentorName: undefined,
+    mentorEmail: undefined,
+    selectedGradeLevels: [],
+    selectedSubjects: [],
+
+    //Page 4
+    agreeTermsOfServce: undefined,
+    agreePrivacyPolicy: undefined,
 };
 
-const updateSignUpData = (data) => {
-    signUpData = { ...signUpData, ...data };
+
+const updateMentorWizardSignUpData = (data) => {
+    mentorWizardSignUpData = { ...mentorWizardSignUpData, ...data };
 }
 
 const MentorWizard = () => {
@@ -35,12 +53,12 @@ const MentorWizard = () => {
 
         const handleChange = (event) => {
             setState({ ...state, [event.target.name]: event.target.value });
-            updateSignUpData({ [event.target.name]: event.target.value });
+            updateMentorWizardSignUpData({ [event.target.name]: event.target.value });
         };
 
         return (
             <SignUpChildWrapper>
-                <FirstPageForm data={signUpData} handleChange={handleChange} />
+                <FirstPageForm data={mentorWizardSignUpData} handleChange={handleChange} />
             </SignUpChildWrapper>
         );
     }
@@ -51,12 +69,12 @@ const MentorWizard = () => {
 
         const handleChange = (event) => {
             setState({ ...state, [event.target.name]: event.target.value });
-            updateSignUpData({ ...state, [event.target.name]: event.target.value });
+            updateMentorWizardSignUpData({ ...state, [event.target.name]: event.target.value });
         }
 
         return (
             <SignUpChildWrapper>
-                <SecondPageForm data={signUpData} handleChange={handleChange} />
+                <SecondPageForm data={mentorWizardSignUpData} handleChange={handleChange} />
             </SignUpChildWrapper>
         );
     }
@@ -64,19 +82,21 @@ const MentorWizard = () => {
     const ThirdPage = () => {
 
         const [state, setState] = useState({
-            selectedSubjects: signUpData.selectedSubjects ?? [],
+            selectedGradeLevels: mentorWizardSignUpData.selectedGradeLevels ?? [],
+            selectedSubjects: mentorWizardSignUpData.selectedSubjects ?? [],
         });
 
-        const { selectedSubjects } = state;
+        const { selectedGradeLevels, selectedSubjects } = state;
 
         const handleChange = (event) => {
+            console.log("clicked", event.target.name, event.target.value);
             setState({ ...state, [event.target.name]: event.target.value });
-            updateSignUpData({ [event.target.name]: event.target.value });
+            updateMentorWizardSignUpData({ [event.target.name]: event.target.value });
         };
 
         return (
             <SignUpChildWrapper>
-                <ThirdPageForm data={signUpData} handleChange={handleChange} selectedSubjects={selectedSubjects} />
+                <ThirdPageForm data={mentorWizardSignUpData} handleChange={handleChange} selectedGradeLevels={selectedGradeLevels} selectedSubjects={selectedSubjects} />
             </SignUpChildWrapper>
         );
     }
@@ -87,12 +107,12 @@ const MentorWizard = () => {
 
         const handleChange = (event) => {
             setState({ ...state, [event.target.name]: event.target.checked });
-            updateSignUpData({ [event.target.name]: event.target.checked });
+            updateMentorWizardSignUpData({ [event.target.name]: event.target.checked });
         };
 
         return (
             <SignUpChildWrapper>
-                <FourthPageForm data={signUpData} handleChange={handleChange} />
+                <FourthPageForm data={mentorWizardSignUpData} handleChange={handleChange} />
             </SignUpChildWrapper>
         );
     }

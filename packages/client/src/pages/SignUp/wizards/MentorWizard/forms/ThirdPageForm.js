@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 import Select from '@material-ui/core/Select';
@@ -26,23 +26,31 @@ const SelectMenuProps = {
 
 const ThirdPageForm = (props) => {
 
-    const gradeLevelMenuItems = tags.map((item, index) => (
-        <MenuItem
-            children={item.label}
-            key={index}
-            value={item.value}
-        />
-    ));
+    const [state, setState] = useState({
+        selectedGradeLevels: [],
+        selectedSubjects: [],
+    });
+    
+    const { selectedGradeLevels, selectedSubjects } = state;
 
-    const subjectsMenuItems = subjects.map((item, index) => (
-        <MenuItem
-            key={index}
-            value={item.value}
-        >
-            <Checkbox value={item.value} checked={props.selectedSubjects.indexOf(item.value) > -1} />
+    const gradeLevelMenuItems = tags.map(item => (
+        <MenuItem key={item.value} value={item.value}>
+            <Checkbox value={item.value} checked={selectedGradeLevels.indexOf(item.value) > -1} />
             {item.label}
         </MenuItem>
     ));
+
+    const subjectsMenuItems = subjects.map(item => (
+        <MenuItem key={item.value} value={item.value}>
+            <Checkbox value={item.value} checked={selectedSubjects.indexOf(item.value) > -1} />
+            {item.label}
+        </MenuItem>
+    ));
+
+    const handleChange = (event) => {
+        setState({ ...state, [event.target.name]: event.target.value });
+        props.handleChange(event);
+    }
 
     return (
         <div>
@@ -52,7 +60,7 @@ const ThirdPageForm = (props) => {
                     fullWidth
                     label="Name"
                     name="mentorName"
-                    onChange={props.handleChange}
+                    onChange={handleChange}
                     value={props.data.mentorName}
                     required
                 />
@@ -62,7 +70,7 @@ const ThirdPageForm = (props) => {
                     fullWidth
                     label="Email"
                     name="mentorEmail"
-                    onChange={props.handleChange}
+                    onChange={handleChange}
                     value={props.data.mentorEmail}
                     required
                 />
@@ -71,27 +79,28 @@ const ThirdPageForm = (props) => {
                 <InputLabel id="wizard-preferred-grade-level">Preferred Grade Level</InputLabel>
                 <Select
                     children={gradeLevelMenuItems}
-                    displayEmpty
                     fullWidth
                     labelId="wizard-preferred-grade-level"
                     MenuProps={SelectMenuProps}
-                    name="preferredGradeLevel"
-                    onChange={props.handleChange}
-                    value={props.data.preferredGradeLevel}
+                    multiple
+                    name="selectedGradeLevels"
+                    renderValue={(selected) => selected.join(", ")}
+                    onChange={handleChange}
+                    value={props.data.selectedGradeLevels}
                     required
                 />
             </WizardInput>
             <WizardInput>
-                <InputLabel id="wizard-preferred-subjects">Preferred Subjects</InputLabel>
+                <InputLabel>Preferred Subjects</InputLabel>
                 <Select
                     children={subjectsMenuItems}
-                    displayEmpty
                     fullWidth
-                    labelId="wizard-preferred-subjects"
                     MenuProps={SelectMenuProps}
-                    name="preferredSubjects"
-                    onChange={props.handleChange}
-                    value={props.data.preferredSubjects}
+                    multiple
+                    name="selectedSubjects"
+                    onChange={handleChange}
+                    renderValue={(selected) => selected.join(", ")}
+                    value={props.data.selectedSubjects}
                     required
                 />
             </WizardInput>
