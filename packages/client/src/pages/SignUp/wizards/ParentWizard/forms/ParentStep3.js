@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 import MenuItem from '@material-ui/core/MenuItem';
@@ -23,7 +23,7 @@ const SelectMenuProps = {
     },
 };
 
-const ThirdPageForm = (props) => {
+const ParentStep3 = (props) => {
 
     const timeZoneMenuItems = timeZones.map(item => {
         return <MenuItem key={item.value} value={item.timezone}>{item.timezone}</MenuItem>;
@@ -79,8 +79,7 @@ const ThirdPageForm = (props) => {
                 />
             </WizardInput>
         </div>
-    )
-
+    );
 }
 
-export default ThirdPageForm;
+export default ParentStep3;

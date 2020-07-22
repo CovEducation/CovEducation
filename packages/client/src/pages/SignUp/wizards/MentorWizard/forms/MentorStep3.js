@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
 import Select from '@material-ui/core/Select';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
-import ListItemText from '@material-ui/core/ListItemText';
 
 import { tags, subjects } from '../../../../../constants.js';
 
@@ -26,33 +24,32 @@ const SelectMenuProps = {
     },
 };
 
-const SecondPageForm = (props) => {
+const MentorStep3 = (props) => {
 
     const [state, setState] = useState({
+        selectedGradeLevels: [],
         selectedSubjects: [],
     });
+    
+    const { selectedGradeLevels, selectedSubjects } = state;
 
-    const { selectedSubjects } = state;
-
-    const gradeLevelMenuItems = tags.map((item, index) => (
-        <MenuItem key={index}>
-            <ListItemText primary={item.label} />
+    const gradeLevelMenuItems = tags.map(item => (
+        <MenuItem key={item.value} value={item.value}>
+            <Checkbox value={item.value} checked={selectedGradeLevels.indexOf(item.value) > -1} />
+            {item.label}
         </MenuItem>
     ));
 
-    const subjectsMenuItems = subjects.map((item, index) => (
-        <MenuItem key={index} value={item.value}>
-            <Checkbox
-                checked={selectedSubjects.indexOf(item.value) > -1}
-                value={item.value}
-            />
-            <ListItemText primary={item.label} />
+    const subjectsMenuItems = subjects.map(item => (
+        <MenuItem key={item.value} value={item.value}>
+            <Checkbox value={item.value} checked={selectedSubjects.indexOf(item.value) > -1} />
+            {item.label}
         </MenuItem>
     ));
 
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.value });
-        props.updateRegisteredChild(props.index, { ...state, [event.target.name]: event.target.value });
+        props.handleChange(event);
     }
 
     return (
@@ -61,45 +58,49 @@ const SecondPageForm = (props) => {
             <WizardInput>
                 <TextField
                     fullWidth
-                    label="Student Name"
-                    name="studentName"
+                    label="Name"
+                    name="mentorName"
                     onChange={handleChange}
-                    value={props.data.registeredChildren[props.index].studentName}
+                    value={props.data.mentorName}
                     required
                 />
             </WizardInput>
             <WizardInput>
                 <TextField
                     fullWidth
-                    label="Student Email"
-                    name="studentEmail"
+                    label="Email"
+                    name="mentorEmail"
                     onChange={handleChange}
-                    value={props.data.registeredChildren[props.index].studentEmail}
+                    value={props.data.mentorEmail}
                     required
                 />
             </WizardInput>
             <WizardInput>
-                <InputLabel id="wizard-time-zone" required>Grade Level</InputLabel>
+                <InputLabel id="wizard-preferred-grade-level">Preferred Grade Level</InputLabel>
                 <Select
                     children={gradeLevelMenuItems}
                     fullWidth
-                    name="gradeLevel"
+                    labelId="wizard-preferred-grade-level"
+                    MenuProps={SelectMenuProps}
+                    multiple
+                    name="selectedGradeLevels"
+                    renderValue={(selected) => selected.join(", ")}
                     onChange={handleChange}
-                    value={props.data.registeredChildren[props.index].gradeLevel}
+                    value={props.data.selectedGradeLevels}
                     required
                 />
             </WizardInput>
             <WizardInput>
-                <InputLabel id="wizard-time-zone" required>Student Seeking Assistance In</InputLabel>
+                <InputLabel>Preferred Subjects</InputLabel>
                 <Select
                     children={subjectsMenuItems}
                     fullWidth
                     MenuProps={SelectMenuProps}
                     multiple
-                    name='selectedSubjects'
+                    name="selectedSubjects"
                     onChange={handleChange}
-                    renderValue={(selected) => selected.join(', ')}
-                    value={props.data.registeredChildren[props.index].selectedSubjects}
+                    renderValue={(selected) => selected.join(", ")}
+                    value={props.data.selectedSubjects}
                     required
                 />
             </WizardInput>
@@ -107,4 +108,4 @@ const SecondPageForm = (props) => {
     );
 }
 
-export default SecondPageForm;
+export default MentorStep3;

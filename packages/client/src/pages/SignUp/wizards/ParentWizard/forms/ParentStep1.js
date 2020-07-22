@@ -7,7 +7,7 @@ const WizardInput = styled.div`
     min-width: 120px;
 `;
 
-const FirstPageForm = (props) => {
+const ParentStep1 = (props) => {
     return (
         <div>
             {JSON.stringify(props.data)}
@@ -22,26 +22,29 @@ const FirstPageForm = (props) => {
                 />
             </WizardInput>
             <WizardInput>
-                <TextField fullWidth
+                <TextField
+                    fullWidth
                     label="Password"
                     name="password1"
                     onChange={props.handleChange}
+                    type="password"
                     value={props.data.password1}
                     required
                 />
             </WizardInput>
             <WizardInput>
-                <TextField fullWidth
+                <TextField
+                    fullWidth
                     label="Confirm Password"
                     name="password2"
                     onChange={props.handleChange}
+                    type="password"
                     value={props.data.password2}
                     required
                 />
             </WizardInput>
         </div>
-    )
-
+    );
 }
 
-export default FirstPageForm;
+export default ParentStep1;

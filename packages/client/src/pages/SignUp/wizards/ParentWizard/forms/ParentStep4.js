@@ -10,7 +10,7 @@ const AgreementCheckboxWrapper = styled.div`
     justify-content: flex-start;
 `;
 
-const FourthPageForm = (props) => {
+const ParentStep4 = (props) => {
 
     const isDisabled = !(props.data.agreedTermsOfService && props.data.agreedPrivacyPolicy)
 
@@ -44,4 +44,4 @@ const FourthPageForm = (props) => {
 
 }
 
-export default FourthPageForm;
+export default ParentStep4;

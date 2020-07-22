@@ -7,7 +7,7 @@ const WizardInput = styled.div`
     min-width: 120px;
 `;
 
-const SecondPageForm = (props) => {
+const MentorStep2 = (props) => {
 
     return (
         <div>
@@ -39,4 +39,4 @@ const SecondPageForm = (props) => {
 
 }
 
-export default SecondPageForm;
+export default MentorStep2;
