@@ -14,21 +14,21 @@ function App() {
     <AuthProvider fallback="loading">
       {/* Add Navbar component on this line */}
       <Router>
-            <Switch>
-              <Route path="/" exact>
-                <HomePage />
-              </Route>
-              <Route path="/profile">
-                <ProfilePage />
-              </Route>
-              <Route path="/signin">
-                <SignInPage/>
-              </Route>
-              <Route path="/forgot-password">
-                <br/>
-              </Route>
-              <Route path="/sign-in" component={Signin} />
-            </Switch>
+        <Switch>
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          <Route path="/profile">
+            <ProfilePage />
+          </Route>
+          <Route path="/signin">
+            <SignInPage/>
+          </Route>
+          <Route path="/forgot-password">
+            <br/>
+          </Route>
+          <Route path="/sign-in" component={Signin} />
+        </Switch>
       </Router>
     </AuthProvider>
   );
