@@ -10,12 +10,6 @@ const router = express.Router();
 // Firebase boilerplate.
 const admin = require('firebase-admin');
 
-const serviceAccount = require('../serviceAccount.json');
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
-
 const db = admin.firestore();
 
 const parentRef = db.collection('parents');
@@ -24,38 +18,42 @@ const mentorRef = db.collection('mentors');
 
 const userRef = db.collection('users'); // Mapping of Firebase UID -> Type of user (MENTOR / PARENT).
 
-const getUser = (firebaseUid) => userRef.where('firebase_uid', '==', firebaseUid).limit(1);
+const getUser = (firebaseUid) => userRef.where('firebase_uid', '==', firebaseUid).limit(1).get();
 
-const postUser = async (user) => userRef.add(user);
+const postUser = (user) => userRef.add(user);
 
-const getParent = (firebaseUid) => parentRef.where('firebase_uid', '==', firebaseUid).limit(1);
+const getParent = (firebaseUid) => parentRef.where('firebase_uid', '==', firebaseUid).limit(1).get();
 
-const postParent = async (parent) => parentRef.add(parent);
+const postParent = (parent) => parentRef.add(parent);
 
-const getMentor = (firebaseUid) => mentorRef.where('firebase_uid', '==', firebaseUid).limit(1);
+const getMentor = (firebaseUid) => mentorRef.where('firebase_uid', '==', firebaseUid).limit(1).get();
 
-const postMentor = async (mentor) => mentorRef.add(mentor);
+const postMentor = (mentor) => mentorRef.add(mentor);
 
 /**
  * Gets a user based on firebase UID.
  */
 router.get('/', (req, res) => {
-  const { firebaseUid } = req.query;
-  getUser(firebaseUid)
+  const { firebaseUID } = req.query;
+  if (firebaseUID === undefined) {
+    res.sendStatus(400);
+    return;
+  }
+  getUser(firebaseUID)
     .then((user) => {
       if (user.role === 'MENTOR') {
-        getMentor(firebaseUid)
+        getMentor(firebaseUID)
           .then((mentor) => res.send(mentor))
           .catch((err) => res.sendStatus(500).json(err));
       } else if (user.role === 'PARENT') {
-        getParent(firebaseUid)
+        getParent(firebaseUID)
           .then((parent) => res.send(parent))
           .catch((err) => res.sendStatus(500).json(err));
       }
     })
-    .catch((err) => {
+    .catch(() => {
       // Could not find the user in our database.
-      res.sendStatus(404).json(err);
+      res.sendStatus(500);
     });
 });
 
@@ -63,21 +61,21 @@ router.get('/', (req, res) => {
  * Gets a user based on firebase UID.
  */
 router.post('/', (req, res) => {
-  const { firebaseUid } = req.query;
-  postUser(firebaseUid)
+  const { firebaseUID, role } = req.query;
+  const { userData } = req.query;
+  postUser({ firebase_uid: firebaseUID, role })
     .then((user) => {
       if (user.role === 'MENTOR') {
-        postMentor(firebaseUid)
+        postMentor({ firebase_uid: firebaseUID, ...userData })
           .then((mentor) => res.send(mentor))
           .catch((err) => res.sendStatus(400).json(err));
       } else if (user.role === 'PARENT') {
-        postMentor(firebaseUid)
+        postMentor({ firebase_uid: firebaseUID, ...userData })
           .then((parent) => res.send(parent))
           .catch((err) => res.sendStatus(400).json(err));
       }
     })
     .catch((err) => {
-      // Could not find the user in our database.
       res.sendStatus(400).json(err);
     });
 });
