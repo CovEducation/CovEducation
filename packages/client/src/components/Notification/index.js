@@ -2,6 +2,11 @@ import React from 'react';
 import './Notifications.css';
 import UncontrolledAlert from './UncontrolledAlert';
 
+/**
+ * Copyright (c) 2016-Present Eddy Hernandez, Chris Burrell, Evan Sharp
+ * package: react-strap
+ */
+
 function Notification (props) {
     if (props.id === 'sign-in') {
         return (
@@ -17,7 +22,7 @@ function Notification (props) {
             <UncontrolledAlert className="alert" color="danger">
                 <span>
                   <b>Oh snap! -</b>
-                  The email and password combination is incorrect. Please try again.
+                  The authentication failed.
                 </span>
             </UncontrolledAlert>
         );

@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router, Switch, Route
 } from 'react-router-dom';
@@ -12,7 +12,7 @@ import { AuthProvider } from './providers/AuthProvider';
 function App() {
   return (
     <AuthProvider fallback="loading">
-      {/* Add Navbar component on this line */}
+      {/* Add Navbar component here */}
       <Router>
         <Switch>
           <Route path="/" exact>
@@ -23,6 +23,7 @@ function App() {
           </Route>
           <Route path="/signin">
             <SignInPage/>
+            {/* for testing and firebase stuffs :) */}
           </Route>
           <Route path="/forgot-password">
             <br/>

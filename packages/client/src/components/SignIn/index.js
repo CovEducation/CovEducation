@@ -47,13 +47,16 @@ const PassForget = styled.p`
         color: #00568C;
     }
 `
+const Title = styled.h1`
+    text-align: center;
+`
 
 const handleMouseDownPassword = (event) => {
     event.preventDefault();
 };
 
-
 const Signin = () => {
+    const [counter, setCounter] = useState(0);
     const { signin } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -62,15 +65,15 @@ const Signin = () => {
     const [serverError, setServerError] = useState(false);
     const [remember, setRemember] = useState(false);
 
-    const handleChange = (prop) => {
-        if (prop === 'remember') {
-            setRemember(!remember);
+    const handleChange = (prop) => (event) => {
+        if (prop === 'email') {
+            setEmail(event.target.value);
+        } else if (prop === 'password') {
+            setPassword(event.target.value);
         } else if (prop === 'serverError') {
             setServerError(!serverError);
-        } else if (prop === 'email') {
-            setEmail(!email);
-        } else if (prop === 'password') {
-            setPassword(!password);
+        } else if (prop === 'remember') {
+            setRemember(!remember);
         } else if (prop === 'error') {
             error = !error;
         }
@@ -78,16 +81,33 @@ const Signin = () => {
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
-    // TODO: fix validation
     const checkValidation = () => {
         error = !(email.length > 0 && email.includes('@') && email.includes('.') && password.length > 5);
+    }
+
+    const ShowNotifications = () => {
+        if (counter > 0) {
+            checkValidation();
+        }
+        if (error) {
+            return (
+                <Notification id="sign-in" />
+            )
+        }
+        if (serverError) {
+            return (
+                <Notification id="auth" />
+            )
+        }
+        return null;
     }
 
     return (
         <AuthWrapper>
             <AuthInner>
                 <form>
-                    <h1>Sign In</h1>
+                    <Title>Sign In</Title>
+
                     <div className="form-group">
                         <Text
                             autoFocus = {true}
@@ -104,7 +124,7 @@ const Signin = () => {
                             placeholder = "Password"
                             type = {showPassword ? 'text' : 'password'}
                             value = {password}
-                            onChange = {() => handleChange('password')}
+                            onChange = {handleChange('password')}
                             required = {true}
                             endAdornment = {{
                                 endAdornment:
@@ -124,7 +144,7 @@ const Signin = () => {
                             control={
                                 <Checkbox
                                     id="checkbox"
-                                    onChange={() => handleChange('remember')}
+                                    onChange={handleChange('remember')}
                                     value={remember}
                                     name="remember"
                                     color="primary"
@@ -134,33 +154,28 @@ const Signin = () => {
                         />
                     </div>
                     <br />
+
                     <Button theme="default" size="md" type="button"
                             onClick={ () => {
                                 checkValidation();
+                                setCounter(counter + 1);
+                                console.log(error);
                                 if (error === false) {
                                     signin(email, password).catch(() => {
                                         setServerError(true);
-                                        if (serverError === true) {
-                                            error = true;
-                                        }
                                     });
                                 }
                                 if (error === false && serverError === false) {
-                                    window.location.reload();
-                                    console.log('accept');
+                                    console.log('accept sign-in');
+                                    // redirect to dashboard page
                                 }
-                                console.log(error);
                             }}
                     >
                         Sign In
                     </Button>
                     <br />
-                    {
-                        error ? <Notification id="sign-in" /> : null
-                    }
-                    {
-                        serverError ? <Notification id="auth" /> : null
-                    }
+
+                    <ShowNotifications counter={counter}/>
                     <PassForget>
                         Forgot <a href="/forgot-password">password?</a>
                     </PassForget>
