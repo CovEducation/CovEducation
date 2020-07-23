@@ -102,86 +102,85 @@ const Signin = () => {
         return null;
     }
 
-    return (
-        <AuthWrapper>
-            <AuthInner>
-                <form>
-                    <Title>Sign In</Title>
+    // noinspection HtmlUnknownTarget
+    return <AuthWrapper>
+        <AuthInner>
+            <form>
+                <Title>Sign In</Title>
 
-                    <div className="form-group">
-                        <Text
-                            autoFocus = {true}
-                            id = 'email'
-                            placeholder = "Email"
-                            value = {email}
-                            onChange = {handleChange('email')}
-                            required = {true}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <Text
-                            id = "password"
-                            placeholder = "Password"
-                            type = {showPassword ? 'text' : 'password'}
-                            value = {password}
-                            onChange = {handleChange('password')}
-                            required = {true}
-                            endAdornment = {{
-                                endAdornment:
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={() => handleClickShowPassword}
-                                            onMouseDown={() => handleMouseDownPassword}
-                                        >
-                                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                                        </IconButton>
-                                    </InputAdornment>
-                            }}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    id="checkbox"
-                                    onChange={handleChange('remember')}
-                                    value={remember}
-                                    name="remember"
-                                    color="primary"
-                                />
+                <div className="form-group">
+                    <Text
+                        autoFocus = {true}
+                        id = 'email'
+                        placeholder = "Email"
+                        value = {email}
+                        onChange = {handleChange('email')}
+                        required = {true}
+                    />
+                </div>
+                <div className="form-group">
+                    <Text
+                        id = "password"
+                        placeholder = "Password"
+                        type = {showPassword ? 'text' : 'password'}
+                        value = {password}
+                        onChange = {handleChange('password')}
+                        required = {true}
+                        endAdornment = {{
+                            endAdornment:
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        onClick={() => handleClickShowPassword}
+                                        onMouseDown={() => handleMouseDownPassword}
+                                    >
+                                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                                    </IconButton>
+                                </InputAdornment>
+                        }}
+                    />
+                </div>
+                <div className="form-group">
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                id="checkbox"
+                                onChange={handleChange('remember')}
+                                value={remember}
+                                name="remember"
+                                color="primary"
+                            />
+                        }
+                        label="Remember Me"
+                    />
+                </div>
+                <br />
+
+                <Button theme="default" size="md" type="button"
+                        onClick={ () => {
+                            checkValidation();
+                            setCounter(counter + 1);
+                            console.log(error);
+                            if (error === false) {
+                                signin(email, password).catch(() => {
+                                    setServerError(true);
+                                });
                             }
-                            label="Remember Me"
-                        />
-                    </div>
-                    <br />
-
-                    <Button theme="default" size="md" type="button"
-                            onClick={ () => {
-                                checkValidation();
-                                setCounter(counter + 1);
-                                console.log(error);
-                                if (error === false) {
-                                    signin(email, password).catch(() => {
-                                        setServerError(true);
-                                    });
-                                }
-                                if (error === false && serverError === false) {
-                                    console.log('accept sign-in');
-                                    // redirect to dashboard page
-                                }
-                            }}
-                    >
-                        Sign In
-                    </Button>
-                    <br />
-                    <ShowNotifications counter={counter}/>
-                    <PassForget>
-                        Forgot <a href="/forgot-password">password?</a>
-                    </PassForget>
-                </form>
-            </AuthInner>
-        </AuthWrapper>
-    );
+                            if (error === false && serverError === false) {
+                                console.log('accept sign-in');
+                                // redirect to dashboard page
+                            }
+                        }}
+                >
+                    Sign In
+                </Button>
+                <br />
+                <ShowNotifications counter={counter}/>
+                <PassForget>
+                    Forgot <a href="/forgot-password">password?</a>
+                </PassForget>
+            </form>
+        </AuthInner>
+    </AuthWrapper>;
 }
 
 export default Signin;
