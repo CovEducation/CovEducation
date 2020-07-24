@@ -41,17 +41,27 @@ const FindAMentorPage = () => {
     const mentors = [
         {
             name: 'John Doe',
-            avatar: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
-            major: 'Psychology',
-            subjects: ['Math', 'Social Studies'],
+            email: 'johndoe@gmail.com',
+            pronouns: 'he/him',
+            avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1000&q=80',
+            bio: 'This is a wonderful bio, right? Hello? Anyone there?',
             tags: ['ESL'],
+            subjects: ['Math', 'Social Studies', 'Spanish', 'AP Psychology'],
+            major: 'Psychology',
+            gradeLevels: ['Elementary', 'Middle School', 'High School'],
+            timezone: 'PST',
         },
         {
             name: 'Barbara Lee',
-            avatar: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80',
+            email: 'barbaralee@gmail.com',
+            pronouns: 'she/her',
+            avatar: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1047&q=80',
+            bio: 'This is a wonderful bio, right? Hello? Anyone there?',
+            tags: ['French'],
+            subjects: ['Art', 'Biology'],
             major: 'Dentistry',
-            subjects: ['Science', 'Magic'],
-            tags: [],
+            gradeLevels: ['Elementary'],
+            timezone: 'EST',
         }
     ];
     const MentorColumn = () => {
