@@ -105,7 +105,6 @@ const Signin = () => {
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
-
     const ShowNotifications = () => {
         if (error) {
             return (
@@ -184,18 +183,18 @@ const Signin = () => {
                     <br />
 
                     <Button theme="default" size="md" type="button"
-                            onClick={ () => {
-                                setSubmittedOnce(true);
-                                if (error === false) {
-                                    signin(email, password).catch(() => {
-                                        setServerError(true);
-                                    });
-                                }
-                                if (error === false && serverError === false) {
-                                    console.log('accept sign-in');
-                                    // redirect to dashboard page
-                                }
-                            }}
+                        onClick={ () => {
+                            setSubmittedOnce(true);
+                            if (error === false) {
+                                signin(email, password).catch(() => {
+                                    setServerError(true);
+                                });
+                            }
+                            if (error === false && serverError === false) {
+                                console.log('accept sign-in');
+                                // redirect to dashboard page
+                            }
+                        }}
                     >
                         Sign In
                     </Button>

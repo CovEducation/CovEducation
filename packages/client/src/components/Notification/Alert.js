@@ -17,7 +17,6 @@ const propTypes = {
     isOpen: PropTypes.bool,
     toggle: PropTypes.func,
     tag: tagPropType,
-    // transition: PropTypes.shape(Fade.propTypes),
     innerRef: PropTypes.oneOfType([
         PropTypes.object,
         PropTypes.string,
@@ -97,5 +96,4 @@ function Alert(props) {
 
 Alert.propTypes = propTypes;
 Alert.defaultProps = defaultProps;
-
 export default Alert;
