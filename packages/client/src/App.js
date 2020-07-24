@@ -8,7 +8,6 @@ import './App.css';
 import DashboardPage from './pages/Dashboard';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
-import SignInPage from './pages/SignIn';
 import { AuthProvider } from './providers/AuthProvider';
 
 function App() {
@@ -25,9 +24,6 @@ function App() {
           </Route>
           <Route path="/dashboard">
             <DashboardPage />
-          </Route>
-          <Route path="/signin">
-            <SignInPage/>
           </Route>
         </Switch>
       </Router>

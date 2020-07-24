@@ -7,17 +7,18 @@ import useAuth from '../../providers/AuthProvider';
 
 const FindAMentorWrapper = styled.div`
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-template-areas: "sidebar main main";
-
-    // remove the following lines after we have the rest of dashboard built.
-    // these are just to make it look approximately like mockups
-    margin-top: 300px;
-    margin-left: 400px;
+    grid-template-columns: 200px auto;
+    grid-template-areas: "sidebar main";
 `;
 
 const FindAMentorSidebarWrapper = styled.div`
     grid-area: sidebar;
+
+    h2 {
+        font-weight: normal;
+        font-size: 18px;
+        padding-left: 15px;
+    }
 `;
 
 const FindAMentorMainWrapper = styled.div`
@@ -70,6 +71,7 @@ const FindAMentorPage = () => {
     return (
         <FindAMentorWrapper>
             <FindAMentorSidebarWrapper>
+                <h2>Filter By</h2>
                 <MentorFilters onChange={handleFilterChange} />
             </FindAMentorSidebarWrapper>
             <FindAMentorMainWrapper>
