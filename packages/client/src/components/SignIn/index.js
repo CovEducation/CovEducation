@@ -1,14 +1,14 @@
 import React, { useState }  from 'react';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import IconButton from '@material-ui/core/IconButton';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
+import styled from 'styled-components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Text from '../../components/TextBox';
 import Checkbox from '@material-ui/core/Checkbox';
 import useAuth from '../../providers/AuthProvider'
 import Button from '../Button';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
-import styled from 'styled-components';
-import Notification from '../Notification'
+import UncontrolledAlert from '../Notification/UncontrolledAlert';
 
 const AuthInner = styled.div`
     width: 450px;
@@ -36,6 +36,24 @@ const AuthWrapper = styled.div`
         padding-bottom: 20px;
     }
 `
+const Notification = styled(UncontrolledAlert)`
+    .section {
+        padding: 70px 0;
+        position: relative;
+    }
+    .close {
+        float: right;
+        top: 1px;
+    }
+
+    position: relative;
+    padding: 0.9rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 0.0625rem solid transparent;
+    border-radius: 0.2857rem; }
+    color: #ffffff;
+    background-color: rgba(255, 14, 14, 0.51);
+`
 const PassForget = styled.p`
     text-align: right;
     font-size: 13px;
@@ -56,14 +74,15 @@ const handleMouseDownPassword = (event) => {
 };
 
 const Signin = () => {
-    const [counter, setCounter] = useState(0);
     const { signin } = useAuth();
+
+    let error = false;
+    const [counter, setCounter] = useState(0);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    let error = false;
+    const [remember, setRemember] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [serverError, setServerError] = useState(false);
-    const [remember, setRemember] = useState(false);
 
     const handleChange = (prop) => (event) => {
         if (prop === 'email') {
@@ -91,12 +110,22 @@ const Signin = () => {
         }
         if (error) {
             return (
-                <Notification id="sign-in" />
+                <Notification>
+                <span>
+                  <b>Oh snap! -</b>
+                  The email and/or password are in the wrong format. Please try again.
+                </span>
+                </Notification>
             )
         }
         if (serverError) {
             return (
-                <Notification id="auth" />
+                <Notification>
+                <span>
+                  <b>Oh snap! -</b>
+                  The authentication failed.
+                </span>
+                </Notification>
             )
         }
         return null;
@@ -110,12 +139,12 @@ const Signin = () => {
 
                 <div className="form-group">
                     <Text
-                        autoFocus = {true}
+                        autoFocus
                         id = 'email'
                         placeholder = "Email"
                         value = {email}
                         onChange = {handleChange('email')}
-                        required = {true}
+                        required
                     />
                 </div>
                 <div className="form-group">
@@ -125,13 +154,13 @@ const Signin = () => {
                         type = {showPassword ? 'text' : 'password'}
                         value = {password}
                         onChange = {handleChange('password')}
-                        required = {true}
+                        required
                         endAdornment = {{
                             endAdornment:
                                 <InputAdornment position="end">
                                     <IconButton
-                                        onClick={() => handleClickShowPassword}
-                                        onMouseDown={() => handleMouseDownPassword}
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
                                     >
                                         {showPassword ? <Visibility /> : <VisibilityOff />}
                                     </IconButton>
