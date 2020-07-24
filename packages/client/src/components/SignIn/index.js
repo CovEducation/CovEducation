@@ -107,32 +107,29 @@ const Signin = () => {
     };
 
     const ShowNotifications = () => {
-        if (submittedOnce) {
-            if (error) {
-                return (
-                    <Notification>
-                        <span>
-                          <b>Oh snap! -</b>
-                          The email and/or password are in the wrong format. Please try again.
-                        </span>
-                    </Notification>
-                )
-            }
-            if (serverError) {
-                return (
-                    <Notification>
-                        <span>
-                          <b>Oh snap! -</b>
-                          The authentication failed.
-                        </span>
-                    </Notification>
-                )
-            }
+        if (error) {
+            return (
+                <Notification>
+                    <span>
+                      <b>Oh snap! -</b>
+                      The email and/or password are in the wrong format. Please try again.
+                    </span>
+                </Notification>
+            )
+        }
+        if (serverError) {
+            return (
+                <Notification>
+                    <span>
+                      <b>Oh snap! -</b>
+                      The authentication failed.
+                    </span>
+                </Notification>
+            )
         }
         return null;
     }
 
-    // noinspection HtmlUnknownTarget
     return (
         <AuthWrapper>
             <AuthInner>
@@ -203,7 +200,7 @@ const Signin = () => {
                         Sign In
                     </Button>
                     <br />
-                    <ShowNotifications />
+                    { submittedOnce && <ShowNotifications /> }
                     <PassForget>
                         Forgot <a href="/forgot-password">password?</a>
                     </PassForget>
