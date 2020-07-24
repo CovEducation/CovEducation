@@ -5,10 +5,10 @@ import {
   Route,
 } from 'react-router-dom';
 import './App.css';
+import DashboardPage from './pages/Dashboard';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
 import SignInPage from './pages/SignIn';
-import FindAMentorPage from './pages/FindAMentor';
 import { AuthProvider } from './providers/AuthProvider';
 
 function App() {
@@ -23,8 +23,8 @@ function App() {
           <Route path="/profile">
             <ProfilePage />
           </Route>
-          <Route path="/mentors">
-            <FindAMentorPage />
+          <Route path="/dashboard">
+            <DashboardPage />
           </Route>
           <Route path="/signin">
             <SignInPage/>
