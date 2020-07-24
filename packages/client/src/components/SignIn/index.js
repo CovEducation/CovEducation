@@ -1,4 +1,4 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState } from 'react';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
@@ -76,13 +76,18 @@ const handleMouseDownPassword = (event) => {
 const Signin = () => {
     const { signin } = useAuth();
 
-    let error = false;
-    const [counter, setCounter] = useState(0);
     const [email, setEmail] = useState('');
+    const [error, setError] = useState(false);
     const [password, setPassword] = useState('');
     const [remember, setRemember] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
     const [serverError, setServerError] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [submittedOnce, setSubmittedOnce] = useState(false);
+
+    useEffect(() => {
+        const invalid = !(email.length > 0 && email.includes('@') && email.includes('.') && password.length > 5);
+        setError(invalid);
+    }, [email, password]);
 
     const handleChange = (prop) => (event) => {
         if (prop === 'email') {
@@ -94,122 +99,118 @@ const Signin = () => {
         } else if (prop === 'remember') {
             setRemember(!remember);
         } else if (prop === 'error') {
-            error = !error;
+            setError(!error);
         }
     }
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
-    const checkValidation = () => {
-        error = !(email.length > 0 && email.includes('@') && email.includes('.') && password.length > 5);
-    }
 
     const ShowNotifications = () => {
-        if (counter > 0) {
-            checkValidation();
-        }
-        if (error) {
-            return (
-                <Notification>
-                <span>
-                  <b>Oh snap! -</b>
-                  The email and/or password are in the wrong format. Please try again.
-                </span>
-                </Notification>
-            )
-        }
-        if (serverError) {
-            return (
-                <Notification>
-                <span>
-                  <b>Oh snap! -</b>
-                  The authentication failed.
-                </span>
-                </Notification>
-            )
+        if (submittedOnce) {
+            if (error) {
+                return (
+                    <Notification>
+                        <span>
+                          <b>Oh snap! -</b>
+                          The email and/or password are in the wrong format. Please try again.
+                        </span>
+                    </Notification>
+                )
+            }
+            if (serverError) {
+                return (
+                    <Notification>
+                        <span>
+                          <b>Oh snap! -</b>
+                          The authentication failed.
+                        </span>
+                    </Notification>
+                )
+            }
         }
         return null;
     }
 
     // noinspection HtmlUnknownTarget
-    return <AuthWrapper>
-        <AuthInner>
-            <form>
-                <Title>Sign In</Title>
+    return (
+        <AuthWrapper>
+            <AuthInner>
+                <form>
+                    <Title>Sign In</Title>
 
-                <div className="form-group">
-                    <Text
-                        autoFocus
-                        id = 'email'
-                        placeholder = "Email"
-                        value = {email}
-                        onChange = {handleChange('email')}
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <Text
-                        id = "password"
-                        placeholder = "Password"
-                        type = {showPassword ? 'text' : 'password'}
-                        value = {password}
-                        onChange = {handleChange('password')}
-                        required
-                        endAdornment = {{
-                            endAdornment:
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                    >
-                                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                                    </IconButton>
-                                </InputAdornment>
-                        }}
-                    />
-                </div>
-                <div className="form-group">
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                id="checkbox"
-                                onChange={handleChange('remember')}
-                                value={remember}
-                                name="remember"
-                                color="primary"
-                            />
-                        }
-                        label="Remember Me"
-                    />
-                </div>
-                <br />
+                    <div className="form-group">
+                        <Text
+                            autoFocus
+                            id = 'email'
+                            placeholder = "Email"
+                            value = {email}
+                            onChange = {handleChange('email')}
+                            required
+                        />
+                    </div>
+                    <div className="form-group">
+                        <Text
+                            id = "password"
+                            placeholder = "Password"
+                            type = {showPassword ? 'text' : 'password'}
+                            value = {password}
+                            onChange = {handleChange('password')}
+                            required
+                            endAdornment = {{
+                                endAdornment:
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                        >
+                                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                                        </IconButton>
+                                    </InputAdornment>
+                            }}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    id="checkbox"
+                                    onChange={handleChange('remember')}
+                                    value={remember}
+                                    name="remember"
+                                    color="primary"
+                                />
+                            }
+                            label="Remember Me"
+                        />
+                    </div>
+                    <br />
 
-                <Button theme="default" size="md" type="button"
-                        onClick={ () => {
-                            checkValidation();
-                            setCounter(counter + 1);
-                            console.log(error);
-                            if (error === false) {
-                                signin(email, password).catch(() => {
-                                    setServerError(true);
-                                });
-                            }
-                            if (error === false && serverError === false) {
-                                console.log('accept sign-in');
-                                // redirect to dashboard page
-                            }
-                        }}
-                >
-                    Sign In
-                </Button>
-                <br />
-                <ShowNotifications counter={counter}/>
-                <PassForget>
-                    Forgot <a href="/forgot-password">password?</a>
-                </PassForget>
-            </form>
-        </AuthInner>
-    </AuthWrapper>;
+                    <Button theme="default" size="md" type="button"
+                            onClick={ () => {
+                                setSubmittedOnce(true);
+                                if (error === false) {
+                                    signin(email, password).catch(() => {
+                                        setServerError(true);
+                                    });
+                                }
+                                if (error === false && serverError === false) {
+                                    console.log('accept sign-in');
+                                    // redirect to dashboard page
+                                }
+                            }}
+                    >
+                        Sign In
+                    </Button>
+                    <br />
+                    <ShowNotifications />
+                    <PassForget>
+                        Forgot <a href="/forgot-password">password?</a>
+                    </PassForget>
+                </form>
+            </AuthInner>
+        </AuthWrapper>
+    );
 }
 
 export default Signin;
