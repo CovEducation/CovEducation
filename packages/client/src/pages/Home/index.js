@@ -5,6 +5,8 @@ import Button from '../../components/Button';
 import LinesBackground from './LinesBackground';
 import { COLORS, FONTS } from '../../constants';
 import Section from '../../components/Section';
+import ImText from '../../components/TextandImage';
+import imgpath from "./img/art.png"
 
 const HomeWrapper = styled.div`
   text-align: center;
@@ -81,7 +83,7 @@ const HomePage = () => {
           <Button theme="accent" size="md">{t('home.MentorsLearnMoreButton')}</Button>
         </Section>
         <Section p="100px">
-          Statistics
+          statistics here
         </Section>
         <Section backgroundColor='lightblue' p="100px">
           <span>"{t('home.quote')}"</span>
@@ -90,6 +92,10 @@ const HomePage = () => {
         </Section>
         <Section p="100px">
           <h2>{t('home.findTutors')}</h2>
+          <ImText arrangement="vertical" shape="circle" img={imgpath} minwidth="100px" minheight="100px">
+          text here <br />
+          Another text
+          </ImText>
         </Section>
         <Section backgroundColor='lightorange' p="100px">
           <h2>{t('home.questions')}</h2>
