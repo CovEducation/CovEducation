@@ -1,18 +1,18 @@
-import React, { Suspense } from 'react';
+import React, { } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from 'react-router-dom';
 import './App.css';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
 import FAQsPage from './pages/FAQs';
+import { AuthProvider } from './providers/AuthProvider';
 
 function App() {
   return (
-    <Suspense fallback="loading">
+    <AuthProvider fallback="loading">
       {/* Add Navbar component on this line */}
       <Router>
         <Switch>
@@ -27,7 +27,7 @@ function App() {
           </Route>
         </Switch>
       </Router>
-    </Suspense>
+    </AuthProvider>
   );
 }
 
