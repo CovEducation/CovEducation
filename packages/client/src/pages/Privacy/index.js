@@ -42,7 +42,7 @@ const Line = styled.hr`
 `;
 
 const PrivacyTitle = styled.h4`
-  font-size: 35px;
+  font-size: 28px;
   font-family: Montserrat, sans-serif;
   padding-bottom: 2px;
   padding-top: 10px;
@@ -51,7 +51,7 @@ const PrivacyTitle = styled.h4`
 `;
 
 const PrivacyBody = styled.p`
-  font-size: 16px;
+  font-size: 18px;
   line-height: 25px;
   font-family: Muli, sans-serif;
   width: 100%;
@@ -62,7 +62,7 @@ const PrivacyBody = styled.p`
 `;
 
 const PrivacySubSecTitle = styled.h4`
-  font-size: 30px;
+  font-size: 25px;
   font-family: Montserrat, sans-serif;
   padding-bottom: 2px;
   padding-top: 10px;

@@ -45,7 +45,7 @@ const Line = styled.hr`
 `;
 
 const TermCondTitle = styled.h4`
-  font-size: 35px;
+  font-size: 28px;
   font-family: Montserrat, sans-serif;
   padding-bottom: 2px;
   padding-top: 10px;
@@ -54,7 +54,7 @@ const TermCondTitle = styled.h4`
 `;
 
 const TermCondBody = styled.p`
-  font-size: 16px;
+  font-size: 18px;
   line-height: 25px;
   font-family: Muli, sans-serif;
   width: 100%;
