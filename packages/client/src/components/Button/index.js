@@ -69,11 +69,12 @@ const Button = ({
   size = 'md',
   basic = false,
   onClick,
+  type = 'submit',
   round = false,
   disabled = false,
 }) => {
   return (
-    <ButtonStyled theme={theme} size={size} basic={basic} onClick={onClick} round={round} disabled={disabled}>
+    <ButtonStyled theme={theme} size={size} basic={basic} onClick={onClick} round={round} disabled={disabled} type={type}>
       {children}
     </ButtonStyled>
   );
@@ -85,5 +86,6 @@ Button.propTypes = {
   size: PropTypes.string,
   basic: PropTypes.bool,
   disabled: PropTypes.bool,
+  type: PropTypes.string,
 };
 export default Button;
