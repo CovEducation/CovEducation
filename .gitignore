@@ -2,5 +2,9 @@
 node_modules
 .vscode
 .idea
+<<<<<<< HEAD
 packages/server/service_account.json
 packages/server/serviceAccount.json
+=======
+packages/server/service_account.json
+>>>>>>> master
