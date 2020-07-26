@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -21,56 +20,43 @@ const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
 
 const TextThemes = {
   fontSize: {
+    default: 18,
     lg: 22,
-    sm: 18,
+  },
+  fontWeight: {
+    default: 'normal',
+    lg: 'bold',
   }
 }
 
-const useStyles = makeStyles({
-  fontFamily: 'Aspira',
-  fontFamily: 'sans-serif',
-  paddingRight: '40px',
-  color: COLORS.blue,
-  fontSize: TextThemes['fontSize']['sm'],
-  fontWeight: 'normal'
-});
+const LinkStyled = styled(Link)`
+  font-family: Muli, sans-serif;
+  font-color: ${COLORS.blue};
+  padding-right: 40px;
+  font-size: ${(props) => TextThemes.fontSize[props.ver]}px;
+  font-weight: ${(props) => TextThemes.fontWeight[props.ver]};
+  text-decoration: none;
 
-const styles = theme => ({
-  root: {
-    fontFamily: 'Aspira', 
-    fontFamily: 'sans-serif', 
-    paddingRight: '40px', 
-    color: COLORS.blue, 
-    fontSize: TextThemes['fontSize']['sm'], 
-    fontWeight: 'normal'
-  },
-  closeButton: {
-    position: 'absolute',
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: theme.palette.grey[500]
+  &:link {
+    color: ${COLORS.blue};
   }
-});
-
-const styleLink = withStyles(styles)(props =>{
-  const{ children, classes, ...other} = props;
-  return(
-    <Link></Link>
-  );
-});
-
-const styledLink = styled('Link') ({
-  fontColor: COLORS.yellow,
-})
-
-const timeoutLength = 300;
-
+  &:visited {
+    color: ${COLORS.blue};
+  }
+  &:hover {
+    color: ${COLORS.yellow};
+    text-decoration: none;
+  }
+  &:active {
+    color: ${COLORS.yellow};
+    text-decoration: none;
+  }
+`
 
 export default function NavBar(props)  {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  const classes = useStyles();
   let menuOpen = false;
 
   const handleMenu = (event) => {
@@ -82,35 +68,11 @@ export default function NavBar(props)  {
     setAnchorEl(null);
   };
 
-  const keepMenuOpen = () => {
-    menuOpen = true;
-  }
-
-  const closeMenu = () => {
-    menuOpen = false;
-  }
-
-  const leaveButton = () => {
-    // Set a timeout so that the menu doesn't close before the user has time to
-    // move their mouse over it
-    setTimeout(() => {
-      while(!menuOpen) {
-
-      }
-      if (!menuOpen) {
-        setAnchorEl(null);
-      } else {
-        leaveButton();
-        closeMenu();
-      }
-    }, timeoutLength);
-  }
-
   let userLinks;
-  if (true) {
+  if (false) {
     userLinks = (
       <>
-        <Link style={{fontFamily: 'Aspira', fontFamily:'sans-serif', paddingRight: '40px', color: COLORS.blue, fontSize: TextThemes['fontSize']['sm'], fontWeight: 'normal'}} href="/login">Login</Link>
+        <LinkStyled href='/login' ver='default'>Login</LinkStyled>
         <div/>
         <Modal title="Sign Up" trigger={<Button theme='accent' size='smmd'> Sign Up </Button>}> <Wizard content={Wiz_content} /> </Modal>
       </>
@@ -125,13 +87,12 @@ export default function NavBar(props)  {
           onClick={handleMenu}
           color="inherit"
           onMouseOver={handleMenu}
-          // onMouseLeave={leaveButton}
         >
           <AccountCircleIcon/>
-          <div style={{padding:'10px'}}/>
-          <Grid style={{fontFamily: 'Aspira', fontFamily:'sans-serif', paddingRight: '40px', color: COLORS.blue, fontSize: TextThemes['fontSize']['sm'], fontWeight: 'normal'}}>
+          <div style={{ padding:'10px' }}/>
+          <LinkStyled ver='default' style={{ color: COLORS.blue }}>
             {'Tim Beaver'}
-          </Grid>
+          </LinkStyled>
         </IconButton>
         <Menu
           id="menu-navbar"
@@ -147,13 +108,11 @@ export default function NavBar(props)  {
             horizontal: 'center',
           }}
           open={open}
-          onMouseOver={keepMenuOpen}
           onClose={handleClose}
-          onMouseLeave={handleClose}
-          MenuListProps={{ onMouseLeave: handleClose, onMouseEnter: closeMenu}}
+          MenuListProps={{ onMouseLeave: handleClose }}
         >
-          <MenuItem href='/profile'>Dashboard</MenuItem>
-          <MenuItem style={{ color: 'red' }}>Sign Out</MenuItem>
+          <MenuItem href='/profile' style={{ fontSize: TextThemes.fontSize['default'] }}>Dashboard</MenuItem>
+          <MenuItem style={{ color: 'red', fontSize: TextThemes.fontSize['default'] }}>Sign Out</MenuItem>
         </Menu>
       </>
     )
@@ -164,11 +123,11 @@ export default function NavBar(props)  {
       <AppBar color='white' flex-direction='row' position={props.position}>
         <Toolbar>
           <Grid>
-            <Link style={{fontFamily: 'Aspira', fontFamily:'sans-serif', paddingRight: '15px', paddingLeft: '15px', color: COLORS.blue, fontSize: TextThemes['fontSize']['lg'], fontWeight: 'bold'}} href='/'>CovEd</Link>
+            <LinkStyled ver='lg' href='/'>CovEd</LinkStyled>
             {props.links.map(link =>(
-              <Link href={link.link} style={{fontFamily: 'Aspira', fontFamily:'sans-serif', paddingRight: '15px', paddingLeft: '15px', color: COLORS.blue, fontSize: TextThemes['fontSize']['sm'], fontWeight: 'normal'}}>
+              <LinkStyled href={link.link} ver='default'>
                 {link.title}
-              </Link>
+              </LinkStyled>
             ))}
             </Grid>
           <div style={{marginLeft: 'auto'}}/>
@@ -208,5 +167,7 @@ NavBar.defaultProps = {
       link: '/contact us',
     },
   ],
-  position: 'absolute'
+  // sticky: stays with user as they scroll,
+  // absolute: disappears after user scrolls past
+  position: 'sticky' 
 }
