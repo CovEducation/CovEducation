@@ -5,6 +5,7 @@ import {
 import './App.css';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
+import SignUpPage from './pages/SignUp';
 import SignInPage from './pages/SignIn';
 import Signin from './components/SignIn';
 import { AuthProvider } from './providers/AuthProvider';
@@ -21,8 +22,11 @@ function App() {
           <Route path="/profile">
             <ProfilePage />
           </Route>
+          <Route path="/signup">
+            <SignUpPage />
+          </Route>
           <Route path="/signin">
-            <SignInPage/>
+            <SignInPage />
             {/* for testing and firebase stuffs :) */}
           </Route>
           <Route path="/forgot-password">
