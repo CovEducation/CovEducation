@@ -42,7 +42,7 @@ let parentWizardSignUpData = {
     registeredChildren: [{
         studentName: undefined,
         studentEmail: undefined,
-        gradeLevel: '',
+        seletedGradeLevel: '',
         selectedSubjects: [],
     }],
 
@@ -105,7 +105,7 @@ const ThirdPage = () => {
         event.preventDefault();
         parentWizardSignUpData.registeredChildren.push({
             selectedSubjects: [],
-            gradeLevel: '',
+            seletedGradeLevel: '',
         });
         setState({ ...state });
     }

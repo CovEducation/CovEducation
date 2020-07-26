@@ -27,28 +27,27 @@ const SelectMenuProps = {
 
 const ParentStep3 = (props) => {
 
-    const [state, setState] = useState({
-        selectedSubjects: [],
-    });
-
-    const { selectedSubjects } = state;
+    const [state, setState] = useState({});
 
     const gradeLevelMenuItems = tags.map((item, index) => (
-        <MenuItem key={index}>
-            <ListItemText primary={item.label} />
-        </MenuItem>
-    ));
-
-    const subjectsMenuItems = subjects.map((item, index) => (
         <MenuItem key={index} value={item.value}>
-            <Checkbox
-                checked={selectedSubjects.indexOf(item.value) > -1}
-                value={item.value}
-            />
             <ListItemText primary={item.label} />
         </MenuItem>
     ));
 
+    const subjectsMenuItems = subjects.map((item, index) => {
+        const isChecked = props.data.registeredChildren[props.index].selectedSubjects.indexOf(item.value) > -1;
+        return (
+            <MenuItem key={index} value={item.value}>
+                <Checkbox
+                    checked={isChecked}
+                    value={item.value}
+                />
+                <ListItemText primary={item.label} />
+            </MenuItem>
+        );
+    });
+        
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.value });
         props.updateRegisteredChild(props.index, { ...state, [event.target.name]: event.target.value });
@@ -78,18 +77,18 @@ const ParentStep3 = (props) => {
                 />
             </WizardInput>
             <WizardInput>
-                <InputLabel id="wizard-time-zone" required>Grade Level</InputLabel>
+                <InputLabel required>Grade Level</InputLabel>
                 <Select
                     children={gradeLevelMenuItems}
                     fullWidth
-                    name="gradeLevel"
+                    name="seletedGradeLevel"
                     onChange={handleChange}
-                    value={props.data.registeredChildren[props.index].gradeLevel}
+                    value={props.data.registeredChildren[props.index].seletedGradeLevel}
                     required
                 />
             </WizardInput>
             <WizardInput>
-                <InputLabel id="wizard-time-zone" required>Student Seeking Assistance In</InputLabel>
+                <InputLabel required>Student Seeking Assistance In</InputLabel>
                 <Select
                     children={subjectsMenuItems}
                     fullWidth
