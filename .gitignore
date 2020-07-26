@@ -3,3 +3,4 @@ node_modules
 .vscode
 .idea
 packages/server/service_account.json
+packages/server/serviceAccount.json
