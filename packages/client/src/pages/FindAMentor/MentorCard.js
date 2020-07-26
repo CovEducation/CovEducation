@@ -18,7 +18,7 @@ const MentorCardText = styled.p`
 const MentorCard = ({ mentor }) => {
     return (
         <MentorCardContainer>
-            <img src={mentor.avatar || 'stock-profile.png'} width='70%' alt='profile pic'/>
+            <img src={mentor.avatar || `${process.env.PUBLIC_URL}/stock-profile.png`} width='70%' alt='profile pic'/>
             <MentorCardText><b>{mentor.name}</b></MentorCardText>
             <MentorCardText>{mentor.timezone}</MentorCardText>
             <MentorCardText>{mentor.subjects.join(', ')}</MentorCardText>

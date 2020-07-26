@@ -67,9 +67,8 @@ AccordionRow.propTypes = {
 const AccordionWrapper = styled.div`
   background-color: ${COLORS.white};
   height: auto;
-  font-size: 14px;
+  font-size: 12px;
   color: black;
-  min-width: 220px;
 `;
 
 const Accordion = ({ children }) => {

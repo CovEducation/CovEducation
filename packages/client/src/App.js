@@ -1,20 +1,20 @@
-import React, { } from 'react';
+import React from 'react';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
+  BrowserRouter as Router, Switch, Route
 } from 'react-router-dom';
 import './App.css';
+import DashboardPage from './pages/Dashboard';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
+import SignUpPage from './pages/SignUp';
 import SignInPage from './pages/SignIn';
-import FindAMentorPage from './pages/FindAMentor';
+import Signin from './components/SignIn';
 import { AuthProvider } from './providers/AuthProvider';
 
 function App() {
   return (
     <AuthProvider fallback="loading">
-      {/* Add Navbar component on this line */}
+      {/* Add Navbar component here */}
       <Router>
         <Switch>
           <Route path="/" exact>
@@ -23,12 +23,20 @@ function App() {
           <Route path="/profile">
             <ProfilePage />
           </Route>
-          <Route path="/mentors">
-            <FindAMentorPage />
+          <Route path="/dashboard">
+            <DashboardPage />
+          </Route>
+          <Route path="/signup">
+            <SignUpPage />
           </Route>
           <Route path="/signin">
-            <SignInPage/>
+            <SignInPage />
+            {/* for testing and firebase stuffs :) */}
           </Route>
+          <Route path="/forgot-password">
+            <br/>
+          </Route>
+          <Route path="/sign-in" component={Signin} />
         </Switch>
       </Router>
     </AuthProvider>
