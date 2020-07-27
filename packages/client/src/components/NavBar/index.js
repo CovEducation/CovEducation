@@ -13,7 +13,6 @@ import Wizard from '../Wizard';
 import Button from '../Button';
 import styled from 'styled-components';
 import { COLORS } from '../../constants';
-import { withStyles } from "@material-ui/styles";
 
 
 const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
@@ -72,7 +71,7 @@ export default function NavBar(props)  {
   if (false) {
     userLinks = (
       <>
-        <LinkStyled href='/login' ver='default'>Login</LinkStyled>
+        <LinkStyled to='/login' ver='default'>Login</LinkStyled>
         <div/>
         <Modal title="Sign Up" trigger={<Button theme='accent' size='smmd'> Sign Up </Button>}> <Wizard content={Wiz_content} /> </Modal>
       </>
@@ -111,7 +110,7 @@ export default function NavBar(props)  {
           onClose={handleClose}
           MenuListProps={{ onMouseLeave: handleClose }}
         >
-          <MenuItem href='/profile' style={{ fontSize: TextThemes.fontSize['default'] }}>Dashboard</MenuItem>
+          <MenuItem component={Link} to="/profile" style={{ fontSize: TextThemes.fontSize['default'] }}>Dashboard</MenuItem>
           <MenuItem style={{ color: 'red', fontSize: TextThemes.fontSize['default'] }}>Sign Out</MenuItem>
         </Menu>
       </>
@@ -120,12 +119,12 @@ export default function NavBar(props)  {
 
   return (
     <>
-      <AppBar color='white' flex-direction='row' position={props.position}>
+      <AppBar color='white' flex-direction='row' position={props.position} >
         <Toolbar>
           <Grid>
-            <LinkStyled ver='lg' href='/'>CovEd</LinkStyled>
+            <LinkStyled ver='lg' to='/'>CovEd</LinkStyled>
             {props.links.map(link =>(
-              <LinkStyled href={link.link} ver='default'>
+              <LinkStyled to={link.link} ver='default'>
                 {link.title}
               </LinkStyled>
             ))}
@@ -134,7 +133,7 @@ export default function NavBar(props)  {
           {userLinks}
         </Toolbar>
       </AppBar>
-      <Toolbar />
+      {/* <Toolbar /> */}
     </>
   );
 }
@@ -142,6 +141,7 @@ export default function NavBar(props)  {
 NavBar.propTypes = {
   links: PropTypes.object,
   position: PropTypes.string,
+  ver: PropTypes.string,
 }
 
 NavBar.defaultProps = {
@@ -169,5 +169,6 @@ NavBar.defaultProps = {
   ],
   // sticky: stays with user as they scroll,
   // absolute: disappears after user scrolls past
-  position: 'sticky' 
+  position: 'sticky',
+  ver: 'default',
 }

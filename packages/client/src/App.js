@@ -13,8 +13,8 @@ import { AuthProvider } from './providers/AuthProvider';
 function App() {
   return (
     <AuthProvider fallback="loading">
-      <NavBar></NavBar>
       <Router>
+      <NavBar />
         <Switch>
           <Route path="/" exact>
             <HomePage />
