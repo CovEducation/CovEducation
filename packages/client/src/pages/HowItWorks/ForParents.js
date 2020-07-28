@@ -1,7 +1,5 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { flexbox } from '@material-ui/system';
-import Typography from '@material-ui/core/Typography';
 import { COLORS, FONTS } from '../../constants';
 import styled from 'styled-components';
 import Button from '../../components/Button';
@@ -48,7 +46,6 @@ const Body = styled.div`
     display: flex;
     font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-
 
 const ForParents = () => {
   const { t } = useTranslation();

@@ -76,7 +76,7 @@ const ForMentors = () => {
                 </Grid>
                 <Grid item alignItems = "center" justify = "center">
                     {t('Edit Your Profile!')} <br /> <br />
-                    {('Log in to visit your Profile page, where you will be able to edit your information including a bio. Make sure you check off "Listed as Available Mentor".')}
+                    {t('Log in to visit your Profile page, where you will be able to edit your information including a bio. Make sure you check off "Listed as Available Mentor".')}
                 </Grid>
                 </Grid>
                 <Grid item lg = {1} >
