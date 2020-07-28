@@ -51,10 +51,11 @@ const Body = styled.div`
 
 
 const ForParents = () => {
+  const { t } = useTranslation();
   return (
     <Wrapper>
-        <Title>How It Works</Title>
-        <Subtitle>For Mentors</Subtitle>
+        <Title>{t('How It Works')}</Title>
+        <Subtitle>{t('For Mentors')}</Subtitle>
 
         <Button theme="light" size="md">{('Skip To Application')}</Button>
 
@@ -65,8 +66,8 @@ const ForParents = () => {
                     <AccountCircleIcon  style = {styles.LargeIcon} />
                 </Grid>
                 <Grid item alignItems = "center" justify = "center">
-                    Register <br /> <br />
-                    Register for an account here! Make sure to input the correct parent email because you will recieve an email-verification link!
+                    {t('Register')} <br /> <br />
+                    {t('Register for an account here! Make sure to input the correct parent email because you will recieve an email-verification link!')}
                 </Grid>
                 </Grid>
                 <Grid item lg = {1} >
@@ -77,8 +78,8 @@ const ForParents = () => {
                     <Search  style = {styles.LargeIcon} />
                 </Grid>
                 <Grid item alignItems = "center" justify = "center">
-                    Find A Mentor <br /> <br />
-                    Log in to visit the Find A Mentor page , where you will be able to search for and request a mentor. Please only contact one mentor per student .
+                    {t('Find A Mentor')} <br /> <br />
+                    {t('Log in to visit the Find A Mentor page , where you will be able to search for and request a mentor. Please only contact one mentor per student.')}
                 </Grid>
                 </Grid>
                 <Grid item lg = {1} >
@@ -89,8 +90,8 @@ const ForParents = () => {
                     <People  style = {styles.LargeIcon} />
                 </Grid>
                 <Grid item alignItems = "center" justify = "center">
-                    Contact Mentee <br /> <br />
-                    Your mentor will email you to set up an initial meeting time. If you do not hear from your mentor within 48 hours, please request another mentor.
+                    {t('Meet Mentee')} <br /> <br />
+                    {t('Your mentor will email you to set up an initial meeting time. If you do not hear from your mentor within 48 hours, please request another mentor.')}
                 </Grid>
                 </Grid>
             </Grid>

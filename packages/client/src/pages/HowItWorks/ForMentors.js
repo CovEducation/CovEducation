@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import { COLORS, FONTS } from '../../constants';
 import styled from 'styled-components';
 import Button from '../../components/Button';
+import { useTranslation } from 'react-i18next';
 import Image from 'material-ui-image';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -47,12 +48,13 @@ const Body = styled.div`
 
 
 const ForMentors = () => {
+  const { t } = useTranslation();
   return (
     <Wrapper>
-        <Title>How It Works</Title>
-        <Subtitle>For Mentors</Subtitle>
+        <Title>{t('How It Works')}</Title>
+        <Subtitle>{t('For Mentors')}</Subtitle>
 
-        <Button theme="light" size="md">{('Skip To Application')}</Button>
+        <Button theme="light" size="md">{t('Skip To Application')}</Button>
 
         <Body>
             <Grid container direction = "row" justify = "center">
@@ -61,8 +63,8 @@ const ForMentors = () => {
                     <AccountCircleIcon  style = {styles.LargeIcon} />
                 </Grid>
                 <Grid item alignItems = "center" justify = "center">
-                    Register <br /> <br />
-                    Register for an account here! Make sure to input the correct parent email because you will recieve an email-verification link!
+                    {t('Register')} <br /> <br />
+                    {t('Register for an account here! Make sure to input the correct parent email because you will recieve an email-verification link!')}
                 </Grid>
                 </Grid>
                 <Grid item lg = {1} >
@@ -73,8 +75,8 @@ const ForMentors = () => {
                     <Edit  style = {styles.LargeIcon} />
                 </Grid>
                 <Grid item alignItems = "center" justify = "center">
-                    Edit Your Profile! <br /> <br />
-                    Log in to visit your Profile page, where you will be able to edit your information including a bio. Make sure you check off "Listed as Available Mentor".
+                    {t('Edit Your Profile!')} <br /> <br />
+                    {('Log in to visit your Profile page, where you will be able to edit your information including a bio. Make sure you check off "Listed as Available Mentor".')}
                 </Grid>
                 </Grid>
                 <Grid item lg = {1} >
@@ -85,8 +87,8 @@ const ForMentors = () => {
                     <Mail  style = {styles.LargeIcon} />
                 </Grid>
                 <Grid item alignItems = "center" justify = "center">
-                    Contact Mentee <br /> <br />
-                    When a parent requests you as a mentor, you will recieve an email with further instructions and contact information. Be sure to contact them as soon as possible to introduce yourself!  
+                    {t('Contact Mentee')} <br /> <br />
+                    {t('When a parent requests you as a mentor, you will recieve an email with further instructions and contact information. Be sure to contact them as soon as possible to introduce yourself!')}
                 </Grid>
                 </Grid>
             </Grid>
