@@ -51,8 +51,8 @@ const ForMentors = () => {
   const { t } = useTranslation();
   return (
     <Wrapper>
-        <Title>{t('How It Works')}</Title>
-        <Subtitle>{t('For Mentors')}</Subtitle>
+        <Title>{t('howItWorksMentors.Title')}</Title>
+        <Subtitle>{t('howItWorksMentors.Subtitle')}</Subtitle>
 
         <Button theme="light" size="md">{t('Skip To Application')}</Button>
 
@@ -63,8 +63,8 @@ const ForMentors = () => {
                     <AccountCircleIcon  style = {styles.LargeIcon} />
                 </Grid>
                 <Grid item alignItems = "center" justify = "center">
-                    {t('Register')} <br /> <br />
-                    {t('Register for an account here! Make sure to input the correct parent email because you will recieve an email-verification link!')}
+                    {t('howItWorksMentors.RegisterTitle')} <br /> <br />
+                    {t('howItWorksMentors.Register')}
                 </Grid>
                 </Grid>
                 <Grid item lg = {1} >
@@ -75,8 +75,8 @@ const ForMentors = () => {
                     <Edit  style = {styles.LargeIcon} />
                 </Grid>
                 <Grid item alignItems = "center" justify = "center">
-                    {t('Edit Your Profile!')} <br /> <br />
-                    {t('Log in to visit your Profile page, where you will be able to edit your information including a bio. Make sure you check off "Listed as Available Mentor".')}
+                    {t('howItWorksMentors.EditTitle')} <br /> <br />
+                    {t('howItWorksMentors.Edit')}
                 </Grid>
                 </Grid>
                 <Grid item lg = {1} >
@@ -87,8 +87,8 @@ const ForMentors = () => {
                     <Mail  style = {styles.LargeIcon} />
                 </Grid>
                 <Grid item alignItems = "center" justify = "center">
-                    {t('Contact Mentee')} <br /> <br />
-                    {t('When a parent requests you as a mentor, you will recieve an email with further instructions and contact information. Be sure to contact them as soon as possible to introduce yourself!')}
+                    {t('howItWorksMentors.ContactTitle')} <br /> <br />
+                    {t('howItWorksMentors.Contact')}
                 </Grid>
                 </Grid>
             </Grid>

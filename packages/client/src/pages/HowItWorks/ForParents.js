@@ -51,8 +51,8 @@ const ForParents = () => {
   const { t } = useTranslation();
   return (
     <Wrapper>
-        <Title>{t('How It Works')}</Title>
-        <Subtitle>{t('For Mentors')}</Subtitle>
+        <Title>{t('howItWorksParents.Title')}</Title>
+        <Subtitle>{t('howItWorksParents.Subtitle')}</Subtitle>
 
         <Button theme="light" size="md">{('Skip To Application')}</Button>
 
@@ -63,8 +63,8 @@ const ForParents = () => {
                     <AccountCircleIcon  style = {styles.LargeIcon} />
                 </Grid>
                 <Grid item alignItems = "center" justify = "center">
-                    {t('Register')} <br /> <br />
-                    {t('Register for an account here! Make sure to input the correct parent email because you will recieve an email-verification link!')}
+                    {t('howItWorksParents.RegisterTitle')} <br /> <br />
+                    {t('howItWorksParents.Register')}
                 </Grid>
                 </Grid>
                 <Grid item lg = {1} >
@@ -75,8 +75,8 @@ const ForParents = () => {
                     <Search  style = {styles.LargeIcon} />
                 </Grid>
                 <Grid item alignItems = "center" justify = "center">
-                    {t('Find A Mentor')} <br /> <br />
-                    {t('Log in to visit the Find A Mentor page , where you will be able to search for and request a mentor. Please only contact one mentor per student.')}
+                    {t('howItWorksParents.findTitle')} <br /> <br />
+                    {t('howItWorksParents.FindAMentor')}
                 </Grid>
                 </Grid>
                 <Grid item lg = {1} >
@@ -87,8 +87,8 @@ const ForParents = () => {
                     <People  style = {styles.LargeIcon} />
                 </Grid>
                 <Grid item alignItems = "center" justify = "center">
-                    {t('Meet Mentee')} <br /> <br />
-                    {t('Your mentor will email you to set up an initial meeting time. If you do not hear from your mentor within 48 hours, please request another mentor.')}
+                    {t('howItWorksParents.ContactTitle')} <br /> <br />
+                    {t('howItWorksParents.Contact')}
                 </Grid>
                 </Grid>
             </Grid>
