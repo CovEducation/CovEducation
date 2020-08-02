@@ -10,16 +10,19 @@ const ButtonThemes = {
   },
   width: {
     sm: 120,
+    smmd: 140,
     md: 206,
     lg: 264,
   },
   height: {
     sm: 30,
+    smmd: 40,
     md: 50,
     lg: 60,
   },
   fontSize: {
     sm: 14,
+    smmd: 18,
     md: 18,
     lg: 18,
   },
@@ -61,10 +64,11 @@ const Button = ({
   size = 'md',
   basic = false,
   onClick,
+  type = 'submit',
   round = false,
 }) => {
   return (
-    <ButtonStyled theme={theme} size={size} basic={basic} onClick={onClick} round={round}>
+    <ButtonStyled theme={theme} size={size} basic={basic} onClick={onClick} round={round} type={type}>
       {children}
     </ButtonStyled>
   );
@@ -75,5 +79,6 @@ Button.propTypes = {
   onClick: PropTypes.func,
   size: PropTypes.string,
   basic: PropTypes.bool,
+  type: PropTypes.string,
 };
 export default Button;
