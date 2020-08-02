@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import Button from '../../components/Button';
 import LinesBackground from './LinesBackground';
 import { COLORS, FONTS } from '../../constants';
