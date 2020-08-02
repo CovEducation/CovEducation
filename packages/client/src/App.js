@@ -4,6 +4,7 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import HomePage from './pages/Home';
+import FAQsPage from './pages/FAQs';
 import ProfilePage from './pages/Profile';
 import SignUpPage from './pages/SignUp';
 import SignInPage from './pages/SignIn';
@@ -22,6 +23,9 @@ function App() {
           </Route>
           <Route path="/profile">
             <ProfilePage />
+          </Route>
+          <Route path="/faqs">
+            <FAQsPage />
           </Route>
           <Route path="/signup">
             <SignUpPage />
