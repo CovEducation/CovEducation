@@ -4,7 +4,6 @@ export const COLORS = {
   white: '#FFFFFF',
   darkblue: '#0F3C61',
   grey: '#D2D2D2',
-<<<<<<< HEAD
   lightgray: '#EDEDED',
   lightorange: '#FFF6DE',
   lightblue: '#E7F2FB',
@@ -13,9 +12,7 @@ export const COLORS = {
 export const FONTS = {
   font1: "'Raleway', sans-serif",
   font2: "'Montserrat', sans-serif",
-=======
   black: '#000000',
->>>>>>> d10111880be4832745ea42b32d898035faa40af2
 };
 
 export const timeZones = [
