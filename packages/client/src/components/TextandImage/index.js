@@ -18,7 +18,7 @@ const HorzIm = ({children, imgpath, shape}) => {
       <Grid item xs={12} sm={4} justify="flex-end">
       {shape == "circle"? <img className="circle" src={imgpath} /> : <img src={imgpath} /> }
       </Grid>
-      <Grid item xs={12} sm={8} justify="flex-start">
+      <Grid item xs={12} sm={8} justify="flex-start" alignItems="flex-start">
       {children}
       </Grid>
     </Grid>

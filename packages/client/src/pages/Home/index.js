@@ -7,6 +7,7 @@ import LinesBackground from './LinesBackground';
 import { COLORS, FONTS } from '../../constants';
 import Section from '../../components/Section';
 import ImText from '../../components/TextandImage';
+import Hidden from '@material-ui/core/Hidden';
 
 //images
 import art from './img/art.svg';
@@ -76,7 +77,129 @@ const HomepageBody = styled.div`
     font-weight: 400;
     font-family: ${FONTS.font2};
   }
+  p.title {
+    font-size: max(1.5vw, 18px);
+    font-weight: 400;
+    font-family: ${FONTS.font2};
+    color: ${COLORS.darkblue};
+  }
+  p.desc {
+    font-size: max(1vw, 16px);
+    font-weight: 300;
+    font-family: ${FONTS.font2};
+  }
+  @media (min-width: 768px){
+    p.title{
+      text-align: left;
+    }
+    p.desc{
+      text-align: left;
+    }
+  }
 `;
+
+const Subjects = [
+  {
+    key: "padding"
+  },
+  {
+    key: 1,
+    row: 1,
+    imgsrc: writing,
+    text: "Writing"
+  },
+  {
+    key: 2,
+    row: 1,
+    imgsrc: math,
+    text: "Math"
+  },
+  {
+    key: 3,
+    row: 1,
+    imgsrc: science,
+    text: "Science"
+  },
+  {
+    key: 4,
+    row: 1,
+    imgsrc: history,
+    text: "History"
+  },
+  {
+    key: 5,
+    row: 1,
+    imgsrc: cs,
+    text: "Computer Science"
+  },
+  {
+    key: "padding"
+  },
+  {
+    key: "padding"
+  },
+  {
+    key: 6,
+    row: 2,
+    imgsrc: eco,
+    text: "Economics"
+  },
+  {
+    key: 7,
+    row: 2,
+    imgsrc: music,
+    text: "Music"
+  },
+  {
+    key: 8,
+    row: 2,
+    imgsrc: art,
+    text: "Art"
+  },
+  {
+    key: 9,
+    row: 2,
+    imgsrc: lang,
+    text: "Languages"
+  },
+  {
+    key: 10,
+    row: 2,
+    imgsrc: testPrep,
+    text: "Test Preparation"
+  },
+  {
+    key: "padding"
+  }
+]
+
+const WhyJoin = [
+  {
+    key: 1,
+    title: "One-on-One Mentoring",
+    desc: "You get to have mentorship beyond academics.",
+    imgsrc: mentoring
+  },
+  {
+    key: 2,
+    title: "Lifelong Community",
+    desc: "You get to form lifelong friendships and expand your network.",
+    imgsrc: community
+  },
+  {
+    key: 3,
+    title: "Events beyond the classroom",
+    desc: "Access our speaker series, career panels, and networking sessions!",
+    imgsrc: classroom
+  },
+  {
+    key: 4,
+    title: "It's Free",
+    desc: "It's entirely cost-free!",
+    imgsrc: free
+  }
+]
+
 
 const HomePage = () => {
   const { t } = useTranslation();
@@ -92,23 +215,19 @@ const HomePage = () => {
         </div>
       </HomepageSection>
       <HomepageBody>
-        <Section p="100px">
-          <h2>{t('home.whyBePartOfCovEd')}</h2>
-          <Grid container direction = "row" justify = "center">
-          <Grid item lg = {4} md = {12} xs = {12}>  <ImText arrangement="horizontal" shape="circle" img={mentoring} minwidth="100px" minheight="100px">
-          One-on-One Mentoring<br /> You get to have mentorship beyond academics.</ImText> </Grid>
-          <Grid item lg = {4} md = {12} xs = {12}>  <ImText arrangement="horizontal" shape="circle" img={community} minwidth="100px" minheight="100px">
-          Title <br /> You get to form lifelong friendships.</ImText> </Grid>
-          </Grid>
-          <Grid container direction = "row" justify = "center">
-          <Grid item lg = {4} md = {12} xs = {12}>  <ImText arrangement="horizontal" shape="circle" img={classroom} minwidth="100px" minheight="100px">
-          Title <br /> You get access to speaker series & career panels.</ImText> </Grid>
-          <Grid item lg = {4} md = {12} xs = {12}>  <ImText arrangement="horizontal" shape="circle" img={free} minwidth="100px" minheight="100px">
-          Title <br /> It’s entirely cost-free!</ImText> </Grid>
+        <Section p="5vw">
+          <h2>{t('home.whyBePartOfCovEd')}</h2> <br /><br />
+          <Grid container direction = "row" justify = "center" spacing={6}>
+          {WhyJoin.map((s) => {
+            return (
+            <Grid item sm={5} xs = {12}> <ImText arrangement="horizontal" shape="circle" img={s.imgsrc} minwidth="100px" minheight="100px">
+              <p className="title">{s.title}</p>   <p className="desc">{s.desc} </p></ImText> </Grid>
+            )
+          })}
           </Grid>
         </Section>
         <Section backgroundColor='lightorange' p="100px">
-          <h2>{t('home.howCovEdWorks')}</h2> 
+          <h2>{t('home.howCovEdWorks')}</h2>
           <Button theme="accent" size="md">{t('home.MenteesLearnMoreButton')}</Button>
           <Button theme="accent" size="md">{t('home.MentorsLearnMoreButton')}</Button>
         </Section>
@@ -121,31 +240,14 @@ const HomePage = () => {
           <p>- {t('home.quoteauth')}</p>
         </Section>
         <Section p="100px">
-          <h2>{t('home.findTutors')}</h2>
-          <Grid container direction = "row" justify = "center">
-          <Grid item lg = {2} md = {6}> <ImText arrangement="vertical" shape="circle" img={writing} minwidth="100px" minheight="100px">
-          Writing </ImText> </Grid>
-          <Grid item lg = {2}md = {6}> <ImText arrangement="vertical" shape="circle" img={math} minwidth="100px" minheight="100px">
-          Math</ImText> </Grid>
-          <Grid item lg = {2}md = {6}> <ImText arrangement="vertical" shape="circle" img={science} minwidth="100px" minheight="100px">
-          Science</ImText> </Grid>
-          <Grid item lg = {2}md = {6}> <ImText arrangement="vertical" shape="circle" img={history} minwidth="100px" minheight="100px">
-          History </ImText> </Grid>
-          <Grid item lg = {2}md = {6}> <ImText arrangement="vertical" shape="circle" img={cs} minwidth="100px" minheight="100px">
-          Computer <br />
-          Science</ImText> </Grid> 
-          </Grid><br /><br />
-          <Grid container direction = "row" justify = "center">
-          <Grid item lg = {2}md = {6}> <ImText arrangement="vertical" shape="circle" img={eco} minwidth="100px" minheight="100px">
-          Economics</ImText> </Grid>
-          <Grid item lg = {2}md = {6}> <ImText arrangement="vertical" shape="circle" img={music} minwidth="100px" minheight="100px">
-          Music</ImText> </Grid>
-          <Grid item lg = {2}md = {6}> <ImText arrangement="vertical" shape="circle" img={art} minwidth="100px" minheight="100px">
-          Art</ImText> </Grid>
-          <Grid item lg = {2}md = {6}> <ImText arrangement="vertical" shape="circle" img={lang} minwidth="100px" minheight="100px">
-          Languages</ImText> </Grid>
-          <Grid item lg = {2}md = {6}> <ImText arrangement="vertical" shape="circle" img={testPrep} minwidth="100px" minheight="100px">
-          Test Prep</ImText> </Grid> 
+          <h2>{t('home.findTutors')}</h2> <br /><br />
+          <Grid container direction = "row" spacing={3} justify="center">
+          {Subjects.map((s) => {
+            return (
+              s.key === "padding"? <Hidden smDown><Grid item sm={1}/></Hidden>:<Grid item sm = {2} xs = {6}> <ImText arrangement="vertical" shape="circle" img={s.imgsrc} minwidth="100px" minheight="100px">
+              {s.text} </ImText> </Grid>
+            )
+          })}
           </Grid>
         </Section>
         <Section backgroundColor='lightorange' p="100px">
