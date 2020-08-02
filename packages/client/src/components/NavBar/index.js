@@ -118,7 +118,7 @@ export default function NavBar(props)  {
 
   return (
     <>
-      <AppBar color='white' flex-direction='row' position={props.position} >
+      <AppBar color='white' flex-direction='row' position={props.position} elevation={0}>
         <Toolbar>
           <Grid>
             <LinkStyled to='/' ver='lg'>CovEd</LinkStyled>

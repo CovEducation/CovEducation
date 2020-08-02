@@ -2,6 +2,7 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
+import Link from '@material-ui/core/Link';
 import Button from '../../components/Button';
 import LinesBackground from './LinesBackground';
 import { COLORS, FONTS } from '../../constants';
@@ -251,8 +252,12 @@ const HomePage = () => {
           </Grid>
         </Section>
         <Section backgroundColor='lightorange' p="100px">
-          <h2>{t('home.questions')}</h2>
-          <p>{t('home.questionsans')}</p>
+        <h2>{t('home.questions')}</h2>
+        <p>
+        <Trans i18nKey="home.questionsans">
+        Check out our <Link href='/faqs'> FAQs page </Link> to see if we've already answered your question or Contact Us!
+        </Trans>
+        </p>
         </Section>
       </HomepageBody>
     </HomeWrapper>

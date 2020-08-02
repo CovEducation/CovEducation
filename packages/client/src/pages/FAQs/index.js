@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
+import { useTranslation, Trans} from 'react-i18next';
 import { COLORS, FONTS, FAQS } from '../../constants';
 import Accordion, { AccordionRow } from '../../components/Accordion';
 import Section from '../../components/Section';

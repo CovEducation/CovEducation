@@ -6,14 +6,10 @@ import './App.css';
 import HomePage from './pages/Home';
 import FAQsPage from './pages/FAQs';
 import ProfilePage from './pages/Profile';
-<<<<<<< HEAD
 import SignUpPage from './pages/SignUp';
 import SignInPage from './pages/SignIn';
 import Signin from './components/SignIn';
 import NavBar from './components/NavBar';
-=======
-import FAQsPage from './pages/FAQs';
->>>>>>> 748fd922de3a597703758845f35e18af1644b0bb
 import { AuthProvider } from './providers/AuthProvider';
 
 function App() {
@@ -31,7 +27,6 @@ function App() {
           <Route path="/faqs">
             <FAQsPage />
           </Route>
-<<<<<<< HEAD
           <Route path="/signup">
             <SignUpPage />
           </Route>
@@ -43,8 +38,6 @@ function App() {
             <br/>
           </Route>
           <Route path="/sign-in" component={Signin} />
-=======
->>>>>>> 748fd922de3a597703758845f35e18af1644b0bb
         </Switch>
       </Router>
     </AuthProvider>
