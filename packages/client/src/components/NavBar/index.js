@@ -12,30 +12,29 @@ import Modal from '../Modal';
 import Wizard from '../Wizard';
 import Button from '../Button';
 import styled from 'styled-components';
-import { COLORS } from '../../constants';
+import { FONTS, COLORS } from '../../constants';
 
 
 const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
 
 const TextThemes = {
   fontSize: {
-    default: 18,
-    lg: 22,
+    default: 'max(16px,1vw)',
+    lg: 'max(22px,1.2vw)',
   },
   fontWeight: {
-    default: 'normal',
-    lg: 'bold',
+    default: '400',
+    lg: '700',
   }
 }
 
 const LinkStyled = styled(Link)`
-  font-family: Muli, sans-serif;
+  font-family: ${FONTS.font1};
   font-color: ${COLORS.blue};
   padding-right: 40px;
-  font-size: ${(props) => TextThemes.fontSize[props.ver]}px;
+  font-size: ${(props) => TextThemes.fontSize[props.ver]};
   font-weight: ${(props) => TextThemes.fontWeight[props.ver]};
   text-decoration: none;
-
   &:link {
     color: ${COLORS.blue};
   }
@@ -68,12 +67,12 @@ export default function NavBar(props)  {
   };
 
   let userLinks;
-  if (false) {
+  if (true) {
     userLinks = (
       <>
         <LinkStyled to='/login' ver='default'>Login</LinkStyled>
         <div/>
-        <Modal title="Sign Up" trigger={<Button theme='accent' size='smmd'> Sign Up </Button>}> <Wizard content={Wiz_content} /> </Modal>
+        <Modal title="Sign Up" trigger={<Button theme='accent' size='sm'> Sign Up </Button>}> <Wizard content={Wiz_content} /> </Modal>
       </>
     );
   } else {
@@ -122,7 +121,7 @@ export default function NavBar(props)  {
       <AppBar color='white' flex-direction='row' position={props.position} >
         <Toolbar>
           <Grid>
-            <LinkStyled ver='lg' to='/'>CovEd</LinkStyled>
+            <LinkStyled to='/' ver='lg'>CovEd</LinkStyled>
             {props.links.map(link =>(
               <LinkStyled to={link.link} ver='default'>
                 {link.title}
@@ -133,7 +132,6 @@ export default function NavBar(props)  {
           {userLinks}
         </Toolbar>
       </AppBar>
-      {/* <Toolbar /> */}
     </>
   );
 }
