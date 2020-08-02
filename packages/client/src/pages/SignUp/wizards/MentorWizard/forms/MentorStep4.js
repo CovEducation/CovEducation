@@ -45,6 +45,7 @@ const MentorStep4 = (props) => {
         const userData = props.data;
         const newMentor = new Mentor(userData.mentorName, userData.mentorEmail, "EST", userData.introduction, userData.selectedSubjects, userData.selectedGradeLevels);
         Auth.signup(userData.mentorEmail, userData.password1, newMentor);
+        alert("Success! Redirecting...");
     };
 
     return (

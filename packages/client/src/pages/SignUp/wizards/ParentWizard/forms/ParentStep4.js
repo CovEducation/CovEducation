@@ -19,7 +19,6 @@ const ParentStep4 = (props) => {
     const handleSubmit = () => {
         // TODO(johancc) - on the child data, it says 'seletedGradeLevel' instead of 'selectedGradeLevel'.
         const userData = props.data;
-        console.log(userData)
         const mentees = userData.registeredChildren
           .filter((child) => child.studentName && child.studentEmail && child.seletedGradeLevel && child.selectedSubjects)
           .map((child) => new Mentee(child.studentName, child.studentEmail, child.seletedGradeLevel, child.selectedSubjects));
