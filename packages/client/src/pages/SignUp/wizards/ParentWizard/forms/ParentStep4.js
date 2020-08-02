@@ -4,6 +4,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '../../../../../components/Button';
 
+import { Parent, Mentee } from '../../../../../models';
+import useAuth from "../../../../../providers/AuthProvider";
+
 const AgreementCheckboxWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -11,9 +14,18 @@ const AgreementCheckboxWrapper = styled.div`
 `;
 
 const ParentStep4 = (props) => {
-
+    const Auth = useAuth();
     const isDisabled = !(props.data.agreedTermsOfService && props.data.agreedPrivacyPolicy)
-
+    const handleSubmit = () => {
+        // TODO(johancc) - on the child data, it says 'seletedGradeLevel' instead of 'selectedGradeLevel'.
+        const userData = props.data;
+        console.log(userData)
+        const mentees = userData.registeredChildren
+          .filter((child) => child.studentName && child.studentEmail && child.seletedGradeLevel && child.selectedSubjects)
+          .map((child) => new Mentee(child.studentName, child.studentEmail, child.seletedGradeLevel, child.selectedSubjects));
+        const newParent = new Parent(userData.parentName, userData.parentEmail, userData.timeZone, mentees);
+        Auth.signup(userData.parentEmail, userData.password1, newParent);
+    };
     return (
         <AgreementCheckboxWrapper>
             {JSON.stringify(props.data)}
@@ -38,6 +50,7 @@ const ParentStep4 = (props) => {
             <Button
                 children={<div>Sign Up</div>}
                 disabled={isDisabled}
+                onClick={handleSubmit}
             />
         </AgreementCheckboxWrapper>
     )

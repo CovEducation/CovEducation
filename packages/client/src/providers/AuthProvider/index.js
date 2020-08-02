@@ -94,7 +94,7 @@ const useAuthProvider = () => {
      * @return {Promise<Mentor|Parent>} the current logged in user
      */
     const getCurrentUser = () => {
-        if (auth === AUTH_STATE.UNINITIALIZED || auth === AUTH_STATE.LOGGED_OUT) {
+        if (auth === AUTH_STATE.UNINITIALIZED || auth === AUTH_STATE.LOGGED_OUT || auth === undefined) {
             return Promise.reject('No user currently logged in.');
         } else {
             // query user for user data if already not cached

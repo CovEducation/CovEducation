@@ -3,9 +3,11 @@ import Button from '../../../../../components/Button';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
+import { Mentor } from '../../../../../models';
+import useAuth from "../../../../../providers/AuthProvider";
 
 const MentorStep4 = (props) => {
-
+    const Auth = useAuth();
     const termsOfServiceCheckbox = (
         <Checkbox
             checked={props.data.termsOfService}
@@ -37,6 +39,13 @@ const MentorStep4 = (props) => {
     );
 
     const isDisabled = !(props.data.termsOfService && props.data.privacyPolicy);
+    
+    const handleSubmit = () => {
+        // TODO(johancc) - Add timezone as part of the required fields.
+        const userData = props.data;
+        const newMentor = new Mentor(userData.mentorName, userData.mentorEmail, "EST", userData.introduction, userData.selectedSubjects, userData.selectedGradeLevels);
+        Auth.signup(userData.mentorEmail, userData.password1, newMentor);
+    };
 
     return (
         <div>
@@ -46,6 +55,7 @@ const MentorStep4 = (props) => {
                 {privacyPolicyControl}
                 <Button
                     disabled={isDisabled}
+                    onClick={handleSubmit}
                     children={<div>Submit</div>}
                 />
             </FormGroup>

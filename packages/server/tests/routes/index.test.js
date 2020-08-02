@@ -8,3 +8,10 @@ describe('Test Index Routes', () => {
     expect(response.text).toBe('coved api is working');
   });
 });
+
+describe('Test authenticated endpoint with no token', () => {
+  test('/auth', async () => {
+    const response = await request(app).get('/auth');
+    expect(response.statusCode).toBe(403);
+  });
+});

@@ -6,7 +6,7 @@ const ParentCollectionRef = Db.collection('parents');
 const ParentConverter = {
     toFirestore: (parent) => {
         const mentees = [];
-
+        // TODO (johancc) - Make sure that this schema is followed in all other places.
         // must convert Mentee object to plain json
         parent.mentees.forEach(s => {
             mentees.push({
@@ -50,6 +50,14 @@ export class Mentee {
         this.email = email;
         this.grade = grade;
         this.subjects = subjects;
+        this.validate();
+    }
+
+    validate() {
+        if (!this.name) throw Error('Mentee must have a name');
+        if (!this.email) throw Error('Mentee must have an email');
+        if (!this.grade) throw Error('Mentee must have a grade level');
+        if (!this.subjects) throw Error('Mentee must have subjects');
     }
 }
 
