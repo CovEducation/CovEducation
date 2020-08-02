@@ -8,13 +8,14 @@ import ProfilePage from './pages/Profile';
 import SignUpPage from './pages/SignUp';
 import SignInPage from './pages/SignIn';
 import Signin from './components/SignIn';
+import NavBar from './components/NavBar';
 import { AuthProvider } from './providers/AuthProvider';
 
 function App() {
   return (
     <AuthProvider fallback="loading">
-      {/* Add Navbar component here */}
       <Router>
+      <NavBar />
         <Switch>
           <Route path="/" exact>
             <HomePage />

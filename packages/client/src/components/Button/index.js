@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { COLORS } from '../../constants';
+import { COLORS, FONTS } from '../../constants';
 
 const ButtonThemes = {
   backgroundColor: {
@@ -10,16 +10,19 @@ const ButtonThemes = {
   },
   width: {
     sm: 120,
+    smmd: 140,
     md: 206,
     lg: 264,
   },
   height: {
     sm: 30,
+    smmd: 40,
     md: 50,
     lg: 60,
   },
   fontSize: {
     sm: 14,
+    smmd: 18,
     md: 18,
     lg: 18,
   },
@@ -30,7 +33,8 @@ const ButtonThemes = {
 };
 
 const ButtonStyled = styled.button`
-  font-family: Roboto;
+  font-family: ${FONTS.font1};
+  font-weight: 500;
   min-width: ${(props) => ButtonThemes.width[props.size]}px;
   min-height: ${(props) => ButtonThemes.height[props.size]}px;
   font-size: ${(props) => ButtonThemes.fontSize[props.size]}px;
