@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const BiggerHeader = styled.h1`
     font-size: 4em;
+    margin: 2px 4px 2px 4px;
 `
 const BigHeader = styled.h3`
     margin: 1px 0px 5px 0px;
@@ -36,7 +37,7 @@ const Major = ({ mentor }) => {
 const Subjects = ({ mentor }) => {
     return (
         <td width="40%">
-            <Header>Major: </Header>{ mentor.major } <br />
+            <Header>Major: </Header>{ mentor.major } <br/><br/>
             <Header>Tags: </Header>{ mentor.tags.join(', ')}
         </td>
     )
@@ -61,6 +62,7 @@ const Mentor = ({ mentor }) => {
                                 <BiggerHeader>
                                     { mentor.name }
                                 </BiggerHeader>
+                                <h3>{ mentor.college }</h3>
                             </td>
                         </tr>
                         <br />
@@ -68,8 +70,10 @@ const Mentor = ({ mentor }) => {
                             <Major mentor={mentor} />
                             <Subjects mentor={mentor} />
                         </tr>
-                        <tr>
-                            <Bio mentor={mentor} />
+                        <tr >
+                            <td colspan="2" >
+                                <Bio mentor={mentor} />
+                            </td>
                         </tr>
                     </tbody>
                 </table>
