@@ -51,8 +51,9 @@ test('create', () => {
         const auth = { uid: 'this-is-a-uid' };
         mentor.create(auth);
     } catch (err) {
-        console.log(err);
-        // this will be a undefined error since we mocked firebase
+        // console.log(err);
+        // returns an undefined error along the lines of
+        //  cannot read property 'doc' of undefined
     }
 
     expect(mentor.id).toBe('this-is-a-uid');
