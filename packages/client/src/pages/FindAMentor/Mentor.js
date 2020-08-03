@@ -46,7 +46,7 @@ const MajorTags = ({ mentor }) => {
     )
 }
 
-// Displays the picture, name, and major of a mentor.
+// Displays additional data about the mentor
 const Mentor = ({ mentor }) => {
     if (!validateMentorData(mentor)) {
         return (<></>);

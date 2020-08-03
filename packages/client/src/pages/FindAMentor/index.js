@@ -14,26 +14,6 @@ const FindAMentorPage = () => {
     //     the mentor results. The tags set by the user should propagate to the mentorship
     //     column - the only shared state component.
 
-    // const { user } = useAuth();
-    // const { tags, setTags } = useState([]);
-    // const { subjects, setSubjects } = useState([]);
-    //
-    // const handleMentorshipRequest = (event) => {
-    //     // TODO(johanc): Implement.
-    // };
-    //
-    // const openModal = (mentor) => {
-    //     // TODO(johanc): Implement.
-    // }
-
-    // TODO: Implement - should use setTags() to update the state.
-    // const FilterColumn = () => {
-    //
-    //     return (
-    //         <a href='#' onClick={() => setTags([])}>Placeholder filter component.</a>
-    //     )
-    // };
-
     // const mentors = get('/api/mentors', { tags: tags, subjects: subjects });
     const mentors = [
         {
@@ -75,9 +55,6 @@ const FindAMentorPage = () => {
 
     return (
             <div className="container">
-                {/*<div className="col-md-4">*/}
-                {/*    <FilterColumn/>*/}
-                {/*</div>*/}
                 <div className="col-md-8">
                     <MentorColumn/>
                 </div>
