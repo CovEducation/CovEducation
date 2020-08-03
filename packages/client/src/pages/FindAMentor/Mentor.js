@@ -74,7 +74,7 @@ const Mentor = ({ mentor }) => {
                             <MajorTags mentor={mentor} />
                         </tr>
                         <tr >
-                            <td colspan="2" >
+                            <td colSpan="2" >
                                 <Bio mentor={mentor} />
                             </td>
                         </tr>
