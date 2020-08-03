@@ -258,7 +258,7 @@ const HomePage = () => {
           <h2>{t('home.howCovEdWorks')}</h2>
           {howItWorks.map((s) => {
             return (
-            <Grid item sm={5} xs = {12}> <ImText arrangement="vertical" img= {s.imgsrc} minwidth="300px" minheight="200px"><Circle>{s.key}</Circle>{t(s.step)} </ImText> </Grid>)})}
+            <Grid item lg = {3}sm={3} xs = {12}> <ImText arrangement="vertical" img= {s.imgsrc} minwidth="300px" minheight="200px"><Circle>{s.key}</Circle>{t(s.step)} </ImText> </Grid>)})}
           <Button theme="accent" size="md">{t('home.MenteesLearnMoreButton')}</Button>
           <Button theme="accent" size="md">{t('home.MentorsLearnMoreButton')}</Button>
         </Section>
