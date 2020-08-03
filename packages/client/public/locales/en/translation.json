@@ -11,6 +11,37 @@
     "questions": "Questions?",
     "questionsans": "Check out our FAQ page to see if we've already answered your question or Contact Us!",
     "quote":" I am so grateful for how much my CovEd mentor has taught me! Where would I have been without him, I truly don't know! Thanks CovEducation!",
-    "quoteauth": "John Smith"
+    "quoteauth": "John Smith",
+
+     "subjects": {
+        "Writing": "Writing",
+        "Math": "Math",
+        "Science": "Writing",
+        "History": "History",
+        "ComputerScience": "Computer Science",
+        "Economics": "Economics",
+        "Music": "Music",
+        "Art": "Art",
+        "Languages": "Languages",
+        "testPrep": "Test Prep"
+        },
+
+     "whyJoin": {
+       "mentoringTitle": "One on One Mentoring",
+       "mentoring": "You get to have mentorship beyond academics.",
+       "communityTitle": "Lifelong Community",
+       "community": "You get to form lifelong friendships and expand your network.",
+       "classroomTitle": "Events Beyond The Classroom",
+       "classroom": "Access our speaker series, career panels, and networking sessions!",
+       "freeTitle": "It's Free",
+       "costFree": "It's entirely cost-free!" 
+      },
+
+      "howItWorks": {
+          "step1": "Mentors sign up to mentor via a quick & easy registration page.",
+          "step2": "Mentees register, and then look for an available mentor who tutors in their desired subjects of choice.",
+          "step3": "Once you’ve requested your mentor, they will receive a notification to then reach out to you"
+      }
+      
   }
 }

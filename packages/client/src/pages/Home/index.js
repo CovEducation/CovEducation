@@ -24,8 +24,18 @@ import music from './img/music.svg';
 import science from './img/science.svg';
 import testPrep from './img/testPrep.svg';
 import writing from './img/writing.svg';
+import tempHIW from './img/tempHIW.svg';
 
 
+
+
+ const Circle = styled.circle`
+  height: 25px;
+  width: 25px;
+  background-color: ${COLORS.yellow};
+  border-radius: 50%;
+  display: inline-block;
+  `;
 
 const HomeWrapper = styled.div`
   text-align: center;
@@ -98,6 +108,24 @@ const HomepageBody = styled.div`
   }
 `;
 
+const howItWorks = [
+  {
+    key: 1,
+    step: 'home.howItWorks.step1',
+    imgsrc: tempHIW
+  },
+  {
+    key: 2,
+    step: 'home.howItWorks.step2',
+    imgsrc: tempHIW
+  },
+  {
+    key: 3,
+    step: 'home.howItWorks.step3',
+    imgsrc: tempHIW
+  }
+]
+
 const Subjects = [
   {
     key: "padding"
@@ -106,31 +134,31 @@ const Subjects = [
     key: 1,
     row: 1,
     imgsrc: writing,
-    text: "Writing"
+    text: 'home.subjects.Writing'
   },
   {
     key: 2,
     row: 1,
     imgsrc: math,
-    text: "Math"
+    text: 'home.subjects.Math'
   },
   {
     key: 3,
     row: 1,
     imgsrc: science,
-    text: "Science"
+    text: 'home.subjects.Science'
   },
   {
     key: 4,
     row: 1,
     imgsrc: history,
-    text: "History"
+    text: 'home.subjects.History'
   },
   {
     key: 5,
     row: 1,
     imgsrc: cs,
-    text: "Computer Science"
+    text: 'home.subjects.ComputerScience'
   },
   {
     key: "padding"
@@ -142,31 +170,31 @@ const Subjects = [
     key: 6,
     row: 2,
     imgsrc: eco,
-    text: "Economics"
+    text: 'home.subjects.Economics'
   },
   {
     key: 7,
     row: 2,
     imgsrc: music,
-    text: "Music"
+    text: 'home.subjects.Music'
   },
   {
     key: 8,
     row: 2,
     imgsrc: art,
-    text: "Art"
+    text: 'home.subjects.Art'
   },
   {
     key: 9,
     row: 2,
     imgsrc: lang,
-    text: "Languages"
+    text: 'home.subjects.Languages'
   },
   {
     key: 10,
     row: 2,
     imgsrc: testPrep,
-    text: "Test Preparation"
+    text: 'home.subjects.testPrep'
   },
   {
     key: "padding"
@@ -176,26 +204,26 @@ const Subjects = [
 const WhyJoin = [
   {
     key: 1,
-    title: "One-on-One Mentoring",
-    desc: "You get to have mentorship beyond academics.",
+    title: 'home.whyJoin.mentoringTitle',
+    desc: 'home.whyJoin.mentoring',
     imgsrc: mentoring
   },
   {
     key: 2,
-    title: "Lifelong Community",
-    desc: "You get to form lifelong friendships and expand your network.",
+    title: 'home.whyJoin.communityTitle',
+    desc: 'home.whyJoin.community',
     imgsrc: community
   },
   {
     key: 3,
-    title: "Events beyond the classroom",
-    desc: "Access our speaker series, career panels, and networking sessions!",
+    title: 'home.whyJoin.classroomTitle',
+    desc: 'home.whyJoin.classroomTitle',
     imgsrc: classroom
   },
   {
     key: 4,
-    title: "It's Free",
-    desc: "It's entirely cost-free!",
+    title: 'home.whyJoin.freeTitle',
+    desc: 'home.whyJoin.costFree',
     imgsrc: free
   }
 ]
@@ -221,13 +249,16 @@ const HomePage = () => {
           {WhyJoin.map((s) => {
             return (
             <Grid item sm={5} xs = {12}> <ImText arrangement="horizontal" shape="circle" img={s.imgsrc} minwidth="100px" minheight="100px">
-              <p className="title">{s.title}</p>   <p className="desc">{s.desc} </p></ImText> </Grid>
+              <p className="title">{t(s.title)}</p>   <p className="desc">{t(s.desc)} </p></ImText> </Grid>
             )
           })}
           </Grid>
         </Section>
         <Section backgroundColor='lightorange' p="100px">
           <h2>{t('home.howCovEdWorks')}</h2>
+          {howItWorks.map((s) => {
+            return (
+            <Grid item sm={5} xs = {12}> <ImText arrangement="vertical" img= {s.imgsrc} minwidth="300px" minheight="200px"><Circle>{s.key}</Circle>{t(s.step)} </ImText> </Grid>)})}
           <Button theme="accent" size="md">{t('home.MenteesLearnMoreButton')}</Button>
           <Button theme="accent" size="md">{t('home.MentorsLearnMoreButton')}</Button>
         </Section>
@@ -245,7 +276,7 @@ const HomePage = () => {
           {Subjects.map((s) => {
             return (
               s.key === "padding"? <Hidden smDown><Grid item sm={1}/></Hidden>:<Grid item sm = {2} xs = {6}> <ImText arrangement="vertical" shape="circle" img={s.imgsrc} minwidth="100px" minheight="100px">
-              {s.text} </ImText> </Grid>
+              {t(s.text)} </ImText> </Grid>
             )
           })}
           </Grid>
