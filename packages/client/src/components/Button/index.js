@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { COLORS } from '../../constants';
+import { COLORS, FONTS } from '../../constants';
 
 const ButtonThemes = {
   backgroundColor: {
@@ -10,16 +10,19 @@ const ButtonThemes = {
   },
   width: {
     sm: 120,
+    smmd: 140,
     md: 206,
     lg: 264,
   },
   height: {
     sm: 30,
+    smmd: 40,
     md: 50,
     lg: 60,
   },
   fontSize: {
     sm: 14,
+    smmd: 18,
     md: 18,
     lg: 18,
   },
@@ -30,17 +33,26 @@ const ButtonThemes = {
 };
 
 const ButtonStyled = styled.button`
-  font-family: Roboto;
+  font-family: ${FONTS.font1};
+  font-weight: 500;
   min-width: ${(props) => ButtonThemes.width[props.size]}px;
   min-height: ${(props) => ButtonThemes.height[props.size]}px;
   font-size: ${(props) => ButtonThemes.fontSize[props.size]}px;
   margin: 10px;
-  border: 1px solid ${(props) => ButtonThemes.backgroundColor[props.theme]};
+  border: 1px solid ${(props) => 
+    props.disabled
+      ? COLORS.grey
+      : ButtonThemes.backgroundColor[props.theme]
+  };
   color: ${(props) =>
     props.basic ? ButtonThemes.backgroundColor[props.theme] : '#ffffff'};
   cursor: pointer;
   background-color: ${(props) =>
-    props.basic ? COLORS.white : ButtonThemes.backgroundColor[props.theme]};
+  props.basic ? COLORS.white
+    : (props.disabled
+      ? COLORS.grey
+      : ButtonThemes.backgroundColor[props.theme]
+    )};
   border-radius: ${(props) => props.round ?
     ButtonThemes.borderRadius.round :
     ButtonThemes.borderRadius.default}px;
@@ -50,7 +62,8 @@ const ButtonStyled = styled.button`
   }
 
   &:hover {
-    opacity: 0.9;
+    cursor: ${(props) => props.disabled ? "not-allowed" : "pointer"};
+    opacity: ${(props) => props.disabled ? "1.0" : "0.9"};
   }
 `;
 
@@ -60,10 +73,12 @@ const Button = ({
   size = 'md',
   basic = false,
   onClick,
+  type = 'submit',
   round = false,
+  disabled = false,
 }) => {
   return (
-    <ButtonStyled theme={theme} size={size} basic={basic} onClick={onClick} round={round}>
+    <ButtonStyled theme={theme} size={size} basic={basic} onClick={onClick} round={round} disabled={disabled} type={type}>
       {children}
     </ButtonStyled>
   );
@@ -74,5 +89,7 @@ Button.propTypes = {
   onClick: PropTypes.func,
   size: PropTypes.string,
   basic: PropTypes.bool,
+  disabled: PropTypes.bool,
+  type: PropTypes.string,
 };
 export default Button;

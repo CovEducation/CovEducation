@@ -1,19 +1,22 @@
 language: node_js
 node_js:
-  - 12
+- 12
 cache:
   directories:
-    - "node_modules"
+  - node_modules
 install: npx lerna bootstrap
 jobs:
   include:
-    - stage: test
-      script:
-        - npx lerna run --scope coved-server test
-        - npx lerna run --scope coved-client test
-        - npx lerna run lint
-    - stage: publish
-      if: branch = master
-      script:
-        - git checkout master
-        - npx lerna version patch --yes --amend
+  - stage: test
+    script:
+    - npx lerna run --scope coved-server test
+    - npx lerna run --scope coved-client test
+    - npx lerna run lint
+  - stage: publish
+    if: branch = master
+    script:
+    - git checkout master
+    - npx lerna version patch --yes --amend
+before_install:
+- openssl aes-256-cbc -K $encrypted_ee58d8b33dc6_key -iv $encrypted_ee58d8b33dc6_iv
+  -in service_account.json.enc -out packages/server/service_account.json -d
