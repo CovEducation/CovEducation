@@ -9,12 +9,12 @@ export const COLORS = {
   lightgray: '#EDEDED',
   lightorange: '#FFF6DE',
   lightblue: '#E7F2FB',
+  black: '#000000',
 };
 
 export const FONTS = {
   font1: "'Raleway', sans-serif",
   font2: "'Montserrat', sans-serif",
-  black: '#000000',
 };
 
 export const FAQS = [
