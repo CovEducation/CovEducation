@@ -9,18 +9,26 @@ const ButtonThemes = {
     accent: COLORS.yellow,
     light: COLORS.lightblue,
   },
+  fontColor: {
+    default: COLORS.white,
+    acccent: COLORS.white,
+    light: COLORS.black,
+  },
   width: {
     sm: 120,
+    smmd: 140,
     md: 206,
     lg: 264,
   },
   height: {
     sm: 30,
+    smmd: 40,
     md: 50,
     lg: 60,
   },
   fontSize: {
     sm: 14,
+    smmd: 18,
     md: 18,
     lg: 18,
   },
@@ -43,7 +51,7 @@ const ButtonStyled = styled.button`
       : ButtonThemes.backgroundColor[props.theme]
   };
   color: ${(props) =>
-    props.basic ? ButtonThemes.backgroundColor[props.theme] : '#ffffff'};
+    props.basic ? ButtonThemes.backgroundColor[props.theme] : ButtonThemes.fontColor[props.theme]};
   cursor: pointer;
   background-color: ${(props) =>
   props.basic ? COLORS.white

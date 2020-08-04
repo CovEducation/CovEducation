@@ -4,32 +4,35 @@ import { COLORS, FONTS } from '../../constants';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import { useTranslation } from 'react-i18next';
-import Image from 'material-ui-image';
+import Hidden from '@material-ui/core/Hidden';
+import ImText from '../../components/TextandImage/index';
 
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import Edit from '@material-ui/icons/EditTwoTone';
-import Mail from '@material-ui/icons/ContactMail';
-import Arrow from './img/arrow.svg'; //svg from the figma, '<Image src={Arrow}/>'
+import Register from './img/register.svg';
+import Edit from './img/editProfile.svg';
+import Meet from './img/meetMentor.svg';
+import Arrow from './img/arrow.svg'; 
+
 
 const Wrapper = styled.div`
   text-align: center;
+  span {
+    font-size: 20px;
+    font-weight: 500;
+    font-style: normal;
+    line-height: 48px;
+    font-family:${FONTS.font2};
+  }
 `;
-
-const styles = {
-    LargeIcon:{
-        fontSize: '150px',
-    }
-  };
-
   const Title = styled.h1`
-  font-size: 48px;
+  padding-top: 50px;
+  font-size: 40px;
   font-family:${FONTS.font2};
   left: calc(50% - 267px/2 + 0.5px)
   top: 86px
 `;
 
 const Subtitle = styled.p`
-  font-size: 27px;
+  font-size: 23px;
   font-weight: 500;
   font-style: normal;
   line-height: 48px;
@@ -40,61 +43,82 @@ const Body = styled.div`
     font-family: ${FONTS.font2};
     font-style: normal;
     font-weight: normal;
-    font-size: 18px;
+    font-size: max(1vw, 16px);
     line-height: 27px;
     display: flex;
     font-feature-settings: 'pnum' on, 'lnum' on;
 `;
 
+const Circle = styled.circle`
+    height: 25px;
+    width: 25px;
+    background-color: ${COLORS.yellow};
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+`;
 
-const ForMentors = () => {
+const HowItWorks = [
+    {
+      key: 1,
+      row: 1,
+      num: 1,
+      imgsrc: Register,
+      title: 'howItWorksMentors.RegisterTitle',
+      text: 'howItWorksMentors.Register'
+      
+    }, 
+    {
+      key: 2,
+      imgsrc: Arrow
+    },
+    {
+      key: 3,
+      row: 1,
+      num:2,
+      imgsrc: Edit,
+      title: 'howItWorksMentors.EditTitle',
+      text: 'howItWorksMentors.Edit'
+        
+      }, 
+      {
+        key: 4,
+        imgsrc: Arrow
+      },
+      {
+       key: 5,
+       row: 1,
+       num :3,
+       imgsrc: Meet,
+       title: 'howItWorksMentors.ContactTitle',
+       text: 'howItWorksMentors.Contact'
+        
+      }
+]
+
+const ForParents = () => {
   const { t } = useTranslation();
   return (
     <Wrapper>
         <Title>{t('howItWorksMentors.Title')}</Title>
         <Subtitle>{t('howItWorksMentors.Subtitle')}</Subtitle>
-
-        <Button theme="light" size="md">{t('Skip To Application')}</Button>
-
+        <Button theme="light" size="md" color = "accent"fontSize = "14">{('Skip To Application')}</Button>
         <Body>
-            <Grid container direction = "row" justify = "center">
-                <Grid container direction = "column" alignItems = "center" spacing = {0} xs ={3} lg = {2}>
-                <Grid item justify="center" >
-                    <AccountCircleIcon  style = {styles.LargeIcon} />
-                </Grid>
-                <Grid item alignItems = "center" justify = "center">
-                    {t('howItWorksMentors.RegisterTitle')} <br /> <br />
-                    {t('howItWorksMentors.Register')}
-                </Grid>
-                </Grid>
-                <Grid item lg = {1} >
-                    <Image src={Arrow} />
-                </Grid>
-                <Grid container direction = "column" alignItems = "center" spacing = {0} xs ={3} lg = {2}>
-                <Grid item justify="center" >
-                    <Edit  style = {styles.LargeIcon} />
-                </Grid>
-                <Grid item alignItems = "center" justify = "center">
-                    {t('howItWorksMentors.EditTitle')} <br /> <br />
-                    {t('howItWorksMentors.Edit')}
-                </Grid>
-                </Grid>
-                <Grid item lg = {1} >
-                    <Image src={Arrow} />
-                </Grid>
-                <Grid container direction = "column" alignItems = "center" spacing = {0} xs ={3} lg = {2}>
-                <Grid item justify="center" >
-                    <Mail  style = {styles.LargeIcon} />
-                </Grid>
-                <Grid item alignItems = "center" justify = "center">
-                    {t('howItWorksMentors.ContactTitle')} <br /> <br />
-                    {t('howItWorksMentors.Contact')}
-                </Grid>
-                </Grid>
-            </Grid>
-        </Body>
+        <Grid container direction = "row" justify = "center" spacing = {3} alignItems = "center">
+          {HowItWorks.map((s) => {
+             return (
+                 s.key%2 === 0 ? <Hidden smDown> <Grid item md={1} sm = {8}><img src={Arrow}/> </Grid> </Hidden>: 
+                <Grid item md={2} sm = {8}> 
+                      <ImText arrangement="vertical"  shape="circle" img= {s.imgsrc} minwidth="170px" minheight="170px"> <Circle>{s.num}</Circle><span>{t(s.title)}</span> <br /> {t(s.text)}
+                      </ImText> 
+                 </Grid>
+            
+                )
+          })}
+          </Grid>
+          </Body>
     </Wrapper>
   )
 }
 
-export default ForMentors;
+export default ForParents;
