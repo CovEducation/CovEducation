@@ -256,9 +256,16 @@ const HomePage = () => {
         </Section>
         <Section backgroundColor='lightorange' p="100px">
           <h2>{t('home.howCovEdWorks')}</h2>
-          {howItWorks.map((s) => {
-            return (
-            <Grid item lg = {3}sm={3} xs = {12}> <ImText arrangement="vertical" img= {s.imgsrc} minwidth="300px" minheight="200px"><Circle>{s.key}</Circle>{t(s.step)} </ImText> </Grid>)})}
+                    <Grid container direction = "row" spacing={3} justify="center">
+          {HowItWorks.map((s) => {
+             return (
+                <Grid item md={3}  sm = {12} xs = {12}> 
+                      <ImText arrangement="vertical" img= {s.imgsrc}> <Circle>{s.key}</Circle> {t(s.step)}
+                      </ImText> 
+                 </Grid>
+                )
+          })}
+          </Grid>
           <Button theme="accent" size="md">{t('home.MenteesLearnMoreButton')}</Button>
           <Button theme="accent" size="md">{t('home.MentorsLearnMoreButton')}</Button>
         </Section>
