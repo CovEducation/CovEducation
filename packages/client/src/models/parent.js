@@ -24,7 +24,7 @@ const ParentConverter = {
             pronouns: parent.pronouns,
             avatar: parent.avatar,
             timezone: parent.timezone,
-            students: students
+            students: parent.students
         };
     },
 
