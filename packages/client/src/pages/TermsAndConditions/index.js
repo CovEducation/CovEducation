@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Col from "react-bootstrap/Col";
-import Row from 'react-bootstrap/Row';
+import Box from '@material-ui/core/Box';
 import { TERMSCONDITIONS, COLORS } from '../../constants.js';
 
 const TermCondwrapper = styled.div`
@@ -25,7 +24,7 @@ const PageTitle = styled.h1`
   margin: 0;
   color: ${COLORS.darkblue};
   font-family: Montserrat, sans-serif;
-  padding: 5px;
+  padding: 20%;
   font-weight: normal;
 `;
 
@@ -76,14 +75,14 @@ const TermsAndConditions = () => {
       <br />
         {TERMSCONDITIONS.map((termcondition) => {
           return(
-            <Col style={{width: '100%'}}>
+            <Box style={{width: '100%'}}>
             <TermCondTitle>
               {termcondition.num + ". " + termcondition.title}
             </TermCondTitle>
             <TermCondBody>
               {termcondition.body}
             </TermCondBody>
-          </Col>
+          </Box>
           )})}
     </TermCondSection>
     // </wrapper>

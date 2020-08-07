@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 
 export const COLORS = {
   blue: '#19568C',
@@ -24,13 +25,13 @@ export const TERMSCONDITIONS = [
   {
     num: '3',
     title: 'Privacy Policy',
-    body: <p>Our <a href='/privacy'>Privacy Policy</a> discusses how we collect, process, and disclose personal information through these Services. Please read that policy carefully. Please note that the Children’s Online Privacy Protection Act of 1998 and regulations enacted under it by the Federal Trade Commission (collectively, “COPPA”) provide parents certain rights regarding the collection, use, and disclosure of personal information collected from children below the age of 13. For more information on these practices, please view our <a href='/privacy'>Privacy Policy</a>.</p>
+    body: <p>Our <Link to='/privacy'>Privacy Policy</Link> discusses how we collect, process, and disclose personal information through these Services. Please read that policy carefully. Please note that the Children’s Online Privacy Protection Act of 1998 and regulations enacted under it by the Federal Trade Commission (collectively, “COPPA”) provide parents certain rights regarding the collection, use, and disclosure of personal information collected from children below the age of 13. For more information on these practices, please view our <Link to='/privacy'>Privacy Policy</Link>.</p>
   },
   {
     num: '4',
     title: 'Eligibility',
     body: <><p><strong>For Parents, Guardians, and Mentees:</strong> No child under the age of 18 may use the Services unless they have been registered by a parent or legal guardian. CovEd may choose to use any method to validate your identity as a parent or legal guardian and to confirm your consent approved by the Federal Trade Commission, including without limitation engaging third parties to provide verification services. CovEd reserves all rights to take legal actions against anyone who misrepresents personal information or is otherwise untruthful about their identity.</p>
-         <p><b>For Mentors:</b> By using the Services or volunteering to be a Mentor you agree to be bound by these Terms and the CovEd <a href='/mentorAgreement'>Mentor Agreement</a>. You are solely responsible for your own conduct and use of the Services.</p></>,
+         <p><b>For Mentors:</b> By using the Services or volunteering to be a Mentor you agree to be bound by these Terms and the CovEd <Link to='/mentorAgreement'>Mentor Agreement</Link>. You are solely responsible for your own conduct and use of the Services.</p></>,
   },
   {
     num: '5',
@@ -60,7 +61,7 @@ export const TERMSCONDITIONS = [
     test: 'heu',
     body: <><p>CovEd has the right to terminate these Terms and your use of the Services at any time and without warning for failure to provide valid parental or guardian consent for a Mentee’s use of the services, for any breach of these Terms, or if CovEd determines in good faith that termination is necessary to protect the safety, security, or rights of any person.</p>
          <p>CovEd has no obligation to post any User Content (as defined below) you may provide through the Services, and may take any action with respect to any User Content that we deem necessary or appropriate in our sole discretion, including if we believe that such User Content violates these Terms, infringes any intellectual property other right of any person or entity, threatens the personal safety of users of the Website or the public, or could create liability for CovEd.</p>
-         <p>If you wish to delete your account, please email <a href="mailto:coved.management@gmail.com">coved.management@gmail.com</a>. Upon receipt of your request to delete your account, and except as set forth below, we will remove your account and associated information within a reasonable time period. Please note that the suspension or termination of your account does not limit your rights under COPPA. Sections 5, 7, 8, 9, 10, 11, 12, 15, and 16 shall survive termination of these Terms.</p>
+         <p>If you wish to delete your account, please email <Link to="mailto:coved.management@gmail.com">coved.management@gmail.com</Link>. Upon receipt of your request to delete your account, and except as set forth below, we will remove your account and associated information within a reasonable time period. Please note that the suspension or termination of your account does not limit your rights under COPPA. Sections 5, 7, 8, 9, 10, 11, 12, 15, and 16 shall survive termination of these Terms.</p>
          </>,
   },
   {
@@ -80,7 +81,7 @@ export const TERMSCONDITIONS = [
   {
     num: '10',
     title: 'Feedback',
-    body: <p>We welcome and encourage you to provide feedback, comments and suggestions for improvements to the Services (“Feedback”). Such Feedback can be sent to CovEd at <a href="mailto:coved.management@gmail.com">coved.management@gmail.com</a>. You agree that CovEd has the right, but not the obligation, to use such Feedback without any obligation to provide you credit, royalty payment, or ownership interest in any changes made to the Services.</p>
+    body: <p>We welcome and encourage you to provide feedback, comments and suggestions for improvements to the Services (“Feedback”). Such Feedback can be sent to CovEd at <Link to="mailto:coved.management@gmail.com">coved.management@gmail.com</Link>. You agree that CovEd has the right, but not the obligation, to use such Feedback without any obligation to provide you credit, royalty payment, or ownership interest in any changes made to the Services.</p>
   },
   {
     num: '11',
@@ -121,7 +122,7 @@ export const TERMSCONDITIONS = [
   {
     num: '18',
     title: 'Contact Us',
-    body: <p>If you have any questions about the Services, please do not hesitate to contact us at <a href="mailto:coved.management@gmail.com">coved.management@gmail.com</a>.</p>
+    body: <p>If you have any questions about the Services, please do not hesitate to contact us at <Link to="mailto:coved.management@gmail.com">coved.management@gmail.com</Link>.</p>
   }
 ];
 
@@ -131,13 +132,13 @@ export const PRIVACY = [
     title: 'Introduction',
     body: <><p>We at CovEd know you care about how your personal information and that of your children is used and shared, and we take your privacy seriously. Please read the following to learn more about our Privacy Policy (the “Policy”). By using or accessing the CovEd Services in any manner, you acknowledge that you accept the practices and requirements outlined in this Policy, and you hereby consent that we will collect, use, and share your information in the following ways.
     <br />
-    Unless otherwise noted, all terms have the same definition as in the CovEd <a href='/termsandconditions'>Terms of Service</a>.</p></>
+    Unless otherwise noted, all terms have the same definition as in the CovEd <PageLink to='/termsandconditions'>Terms of Service</PageLink>.</p></>
   },
   {
     num: '2',
     title: 'Information that CovEd Collects',
     body: <><p>CovEd collects different information depending on whether you use the services as a Mentor or as on behalf of a Mentee (such as a parent or guardian of a Mentee).
-    <br />As set forth in our <a href='/termsandconditions'>Terms of Service</a>, only a parent or guardian may sign up a Mentee under the age of 18. The Children’s Online Privacy Protection Act of 1998 and regulations enacted under it by the Federal Trade Commission (“COPPA”) require us to obtain verifiable parental consent in order to collect, use, and disclose personal information of individuals under the age of 13. We do not knowingly collect personal information from individuals under 13 years of age without parental consent. If we learn we have collected or received personal information about an individual under 13 years of age without verification of parental consent, we will delete that information. If you believe we might have any information from or about an individual under 13 years of age, please contact us at <a href="mailto:coveducation@gmail.com">coveducation@gmail.com</a>.</p>
+    <br />As set forth in our <Link to='/termsandconditions'>Terms of Service</Link>, only a parent or guardian may sign up a Mentee under the age of 18. The Children’s Online Privacy Protection Act of 1998 and regulations enacted under it by the Federal Trade Commission (“COPPA”) require us to obtain verifiable parental consent in order to collect, use, and disclose personal information of individuals under the age of 13. We do not knowingly collect personal information from individuals under 13 years of age without parental consent. If we learn we have collected or received personal information about an individual under 13 years of age without verification of parental consent, we will delete that information. If you believe we might have any information from or about an individual under 13 years of age, please contact us at <Link to="mailto:coveducation@gmail.com">coveducation@gmail.com</Link>.</p>
     <p>The information collected is as follows:</p></>,
     subsection: [{
       num: '1',
@@ -155,7 +156,7 @@ export const PRIVACY = [
       num: '2',
       title: 'Information Collected on Behalf of Mentees',
       body: <><p><b>Information Collected at Registration</b><br />
-      As set forth in our <a href='/termsandconditions'>Terms of Service</a>, only a parent or guardian may sign up a Mentee under the age of 18. At registration, CovEd collects a parent or guardian’s name and email address as an identifier, and requests the user to create a password in order to establish a user account. We also collect your time zone, the Mentee’s name and email address, and level of educational background, subjects in which they seek tutoring, and other educational instructions.<br />
+      As set forth in our <Link to='/termsandconditions'>Terms of Service</Link>, only a parent or guardian may sign up a Mentee under the age of 18. At registration, CovEd collects a parent or guardian’s name and email address as an identifier, and requests the user to create a password in order to establish a user account. We also collect your time zone, the Mentee’s name and email address, and level of educational background, subjects in which they seek tutoring, and other educational instructions.<br />
       When you select a Mentor, this information along with your message to the Mentor will be provided to the Mentor to help them make sure they can provide appropriate tutoring services to the Mentee. This may also be used to help identify other Mentors that are best suited for your child or children and to facilitate contact once a paring has been established.</p>
       <p><b>Information Collected During and After Mentorship Sessions</b><br />
       CovEd is a matchmaking service, and does not participate in meetings between Mentors and Mentees. Mentors are instructed to follow the CovEd Mentor Agreement , which requires Mentors to not disclose any personally-identifiable information about a Mentee except limited circumstances. Mentors send a report following sessions to CovEd after a session occurs, which discloses the Mentee involved, the duration of the meeting, and their feedback from the experience. This is used by CovEd to develop and improve the Services and ensure compliance with CovEd’s Terms.</p>
@@ -177,7 +178,7 @@ export const PRIVACY = [
     <li><i>Public Information</i> — a very limited amount of User Content is made available on the Services, including information a Mentor provides for their profile. Please note that any information you submit in a public portion of the site will be viewable by others. Accordingly, only include information in such submissions that you are comfortable sharing with third parties or the general public</li>
     <li><i>Business Transfers</i> — if CovEd is acquired by another company, goes into dissolution, or otherwise transfers ownership or assets, CovEd may transfer the information it has as part of that transaction.</li>
     <li><i>Aggregate Usage Information and Analytics</i> — We may de-identify your personal information so that you are not identified as an individual and use that information for any business purpose, including for analyzing demographic and usage information or to help identify new partners and companion services</li>
-    <li><i>Legal Compliance</i> — We reserve the right to access, read, and disclose any information that we believe in our sole discretion is necessary to comply with law or court order; enforce or apply our <a href='/termsandconditions'>Terms of Service</a> and other agreements; or protect the rights, property, or safety of CovEd, our members, our users, or others</li>
+    <li><i>Legal Compliance</i> — We reserve the right to access, read, and disclose any information that we believe in our sole discretion is necessary to comply with law or court order; enforce or apply our <Link to='/termsandconditions'>Terms of Service</Link> and other agreements; or protect the rights, property, or safety of CovEd, our members, our users, or others</li>
     </ul></p>
   },
   {
@@ -189,7 +190,7 @@ export const PRIVACY = [
   {
     num: '6',
     title: 'Modification and Deletion of Information',
-    body: <p>You may access, and, in some cases, edit or delete your information through your account and profile settings. The information you can view, update, and delete may change over time. You may request that we delete your account and your data from CovEd by contacting us at <a href="mailto:coved.management@gmail.com">coved.management@gmail.com</a>. Please note that if you request removal of your information you may be unable to continue to utilize the Services.</p>
+    body: <p>You may access, and, in some cases, edit or delete your information through your account and profile settings. The information you can view, update, and delete may change over time. You may request that we delete your account and your data from CovEd by contacting us at <Link to="mailto:coved.management@gmail.com">coved.management@gmail.com</Link>. Please note that if you request removal of your information you may be unable to continue to utilize the Services.</p>
   },
   {
     num: '7',
@@ -200,7 +201,7 @@ export const PRIVACY = [
     <li>Request that CovEd no longer collect or use information about their child;</li>
     <li>Request that CovEd no longer share information about their child with third parties that are not part of Services.</li>
     </ul></p>
-    <p>Parents may exercise any of these rights listed above by contacting CovEd at <a href="mailto:coved.management@gmail.com">coved.management@gmail.com</a>.</p></>
+    <p>Parents may exercise any of these rights listed above by contacting CovEd at <Link to="mailto:coved.management@gmail.com">coved.management@gmail.com</Link>.</p></>
   },
   {
     num: '8',
@@ -210,7 +211,7 @@ export const PRIVACY = [
   {
     num: '9',
     title: 'Contact Information',
-    body: <p>For any inquiries about this privacy policy and our privacy practices, contact us at: <a href="mailto:coveducation@gmail.com">coveducation@gmail.com</a>.</p>
+    body: <p>For any inquiries about this privacy policy and our privacy practices, contact us at: <Link to="mailto:coveducation@gmail.com">coveducation@gmail.com</Link>.</p>
   }
 
 ];

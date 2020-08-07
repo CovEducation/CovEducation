@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Col from "react-bootstrap/Col";
-import Row from 'react-bootstrap/Row';
+import Box from '@material-ui/core/Box';
 import { PRIVACY, COLORS } from '../../constants.js';
 
 const PrivacySection = styled.section`
@@ -21,7 +20,7 @@ const PageTitle = styled.h1`
   margin: 0;
   color: ${COLORS.darkblue};
   font-family: Montserrat, sans-serif;
-  padding: 5px;
+  padding: 12px;
   font-weight: normal;
 `;
 
@@ -55,14 +54,11 @@ const PrivacyBody = styled.p`
   line-height: 25px;
   font-family: Muli, sans-serif;
   width: 100%;
-
-  a {
-    font-color: ${COLORS.yellow};
   }
 `;
 
 const PrivacySubSecTitle = styled.h4`
-  font-size: 25px;
+  font-size: 24px;
   font-family: Montserrat, sans-serif;
   padding-bottom: 2px;
   padding-top: 10px;
@@ -85,8 +81,8 @@ const Privacy = () => {
             var subsection;
             subsection = privacy.subsection.map((sec) => {
               return(
-                <Col><PrivacySubSecTitle>{privacy.num +'.'+sec.num+'. '+sec.title}</PrivacySubSecTitle>
-                <PrivacyBody>{sec.body}</PrivacyBody></Col>
+                <Box><PrivacySubSecTitle>{privacy.num +'.'+sec.num+'. '+sec.title}</PrivacySubSecTitle>
+                <PrivacyBody>{sec.body}</PrivacyBody></Box>
               )
             })
             body = <>
@@ -97,12 +93,12 @@ const Privacy = () => {
             body = <PrivacyBody>{privacy.body}</PrivacyBody>
           }
           return(
-            <Col style={{width: '100%'}}>
+            <Box style={{width: '100%'}}>
             <PrivacyTitle>
               {privacy.num + ". " + privacy.title}
             </PrivacyTitle>
             {body}
-          </Col>
+          </Box>
           )
         })}
     </PrivacySection>
