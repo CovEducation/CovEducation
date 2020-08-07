@@ -8,6 +8,7 @@ const MentorConverter = {
         return {
             name: mentor.name,
             email: mentor.email,
+            phone: mentor.phone,
             pronouns: mentor.pronouns,
             college: mentor.college,
             avatar: mentor.avatar,
@@ -27,6 +28,7 @@ const MentorConverter = {
         return new Mentor(
             data.name,
             data.email,
+            data.phone,
             data.pronouns,
             data.college,
             data.avatar,
@@ -52,6 +54,7 @@ export default class Mentor {
     constructor(
         name,
         email,
+        phone,
         pronouns,
         college,
         avatar,
@@ -67,6 +70,7 @@ export default class Mentor {
         this.id = undefined;
         this.name = name;
         this.email = email;
+        this.phone = phone;
         this.pronouns = pronouns;
         this.college = college;
         this.avatar = avatar;

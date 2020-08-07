@@ -8,6 +8,7 @@ beforeEach(() => {
     mentor = new Mentor(
         'test',
         'test@email.com',
+        '123-456-7890',
         'he/him',
         'MIT Class of 2021',
         'https://images.unsplash.com/photo-1583006479542-4d67993b8d9a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=676&q=80',
@@ -24,6 +25,7 @@ beforeEach(() => {
 test('constructor', () => {
     expect(mentor.name).toBe('test');
     expect(mentor.email).toBe('test@email.com');
+    expect(mentor.phone).toBe('123-456-7890');
     expect(mentor.timezone).toBe('CST');
     expect(mentor.about).toBe('what is this about again?');
     expect(mentor.id).toBeFalsy();
