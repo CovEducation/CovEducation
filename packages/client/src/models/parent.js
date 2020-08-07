@@ -92,7 +92,7 @@ export default class Parent {
     /**
      * Publishes the current parent instance to firebase. If a parent
      * with the firebase uid already exists the record is updated.
-     * @param {firebase.auth.UserCredential} the firebase auth user object
+     * @param {firebase.auth.UserCredential} user is firebase auth user object
      *
      * @return {Promise<void>} a promise indicating successful creation.
      */
@@ -106,7 +106,7 @@ export default class Parent {
 
     /**
      * Reads the Parent object from firebase.
-     * @param {firebase.auth.UserCredential} the firebase auth uid of the parent
+     * @param {firebase.auth.UserCredential} user is firebase auth uid of the parent
      *
      * @return {Promise<Parent>} the parent with the corresponding uid
      */
