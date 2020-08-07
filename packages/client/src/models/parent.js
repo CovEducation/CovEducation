@@ -5,11 +5,11 @@ const ParentCollectionRef = Db.collection('parents');
 /** Firebase Parent Convertor */
 const ParentConverter = {
     toFirestore: (parent) => {
-        const mentees = [];
+        const students = [];
 
         // must convert Mentee object to plain json
-        parent.mentees.forEach(s => {
-            mentees.push({
+        parent.students.forEach(s => {
+            students.push({
                 name: s.name,
                 email: s.email,
                 grade: s.grade,
@@ -20,31 +20,38 @@ const ParentConverter = {
         return {
             name: parent.name,
             email: parent.email,
+            phone: parent.phone,
+            pronouns: parent.pronouns,
+            avatar: parent.avatar,
             timezone: parent.timezone,
-            mentees: mentees
+            students: students
         };
     },
 
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
 
-        const mentees = [];
+        const students = [];
 
-        data.mentees.forEach(s => {
-            mentees.push(new Mentee(s.name, s.email, s.grade, s.subjects))
+        data.students.forEach(s => {
+            students.push(new Student(s.name, s.email, s.grade, s.subjects))
         });
 
         return new Parent(
             data.name,
             data.email,
+            data.phone,
+            data.pronouns,
+            data.avatar,
             data.timezone,
-            mentees
+            data.number_requests,
+            students
         );
     }
 }
 
 // this is mainly just a convenient constructor
-export class Mentee {
+export class Student {
     constructor(name, email, grade, subjects) {
         this.name = name;
         this.email = email;
@@ -55,12 +62,16 @@ export class Mentee {
 
 /** Firebase Parent Object */
 export default class Parent {
-    constructor(name, email, timezone, mentees) {
+    constructor(name, email, phone, pronouns, avatar, timezone, number_requests, students) {
         this.id = undefined;
         this.name = name;
         this.email = email;
+        this.phone = phone;
+        this.pronouns = pronouns;
+        this.avatar = avatar;
         this.timezone = timezone;
-        this.mentees = mentees;
+        this.number_requests = number_requests;
+        this.students = students;
 
         this.validate();
     }

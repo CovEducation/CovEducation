@@ -1,4 +1,4 @@
-import Parent, { Mentee } from './parent';
+import Parent, { Student } from './parent';
 
 jest.mock('../providers/FirebaseProvider');
 
@@ -9,7 +9,7 @@ beforeEach(() => {
         'test',
         'test@email.com',
         'CST',
-        [new Mentee('testm', 'testm@email.com', 12, ['Math'])]
+        [new Student('teststudent', 'testm@email.com', 12, ['Math'])]
     );
 });
 
@@ -18,7 +18,7 @@ test('constructor', () => {
     expect(parent.email).toBe('test@email.com');
     expect(parent.timezone).toBe('CST');
     const mentee = parent.mentees[0];
-    expect(mentee.name).toBe('testm');
+    expect(mentee.name).toBe('teststudent');
     expect(mentee.email).toBe('testm@email.com');
     expect(mentee.grade).toBe(12);
     expect(mentee.subjects[0]).toBe('Math');
