@@ -24,18 +24,21 @@ import music from './img/music.svg';
 import science from './img/science.svg';
 import testPrep from './img/testPrep.svg';
 import writing from './img/writing.svg';
-import tempHIW from './img/tempHIW.svg';
+import step1 from './img/step1.svg';
+import step2 from './img/step2.svg';
+import step3 from './img/step3.svg';
 
 
 
 
- const Circle = styled.circle`
-  height: 25px;
-  width: 25px;
-  background-color: ${COLORS.yellow};
-  border-radius: 50%;
-  display: inline-block;
-  `;
+const Circle = styled.circle`
+    height: 20px;
+    width: 20px;
+    background-color: ${COLORS.yellow};
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+`;
 
 const HomeWrapper = styled.div`
   text-align: center;
@@ -112,17 +115,17 @@ const howItWorks = [
   {
     key: 1,
     step: 'home.howItWorks.step1',
-    imgsrc: tempHIW
+    imgsrc: step1
   },
   {
     key: 2,
     step: 'home.howItWorks.step2',
-    imgsrc: tempHIW
+    imgsrc: step2
   },
   {
     key: 3,
     step: 'home.howItWorks.step3',
-    imgsrc: tempHIW
+    imgsrc: step3
   }
 ]
 
@@ -255,10 +258,12 @@ const HomePage = () => {
           </Grid>
         </Section>
         <Section backgroundColor='lightorange' p="100px">
-          <h2>{t('home.howCovEdWorks')}</h2>
+          <h2>{t('home.howCovEdWorks')}</h2><br />
+          <Grid container direction = "row" spacing={3} justify="center" alignItems = 'center'>
           {howItWorks.map((s) => {
             return (
-            <Grid item lg = {3}sm={3} xs = {12}> <ImText arrangement="vertical" img= {s.imgsrc} minwidth="300px" minheight="200px"><Circle>{s.key}</Circle>{t(s.step)} </ImText> </Grid>)})}
+            <Grid item lg = {3}sm={3} xs = {12}> <ImText arrangement="vertical" img= {s.imgsrc} minwidth="300px" minheight="200px"><br /><br /><Circle>{s.key}</Circle>{t(s.step)} </ImText> </Grid>)})}
+          </Grid><br /><br />
           <Button theme="accent" size="md">{t('home.MenteesLearnMoreButton')}</Button>
           <Button theme="accent" size="md">{t('home.MentorsLearnMoreButton')}</Button>
         </Section>
