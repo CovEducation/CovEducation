@@ -4,25 +4,30 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import HomePage from './pages/Home';
+import FAQsPage from './pages/FAQs';
 import ProfilePage from './pages/Profile';
 import SignUpPage from './pages/SignUp';
 import SignInPage from './pages/SignIn';
 import ForMentors from './pages/HowItWorks/ForMentors';
 import ForParents from './pages/HowItWorks/ForParents'
 import Signin from './components/SignIn';
+import NavBar from './components/NavBar';
 import { AuthProvider } from './providers/AuthProvider';
 
 function App() {
   return (
     <AuthProvider fallback="loading">
-      {/* Add Navbar component here */}
       <Router>
+      <NavBar />
         <Switch>
           <Route path="/" exact>
             <HomePage />
           </Route>
           <Route path="/profile">
             <ProfilePage />
+          </Route>
+          <Route path="/faqs">
+            <FAQsPage />
           </Route>
           <Route path="/signup">
             <SignUpPage />
