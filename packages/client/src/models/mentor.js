@@ -1,5 +1,5 @@
 import { Db } from '../providers/FirebaseProvider';
-import Yup from 'yup';
+import * as yup from 'yup';
 
 const MentorCollectionRef = Db.collection('mentors');
 
@@ -49,38 +49,38 @@ const phoneRegex = RegExp(
     /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
 );
 
-const mentorSchema = Yup.object().shape({
-    email: Yup
+const mentorSchema = yup.object().shape({
+    email: yup
         .string()
         .email()
         .required('Email Required'),
-    name: Yup
+    name: yup
         .string()
         .required('Name Required'),
-    timezone: Yup
+    timezone: yup
         .string()
         .required('Timezone Required'),
-    phone: Yup
+    phone: yup
         .string()
         .matches(phoneRegex, 'Phone number is not valid'),
-    pronouns: Yup
+    pronouns: yup
         .string(),
-    college: Yup
+    college: yup
         .string(),
-    avatar: Yup
+    avatar: yup
         .string()
         .required('Avatar Required'),
-    bio: Yup
+    bio: yup
         .string()
         .required('Bio Required'),
-    major: Yup
+    major: yup
         .string(),
-    about: Yup
+    about: yup
         .string(),
-    subjects: Yup
+    subjects: yup
         .array()
         .required('Subjects Required'),
-    gradeLevels: Yup
+    gradeLevels: yup
         .array()
         .required('Grade Levels Required')
 });
