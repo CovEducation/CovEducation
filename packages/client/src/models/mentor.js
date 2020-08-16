@@ -1,4 +1,5 @@
 import { Db } from '../providers/FirebaseProvider';
+import Yup from 'yup';
 
 const MentorCollectionRef = Db.collection('mentors');
 
@@ -43,6 +44,46 @@ const MentorConverter = {
         );
     }
 };
+
+const phoneRegex = RegExp(
+    /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+);
+
+const mentorSchema = Yup.object().shape({
+    email: Yup
+        .string()
+        .email()
+        .required('Email Required'),
+    name: Yup
+        .string()
+        .required('Name Required'),
+    timezone: Yup
+        .string()
+        .required('Timezone Required'),
+    phone: Yup
+        .string()
+        .matches(phoneRegex, 'Phone number is not valid'),
+    pronouns: Yup
+        .string(),
+    college: Yup
+        .string(),
+    avatar: Yup
+        .string()
+        .required('Avatar Required'),
+    bio: Yup
+        .string()
+        .required('Bio Required'),
+    major: Yup
+        .string(),
+    about: Yup
+        .string(),
+    subjects: Yup
+        .array()
+        .required('Subjects Required'),
+    gradeLevels: Yup
+        .array()
+        .required('Grade Levels Required')
+});
 
 /** Firebase Mentor Object */
 export default class Mentor {
@@ -89,12 +130,8 @@ export default class Mentor {
     /**
      *
      */
-    validate() {
-        // TODO use Yup for object validation; this validation just needs to run in development
-        // TODO add other validation as required
-        if (!this.name) throw Error('Mentor must have a name');
-        if (!this.email) throw Error('Mentor must have an email');
-        if (!this.timezone) throw Error('Mentor must have timezone');
+    async validate() {
+        const valid = await mentorSchema.isValid(Mentor);
     }
 
     /**
