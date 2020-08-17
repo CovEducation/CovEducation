@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import FindAMentorPage from '../FindAMentor';
 import { COLORS } from '../../constants';
 import { Route, Link, useRouteMatch, useLocation, Redirect } from 'react-router-dom';
+import ProfilePage from '../Profile';
 
 const DashboardWrapper = styled.div`
   height: calc(100vh - 64px - 195px); // subtract heights for navbar and footer
@@ -90,6 +91,9 @@ const DashboardPage = () => {
         <SidenavLink to={`${url}/requests`} active={location.pathname.endsWith('requests')}>Requests</SidenavLink>
       </DashboardSidenav>
       <DashboardContent>
+        <Route path={`${path}/profile`} exact>
+          <ProfilePage />
+        </Route>
         <Route path={`${path}/mentors`} exact>
           <FindAMentorPage />
         </Route>
