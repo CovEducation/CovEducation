@@ -11,12 +11,11 @@ import Button from '../Button';
 import UncontrolledAlert from '../Notification/UncontrolledAlert';
 
 const AuthInner = styled.div`
-    width: 450px;
     margin: auto;
     background: #ffffff;
-    box-shadow: 0 14px 80px rgba(34, 35, 58, 0.2);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
     padding: 40px 55px 45px 55px;
-    border-radius: 15px;
+    border-radius: 10px;
     transition: all .3s;
 `
 const AuthWrapper = styled.div`
@@ -24,7 +23,6 @@ const AuthWrapper = styled.div`
     justify-content: center;
     flex-direction: column;
     text-align: left;
-    
     .form-control:focus {
         border-color: #00568C;
         box-shadow: none;
@@ -60,7 +58,7 @@ const PassForget = styled.p`
     padding-top: 10px;
     color: #7f7d7d;
     margin: 0;
-    
+
     a {
         color: #00568C;
     }
@@ -182,7 +180,7 @@ const Signin = () => {
                     </div>
                     <br />
 
-                    <Button theme="default" size="md" type="button"
+                    <Button theme="default" size="md" type="button" theme="accent"
                         onClick={ () => {
                             setSubmittedOnce(true);
                             if (error === false) {
@@ -196,7 +194,7 @@ const Signin = () => {
                             }
                         }}
                     >
-                        Sign In
+                        Login
                     </Button>
                     <br />
                     { submittedOnce && <ShowNotifications /> }

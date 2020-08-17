@@ -14,6 +14,8 @@ import Button from '../Button';
 import styled from 'styled-components';
 import { FONTS, COLORS } from '../../constants';
 
+import { Modal as Md } from '@material-ui/core';
+import Signin from "../SignIn";
 
 const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
 
@@ -54,8 +56,19 @@ const LinkStyled = styled(Link)`
 export default function NavBar(props)  {
 
   const [anchorEl, setAnchorEl] = useState(null);
+  // set the login modal's visibility to false to begin with
+  const [loginOpen, setLoginOpen] = useState(false);
+
   const open = Boolean(anchorEl);
   let menuOpen = false;
+
+  const toggleLogin = () => {
+    setLoginOpen(!loginOpen);
+  };
+
+  const handleLoginClose = () => {
+    setLoginOpen(false);
+  };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -70,9 +83,16 @@ export default function NavBar(props)  {
   if (true) {
     userLinks = (
       <>
-        <LinkStyled to='/login' ver='default'>Login</LinkStyled>
+        <Button size='sm' onClick={toggleLogin}>Log In</Button>
         <div/>
         <Modal title="Sign Up" trigger={<Button theme='accent' size='sm'> Sign Up </Button>}> <Wizard content={Wiz_content} /> </Modal>
+        <Md
+          style={{top: '25%'}}
+          open={loginOpen}
+          onClose={handleLoginClose}
+        >
+          <Signin />
+        </Md>
       </>
     );
   } else {
