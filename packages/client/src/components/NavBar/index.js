@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import IconButton from '@material-ui/core/IconButton';
+import React, { useState } from 'react';
+// import IconButton from '@material-ui/core/IconButton';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+// import MenuItem from '@material-ui/core/MenuItem';
+// import Menu from '@material-ui/core/Menu';
+// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PropTypes from 'prop-types';
 import Modal from '../Modal';
 import Wizard from '../Wizard';
@@ -15,7 +15,7 @@ import styled from 'styled-components';
 import { FONTS, COLORS } from '../../constants';
 
 import { Modal as Md } from '@material-ui/core';
-import Signin from "../SignIn";
+import Signin from '../SignIn';
 
 const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
 
@@ -55,12 +55,13 @@ const LinkStyled = styled(Link)`
 
 export default function NavBar(props)  {
 
-  const [anchorEl, setAnchorEl] = useState(null);
+  // const [anchorEl, setAnchorEl] = useState(null);
   // set the login modal's visibility to false to begin with
   const [loginOpen, setLoginOpen] = useState(false);
 
-  const open = Boolean(anchorEl);
-  let menuOpen = false;
+  // // not used yet
+  // const open = Boolean(anchorEl);
+  // let menuOpen = false;
 
   const toggleLogin = () => {
     setLoginOpen(!loginOpen);
@@ -70,71 +71,33 @@ export default function NavBar(props)  {
     setLoginOpen(false);
   };
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    menuOpen = false;
-    setAnchorEl(null);
-  };
+  // // not used yet
+  // const handleMenu = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  //
+  // // not used yet
+  // const handleClose = () => {
+  //   menuOpen = false;
+  //   setAnchorEl(null);
+  // };
 
   let userLinks;
-  if (true) {
-    userLinks = (
+  userLinks = (
       <>
         <Button size='sm' onClick={toggleLogin}>Log In</Button>
         <div/>
-        <Modal title="Sign Up" trigger={<Button theme='accent' size='sm'> Sign Up </Button>}> <Wizard content={Wiz_content} /> </Modal>
+        <Modal title="Sign Up" trigger={<Button theme='accent' size='sm'> Sign Up </Button>}> <Wizard
+            content={Wiz_content}/> </Modal>
         <Md
-          style={{top: '25%'}}
-          open={loginOpen}
-          onClose={handleLoginClose}
+            style={{ top: '25%' }}
+            open={loginOpen}
+            onClose={handleLoginClose}
         >
-          <Signin />
+          <Signin/>
         </Md>
       </>
-    );
-  } else {
-    userLinks = (
-      <>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="menu-navbar"
-          aria-haspopup="true"
-          onClick={handleMenu}
-          color="inherit"
-          onMouseOver={handleMenu}
-        >
-          <AccountCircleIcon/>
-          <div style={{ padding:'10px' }}/>
-          <LinkStyled ver='default' style={{ color: COLORS.blue }}>
-            {'Tim Beaver'}
-          </LinkStyled>
-        </IconButton>
-        <Menu
-          id="menu-navbar"
-          anchorEl={anchorEl}
-          getContentAnchorEl={null}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{ onMouseLeave: handleClose }}
-        >
-          <MenuItem component={Link} to="/profile" style={{ fontSize: TextThemes.fontSize['default'] }}>Dashboard</MenuItem>
-          <MenuItem style={{ color: 'red', fontSize: TextThemes.fontSize['default'] }}>Sign Out</MenuItem>
-        </Menu>
-      </>
-    )
-  }
+  );
 
   return (
     <>
@@ -148,7 +111,7 @@ export default function NavBar(props)  {
               </LinkStyled>
             ))}
             </Grid>
-          <div style={{marginLeft: 'auto'}}/>
+          <div style={{ marginLeft: 'auto' }}/>
           {userLinks}
         </Toolbar>
       </AppBar>
