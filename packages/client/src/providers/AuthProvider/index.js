@@ -56,14 +56,14 @@ const useAuthProvider = () => {
         }
 
         return Auth.createUserWithEmailAndPassword(email, password)
-            .then(() => {
-                const updateDisplayName = Auth.currentUser.updateProfile({displayName: userType});
-                return Promise.all([user.create(Auth.currentUser), updateDisplayName]);
+            .then(async () => {
+                await Auth.currentUser.updateProfile({displayName: userType});
+                return user.create(Auth.currentUser);
             })
             .then(() => {
                 // since the database updates were successful we don't have to query again
                 setUser(user);
-            })
+            });
     };
 
     /**
