@@ -1,4 +1,5 @@
 import { Db } from '../providers/FirebaseProvider';
+import * as yup from 'yup';
 
 const ParentCollectionRef = Db.collection('parents');
 
@@ -50,6 +51,46 @@ const ParentConverter = {
     }
 }
 
+const phoneRegex = RegExp(
+    /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+);
+
+const parentSchema = yup.object().shape({
+    email: yup
+        .string()
+        .email()
+        .required('Email Required'),
+    name: yup
+        .string()
+        .required('Name Required'),
+    timezone: yup
+        .string()
+        .required('Timezone Required'),
+    phone: yup
+        .string()
+        .matches(phoneRegex, 'Phone number is not valid'),
+    pronouns: yup
+        .string(),
+    avatar: yup
+        .string()
+        .required('Avatar Required'),
+});
+const studentSchema = yup.object().shape({
+    email: yup
+        .string()
+        .email()
+        .required('Email Required'),
+    name: yup
+        .string()
+        .required('Name Required'),
+    subjects: yup
+        .array()
+        .required('Subjects Required'),
+    grade: yup
+        .number()
+        .required('Grade Required'),
+})
+
 // this is mainly just a convenient constructor
 export class Student {
     constructor(name, email, grade, subjects) {
@@ -57,6 +98,10 @@ export class Student {
         this.email = email;
         this.grade = grade;
         this.subjects = subjects;
+    }
+
+    async validate() {
+        const valid = await studentSchema.isValid(Student);
     }
 }
 
@@ -76,10 +121,8 @@ export default class Parent {
         this.validate();
     }
 
-    validate() {
-        if (!this.name) throw Error('Parent must have a name');
-        if (!this.email) throw Error('Parent must have an email');
-        if (!this.timezone) throw Error('Parent must have timezone');
+    async validate() {
+        const valid = await parentSchema.isValid(Parent);
     }
 
     /**
