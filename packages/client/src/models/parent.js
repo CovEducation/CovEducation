@@ -118,9 +118,13 @@ export default class Parent {
         this.number_requests = number_requests;
         this.students = students;
 
-        this.validate();
+        this.validate().catch(reason => console.log(reason));
     }
 
+    /**
+     * The validation asynchronously checks the data against the restrictions of Yup
+     * TODO: More validation needs to be done on how the error is returned to the client.
+     */
     async validate() {
         const valid = await parentSchema.isValid(Parent);
     }
@@ -132,7 +136,7 @@ export default class Parent {
      * @return {Promise<void>} a promise indicating successful update.
      */
     update() {
-        this.validate();
+        this.validate().catch(reason => console.log(reason));
 
         if (!this.id) {
             return Promise.reject('Parent update failed: not initialized with firebase uid');
@@ -151,7 +155,7 @@ export default class Parent {
      * @return {Promise<void>} a promise indicating successful creation.
      */
     create(user) {
-        this.validate();
+        this.validate().catch(reason => console.log(reason));
         this.id = user.uid;
         return ParentCollectionRef.doc(this.id)
             .withConverter(ParentConverter)

@@ -128,7 +128,8 @@ export default class Mentor {
     }
 
     /**
-     *
+     * The validation asynchronously checks the data against the restrictions of Yup
+     * TODO: More validation needs to be done on how the error is returned to the client.
      */
     async validate() {
         const valid = await mentorSchema.isValid(Mentor);
@@ -160,7 +161,7 @@ export default class Mentor {
      * @return {Promise<void>} a promise indicating successful creation.
      */
     create(user) {
-        this.validate();
+        this.validate().catch(reason => console.log(reason));
         // uid is an unresolved variable
         this.id = user.uid; // Saving the id in the object so update can be called.
         return MentorCollectionRef.doc(this.id)
