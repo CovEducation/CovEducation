@@ -6,8 +6,6 @@ import './App.css';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
 import SignUpPage from './pages/SignUp';
-import SignInPage from './pages/SignIn';
-import Signin from './components/SignIn';
 import NavBar from './components/NavBar';
 import { AuthProvider } from './providers/AuthProvider';
 
@@ -26,14 +24,9 @@ function App() {
           <Route path="/signup">
             <SignUpPage />
           </Route>
-          <Route path="/signin">
-            <SignInPage />
-            {/* for testing and firebase stuffs :) */}
-          </Route>
           <Route path="/forgot-password">
             <br/>
           </Route>
-          <Route path="/sign-in" component={Signin} />
         </Switch>
       </Router>
     </AuthProvider>
