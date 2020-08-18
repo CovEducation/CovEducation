@@ -262,9 +262,9 @@ const HomePage = () => {
           <Grid container direction = "row" spacing={3} justify="center">
             {howItWorks.map((s) => {
              return (
-                <Grid item md={3}  sm = {12} xs = {12}> 
+                <Grid item md={4}  sm = {12} xs = {12}>
                       <ImText arrangement="vertical" img= {s.imgsrc}> <Circle>{s.key}</Circle> {t(s.step)}
-                      </ImText> 
+                      </ImText>
                  </Grid>
                 )
             })}
