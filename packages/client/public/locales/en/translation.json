@@ -38,8 +38,9 @@
           "step1": "Mentors sign up to mentor via a quick & easy registration page.",
           "step2": "Mentees register, and then look for an available mentor who tutors in their desired subjects of choice.",
           "step3": "Once you’ve requested your mentor, they will receive a notification to then reach out to you."
-      }},
-    "howItWorksMentors": {
+      }
+  },
+  "howItWorksMentors": {
       "Title": "How It Works",
       "Subtitle": "For Mentors",
       "RegisterTitle": "Register",
@@ -49,7 +50,7 @@
       "ContactTitle": "Contact Mentee",
       "Contact": "When a parent requests you as a mentor, you will recieve an email with further instructions and contact information. Be sure to contact them as soon as possible to introduce yourself!"
     },
-    "howItWorksParents": {
+  "howItWorksParents": {
       "Title": "How It Works",
       "Subtitle": "For Parents",
       "RegisterTitle": "Register",
