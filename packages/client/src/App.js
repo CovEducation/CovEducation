@@ -10,6 +10,9 @@ import SignUpPage from './pages/SignUp';
 import SignInPage from './pages/SignIn';
 import Signin from './components/SignIn';
 import NavBar from './components/NavBar';
+import ForMentors from './pages/HowItWorks/ForMentors';
+import ForParents from './pages/HowItWorks/ForParents';
+
 import { AuthProvider } from './providers/AuthProvider';
 
 function App() {
@@ -24,6 +27,12 @@ function App() {
           <Route path="/profile">
             <ProfilePage />
           </Route>
+          <Route path="/parents">
+             <ForParents />
+           </Route>
+           <Route path="/mentors">
+             <ForMentors />
+           </Route>
           <Route path="/faqs">
             <FAQsPage />
           </Route>
