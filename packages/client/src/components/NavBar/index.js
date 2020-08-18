@@ -55,15 +55,20 @@ export default function NavBar(props)  {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-  let menuOpen = false;
-
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
-    menuOpen = false;
     setAnchorEl(null);
+  };
+
+  const [anchorEl2, setAnchorEl2] = useState(null);
+  const open2 = Boolean(anchorEl2);
+  const handleMenu2 = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+  const handleClose2 = () => {
+    setAnchorEl2(null);
   };
 
   let userLinks;
@@ -118,10 +123,30 @@ export default function NavBar(props)  {
 
   return (
     <>
-      <AppBar color='white' flex-direction='row' position={props.position} >
+      <AppBar color='white' flex-direction='row' position={props.position} elevation={0}>
         <Toolbar>
           <Grid>
             <LinkStyled to='/' ver='lg'>CovEd</LinkStyled>
+            <Menu
+              id="howitworks"
+              anchorEl={anchorEl2}
+              getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+              open={open2}
+              onClose={handleClose2}
+              MenuListProps={{ onMouseLeave: handleClose2 }}
+            >
+              <MenuItem component={LinkStyled} to="/parents">For Parents</MenuItem>
+              <MenuItem component={LinkStyled} to="/mentors">For Mentors</MenuItem>
+            </Menu>
             {props.links.map(link =>(
               <LinkStyled to={link.link} ver='default'>
                 {link.title}
@@ -144,10 +169,6 @@ NavBar.propTypes = {
 
 NavBar.defaultProps = {
   links: [
-    {
-      title: 'How It Works',
-      link: '/howitworks',
-    },
     {
       title: 'Resources',
       link: '/resources',

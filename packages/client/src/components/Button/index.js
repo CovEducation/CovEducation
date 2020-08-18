@@ -7,6 +7,7 @@ const ButtonThemes = {
   backgroundColor: {
     default: COLORS.blue,
     accent: COLORS.yellow,
+    light: COLORS.lightblue,
   },
   width: {
     sm: 120,

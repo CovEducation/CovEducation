@@ -6,7 +6,7 @@ const HomepageBackground = styled.svg`
   left: 0;
   right: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
   z-index: -1;
 `;
 
