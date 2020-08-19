@@ -6,9 +6,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const firebase = require('firebase-admin');
 
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-
 const app = express();
 
 // disable logging when running unit tests
@@ -28,6 +25,10 @@ firebase.initializeApp({
   databaseURL: process.env.FIREBASE_URL
 });
 console.log('Successfully connected to firebase.');
+
+// import routes
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

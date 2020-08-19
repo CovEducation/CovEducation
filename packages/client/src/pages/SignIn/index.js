@@ -33,7 +33,6 @@ const SignInPage = () => {
     return (
         <>
             { JSON.stringify(auth.uid) }
-            { JSON.stringify(user) }
             { JSON.stringify(res)}
             <Text label="Email" id="email" placeholder="Email" value={email} onChange={handleChange}/>
             <Text label="Password" id="password" placeholder="Password" value={password} onChange={handleChange}/>
