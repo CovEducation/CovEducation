@@ -40,7 +40,6 @@ const MentorStep4 = (props) => {
     );
 
     const handleSubmit = async () => {
-        console.log(props.data);
         const {
             mentorName,
             mentorEmail,
@@ -54,8 +53,8 @@ const MentorStep4 = (props) => {
             mentorName,
             mentorEmail,
             {
-                value: "GMT-5",
-                timezone: "Central Daylight Time - Chicago (GMT-5)"
+                value: 'GMT-5',
+                timezone: 'Central Daylight Time - Chicago (GMT-5)'
             },
             introduction,
             selectedSubjects,
@@ -65,7 +64,7 @@ const MentorStep4 = (props) => {
         try {
             await signup(mentorEmail, password1, user);
         } catch (e) {
-            console.error("Failed to register mentor ", JSON.stringify(props.data));
+            console.error('Failed to register mentor ', JSON.stringify(props.data));
             console.error(e);
         }
     }

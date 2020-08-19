@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Button from '../../../../../components/Button';
-
+import useAuth from '../../../../../providers/AuthProvider';
+import { Parent } from '../../../../../models';
 const AgreementCheckboxWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -11,9 +12,35 @@ const AgreementCheckboxWrapper = styled.div`
 `;
 
 const ParentStep4 = (props) => {
+    const { signup } = useAuth();
 
     const isDisabled = !(props.data.agreedTermsOfService && props.data.agreedPrivacyPolicy)
 
+    const handleSubmit = async () => {
+        const {
+            parentName,
+            parentEmail,
+            password1,
+            registeredChildren,
+        } = props.data;
+
+        const user = new Parent(
+            parentName,
+            parentEmail,
+            {
+                value: 'GMT-5',
+                timezone: 'Central Daylight Time - Chicago (GMT-5)'
+            },
+            registeredChildren,
+        );
+
+        try {
+            await signup(parentEmail, password1, user);
+        } catch (e) {
+            console.error('Failed to register parent ', JSON.stringify(props.data));
+            console.error(e);
+        }
+    }
     return (
         <AgreementCheckboxWrapper>
             {JSON.stringify(props.data)}
@@ -38,6 +65,7 @@ const ParentStep4 = (props) => {
             <Button
                 children={<div>Sign Up</div>}
                 disabled={isDisabled}
+                onClick={handleSubmit}
             />
         </AgreementCheckboxWrapper>
     )
