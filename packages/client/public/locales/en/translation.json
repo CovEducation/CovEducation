@@ -58,6 +58,14 @@
       "FindTitle": "Find A Mentor",
       "FindAMentor": "Log in to visit the Find A Mentor page , where you will be able to search for and request a mentor. Please only contact one mentor per student.",
       "ContactTitle": "Meet Mentor",
-      "Contact": "Your mentor will email you to set up an initial meeting time. If you do not hear from your mentor within 48 hours, please request another mentor.",
+      "Contact": "Your mentor will email you to set up an initial meeting time. If you do not hear from your mentor within 48 hours, please request another mentor."
+    },
+
+    "Contact" : {
+      "Title": "Contact Us",
+      "Subtitle" : "Make sure to check out our FAQs page first!",
+      "Name": "Name",
+      "Email": "Email",
+      "Message": "Message"
     }
 }
