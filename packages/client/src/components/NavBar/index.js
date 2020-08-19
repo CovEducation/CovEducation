@@ -12,9 +12,12 @@ import Modal from '../Modal';
 import Wizard from '../Wizard';
 import Button from '../Button';
 import styled from 'styled-components';
-import { FONTS, COLORS } from '../../constants';
+import { COLORS, FONTS } from '../../constants';
 
-import { Modal as Md } from '@material-ui/core';
+// import { Modal as Md } from '@material-ui/core';
+import Dialog from '@material-ui/core/Dialog';
+// import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
 import Signin from '../SignIn';
 
 const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
@@ -89,13 +92,11 @@ export default function NavBar(props)  {
         <div/>
         <Modal title="Sign Up" trigger={<Button theme='accent' size='sm'> Sign Up </Button>}> <Wizard
             content={Wiz_content}/> </Modal>
-        <Md
-            style={{ top: '25%' }}
-            open={loginOpen}
-            onClose={handleLoginClose}
-        >
-          <Signin/>
-        </Md>
+        <Dialog open={loginOpen} onClose={handleLoginClose}>
+          <DialogContent>
+            <Signin/>
+          </DialogContent>
+        </Dialog>
       </>
   );
 

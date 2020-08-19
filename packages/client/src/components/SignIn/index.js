@@ -10,30 +10,6 @@ import useAuth from '../../providers/AuthProvider'
 import Button from '../Button';
 import UncontrolledAlert from '../Notification/UncontrolledAlert';
 
-const AuthInner = styled.div`
-    margin: auto;
-    background: #ffffff;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-    padding: 40px 55px 45px 55px;
-    border-radius: 10px;
-    transition: all .3s;
-`
-const AuthWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: left;
-    .form-control:focus {
-        border-color: #00568C;
-        box-shadow: none;
-    }
-    h3 {
-        text-align: center;
-        margin: 0;
-        line-height: 1;
-        padding-bottom: 20px;
-    }
-`
 const Notification = styled(UncontrolledAlert)`
     .section {
         padding: 70px 0;
@@ -103,7 +79,7 @@ const Signin = () => {
     }
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
-    };
+    }
     const ShowNotifications = () => {
         if (error) {
             return (
@@ -129,111 +105,107 @@ const Signin = () => {
     }
 
     return (
-        <AuthWrapper>
-            <AuthInner>
-                <form>
-                    <Title>Sign In</Title>
-                    <table>
-                        <tr>
-                            <td align="center">
-                                <div className="form-group">
-                                    <Text
-                                        autoFocus
-                                        id = 'email'
-                                        placeholder = "Email"
-                                        value = {email}
-                                        onChange = {handleChange('email')}
-                                        required
+        <form>
+            <Title>Sign In</Title>
+            <table>
+                <tr>
+                    <td align="center">
+                        <div className="form-group">
+                            <Text
+                                autoFocus
+                                id='email'
+                                placeholder="Email"
+                                value={email}
+                                onChange={handleChange('email')}
+                                required
+                            />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <div className="form-group">
+                            <Text
+                                id="password"
+                                placeholder="Password"
+                                type={showPassword ? 'text' : 'password'}
+                                value={password}
+                                onChange={handleChange('password')}
+                                required
+                                endAdornment={{
+                                    endAdornment:
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                            >
+                                                {showPassword ? <Visibility/> : <VisibilityOff/>}
+                                            </IconButton>
+                                        </InputAdornment>
+                                }}
+                            />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div className="form-group">
+                            <FormControlLabel
+                                style={{
+                                    paddingLeft: '13px'
+                                }}
+                                control={
+                                    <Checkbox
+                                        id="checkbox"
+                                        onChange={handleChange('remember')}
+                                        value={remember}
+                                        name="remember"
+                                        color="primary"
                                     />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="center">
-                                <div className="form-group">
-                                    <Text
-                                        id = "password"
-                                        placeholder = "Password"
-                                        type = {showPassword ? 'text' : 'password'}
-                                        value = {password}
-                                        onChange = {handleChange('password')}
-                                        required
-                                        endAdornment = {{
-                                            endAdornment:
-                                                <InputAdornment position="end">
-                                                    <IconButton
-                                                        onClick={handleClickShowPassword}
-                                                        onMouseDown={handleMouseDownPassword}
-                                                    >
-                                                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                                                    </IconButton>
-                                                </InputAdornment>
-                                        }}
-                                    />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div className="form-group">
-                                    <FormControlLabel
-                                        style = {{
-                                           paddingLeft: '13px'
-                                        }}
-                                        control={
-                                            <Checkbox
-                                                id="checkbox"
-                                                onChange={handleChange('remember')}
-                                                value={remember}
-                                                name="remember"
-                                                color="primary"
-                                            />
-                                        }
-                                        label="Remember Me"
-                                    />
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="center">
-                                <br />
-                                <Button theme="default" size="md" type="button"
-                                        onClick={ () => {
-                                            setSubmittedOnce(true);
-                                            if (error === false) {
-                                                signin(email, password).catch(() => {
-                                                    setServerError(true);
-                                                });
-                                            }
-                                            if (error === false && serverError === false) {
-                                                console.log('accept sign-in');
-                                                // redirect to dashboard page
-                                            }
-                                        }}
-                                >
-                                    Login
-                                </Button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <br />
-                                { submittedOnce && <ShowNotifications /> }
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="right">
-                                <PassForget>
-                                    Forgot <a href="/forgot-password">password?</a>
-                                </PassForget>
-                            </td>
-                        </tr>
-                    </table>
+                                }
+                                label="Remember Me"
+                            />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <br/>
+                        <Button theme="default" size="md" type="button"
+                                onClick={() => {
+                                    setSubmittedOnce(true);
+                                    if (error === false) {
+                                        signin(email, password).catch(() => {
+                                            setServerError(true);
+                                        });
+                                    }
+                                    if (error === false && serverError === false) {
+                                        console.log('accept sign-in');
+                                        // redirect to dashboard page
+                                    }
+                                }}
+                        >
+                            Login
+                        </Button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br/>
+                        {submittedOnce && <ShowNotifications/>}
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <PassForget>
+                            Forgot <a href="/forgot-password">password?</a>
+                        </PassForget>
+                    </td>
+                </tr>
+            </table>
 
-                    <br />
-                </form>
-            </AuthInner>
-        </AuthWrapper>
+            <br/>
+        </form>
     );
 }
 
