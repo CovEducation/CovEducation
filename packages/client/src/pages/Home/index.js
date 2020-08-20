@@ -29,10 +29,6 @@ import writing from './img/writing.svg';
 const HomeWrapper = styled.div`
   text-align: center;
 `;
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 const HomepageSection = styled.section`
   width: 70%;
   margin: 0 auto;
@@ -44,10 +40,6 @@ const HomepageSection = styled.section`
   position: relative;
   overflow: hidden;
 `;
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 const HomepageTitle = styled.h1`
   font-size: min(7vw, 84px);
   font-family:${FONTS.font1};
@@ -60,20 +52,12 @@ const HomepageTitle = styled.h1`
   letter-spacing: -0.16px;
   font-feature-settings: 'pnum' on, 'lnum' on;
 `;
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 const HomepageSubtitle = styled.p`
   font-size: min(3vw, 24px);
   font-weight: 400;
   font-family:${FONTS.font2};
   color: ${COLORS.darkblue};
 `;
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 const HomepageBody = styled.div`
   p{
     font-family: ${FONTS.font2};
@@ -183,10 +167,6 @@ const Subjects = [
     key: 'padding'
   }
 ]
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 const WhyJoin = [
   {
     key: 1,
@@ -214,10 +194,6 @@ const WhyJoin = [
   }
 ]
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 const HomePage = () => {
   const { t } = useTranslation();
   return (

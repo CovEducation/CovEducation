@@ -203,10 +203,6 @@ const Signin = () => {
                     </td>
                 </tr>
             </table>
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
             <br/>
         </form>
     );
