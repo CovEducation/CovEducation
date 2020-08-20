@@ -6,7 +6,7 @@ async function authMiddleware(req, res, next) {
         next();
     } catch (err) {
         console.log('Error authenticated API request: ' + err);
-        res.sendStatus(403);
+        res.status(403).send('Error authenticated API request: ' + err);
     }
 }
 
