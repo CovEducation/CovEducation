@@ -55,27 +55,11 @@ const AntTabs = withStyles({
 
 const AntTab = withStyles((theme) => ({
     root: {
-        textTransform: 'none',
-        minWidth: 200,
-        fontWeight: theme.typography.fontWeightRegular,
-        fontFamily: [
-            '-apple-system',
-            'BlinkMacSystemFont',
-            '"Segoe UI"',
-            'Roboto',
-            '"Helvetica Neue"'
-        ].join(','),
-        '&:hover': {
-            color: '#003c5e',
-            opacity: 1
-        },
-        '&$selected': {
-            color: '#003c5e',
-            fontWeight: theme.typography.fontWeightBold
-        },
-        '&:focus': {
-            color: '#003c5e'
-        }
+        flexGrow: 1,
+        backgroundColor: 'transparent',
+        display: 'flex',
+        height: 448,
+        paddingLeft: '300px'
     },
     selected: {}
 }))((props) => <Tab disableRipple {...props} />);
@@ -93,21 +77,33 @@ export default function HTabs(props) {
     const classes = HTabStyle();
     const [value, setValue] = useState(0);
 
-    const handleChange = (_, newValue) => {
+    const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
     return (
         <div className={classes.root}>
-            <AppBar position="static" color="default">
-                <AntTabs value={value} onChange={handleChange} aria-label="ant example">
-                    {props.labels.map((label, index) => (
-                        <AntTab key={label} label={label} {...a11yProps(index)} />
-                    ))}
-                </AntTabs>
-            </AppBar>
-            {props.texts.map((text, index) => (
-                <TabPanel value={value} index={index} key={index}>
+            <ProcessTabs
+                orientation="horizontal"
+                indicatorColor="primary"
+                value={value}
+                onChange={handleChange}
+                aria-label="Tabs Example"
+                className={classes.tabs}
+            >
+                {labels.map((label, index) => (
+                    <Tab
+                        disableRipple={ true }
+                        key={index}
+                        label={label}
+                        style={index === value ? selected : defaultColor}
+                        className={classes.process}
+                        {...a11yProps({ index })}
+                    />
+                ))}
+            </ProcessTabs>
+            {texts.map((text, index) => (
+                <TabPanel value={text} index={index} key={index}>
                     {text}
                 </TabPanel>
             ))}
