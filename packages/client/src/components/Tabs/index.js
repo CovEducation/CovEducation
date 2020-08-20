@@ -56,7 +56,8 @@ const useStyles = makeStyles({
         flexGrow: 1,
         backgroundColor: 'transparent',
         display: 'flex',
-        height: 448
+        height: 448,
+        paddingLeft: '300px'
     },
     tabs: {
         borderRight: '1px solid rgba(0, 0, 0, 0.12)'
@@ -82,7 +83,7 @@ const defaultColor = {
     '--text': '#003c5e'
 };
 
-export default function VTabs(props) {
+export default function HTabs(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -98,7 +99,7 @@ export default function VTabs(props) {
     return (
         <div className={classes.root}>
             <ProcessTabs
-                orientation="vertical"
+                orientation="horizontal"
                 indicatorColor="primary"
                 value={value}
                 onChange={handleChange}
