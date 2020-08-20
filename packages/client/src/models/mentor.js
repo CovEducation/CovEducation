@@ -11,7 +11,8 @@ const MentorConverter = {
             timezone: mentor.timezone,
             about: mentor.about,
             subjects: mentor.subjects,
-            tags: mentor.tags
+            tags: mentor.tags,
+            role: mentor.role,
         };
     },
 
@@ -23,7 +24,8 @@ const MentorConverter = {
             data.timezone,
             data.about,
             data.subjects,
-            data.tags
+            data.tags,
+            data.role,
         );
     }
 };
@@ -43,6 +45,7 @@ export default class Mentor {
         this.about = about;
         this.subjects = subjects;
         this.tags = tags;
+        this.role = 'MENTOR';
 
         this.validate();
     }

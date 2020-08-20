@@ -46,10 +46,10 @@ const useAuthProvider = () => {
      * @return {Promise<void>} indicates successful account creation.
      */
     const signup = async (email, password, user) => {
-        await Auth.createUserWithEmailAndPassword(email, password);
-        const token = await Auth.currentUser.getIdToken();
+        const creds = await Auth.createUserWithEmailAndPassword(email, password);
+        const token = await creds.user.getIdToken();
 
-        const res = await fetch('/users', {
+        await fetch('/users', {
             method: 'POST',
             headers: { 'token' : token, 'Content-Type': 'application/json'},
             body: JSON.stringify(user),
