@@ -18,7 +18,7 @@ import { COLORS, FONTS } from '../../constants';
 import Dialog from '@material-ui/core/Dialog';
 // import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import Signin from '../SignIn';
+import Signin from '../SignIn/index';
 
 const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
 
@@ -90,11 +90,18 @@ export default function NavBar(props)  {
       <>
         <Button size='sm' onClick={toggleLogin}>Log In</Button>
         <div/>
-        <Modal title="Sign Up" trigger={<Button theme='accent' size='sm'> Sign Up </Button>}> <Wizard
-            content={Wiz_content}/> </Modal>
+        <Modal
+            title="Sign Up"
+            trigger={
+              <Button theme='accent' size='sm'> Sign Up </Button>}
+        >
+          <Wizard
+              content={Wiz_content}
+          />
+        </Modal>
         <Dialog open={loginOpen} onClose={handleLoginClose}>
           <DialogContent>
-            <Signin/>
+            <Signin />
           </DialogContent>
         </Dialog>
       </>
