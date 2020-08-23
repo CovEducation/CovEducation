@@ -25,17 +25,17 @@ const Wrapper = styled.div`
 `;
   const Title = styled.h1`
   padding-top: 50px;
-  font-size: 40px;
-  font-family:${FONTS.font2};
+  font-size: max(1.5vw, 32px);
+  font-weight: 400;
+  font-family: ${FONTS.font2};
   left: calc(50% - 267px/2 + 0.5px)
   top: 86px
 `;
 
 const Subtitle = styled.p`
-  font-size: 23px;
+  font-size: max(1.1vw, 20px);
   font-weight: 500;
   font-style: normal;
-  line-height: 48px;
   font-family:${FONTS.font2};
 `;
 
