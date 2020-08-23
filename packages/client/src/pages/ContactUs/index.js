@@ -33,7 +33,7 @@ const Headings = styled.p`
   text-align: left;
 `;
 
-const ContactUs = () => {
+const ContactUsPage = () => {
   const { t } = useTranslation();
   return (
     <Wrapper>
@@ -54,4 +54,4 @@ const ContactUs = () => {
   )
 }
 
-export default ContactUs;
+export default ContactUsPage;

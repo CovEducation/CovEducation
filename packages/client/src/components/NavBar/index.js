@@ -183,7 +183,7 @@ NavBar.defaultProps = {
     },
     {
       title: 'Contact Us',
-      link: '/contact us',
+      link: '/contactus',
     },
   ],
   // sticky: stays with user as they scroll,
