@@ -144,6 +144,9 @@ NavBar.propTypes = {
 
 NavBar.defaultProps = {
   links: [
+    { title: 'Dashboard',
+      link: '/dashboard'
+    },
     {
       title: 'How It Works',
       link: '/howitworks',

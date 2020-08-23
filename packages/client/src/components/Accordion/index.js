@@ -39,8 +39,8 @@ const AccordionRowIcon = styled(ArrowDown)`
 
 const AccordionRowContent = styled.div`
   background-color: ${COLORS.grey};
-  height: ${props => props.open ? 'auto' : 0};
-  transition: 0.2s ease height;
+  max-height: ${props => props.open ? '80vh': 0};
+  transition: 0.25s ease-in-out max-height;
   overflow: hidden;
 `;
 
@@ -67,9 +67,8 @@ AccordionRow.propTypes = {
 const AccordionWrapper = styled.div`
   background-color: ${COLORS.white};
   height: auto;
-  font-size: 14px;
+  font-size: 12px;
   color: black;
-  min-width: 220px;
 `;
 
 const Accordion = ({ children }) => {

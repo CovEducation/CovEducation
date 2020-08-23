@@ -3,6 +3,15 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+// Firebase boilerplate.
+const admin = require('firebase-admin');
+
+const serviceAccount = require('./service_account.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
@@ -20,5 +29,4 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
 module.exports = app;

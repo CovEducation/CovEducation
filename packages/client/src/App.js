@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router, Switch, Route
 } from 'react-router-dom';
 import './App.css';
+import DashboardPage from './pages/Dashboard';
 import HomePage from './pages/Home';
 import ProfilePage from './pages/Profile';
 import SignUpPage from './pages/SignUp';
@@ -22,6 +23,9 @@ function App() {
           </Route>
           <Route path="/profile">
             <ProfilePage />
+          </Route>
+          <Route path="/dashboard">
+            <DashboardPage />
           </Route>
           <Route path="/signup">
             <SignUpPage />

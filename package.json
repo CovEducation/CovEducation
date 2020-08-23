@@ -16,6 +16,9 @@
     "lerna": "^3.22.1"
   },
   "dependencies": {
-    "redoc-cli": "^0.9.8"
+    "algoliasearch": "^4.4.0",
+    "firebase-admin": "^9.0.0",
+    "react-instantsearch-dom": "^6.7.0",
+    "redoc-cli": "^0.9.11"
   }
 }

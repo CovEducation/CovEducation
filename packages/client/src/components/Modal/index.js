@@ -46,7 +46,7 @@ const ModalContent = withStyles(theme => ({
 }))(MuiDialogContent);
 
 export default function Modal(props) {
-  //called as so <Modal text="test" title="ahh" trigger={<Button> Test </Button>}> stuff to show up in modal </Modal>
+  // Called as so <Modal text="test" title="ahh" trigger={<Button> Test </Button>}> stuff to show up in modal </Modal>
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
@@ -57,7 +57,7 @@ export default function Modal(props) {
 
   return (
     <div>
-      { props.trigger && cloneElement(props.trigger,{ onClick: handleClickOpen }) } 
+      { props.trigger && cloneElement(props.trigger,{ onClick: handleClickOpen }) }
       <Dialog aria-labelledby="customized-dialog-title" open={open}>
         <ModalTitle id="customized-dialog-title" onClose={handleClose}>
           {props.title}
