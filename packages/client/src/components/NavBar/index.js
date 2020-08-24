@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,6 +11,7 @@ import PropTypes from 'prop-types';
 import Button from '../Button';
 import styled from 'styled-components';
 import { FONTS, COLORS } from '../../constants';
+import MobileNav from './MobileNav';
 
 const TextThemes = {
   fontSize: {
@@ -51,6 +52,7 @@ const UserLinkWrapper = styled.div`
 `;
 
 export default function NavBar(props)  {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [menuDropdownAnchor, setMenuDropdownAnchor] = useState(null);
   const handleMenuDropdownClick = (event) => {
     setMenuDropdownAnchor(event.currentTarget);
@@ -113,13 +115,28 @@ export default function NavBar(props)  {
     // )
   }
 
+  useEffect(() => {
+    const updateWindowWidth = () => {
+      setWindowWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', updateWindowWidth);
+
+    return () => {
+      window.removeEventListener('resize', updateWindowWidth);
+    }
+  }, []);
+
+  if (windowWidth < 1024) {
+    return <MobileNav links={props.links} />
+  }
+
   return (
     <>
       <AppBar color='white' flex-direction='row' position={props.position} elevation={0}>
         <Toolbar>
           <Grid>
             <LinkStyled to='/' ver='lg'>CovEd</LinkStyled>
-            <LinkStyled to='#' onClick={handleMenuDropdownClick}>How It Works</LinkStyled>
+            <LinkStyled to='#' ver='default' onClick={handleMenuDropdownClick}>How It Works</LinkStyled>
             <Menu
               id="howitworks"
               anchorEl={menuDropdownAnchor}
