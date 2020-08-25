@@ -12,7 +12,6 @@ const PARENT = 'PARENT';
 
 const getDoc = async (collection, uid) => {
   const obj = await db.collection(collection).doc(uid).get();
-
   if (obj.exists) {
     return obj.data();
   }
@@ -24,7 +23,6 @@ const getDoc = async (collection, uid) => {
 
 const getUser = async (uid) => {
   const userDoc = await getDoc('users', uid);
-
   let user;
   if (userDoc.role === MENTOR) {
     user = await getDoc('mentors', uid);
@@ -71,7 +69,7 @@ const updateUser = async (uid) => {
 
 };
 
-// Helper function
+// Validation Functions
 const parseMentor = async (body) => {
   const mentor = {
     name: body.name,

@@ -1,6 +1,6 @@
 const express = require('express');
 const authMiddleware = require('../middleware/auth');
-const db = require('../db/user');
+const db = require('../db/users');
 
 const router = express.Router();
 
@@ -35,7 +35,7 @@ router.post('/', authMiddleware, async (req, res, next) => {
 });
 
 router.patch('/', authMiddleware, async (req, res) => {
-
+  // TODO logic to update existing documents
 });
 
 module.exports = router;

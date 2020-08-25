@@ -5,7 +5,6 @@ async function authMiddleware(req, res, next) {
         req.user = await firebase.auth().verifyIdToken(req.query.token || req.headers.token || req.body.token);
         next();
     } catch (err) {
-        console.log('Error authenticated API request: ' + err);
         res.status(403).send('Error authenticated API request: ' + err);
     }
 }
