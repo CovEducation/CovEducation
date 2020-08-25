@@ -40,7 +40,6 @@ const getUser = async (uid) => {
 };
 
 const createUser = async (uid, body) => {
-  // TODO user yup data validation.
   const user = {
     role: body.role,
   };
