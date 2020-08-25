@@ -9,7 +9,7 @@ import Section from '../../components/Section';
 import ImText from '../../components/TextandImage';
 import Hidden from '@material-ui/core/Hidden';
 
-//images
+// Images
 import art from './img/art.svg';
 import classroom from './img/classroom.svg';
 import community from './img/community.svg';
@@ -237,10 +237,19 @@ const HomePage = () => {
           <Grid container direction = "row" spacing={3} justify="center">
           {Subjects.map((s) => {
             return (
-                s.key === 'padding' ? <Hidden smDown><Grid item sm={1}/></Hidden> :
-                    <Grid item sm={2} xs={6}> <ImText arrangement="vertical" shape="circle" img={s.imgsrc}
-                                                      minwidth="100px" minheight="100px">
-                      {s.text} </ImText> </Grid>
+                s.key === 'padding' ? 
+                  <Hidden smDown>
+                    <Grid item sm={1}/>
+                  </Hidden> 
+                  :
+                  <Grid item sm={2} xs={6}> 
+                    <ImText 
+                      arrangement="vertical" 
+                      shape="circle" img={s.imgsrc}
+                      minwidth="100px" minheight="100px">
+                      {s.text} 
+                    </ImText> 
+                  </Grid>
             )
           })}
           </Grid>

@@ -48,11 +48,16 @@ const handleMouseDownPassword = (event) => {
     event.preventDefault();
 };
 
+const validateUserFields = (email, password) => {
+    const longEnough = email.length > 0 && password.length > 5;
+    const validEmail = email.includes('@') && email.includes('.');
+    return validEmail && longEnough;
+}
+
 const Signin = () => {
     const { signin } = useAuth();
-
     const [email, setEmail] = useState('');
-    const [error, setError] = useState(false);
+    const [formError, setFormError] = useState(false);
     const [password, setPassword] = useState('');
     const [remember, setRemember] = useState(false);
     const [serverError, setServerError] = useState(false);
@@ -60,8 +65,8 @@ const Signin = () => {
     const [submittedOnce, setSubmittedOnce] = useState(false);
 
     useEffect(() => {
-        const invalid = !(email.length > 0 && email.includes('@') && email.includes('.') && password.length > 5);
-        setError(invalid);
+        const valid = validateUserFields(email, password);
+        setFormError(!valid);
     }, [email, password]);
 
     const handleChange = (prop) => (event) => {
@@ -73,19 +78,23 @@ const Signin = () => {
             setServerError(!serverError);
         } else if (prop === 'remember') {
             setRemember(!remember);
-        } else if (prop === 'error') {
-            setError(!error);
+        } else if (prop === 'formError') {
+            setFormError(!formError);
         }
     }
+
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     }
+    
+    
     const ShowNotifications = () => {
-        if (error) {
+        if (!formError && !serverError) return <></>;
+
+        if (formError) {
             return (
                 <Notification>
                     <span>
-                      <b>Oh snap! -</b>
                       The email and/or password are in the wrong format. Please try again.
                     </span>
                 </Notification>
@@ -95,15 +104,28 @@ const Signin = () => {
             return (
                 <Notification>
                     <span>
-                      <b>Oh snap! -</b>
-                      The authentication failed.
+                      Wrong email and password.
                     </span>
                 </Notification>
             )
         }
-        return null;
     }
 
+    const handleSubmit = () => {
+        setSubmittedOnce(true);
+        // We don't have to return anything since the
+        // Notification component will alert the user.
+        if (formError || serverError) return;
+        signin(email, password)
+            .then((resp) => {
+                // Redirect.
+                alert('Success! Redirecting to sign in...');
+            })
+            .catch(() => {
+                setServerError(true);
+            });
+    }
+    
     return (
         <form>
             <Title>Sign In</Title>
@@ -171,20 +193,11 @@ const Signin = () => {
                 <tr>
                     <td align="center">
                         <br/>
-                        <Button theme="default" size="md" type="button"
-                                onClick={() => {
-                                    setSubmittedOnce(true);
-                                    if (error === false) {
-                                        signin(email, password).catch(() => {
-                                            setServerError(true);
-                                        });
-                                    }
-                                    if (error === false && serverError === false) {
-                                        console.log('accept sign-in');
-                                        // redirect to dashboard page
-                                    }
-                                }}
-                        >
+                        <Button 
+                            theme="default" 
+                            size="md" 
+                            type="button"
+                            onClick={handleSubmit}>
                             Login
                         </Button>
                     </td>
@@ -198,7 +211,7 @@ const Signin = () => {
                 <tr>
                     <td align="right">
                         <PassForget>
-                            Forgot <a href="/forgot-password">password?</a>
+                            <a href="/forgot-password">Forgot password?</a>
                         </PassForget>
                     </td>
                 </tr>

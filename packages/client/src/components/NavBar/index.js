@@ -1,12 +1,8 @@
 import React, { useState } from 'react';
-// import IconButton from '@material-ui/core/IconButton';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
-// import MenuItem from '@material-ui/core/MenuItem';
-// import Menu from '@material-ui/core/Menu';
-// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PropTypes from 'prop-types';
 import Modal from '../Modal';
 import Wizard from '../Wizard';
@@ -14,18 +10,16 @@ import Button from '../Button';
 import styled from 'styled-components';
 import { COLORS, FONTS } from '../../constants';
 
-// import { Modal as Md } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
-// import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Signin from '../SignIn';
 
-const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
+const SignUpWizard = ['page1', <Button> Sign up Wizard </Button>, 'page3']
 
 const TextThemes = {
   fontSize: {
     default: 'max(16px,1vw)',
-    lg: 'max(22px,1.2vw)',
+    lg: 'max(24px,1.2vw)',
   },
   fontWeight: {
     default: '400',
@@ -57,14 +51,7 @@ const LinkStyled = styled(Link)`
 `
 
 export default function NavBar(props)  {
-
-  // const [anchorEl, setAnchorEl] = useState(null);
-  // set the login modal's visibility to false to begin with
   const [loginOpen, setLoginOpen] = useState(false);
-
-  // // not used yet
-  // const open = Boolean(anchorEl);
-  // let menuOpen = false;
 
   const toggleLogin = () => {
     setLoginOpen(!loginOpen);
@@ -74,24 +61,18 @@ export default function NavBar(props)  {
     setLoginOpen(false);
   };
 
-  // // not used yet
-  // const handleMenu = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  //
-  // // not used yet
-  // const handleClose = () => {
-  //   menuOpen = false;
-  //   setAnchorEl(null);
-  // };
-
-  let userLinks;
-  userLinks = (
+  const SignUpButton = <Button theme='accent' size='sm'> Sign Up </Button>;
+  // TODO: Change the user links based on auth state.
+  let loggedInUserLinks = (
       <>
         <Button size='sm' onClick={toggleLogin}>Log In</Button>
         <div/>
-        <Modal title="Sign Up" trigger={<Button theme='accent' size='sm'> Sign Up </Button>}> <Wizard
-            content={Wiz_content}/> </Modal>
+        <Modal 
+          title='Sign Up' 
+          trigger={SignUpButton}>
+          <Wizard
+            content={SignUpWizard}/> 
+        </Modal>
         <Dialog open={loginOpen} onClose={handleLoginClose}>
           <DialogContent>
             <Signin/>
@@ -107,13 +88,13 @@ export default function NavBar(props)  {
           <Grid>
             <LinkStyled to='/' ver='lg'>CovEd</LinkStyled>
             {props.links.map(link =>(
-              <LinkStyled to={link.link} ver='default'>
+              <LinkStyled to={link.link} ver='default' key={link}>
                 {link.title}
               </LinkStyled>
             ))}
             </Grid>
           <div style={{ marginLeft: 'auto' }}/>
-          {userLinks}
+          {loggedInUserLinks}
         </Toolbar>
       </AppBar>
     </>
@@ -146,11 +127,9 @@ NavBar.defaultProps = {
     },
     {
       title: 'Contact Us',
-      link: '/contact us',
+      link: '/contactus',
     },
   ],
-  // sticky: stays with user as they scroll,
-  // absolute: disappears after user scrolls past
   position: 'sticky',
   ver: 'default',
 }
