@@ -8,23 +8,23 @@ const firebase = require('firebase-admin');
 
 const app = express();
 
-// disable logging when running unit tests
+// disable when running unit tests
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));
-}
 
-// firebase setup
-// the google service account file path should be in FIREBASE_CREDENTIALS
-// the database name should be in FIREBASE_URL
-const firebaseCredentials = JSON.parse(fs.readFileSync(process.env.FIREBASE_CREDENTIALS));
-if (!firebaseCredentials) {
-  throw new Error('Cannot find google service account credentials');
+  // firebase setup
+  // the google service account file path should be in FIREBASE_CREDENTIALS
+  // the database name should be in FIREBASE_URL
+  const firebaseCredentials = JSON.parse(fs.readFileSync(process.env.FIREBASE_CREDENTIALS));
+  if (!firebaseCredentials) {
+    throw new Error('Cannot find google service account credentials');
+  }
+  firebase.initializeApp({
+    credential: firebase.credential.cert(firebaseCredentials),
+    databaseURL: process.env.FIREBASE_URL
+  });
+  console.log('Successfully connected to firebase.');
 }
-firebase.initializeApp({
-  credential: firebase.credential.cert(firebaseCredentials),
-  databaseURL: process.env.FIREBASE_URL
-});
-console.log('Successfully connected to firebase.');
 
 // import routes
 const indexRouter = require('./routes/index');
