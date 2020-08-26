@@ -14,7 +14,6 @@ beforeEach(() => {
         'Hey! My name is Test. Johnny Test.',
         ['Time Traveling', 'Dog Talking'],
         'CST',
-        'what is this about again?',
         ['Sword Fighting'],
         ['ESL', 'FE-Unite'],
         ['Elementary School'],
@@ -26,7 +25,6 @@ test('constructor', () => {
     expect(mentor.email).toBe('test@email.com');
     expect(mentor.phone).toBe('123-456-7890');
     expect(mentor.timezone).toBe('CST');
-    expect(mentor.about).toBe('what is this about again?');
     expect(mentor.id).toBeFalsy();
     expect(mentor.subjects.length).toBe(1);
     expect(mentor.tags.length).toBe(2);
