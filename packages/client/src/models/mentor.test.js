@@ -1,4 +1,3 @@
-// import { } from '../providers/FirebaseProvider';
 import Mentor from './mentor';
 jest.mock('../providers/FirebaseProvider');
 
