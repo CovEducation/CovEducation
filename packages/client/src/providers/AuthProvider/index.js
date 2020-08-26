@@ -45,17 +45,25 @@ const useAuthProvider = () => {
      *
      * @return {Promise<void>} indicates successful account creation.
      */
-    const signup = async (email, password, user) => {
-        const creds = await Auth.createUserWithEmailAndPassword(email, password);
-        const token = await creds.user.getIdToken();
+    const signup = (email, password, user) => {
+        let userType = '';
+        if (user instanceof Mentor) {
+            userType = 'mentor';
+        } else if (user instanceof Parent) {
+            userType = 'parent';
+        } else {
+            return Promise.reject(`Error creating account: Unexpected user type: ${userType}`);
+        }
 
-        await fetch('/users', {
-            method: 'POST',
-            headers: { 'token' : token, 'Content-Type': 'application/json'},
-            body: JSON.stringify(user),
-        });
-
-        await Auth.currentUser.sendEmailVerification();
+        return Auth.createUserWithEmailAndPassword(email, password)
+            .then(() => {
+                const updateDisplayName = Auth.currentUser.updateProfile({displayName: userType});
+                return Promise.all([user.create(Auth.currentUser), updateDisplayName]);
+            })
+            .then(() => {
+                // since the database updates were successful we don't have to query again
+                setUser(user);
+            })
     };
 
     /**
@@ -80,19 +88,39 @@ const useAuthProvider = () => {
         });
     };
 
+    /**
+     * Gets the current user if possible
+     *
+     * @return {Promise<Mentor|Parent>} the current logged in user
+     */
+    const getCurrentUser = () => {
+        if (auth === AUTH_STATE.UNINITIALIZED || auth === AUTH_STATE.LOGGED_OUT) {
+            return Promise.reject('No user currently logged in.');
+        } else {
+            // query user for user data if already not cached
+            if (user) {
+                return Promise.resolve(user);
+            }
+
+            let userProm;
+            if (auth.displayName === 'mentor') {
+                userProm = Mentor.get(auth);
+            } else if (auth.displayName === 'parent') {
+                userProm = Parent.get(auth);
+            } else {
+                return Promise.reject('Unexpected user type.');
+            }
+
+            return userProm;
+        }
+    };
+
     // register firebase state handler
     // note that this only gets called once on mount
     useEffect(() => {
         const unsubscribe = Auth.onAuthStateChanged(async (auth) => {
             if (auth) {
                 setAuth(auth);
-
-                // TODO error handling
-                const token = await auth.getIdToken();
-                const res = await fetch('/users', { headers : { token: token }});
-                const user = await res.json();
-                setUser(user)
-
             } else {
                 setAuth(AUTH_STATE.LOGGED_OUT);
             }
@@ -100,6 +128,18 @@ const useAuthProvider = () => {
 
         return () => unsubscribe();
     }, []);
+
+    // attempt to fetch the user on update
+    useEffect(() => {
+        getCurrentUser()
+            .then((user) => {
+                setUser(user)
+            })
+            .catch((err) => {
+                console.log(err);
+                setUser(null);
+            });
+    });
 
     return {
         auth,
