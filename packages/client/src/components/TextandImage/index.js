@@ -12,27 +12,31 @@ img.circle{
 }
 `;
 
-const HorzIm = ({children, imgpath, shape}) => {
+const HorzIm = ({ children, imgpath, shape }) => {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12} sm={4} justify="flex-end">
-      {shape == "circle"? <img className="circle" src={imgpath} /> : <img src={imgpath} /> }
+        {shape === 'circle' ? 
+          <img className="circle" src={imgpath} alt="alt" /> :
+          <img src={imgpath} alt="alt" /> }
       </Grid>
       <Grid item xs={12} sm={8} justify="flex-start" alignItems="flex-start">
-      {children}
+        {children}
       </Grid>
     </Grid>
   )
 };
 
-const VertIm = ({children, imgpath, shape}) => {
+const VertIm = ({ children, imgpath, shape }) => {
   return (
     <Grid container spacing={1}>
       <Grid item xs={12} justify="center">
-      {shape == "circle"? <img className="circle" src={imgpath} /> : <img src={imgpath} /> }
+        {shape === 'circle' ? 
+          <img className="circle" src={imgpath} alt="alt" /> :
+          <img src={imgpath}  alt="alt" /> }
       </Grid>
       <Grid item xs={12} justify="center">
-      {children}
+        {children}
       </Grid>
     </Grid>
   )
@@ -41,7 +45,12 @@ const VertIm = ({children, imgpath, shape}) => {
 export default function ImText(props) {
   return (
     <GridWrapper minwidth={props.minwidth} minheight={props.minheight}>
-      {props.arrangement == "horizontal" ? <HorzIm imgpath={props.img} shape={props.shape}>{props.children}</HorzIm> : <VertIm imgpath={props.img} shape={props.shape}>{props.children}</VertIm>}
+        {/* eslint-disable-next-line eqeqeq */}
+      {
+          props.arrangement === 'horizontal' ? 
+            <HorzIm imgpath={props.img} shape={props.shape}>{props.children}</HorzIm> :
+            <VertIm imgpath={props.img} shape={props.shape}>{props.children}</VertIm>
+      }
     </GridWrapper>
   );
 };

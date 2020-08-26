@@ -10,32 +10,6 @@ import useAuth from '../../providers/AuthProvider'
 import Button from '../Button';
 import UncontrolledAlert from '../Notification/UncontrolledAlert';
 
-const AuthInner = styled.div`
-    width: 450px;
-    margin: auto;
-    background: #ffffff;
-    box-shadow: 0 14px 80px rgba(34, 35, 58, 0.2);
-    padding: 40px 55px 45px 55px;
-    border-radius: 15px;
-    transition: all .3s;
-`
-const AuthWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    text-align: left;
-    
-    .form-control:focus {
-        border-color: #00568C;
-        box-shadow: none;
-    }
-    h3 {
-        text-align: center;
-        margin: 0;
-        line-height: 1;
-        padding-bottom: 20px;
-    }
-`
 const Notification = styled(UncontrolledAlert)`
     .section {
         padding: 70px 0;
@@ -49,6 +23,7 @@ const Notification = styled(UncontrolledAlert)`
     position: relative;
     padding: 0.9rem 1.25rem;
     margin-bottom: 1rem;
+    width: 33ch;
     border: 0.0625rem solid transparent;
     border-radius: 0.2857rem; }
     color: #ffffff;
@@ -60,7 +35,7 @@ const PassForget = styled.p`
     padding-top: 10px;
     color: #7f7d7d;
     margin: 0;
-    
+
     a {
         color: #00568C;
     }
@@ -73,11 +48,16 @@ const handleMouseDownPassword = (event) => {
     event.preventDefault();
 };
 
+const validateUserFields = (email, password) => {
+    const longEnough = email.length > 0 && password.length > 5;
+    const validEmail = email.includes('@') && email.includes('.');
+    return validEmail && longEnough;
+}
+
 const Signin = () => {
     const { signin } = useAuth();
-
     const [email, setEmail] = useState('');
-    const [error, setError] = useState(false);
+    const [formError, setFormError] = useState(false);
     const [password, setPassword] = useState('');
     const [remember, setRemember] = useState(false);
     const [serverError, setServerError] = useState(false);
@@ -85,8 +65,8 @@ const Signin = () => {
     const [submittedOnce, setSubmittedOnce] = useState(false);
 
     useEffect(() => {
-        const invalid = !(email.length > 0 && email.includes('@') && email.includes('.') && password.length > 5);
-        setError(invalid);
+        const valid = validateUserFields(email, password);
+        setFormError(!valid);
     }, [email, password]);
 
     const handleChange = (prop) => (event) => {
@@ -98,19 +78,23 @@ const Signin = () => {
             setServerError(!serverError);
         } else if (prop === 'remember') {
             setRemember(!remember);
-        } else if (prop === 'error') {
-            setError(!error);
+        } else if (prop === 'formError') {
+            setFormError(!formError);
         }
     }
+
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
-    };
+    }
+    
+    
     const ShowNotifications = () => {
-        if (error) {
+        if (!formError && !serverError) return <></>;
+
+        if (formError) {
             return (
                 <Notification>
                     <span>
-                      <b>Oh snap! -</b>
                       The email and/or password are in the wrong format. Please try again.
                     </span>
                 </Notification>
@@ -120,92 +104,120 @@ const Signin = () => {
             return (
                 <Notification>
                     <span>
-                      <b>Oh snap! -</b>
-                      The authentication failed.
+                      Wrong email and password.
                     </span>
                 </Notification>
             )
         }
-        return null;
     }
 
+    const handleSubmit = () => {
+        setSubmittedOnce(true);
+        // We don't have to return anything since the
+        // Notification component will alert the user.
+        if (formError || serverError) return;
+        signin(email, password)
+            .then((resp) => {
+                // Redirect.
+                alert('Success! Redirecting to sign in...');
+            })
+            .catch(() => {
+                setServerError(true);
+            });
+    }
+    
     return (
-        <AuthWrapper>
-            <AuthInner>
-                <form>
-                    <Title>Sign In</Title>
-
-                    <div className="form-group">
-                        <Text
-                            autoFocus
-                            id = 'email'
-                            placeholder = "Email"
-                            value = {email}
-                            onChange = {handleChange('email')}
-                            required
-                        />
-                    </div>
-                    <div className="form-group">
-                        <Text
-                            id = "password"
-                            placeholder = "Password"
-                            type = {showPassword ? 'text' : 'password'}
-                            value = {password}
-                            onChange = {handleChange('password')}
-                            required
-                            endAdornment = {{
-                                endAdornment:
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                        >
-                                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                                        </IconButton>
-                                    </InputAdornment>
-                            }}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <FormControlLabel
-                            control={
-                                <Checkbox
-                                    id="checkbox"
-                                    onChange={handleChange('remember')}
-                                    value={remember}
-                                    name="remember"
-                                    color="primary"
-                                />
-                            }
-                            label="Remember Me"
-                        />
-                    </div>
-                    <br />
-
-                    <Button theme="default" size="md" type="button"
-                        onClick={ () => {
-                            setSubmittedOnce(true);
-                            if (error === false) {
-                                signin(email, password).catch(() => {
-                                    setServerError(true);
-                                });
-                            }
-                            if (error === false && serverError === false) {
-                                console.log('accept sign-in');
-                                // redirect to dashboard page
-                            }
-                        }}
-                    >
-                        Sign In
-                    </Button>
-                    <br />
-                    { submittedOnce && <ShowNotifications /> }
-                    <PassForget>
-                        Forgot <a href="/forgot-password">password?</a>
-                    </PassForget>
-                </form>
-            </AuthInner>
-        </AuthWrapper>
+        <form>
+            <Title>Sign In</Title>
+            <table>
+                <tr>
+                    <td align="center">
+                        <div className="form-group">
+                            <Text
+                                autoFocus
+                                id='email'
+                                placeholder="Email"
+                                value={email}
+                                onChange={handleChange('email')}
+                                required
+                            />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <div className="form-group">
+                            <Text
+                                id="password"
+                                placeholder="Password"
+                                type={showPassword ? 'text' : 'password'}
+                                value={password}
+                                onChange={handleChange('password')}
+                                required
+                                endAdornment={{
+                                    endAdornment:
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={handleClickShowPassword}
+                                                onMouseDown={handleMouseDownPassword}
+                                            >
+                                                {showPassword ? <Visibility/> : <VisibilityOff/>}
+                                            </IconButton>
+                                        </InputAdornment>
+                                }}
+                            />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div className="form-group">
+                            <FormControlLabel
+                                style={{
+                                    paddingLeft: '13px'
+                                }}
+                                control={
+                                    <Checkbox
+                                        id="checkbox"
+                                        onChange={handleChange('remember')}
+                                        value={remember}
+                                        name="remember"
+                                        color="primary"
+                                    />
+                                }
+                                label="Remember Me"
+                            />
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <br/>
+                        <Button 
+                            theme="default" 
+                            size="md" 
+                            type="button"
+                            onClick={handleSubmit}>
+                            Login
+                        </Button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br/>
+                        {submittedOnce && <ShowNotifications/>}
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <PassForget>
+                            <a href="/forgot-password">Forgot password?</a>
+                        </PassForget>
+                    </td>
+                </tr>
+            </table>
+            <br/>
+        </form>
     );
 }
 

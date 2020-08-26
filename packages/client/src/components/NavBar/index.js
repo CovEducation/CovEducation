@@ -1,26 +1,25 @@
-import React, { useState } from "react";
-import IconButton from '@material-ui/core/IconButton';
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PropTypes from 'prop-types';
 import Modal from '../Modal';
 import Wizard from '../Wizard';
 import Button from '../Button';
 import styled from 'styled-components';
-import { FONTS, COLORS } from '../../constants';
+import { COLORS, FONTS } from '../../constants';
 
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
+import Signin from '../SignIn';
 
-const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
+const SignUpWizard = ['page1', <Button> Sign up Wizard </Button>, 'page3']
 
 const TextThemes = {
   fontSize: {
     default: 'max(16px,1vw)',
-    lg: 'max(22px,1.2vw)',
+    lg: 'max(24px,1.2vw)',
   },
   fontWeight: {
     default: '400',
@@ -52,69 +51,35 @@ const LinkStyled = styled(Link)`
 `
 
 export default function NavBar(props)  {
+  const [loginOpen, setLoginOpen] = useState(false);
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  let menuOpen = false;
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+  const toggleLogin = () => {
+    setLoginOpen(!loginOpen);
   };
 
-  const handleClose = () => {
-    menuOpen = false;
-    setAnchorEl(null);
+  const handleLoginClose = () => {
+    setLoginOpen(false);
   };
 
-  let userLinks;
-  if (true) {
-    userLinks = (
+  const SignUpButton = <Button theme='accent' size='sm'> Sign Up </Button>;
+  // TODO: Change the user links based on auth state.
+  let loggedInUserLinks = (
       <>
-        <LinkStyled to='/login' ver='default'>Login</LinkStyled>
+        <Button size='sm' onClick={toggleLogin}>Log In</Button>
         <div/>
-        <Modal title="Sign Up" trigger={<Button theme='accent' size='sm'> Sign Up </Button>}> <Wizard content={Wiz_content} /> </Modal>
+        <Modal 
+          title='Sign Up' 
+          trigger={SignUpButton}>
+          <Wizard
+            content={SignUpWizard}/> 
+        </Modal>
+        <Dialog open={loginOpen} onClose={handleLoginClose}>
+          <DialogContent>
+            <Signin/>
+          </DialogContent>
+        </Dialog>
       </>
-    );
-  } else {
-    userLinks = (
-      <>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="menu-navbar"
-          aria-haspopup="true"
-          onClick={handleMenu}
-          color="inherit"
-          onMouseOver={handleMenu}
-        >
-          <AccountCircleIcon/>
-          <div style={{ padding:'10px' }}/>
-          <LinkStyled ver='default' style={{ color: COLORS.blue }}>
-            {'Tim Beaver'}
-          </LinkStyled>
-        </IconButton>
-        <Menu
-          id="menu-navbar"
-          anchorEl={anchorEl}
-          getContentAnchorEl={null}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{ onMouseLeave: handleClose }}
-        >
-          <MenuItem component={Link} to="/profile" style={{ fontSize: TextThemes.fontSize['default'] }}>Dashboard</MenuItem>
-          <MenuItem style={{ color: 'red', fontSize: TextThemes.fontSize['default'] }}>Sign Out</MenuItem>
-        </Menu>
-      </>
-    )
-  }
+  );
 
   return (
     <>
@@ -123,13 +88,13 @@ export default function NavBar(props)  {
           <Grid>
             <LinkStyled to='/' ver='lg'>CovEd</LinkStyled>
             {props.links.map(link =>(
-              <LinkStyled to={link.link} ver='default'>
+              <LinkStyled to={link.link} ver='default' key={link}>
                 {link.title}
               </LinkStyled>
             ))}
             </Grid>
-          <div style={{marginLeft: 'auto'}}/>
-          {userLinks}
+          <div style={{ marginLeft: 'auto' }}/>
+          {loggedInUserLinks}
         </Toolbar>
       </AppBar>
     </>
@@ -162,11 +127,9 @@ NavBar.defaultProps = {
     },
     {
       title: 'Contact Us',
-      link: '/contact us',
+      link: '/contactus',
     },
   ],
-  // sticky: stays with user as they scroll,
-  // absolute: disappears after user scrolls past
   position: 'sticky',
   ver: 'default',
 }
