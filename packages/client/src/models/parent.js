@@ -78,8 +78,7 @@ const parentSchema = yup.object().shape({
 const studentSchema = yup.object().shape({
     email: yup
         .string()
-        .email()
-        .required('Email Required'),
+        .email(),
     name: yup
         .string()
         .required('Name Required'),
