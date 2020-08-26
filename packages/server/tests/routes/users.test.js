@@ -5,10 +5,10 @@ const app = require('../../app');
 describe('Test User Routes', () => {
   test('/users', async () => {
     firebase.auth().verifyIdToken.mockImplementation(() => {
-      throw 'Some user not found error'
+      throw Error('Some user not found error');
     });
     const response = await request(app).get('/users');
     expect(response.statusCode).toBe(403);
-    expect(response.text).toBe('Error authenticated API request: Some user not found error');
+    expect(response.text).toBe('Error authenticated API request: Error: Some user not found error');
   });
 });

@@ -6,11 +6,11 @@ jest.mock('firebase-admin');
 describe('Test User Database Actions', () => {
   test('getUser', async () => {
     const db = firebase.firestore();
-    const get = db.collection().doc().get;
+    const { get } = db.collection().doc();
 
     const mockDocRef = {
       exists: true,
-      data: jest.fn()
+      data: jest.fn(),
     };
 
     mockDocRef.data.mockReturnValueOnce({ role: 'MENTOR' });
@@ -25,6 +25,3 @@ describe('Test User Database Actions', () => {
     expect(user).toStrictEqual({ role: 'MENTOR', value: 'this is my user' });
   });
 });
-
-
-

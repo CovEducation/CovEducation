@@ -16,57 +16,7 @@ const getDoc = async (collection, uid) => {
     return obj.data();
   }
 
-  throw (`Unable to find '${uid}' in '${collection}' collection`);
-};
-
-// These are the three main methods to interact with the user schemas
-
-const getUser = async (uid) => {
-  const userDoc = await getDoc('users', uid);
-  let user;
-  if (userDoc.role === MENTOR) {
-    user = await getDoc('mentors', uid);
-  } else if (userDoc.role === PARENT) {
-    user = await getDoc('parents', uid);
-    const studentSnapshot = await parentsCollectionRef.doc(uid).collection('students').get();
-    user.students = studentSnapshot.docs.map((s) => s.data());
-  }
-
-  user.role = userDoc.role;
-
-  return user;
-};
-
-const createUser = async (uid, body) => {
-  const user = {
-    role: body.role,
-  };
-
-  const batch = db.batch();
-  batch.set(usersCollectionRef.doc(uid), user);
-
-  if (user.role == MENTOR) {
-    const mentor = await parseMentor(body);
-    batch.set(mentorsCollectionRef.doc(uid), mentor);
-  } else if (user.role == PARENT) {
-    const parent = await parseParent(body);
-    batch.set(parentsCollectionRef.doc(uid), parent);
-
-    for (const i in body.students) {
-      console.log(body.students[i]);
-      const newStudent = await parseStudent(body.students[i]);
-      const newStudentRef = parentsCollectionRef.doc(uid).collection('students').doc();
-      batch.set(newStudentRef, newStudent);
-    }
-  } else {
-    throw `Unexpected role: ${body.role}`;
-  }
-
-  return batch.commit();
-};
-
-const updateUser = async (uid) => {
-
+  throw new Error(`Unable to find '${uid}' in '${collection}' collection`);
 };
 
 // Validation Functions
@@ -118,4 +68,53 @@ const parseStudent = async (body) => {
   return student;
 };
 
-module.exports = { getUser, createUser, updateUser };
+// These are the three main methods to interact with the user schemas
+
+const getUser = async (uid) => {
+  const userDoc = await getDoc('users', uid);
+  let user;
+  if (userDoc.role === MENTOR) {
+    user = await getDoc('mentors', uid);
+  } else if (userDoc.role === PARENT) {
+    user = await getDoc('parents', uid);
+    const studentSnapshot = await parentsCollectionRef.doc(uid).collection('students').get();
+    user.students = studentSnapshot.docs.map((s) => s.data());
+  }
+
+  user.role = userDoc.role;
+
+  return user;
+};
+
+const createUser = async (uid, body) => {
+  const user = {
+    role: body.role,
+  };
+
+  const batch = db.batch();
+  batch.set(usersCollectionRef.doc(uid), user);
+
+  if (user.role === MENTOR) {
+    const mentor = await parseMentor(body);
+    batch.set(mentorsCollectionRef.doc(uid), mentor);
+  } else if (user.role === PARENT) {
+    const parent = await parseParent(body);
+    batch.set(parentsCollectionRef.doc(uid), parent);
+
+    body.students.forEach(async (student) => {
+      const newStudent = await parseStudent(student);
+      const newStudentRef = parentsCollectionRef.doc(uid).collection('students').doc();
+      batch.set(newStudentRef, newStudent);
+    });
+  } else {
+    throw new Error(`Unexpected role: ${body.role}`);
+  }
+
+  return batch.commit();
+};
+
+// const updateUser = async (uid) => {
+//   // TODO
+// };
+
+module.exports = { getUser, createUser };
