@@ -162,7 +162,6 @@ export default class Mentor {
      */
     create(user) {
         this.validate();
-        // uid is an unresolved variable
         this.id = user.uid; // Saving the id in the object so update can be called.
         return MentorCollectionRef.doc(this.id)
             .withConverter(MentorConverter)
