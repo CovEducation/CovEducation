@@ -1,5 +1,5 @@
 import { Db } from '../providers/FirebaseProvider';
-import * as yup from 'yup';
+import * as Yup from 'yup';
 
 const MentorCollectionRef = Db.collection('mentors');
 
@@ -16,8 +16,6 @@ const MentorConverter = {
             bio: mentor.bio,
             major: mentor.major,
             timezone: mentor.timezone,
-            // what is this for?
-            about: mentor.about,
             subjects: mentor.subjects,
             tags: mentor.tags,
             gradeLevels: mentor.gradeLevels
@@ -36,8 +34,6 @@ const MentorConverter = {
             data.bio,
             data.major,
             data.timezone,
-            // what is this for?
-            data.about,
             data.subjects,
             data.tags,
             data.gradeLevels
@@ -49,38 +45,36 @@ const phoneRegex = RegExp(
     /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
 );
 
-const mentorSchema = yup.object().shape({
-    email: yup
+const mentorSchema = Yup.object().shape({
+    email: Yup
         .string()
         .email()
         .required('Email Required'),
-    name: yup
+    name: Yup
         .string()
         .required('Name Required'),
-    timezone: yup
+    timezone: Yup
         .string()
         .required('Timezone Required'),
-    phone: yup
+    phone: Yup
         .string()
         .matches(phoneRegex, 'Phone number is not valid'),
-    pronouns: yup
+    pronouns: Yup
         .string(),
-    college: yup
+    college: Yup
         .string(),
-    avatar: yup
+    avatar: Yup
         .string()
         .required('Avatar Required'),
-    bio: yup
+    bio: Yup
         .string()
         .required('Bio Required'),
-    major: yup
+    major: Yup
         .string(),
-    about: yup
-        .string(),
-    subjects: yup
+    subjects: Yup
         .array()
         .required('Subjects Required'),
-    gradeLevels: yup
+    gradeLevels: Yup
         .array()
         .required('Grade Levels Required')
 });
@@ -102,8 +96,6 @@ export default class Mentor {
         bio,
         major,
         timezone,
-        // what is this for?
-        about,
         subjects,
         tags,
         gradeLevels
@@ -118,8 +110,6 @@ export default class Mentor {
         this.bio = bio;
         this.major = major;
         this.timezone = timezone;
-        // what is this for?
-        this.about = about;
         this.subjects = subjects;
         this.tags = tags;
         this.gradeLevels = gradeLevels;
