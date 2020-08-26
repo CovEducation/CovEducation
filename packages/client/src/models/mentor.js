@@ -1,4 +1,5 @@
 import { Db } from '../providers/FirebaseProvider';
+import * as yup from 'yup';
 
 const MentorCollectionRef = Db.collection('mentors');
 
@@ -8,10 +9,18 @@ const MentorConverter = {
         return {
             name: mentor.name,
             email: mentor.email,
+            phone: mentor.phone,
+            pronouns: mentor.pronouns,
+            college: mentor.college,
+            avatar: mentor.avatar,
+            bio: mentor.bio,
+            major: mentor.major,
             timezone: mentor.timezone,
+            // what is this for?
             about: mentor.about,
             subjects: mentor.subjects,
-            tags: mentor.tags
+            tags: mentor.tags,
+            gradeLevels: mentor.gradeLevels
         };
     },
 
@@ -20,13 +29,61 @@ const MentorConverter = {
         return new Mentor(
             data.name,
             data.email,
+            data.phone,
+            data.pronouns,
+            data.college,
+            data.avatar,
+            data.bio,
+            data.major,
             data.timezone,
+            // what is this for?
             data.about,
             data.subjects,
-            data.tags
+            data.tags,
+            data.gradeLevels
         );
     }
 };
+
+const phoneRegex = RegExp(
+    /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+);
+
+const mentorSchema = yup.object().shape({
+    email: yup
+        .string()
+        .email()
+        .required('Email Required'),
+    name: yup
+        .string()
+        .required('Name Required'),
+    timezone: yup
+        .string()
+        .required('Timezone Required'),
+    phone: yup
+        .string()
+        .matches(phoneRegex, 'Phone number is not valid'),
+    pronouns: yup
+        .string(),
+    college: yup
+        .string(),
+    avatar: yup
+        .string()
+        .required('Avatar Required'),
+    bio: yup
+        .string()
+        .required('Bio Required'),
+    major: yup
+        .string(),
+    about: yup
+        .string(),
+    subjects: yup
+        .array()
+        .required('Subjects Required'),
+    gradeLevels: yup
+        .array()
+        .required('Grade Levels Required')
+});
 
 /** Firebase Mentor Object */
 export default class Mentor {
@@ -35,24 +92,47 @@ export default class Mentor {
      * Use this class to create and modify mentors in firebase.
      * @constructor
      */
-    constructor(name, email, timezone, about, subjects, tags) {
+    constructor(
+        name,
+        email,
+        phone,
+        pronouns,
+        college,
+        avatar,
+        bio,
+        major,
+        timezone,
+        // what is this for?
+        about,
+        subjects,
+        tags,
+        gradeLevels
+    ) {
         this.id = undefined;
         this.name = name;
         this.email = email;
+        this.phone = phone;
+        this.pronouns = pronouns;
+        this.college = college;
+        this.avatar = avatar;
+        this.bio = bio;
+        this.major = major;
         this.timezone = timezone;
+        // what is this for?
         this.about = about;
         this.subjects = subjects;
         this.tags = tags;
+        this.gradeLevels = gradeLevels;
 
         this.validate();
     }
 
-    validate() {
-        // TODO use Yup for object validation; this validation just needs
-        // to run in development
-        if (!this.name) throw Error('Mentor must have a name');
-        if (!this.email) throw Error('Mentor must have an email');
-        if (!this.timezone) throw Error('Mentor must have timezone');
+    /**
+     * The validation asynchronously checks the data against the restrictions of Yup
+     * TODO: More validation needs to be done on how the error is returned to the client.
+     */
+    async validate() {
+        const valid = await mentorSchema.isValid(Mentor);
     }
 
     /**
@@ -76,7 +156,7 @@ export default class Mentor {
 
     /**
      * Publishes the current mentor instance to firebase
-     * @param {firebase.auth.UserCredential} the firebase user object
+     * @param {firebase.auth.UserCredential} user object from firebase
      *
      * @return {Promise<void>} a promise indicating successful creation.
      */
@@ -90,7 +170,7 @@ export default class Mentor {
 
     /**
      * Reads the Mentor object from firebase.
-     * @param {firebase.auth.UserCredential} the firebase auth uid of the mentor
+     * @param {firebase.auth.UserCredential}  user has firebase auth uid of the mentor
      *
      * @return {Promise<Mentor>} the mentor with the corresponding uid
      */
