@@ -15,6 +15,9 @@ import Arrow from './img/arrow.svg';
 
 const Wrapper = styled.div`
   text-align: center;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
   span {
     font-size: 20px;
     font-weight: 500;
