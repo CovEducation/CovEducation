@@ -118,7 +118,7 @@ export default class Parent {
         this.number_requests = number_requests;
         this.students = students;
 
-        this.validate().catch(reason => console.log(reason));
+        this.validate()
     }
 
     /**
@@ -136,7 +136,7 @@ export default class Parent {
      * @return {Promise<void>} a promise indicating successful update.
      */
     update() {
-        this.validate().catch(reason => console.log(reason));
+        this.validate()
 
         if (!this.id) {
             return Promise.reject('Parent update failed: not initialized with firebase uid');
@@ -155,7 +155,7 @@ export default class Parent {
      * @return {Promise<void>} a promise indicating successful creation.
      */
     create(user) {
-        this.validate().catch(reason => console.log(reason));
+        this.validate()
         this.id = user.uid;
         return ParentCollectionRef.doc(this.id)
             .withConverter(ParentConverter)
