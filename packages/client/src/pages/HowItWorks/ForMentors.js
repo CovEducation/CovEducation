@@ -23,7 +23,7 @@ const Wrapper = styled.div`
     font-family:${FONTS.font2};
   }
 `;
-  const Title = styled.h1`
+const Title = styled.h1`
   padding-top: 50px;
   font-size: max(1.5vw, 32px);
   font-weight: 400;
@@ -59,63 +59,63 @@ const Circle = styled.circle`
 `;
 
 const HowItWorks = [
-    {
-      key: 1,
-      row: 1,
-      num: 1,
-      imgsrc: Register,
-      title: 'howItWorksMentors.RegisterTitle',
-      text: 'howItWorksMentors.Register'
+  {
+    key: 1,
+    row: 1,
+    num: 1,
+    imgsrc: Register,
+    title: 'howItWorksMentors.RegisterTitle',
+    text: 'howItWorksMentors.Register'
 
-    },
-    {
-      key: 2,
-      imgsrc: Arrow
-    },
-    {
-      key: 3,
-      row: 1,
-      num:2,
-      imgsrc: Edit,
-      title: 'howItWorksMentors.EditTitle',
-      text: 'howItWorksMentors.Edit'
+  },
+  {
+    key: 2,
+    imgsrc: Arrow
+  },
+  {
+    key: 3,
+    row: 1,
+    num: 2,
+    imgsrc: Edit,
+    title: 'howItWorksMentors.EditTitle',
+    text: 'howItWorksMentors.Edit'
 
-      },
-      {
-        key: 4,
-        imgsrc: Arrow
-      },
-      {
-       key: 5,
-       row: 1,
-       num :3,
-       imgsrc: Meet,
-       title: 'howItWorksMentors.ContactTitle',
-       text: 'howItWorksMentors.Contact'
+  },
+  {
+    key: 4,
+    imgsrc: Arrow
+  },
+  {
+    key: 5,
+    row: 1,
+    num: 3,
+    imgsrc: Meet,
+    title: 'howItWorksMentors.ContactTitle',
+    text: 'howItWorksMentors.Contact'
 
-      }
+  }
 ]
 
 const ForMentors = () => {
   const { t } = useTranslation();
   return (
     <Wrapper>
-        <Title>{t('howItWorksMentors.Title')}</Title>
-        <Subtitle>{t('howItWorksMentors.Subtitle')}</Subtitle>
-        <Button theme="light" size="md" color = "accent"fontSize = "14">{('Skip To Application')}</Button>
-        <Body>
-        <Grid container direction = "row" justify = "center" spacing = {3} alignItems = "center">
+      <Title>{t('howItWorksMentors.Title')}</Title>
+      <Subtitle>{t('howItWorksMentors.Subtitle')}</Subtitle>
+      <Button theme="light" size="md" color="accent" fontSize="14">{('Skip To Application')}</Button>
+      <Body>
+        <Grid container direction="row" justify="center" spacing={3} alignItems="center">
           {HowItWorks.map((s) => {
-             return (
-                 s.key%2 === 0 ? <Hidden smDown> <Grid item md={1} sm = {8}><img src={Arrow}/> </Grid> </Hidden>:
-                <Grid item md={3} sm = {8}>
-                      <ImText arrangement="vertical"  shape="circle" img= {s.imgsrc} minwidth="170px" minheight="170px"> <Circle>{s.num}</Circle><span>{t(s.title)}</span> <br /> {t(s.text)}
-                      </ImText>
-                 </Grid>
-                )
+            return (
+              s.key % 2 === 0 ? <Hidden smDown> <Grid item md={1} sm={8}><img src={Arrow} alt="arrow" /> </Grid> </Hidden> :
+                <Grid item md={3} sm={8}>
+                  <ImText arrangement="vertical" shape="circle" img={s.imgsrc} minwidth="170px" minheight="170px"> <Circle>{s.num}</Circle><span>{t(s.title)}</span> <br /> {t(s.text)}
+                  </ImText>
+                </Grid>
+            )
           })}
-          </Grid>
-          </Body>
+        </Grid>
+      </Body>
     </Wrapper>
   )
 }

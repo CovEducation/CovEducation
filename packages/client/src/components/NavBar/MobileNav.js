@@ -9,14 +9,14 @@ import { COLORS } from '../../constants';
 
 const MobileMenuIconWrapper = styled.div`
   position: absolute;
-  top: 15px;
-  left: 15px;
+  top: 16px;
+  left: 16px;
   cursor: pointer;
   z-index: 10;
 `;
 
 const StyledList = styled(List)`
-  width: 250px;
+  width: 240px;
   font-size: 1.5em;
   height: 100%;
   display: flex;
@@ -24,8 +24,8 @@ const StyledList = styled(List)`
 `;
 
 const StyledListItem = styled(ListItem)`
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 8px;
+  margin-bottom: 8px;
 `;
 
 const MobileNavLink = styled(Link)`

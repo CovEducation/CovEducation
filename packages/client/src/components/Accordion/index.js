@@ -38,7 +38,7 @@ const AccordionRowHeader = styled.div`
   margin-right: auto;
   color:  ${COLORS.blue};
   font-weight: 600;
-  border-bottom: 1px solid #E0E0E0;
+  border-bottom: 1px solid ${COLORS.lightgray};
 `;
 
 const AccordionRowIcon = styled(ArrowDown)`

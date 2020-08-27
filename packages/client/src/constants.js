@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 export const COLORS = {
   blue: '#19568C',
@@ -46,7 +46,7 @@ export const FAQS = [
     key: "4",
     category: "mentee",
     question: "How do I get matched with a mentor? How does the matching process work?",
-    answer: <div>After filling out the registration form and verifying their emails, parents/guardians will be able to access our 'Find a Mentor' page to find a mentor for their child. From there, they will be able to send messages to any of the mentors in our database. Please do not request more than 1 mentor per student per 24 hour period.</div>
+    answer: <div>After filling out the registration form and verifying their emails, parents/guardians will be able to access our 'Find a Mentor' page to find a mentor for their child. From there, they will be able to send messages to any of our mentors. Please do not request more than 1 mentor per student per 24 hour period.</div>
   },
   {
     key: "5",
@@ -58,7 +58,7 @@ export const FAQS = [
     key: "6",
     category: "mentee",
     question: "What if I have multiple students I want to request mentors for?",
-    answer: <div>Parents/guardians are able to request up to 4 students, with a maximum of one mentor request per student. Be sure to mention the name of the student you're requesting for.</div>
+    answer: <div>Parents/guardians are able to request for up to 4 students, with a maximum of one mentor request per student. Be sure to mention the name of the student you're requesting for.</div>
   },
   {
     key: "7",
@@ -132,7 +132,7 @@ export const FAQS = [
     key: "18",
     category: "general",
     question: "What do you use donations for?",
-    answer: <div> This year we need donations for applying to be a non-profit and for our technological operation expenses. To see a further breakdown of our costs and projected costs, please visit <a target="_blank" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTJPlD1iXGjSdVbyiPoEETMNBDUEkYbyoHpMO1CHfpJbl5zqRCgvy5O_QC9ElQpCm0aNAfYrei1F3__/pubhtml?gid=1646064687&single=true"> this spreadsheet </a>.</div>
+    answer: <div> This year we need donations for applying to be a non-profit and for our technological operation expenses. To see a further breakdown of our costs and projected costs, please visit <a target="_blank" rel="noopener noreferrer" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTJPlD1iXGjSdVbyiPoEETMNBDUEkYbyoHpMO1CHfpJbl5zqRCgvy5O_QC9ElQpCm0aNAfYrei1F3__/pubhtml?gid=1646064687&single=true"> this spreadsheet </a>.</div>
   }
   ,
   {

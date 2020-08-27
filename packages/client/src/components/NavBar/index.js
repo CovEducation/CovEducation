@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import IconButton from '@material-ui/core/IconButton';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 import styled from 'styled-components';
@@ -51,7 +49,7 @@ const UserLinkWrapper = styled.div`
   margin-left: auto;
 `;
 
-export default function NavBar(props)  {
+export default function NavBar(props) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [menuDropdownAnchor, setMenuDropdownAnchor] = useState(null);
   const handleMenuDropdownClick = (event) => {
@@ -62,9 +60,8 @@ export default function NavBar(props)  {
     setMenuDropdownAnchor(null);
   };
 
-  let userLinks;
-  if (true) {
-    userLinks = (
+  // TODO(mi-yu): conditionally render the logged-in routes
+  const userLinks = (
       <>
         <LinkStyled to='/signin' ver='default'>Login</LinkStyled>
         <LinkStyled to='/signup' ver='default'>
@@ -74,46 +71,6 @@ export default function NavBar(props)  {
         </LinkStyled>
       </>
     );
-  } else {
-    // userLinks = (
-    //   <>
-    //     <IconButton
-    //       aria-label="account of current user"
-    //       aria-controls="menu-navbar"
-    //       aria-haspopup="true"
-    //       onClick={handleMenu}
-    //       color="inherit"
-    //       onMouseOver={handleMenu}
-    //     >
-    //       <AccountCircleIcon/>
-    //       <div style={{ padding:'10px' }}/>
-    //       <LinkStyled ver='default' style={{ color: COLORS.blue }}>
-    //         {'Tim Beaver'}
-    //       </LinkStyled>
-    //     </IconButton>
-    //     <Menu
-    //       id="menu-navbar"
-    //       anchorEl={anchorEl}
-    //       getContentAnchorEl={null}
-    //       anchorOrigin={{
-    //         vertical: 'bottom',
-    //         horizontal: 'center',
-    //       }}
-    //       keepMounted
-    //       transformOrigin={{
-    //         vertical: 'top',
-    //         horizontal: 'center',
-    //       }}
-    //       open={open}
-    //       onClose={handleClose}
-    //       MenuListProps={{ onMouseLeave: handleClose }}
-    //     >
-    //       <MenuItem component={Link} to="/profile" style={{ fontSize: TextThemes.fontSize['default'] }}>Dashboard</MenuItem>
-    //       <MenuItem style={{ color: 'red', fontSize: TextThemes.fontSize['default'] }}>Sign Out</MenuItem>
-    //     </Menu>
-    //   </>
-    // )
-  }
 
   useEffect(() => {
     const updateWindowWidth = () => {
@@ -132,7 +89,7 @@ export default function NavBar(props)  {
 
   return (
     <>
-      <AppBar color='white' flex-direction='row' position={props.position} elevation={0}>
+      <AppBar color='default' flex-direction='row' position={props.position} elevation={0}>
         <Toolbar>
           <Grid>
             <LinkStyled to='/' ver='lg'>CovEd</LinkStyled>
@@ -173,7 +130,7 @@ export default function NavBar(props)  {
 }
 
 NavBar.propTypes = {
-  links: PropTypes.object,
+  links: PropTypes.array,
   position: PropTypes.string,
   ver: PropTypes.string,
 }

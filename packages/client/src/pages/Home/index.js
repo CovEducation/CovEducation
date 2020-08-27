@@ -29,10 +29,7 @@ import step1 from './img/step1.svg';
 import step2 from './img/step2.svg';
 import step3 from './img/step3.svg';
 
-
-
-
-const Circle = styled.circle`
+const Circle = styled.div`
     height: 20px;
     width: 20px;
     background-color: ${COLORS.yellow};
@@ -132,7 +129,8 @@ const howItWorks = [
 
 const Subjects = [
   {
-    key: "padding"
+    key: "padding",
+    text: "padding-row-1-start"
   },
   {
     key: 1,
@@ -165,10 +163,12 @@ const Subjects = [
     text: 'home.subjects.ComputerScience'
   },
   {
-    key: "padding"
+    key: "padding",
+    text: "padding-row-1-end"
   },
   {
-    key: "padding"
+    key: "padding",
+    text: "padding-row-2-start"
   },
   {
     key: 6,
@@ -201,7 +201,8 @@ const Subjects = [
     text: 'home.subjects.testPrep'
   },
   {
-    key: "padding"
+    key: "padding",
+    text: "padding-row-2-end"
   }
 ]
 
@@ -249,25 +250,33 @@ const HomePage = () => {
       <HomepageBody>
         <Section p="5vw">
           <h2>{t('home.whyBePartOfCovEd')}</h2> <br /><br />
-          <Grid container direction = "row" justify = "center" spacing={6}>
-          {WhyJoin.map((s) => {
-            return (
-            <Grid item sm={5} xs = {12}> <ImText arrangement="horizontal" shape="circle" img={s.imgsrc} minwidth="100px" minheight="100px">
-              <p className="title">{t(s.title)}</p>   <p className="desc">{t(s.desc)} </p></ImText> </Grid>
-            )
-          })}
+          <Grid container direction="row" justify="center" spacing={6}>
+            {WhyJoin.map((s) => {
+              return (
+                <Grid
+                  key={s.title}
+                  item sm={5}
+                  xs={12}
+                >
+                  <ImText arrangement="horizontal" shape="circle" img={s.imgsrc} minwidth="100px" minheight="100px">
+                    <p className="title">{t(s.title)}</p>
+                    <p className="desc">{t(s.desc)}</p>
+                  </ImText>
+                </Grid>
+              )
+            })}
           </Grid>
         </Section>
         <Section backgroundColor='lightorange' p="100px">
           <h2>{t('home.howCovEdWorks')}</h2><br />
-          <Grid container direction = "row" spacing={3} justify="center">
+          <Grid container direction="row" spacing={3} justify="center">
             {howItWorks.map((s) => {
-             return (
-                <Grid item md={4}  sm = {12} xs = {12}>
-                      <ImText arrangement="vertical" img= {s.imgsrc}> <Circle>{s.key}</Circle> {t(s.step)}
-                      </ImText>
-                 </Grid>
-                )
+              return (
+                <Grid key={s.step} item md={4} sm={12} xs={12}>
+                  <ImText arrangement="vertical" img={s.imgsrc}> <Circle>{s.key}</Circle> {t(s.step)}
+                  </ImText>
+                </Grid>
+              )
             })}
           </Grid><br /><br />
           <Button theme="accent" size="md">{t('home.MenteesLearnMoreButton')}</Button>
@@ -283,22 +292,37 @@ const HomePage = () => {
         </Section>
         <Section p="100px">
           <h2>{t('home.findTutors')}</h2> <br /><br />
-          <Grid container direction = "row" spacing={3} justify="center">
-          {Subjects.map((s) => {
-            return (
-              s.key === "padding"? <Hidden smDown><Grid item sm={1}/></Hidden>:<Grid item sm = {2} xs = {6}> <ImText arrangement="vertical" shape="circle" img={s.imgsrc} minwidth="100px" minheight="100px">
-              {t(s.text)} </ImText> </Grid>
-            )
-          })}
+          <Grid container direction="row" spacing={3} justify="center">
+            {Subjects.map((s) => {
+              return (
+                s.key === "padding" ? (
+                  <Hidden key={s.text} smDown>
+                    <Grid item sm={1} />
+                  </Hidden>
+                ) : (
+                  <Grid key={s.text} item sm={2} xs={6}>
+                    <ImText
+                      arrangement="vertical"
+                      shape="circle"
+                      img={s.imgsrc}
+                      minwidth="100px"
+                      minheight="100px"
+                    >
+                      {t(s.text)}
+                    </ImText>
+                  </Grid>
+                )
+              )
+            })}
           </Grid>
         </Section>
         <Section backgroundColor='lightorange' p="100px">
-        <h2>{t('home.questions')}</h2>
-        <p>
-        <Trans i18nKey="home.questionsans">
-        Check out our <Link href='/faqs'> FAQs page </Link> to see if we've already answered your question or Contact Us!
+          <h2>{t('home.questions')}</h2>
+          <p>
+            <Trans i18nKey="home.questionsans">
+              Check out our <Link href='/faqs'> FAQs page </Link> to see if we've already answered your question or Contact Us!
         </Trans>
-        </p>
+          </p>
         </Section>
       </HomepageBody>
     </HomeWrapper>
