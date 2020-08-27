@@ -16,7 +16,6 @@ const ParentStep4 = (props) => {
 
     return (
         <AgreementCheckboxWrapper>
-            {JSON.stringify(props.data)}
             <FormControlLabel
                 control={
                     <Checkbox
@@ -38,6 +37,7 @@ const ParentStep4 = (props) => {
             <Button
                 children={<div>Sign Up</div>}
                 disabled={isDisabled}
+                onClick={props.onClick}
             />
         </AgreementCheckboxWrapper>
     )

@@ -1,18 +1,44 @@
 // Set of API endpoints available to all pages. This should make the get, post, update, and delete
 // requests necessary.
-import { get } from './utilities.js';
+// TODO: Handle profile pictures and set them as the photoURL.
+import { post, get } from './utilities.js';
+import { Auth } from './providers/FirebaseProvider/index.js';
 
-/**
- * Returns mentors given a set of filters.
- * @param {String} gradeLevel - The grade level of the student looking for a mentor.
- * @param {list} subjects - Subjects the mentor should be willing to help on.
- * @param {list} specialNeeds - Any special needs the student might need.
- */
-export const getMentors = async (gradeLevel, subjects, specialNeeds) => {
-    return await get('/mentors', {
-        gradeLevel: gradeLevel,
-        subjects: subjects,
-        specialNeeds: specialNeeds,
-    })
+const Roles = {
+    MENTOR: 'MENTOR',
+    PARENT: 'PARENT',
 }
 
+export const getMentor = async () => await getUser(Roles.MENTOR);
+
+export const getParent = async () => await getUser(Roles.PARENT);
+
+export const createParentWithEmail = async (email, password, parent) => {
+    return await createUserWithEmail(email, password, parent, Roles.PARENT);
+};
+
+export const createMentorWithEmail = async (email, password, mentor) => {
+    return await createUserWithEmail(email, password, mentor, Roles.MENTOR);
+};
+
+export const getUser = async () => {
+    if (Auth.currentUser === undefined || Auth.currentUser === null) {
+        throw Error('Unable to retrive user data with uninitilized Auth user.');
+    }
+    const token = await Auth.currentUser.getIdToken();
+    return await get('/users', {}, {token});
+}
+
+const createUserWithEmail = async (email, password, data, role) => {
+    let token = undefined;
+    try {
+        await Auth.createUserWithEmailAndPassword(email, password);
+        token = await Auth.currentUser.getIdToken();
+        await post('/users', { role: role, ...data}, { token });
+        await Auth.currentUser.sendEmailVerification();
+        
+    } catch (err) {
+        if (token) await Auth.currentUser.delete();
+        throw new Error(`Error creating ${role}: ${err}`);
+    }
+}

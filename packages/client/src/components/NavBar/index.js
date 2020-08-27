@@ -9,13 +9,10 @@ import Menu from '@material-ui/core/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PropTypes from 'prop-types';
 import Modal from '../Modal';
-import Wizard from '../Wizard';
 import Button from '../Button';
 import styled from 'styled-components';
 import { FONTS, COLORS } from '../../constants';
-
-
-const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
+import SignUp from '../../pages/SignUp';
 
 const TextThemes = {
   fontSize: {
@@ -72,7 +69,7 @@ export default function NavBar(props)  {
       <>
         <LinkStyled to='/login' ver='default'>Login</LinkStyled>
         <div/>
-        <Modal title="Sign Up" trigger={<Button theme='accent' size='sm'> Sign Up </Button>}> <Wizard content={Wiz_content} /> </Modal>
+        <Modal title='Sign Up' trigger={<Button theme='accent' size='sm'> Sign Up </Button>}> <SignUp /> </Modal>
       </>
     );
   } else {
