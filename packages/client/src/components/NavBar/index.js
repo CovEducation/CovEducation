@@ -68,8 +68,7 @@ export default function NavBar(props) {
   };
   
 
-  let userLinks;
-  userLinks = (
+  const userLinks = (
       <>
         
         <Modal
