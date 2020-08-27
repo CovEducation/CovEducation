@@ -1,15 +1,16 @@
 import { Db } from '../providers/FirebaseProvider';
+import * as yup from 'yup';
 
 const ParentCollectionRef = Db.collection('parents');
 
 /** Firebase Parent Convertor */
 const ParentConverter = {
     toFirestore: (parent) => {
-        const mentees = [];
+        const students = [];
 
         // must convert Mentee object to plain json
-        parent.mentees.forEach(s => {
-            mentees.push({
+        parent.students.forEach(s => {
+            students.push({
                 name: s.name,
                 email: s.email,
                 grade: s.grade,
@@ -20,55 +21,117 @@ const ParentConverter = {
         return {
             name: parent.name,
             email: parent.email,
+            phone: parent.phone,
+            pronouns: parent.pronouns,
+            avatar: parent.avatar,
             timezone: parent.timezone,
-            mentees: mentees
+            students: parent.students
         };
     },
 
     fromFirestore: (snapshot, options) => {
         const data = snapshot.data(options);
 
-        const mentees = [];
+        const students = [];
 
-        data.mentees.forEach(s => {
-            mentees.push(new Mentee(s.name, s.email, s.grade, s.subjects))
+        data.students.forEach(s => {
+            students.push(new Student(s.name, s.email, s.grade, s.subjects))
         });
 
         return new Parent(
             data.name,
             data.email,
+            data.phone,
+            data.pronouns,
+            data.avatar,
             data.timezone,
-            mentees
+            data.number_requests,
+            students
         );
     }
 }
 
+const phoneRegex = RegExp(
+    /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+);
+
+const parentSchema = yup.object().shape({
+    email: yup
+        .string()
+        .email()
+        .required('Email Required'),
+    name: yup
+        .string()
+        .required('Name Required'),
+    timezone: yup
+        .string()
+        .required('Timezone Required'),
+    phone: yup
+        .string()
+        .matches(phoneRegex, 'Phone number is not valid'),
+    pronouns: yup
+        .string(),
+    avatar: yup
+        .string()
+        .required('Avatar Required'),
+});
+const studentSchema = yup.object().shape({
+    email: yup
+        .string()
+        .email(),
+    name: yup
+        .string()
+        .required('Name Required'),
+    subjects: yup
+        .array()
+        .required('Subjects Required'),
+    grade: yup
+        .number()
+        .required('Grade Required'),
+})
+
 // this is mainly just a convenient constructor
-export class Mentee {
+export class Student {
     constructor(name, email, grade, subjects) {
         this.name = name;
         this.email = email;
         this.grade = grade;
         this.subjects = subjects;
     }
+
+    async validate() {
+        const valid = await studentSchema.isValid(Student);
+        if (!valid) {
+            throw Error('Malformed student object.');
+        }
+    }
 }
 
 /** Firebase Parent Object */
 export default class Parent {
-    constructor(name, email, timezone, mentees) {
+    constructor(name, email, phone, pronouns, avatar, timezone, number_requests, students) {
         this.id = undefined;
         this.name = name;
         this.email = email;
+        this.phone = phone;
+        this.pronouns = pronouns;
+        this.avatar = avatar;
         this.timezone = timezone;
-        this.mentees = mentees;
+        this.number_requests = number_requests;
+        this.students = students;
 
         this.validate();
     }
 
-    validate() {
-        if (!this.name) throw Error('Parent must have a name');
-        if (!this.email) throw Error('Parent must have an email');
-        if (!this.timezone) throw Error('Parent must have timezone');
+    /**
+     * The validation asynchronously checks the data against the restrictions of Yup
+     * TODO: More validation needs to be done on how the error is returned to the client.
+     */
+    async validate() {
+        const valid = await parentSchema.isValid(Parent);
+        if (!valid) {
+            throw Error('Malformed parent object.');
+        }
     }
 
     /**
@@ -92,7 +155,7 @@ export default class Parent {
     /**
      * Publishes the current parent instance to firebase. If a parent
      * with the firebase uid already exists the record is updated.
-     * @param {firebase.auth.UserCredential} the firebase auth user object
+     * @param {firebase.auth.UserCredential} user is firebase auth user object
      *
      * @return {Promise<void>} a promise indicating successful creation.
      */
@@ -106,7 +169,7 @@ export default class Parent {
 
     /**
      * Reads the Parent object from firebase.
-     * @param {firebase.auth.UserCredential} the firebase auth uid of the parent
+     * @param {firebase.auth.UserCredential} user is firebase auth uid of the parent
      *
      * @return {Promise<Parent>} the parent with the corresponding uid
      */

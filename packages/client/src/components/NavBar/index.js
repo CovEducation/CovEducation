@@ -1,27 +1,22 @@
-import React, { useState } from 'react';
-// import IconButton from '@material-ui/core/IconButton';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
-// import MenuItem from '@material-ui/core/MenuItem';
-// import Menu from '@material-ui/core/Menu';
-// import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 import PropTypes from 'prop-types';
-import Modal from '../Modal';
-import Wizard from '../Wizard';
 import Button from '../Button';
 import styled from 'styled-components';
-import { COLORS, FONTS } from '../../constants';
-
-// import { Modal as Md } from '@material-ui/core';
 import Dialog from '@material-ui/core/Dialog';
-// import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Signin from '../SignIn/index';
+import Modal from '../Modal';
+import Wizard from '../Wizard';
+import { FONTS, COLORS } from '../../constants';
+import MobileNav from './MobileNav';
 
 const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
-
 const TextThemes = {
   fontSize: {
     default: 'max(16px,1vw)',
@@ -56,16 +51,25 @@ const LinkStyled = styled(Link)`
   }
 `
 
-export default function NavBar(props)  {
+const UserLinkWrapper = styled.div`
+  margin-left: auto;
+  flex-direction: row;
+  display: flex;
+`;
 
-  // const [anchorEl, setAnchorEl] = useState(null);
-  // set the login modal's visibility to false to begin with
+export default function NavBar(props) {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [menuDropdownAnchor, setMenuDropdownAnchor] = useState(null);
   const [loginOpen, setLoginOpen] = useState(false);
-
-  // // not used yet
-  // const open = Boolean(anchorEl);
-  // let menuOpen = false;
-
+  
+  const handleMenuDropdownClick = (event) => {
+    setMenuDropdownAnchor(event.currentTarget);
+    event.stopPropagation();
+  };
+  const handleMenuDropdownClose = () => {
+    setMenuDropdownAnchor(null);
+  };
+  
   const toggleLogin = () => {
     setLoginOpen(!loginOpen);
   };
@@ -74,53 +78,80 @@ export default function NavBar(props)  {
     setLoginOpen(false);
   };
 
-  // // not used yet
-  // const handleMenu = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-  //
-  // // not used yet
-  // const handleClose = () => {
-  //   menuOpen = false;
-  //   setAnchorEl(null);
-  // };
-
   let userLinks;
   userLinks = (
       <>
-        <Button size='sm' onClick={toggleLogin}>Log In</Button>
-        <div/>
+        
         <Modal
-            title="Sign Up"
-            trigger={
-              <Button theme='accent' size='sm'> Sign Up </Button>}
-        >
-          <Wizard
-              content={Wiz_content}
-          />
-        </Modal>
-        <Dialog open={loginOpen} onClose={handleLoginClose}>
-          <DialogContent>
+              title="Login"
+              trigger={
+                <Button theme='primary' size='sm'> Login </Button>}
+          >
             <Signin />
-          </DialogContent>
-        </Dialog>
+        </Modal>
+        <Modal
+              title="Sign Up"
+              trigger={
+                <Button theme='accent' size='sm'> Sign Up </Button>}
+          >
+            <Wizard
+                content={Wiz_content}
+            />
+        </Modal>
       </>
   );
 
+  useEffect(() => {
+    const updateWindowWidth = () => {
+      setWindowWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', updateWindowWidth);
+
+    return () => {
+      window.removeEventListener('resize', updateWindowWidth);
+    }
+  }, []);
+
+  if (windowWidth < 1024) {
+    return <MobileNav links={props.links} />
+  }
+
   return (
     <>
-      <AppBar color='white' flex-direction='row' position={props.position} >
+      <AppBar color='default' flex-direction='row' position={props.position} elevation={0}>
         <Toolbar>
           <Grid>
             <LinkStyled to='/' ver='lg'>CovEd</LinkStyled>
+            <LinkStyled to='#' ver='default' onClick={handleMenuDropdownClick}>How It Works</LinkStyled>
+            <Menu
+              id="howitworks"
+              anchorEl={menuDropdownAnchor}
+              getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+              open={Boolean(menuDropdownAnchor)}
+              onClose={handleMenuDropdownClose}
+              MenuListProps={{ onMouseLeave: handleMenuDropdownClose }}
+            >
+              <MenuItem component={LinkStyled} to="/parents">For Parents</MenuItem>
+              <MenuItem component={LinkStyled} to="/mentors">For Mentors</MenuItem>
+            </Menu>
             {props.links.map(link =>(
-              <LinkStyled to={link.link} ver='default'>
+              <LinkStyled key={link.link} to={link.link} ver='default'>
                 {link.title}
               </LinkStyled>
             ))}
-            </Grid>
-          <div style={{ marginLeft: 'auto' }}/>
-          {userLinks}
+          </Grid>
+          <UserLinkWrapper>
+            {userLinks}
+          </UserLinkWrapper>
         </Toolbar>
       </AppBar>
     </>
@@ -128,17 +159,13 @@ export default function NavBar(props)  {
 }
 
 NavBar.propTypes = {
-  links: PropTypes.object,
+  links: PropTypes.array,
   position: PropTypes.string,
   ver: PropTypes.string,
 }
 
 NavBar.defaultProps = {
   links: [
-    {
-      title: 'How It Works',
-      link: '/howitworks',
-    },
     {
       title: 'Resources',
       link: '/resources',
@@ -149,11 +176,11 @@ NavBar.defaultProps = {
     },
     {
       title: 'Meet Our Team',
-      link: '/meetourteam',
+      link: '/team',
     },
     {
       title: 'Contact Us',
-      link: '/contact us',
+      link: '/contactus',
     },
   ],
   // sticky: stays with user as they scroll,
