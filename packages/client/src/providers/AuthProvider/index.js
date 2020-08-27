@@ -57,7 +57,7 @@ const useAuthProvider = () => {
 
         return Auth.createUserWithEmailAndPassword(email, password)
             .then(() => {
-                const updateDisplayName = Auth.currentUser.updateProfile({displayName: userType});
+                const updateDisplayName = Auth.currentUser.updateProfile({ displayName: userType });
                 return Promise.all([user.create(Auth.currentUser), updateDisplayName]);
             })
             .then(() => {
