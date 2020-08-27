@@ -14,7 +14,7 @@ import MobileNav from './MobileNav';
 const TextThemes = {
   fontSize: {
     default: 'max(16px,1vw)',
-    lg: 'max(22px,1.2vw)',
+    lg: 'max(24px,1.2vw)',
   },
   fontWeight: {
     default: '400',
@@ -147,15 +147,13 @@ NavBar.defaultProps = {
     },
     {
       title: 'Meet Our Team',
-      link: '/meetourteam',
+      link: '/team',
     },
     {
       title: 'Contact Us',
       link: '/contactus',
     },
   ],
-  // sticky: stays with user as they scroll,
-  // absolute: disappears after user scrolls past
   position: 'sticky',
   ver: 'default',
 }
