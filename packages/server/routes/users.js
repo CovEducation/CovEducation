@@ -4,98 +4,39 @@
 // TODO(johancc) - Add a schema to Firestore.
 
 const express = require('express');
+const authMiddleware = require('../middleware/auth');
+const db = require('../db/users');
 
 const router = express.Router();
 
-// Firebase boilerplate.
-const admin = require('firebase-admin');
+/* GET users listing. */
+router.get('/', authMiddleware, async (req, res) => {
+  const { uid } = req.user;
 
-const db = admin.firestore();
-
-const parentRef = db.collection('parents'); // Mapping of firebase_uid -> mentor.
-
-const mentorRef = db.collection('mentors'); // Mapping of firebase_uid -> mentor.
-
-const userRef = db.collection('users'); // Mapping of Firebase UID -> Type of user (MENTOR / PARENT).
-
-const getDataOrUndefined = (resp, limit) => {
-  if (resp.empty) return undefined;
-  const wantedDocs = resp.docs.slice(0, limit);
-  const resolvedDocs = wantedDocs.map((doc) => doc.data());
-  return resolvedDocs;
-};
-
-const getFirstDoc = (docs) => {
-  if (docs === undefined) return undefined;
-  return docs[0];
-};
-
-const getUser = (firebaseUid) => userRef.where('firebase_uid', '==', firebaseUid).limit(1).get()
-  .then((resp) => getDataOrUndefined(resp, 1))
-  .then((docs) => getFirstDoc(docs));
-
-const getParent = (firebaseUid) => parentRef.where('firebase_uid', '==', firebaseUid).limit(1).get()
-  .then((resp) => getDataOrUndefined(resp, 1))
-  .then((docs) => getFirstDoc(docs));
-
-const getMentor = (firebaseUid) => mentorRef.where('firebase_uid', '==', firebaseUid).limit(1).get()
-  .then((resp) => getDataOrUndefined(resp, 1))
-  .then((docs) => getFirstDoc(docs));
-
-const postParent = (parent) => parentRef.add(parent);
-
-const postUser = (user) => userRef.add(user);
-
-const postMentor = (mentor) => mentorRef.add(mentor);
-
-/**
- * Gets a user based on firebase UID.
- */
-router.get('/', (req, res) => {
-  const { firebaseUID } = req.query;
-  if (firebaseUID === undefined) {
-    res.sendStatus(400);
-    return;
+  try {
+    const user = await db.getUser(uid);
+    res.send(user);
+  } catch (err) {
+    res.status(500).send(err);
   }
-  getUser(firebaseUID)
-    .then((user) => {
-      if (user.role === 'MENTOR') {
-        getMentor(firebaseUID)
-          .then((mentor) => res.send(mentor))
-          .catch((err) => res.sendStatus(500).json(err));
-      } else if (user.role === 'PARENT') {
-        getParent(firebaseUID)
-          .then((parent) => res.send(parent))
-          .catch((err) => res.sendStatus(500).json(err));
-      }
-    })
-    .catch(() => {
-      // Could not find the user in our database.
-      res.sendStatus(500);
-    });
 });
 
-/**
- * Gets a user based on firebase UID.
- */
-router.post('/', (req, res) => {
-  const { firebaseUID, role } = req.query;
-  const { userData } = req.query;
-  postUser({ firebase_uid: firebaseUID, role })
-    .then((user) => {
-      if (user.role === 'MENTOR') {
-        postMentor({ firebase_uid: firebaseUID, ...userData })
-          .then((mentor) => res.send(mentor))
-          .catch((err) => res.sendStatus(400).json(err));
-      } else if (user.role === 'PARENT') {
-        postParent({ firebase_uid: firebaseUID, ...userData })
-          .then((parent) => res.send(parent))
-          .catch((err) => res.sendStatus(400).json(err));
-      }
-    })
-    .catch((err) => {
-      res.sendStatus(400).json(err);
-    });
+/* POST a new user given the firebase token */
+router.post('/', authMiddleware, async (req, res) => {
+  const { uid } = req.user;
+
+  try {
+    const user = await db.createUser(uid, req.body);
+    res.send(user);
+  } catch (err) {
+    // TODO we will want to delete the firebase auth document if there is any error
+    // creating the new user.
+    res.status(500).send(err);
+  }
 });
+
+// router.patch('/', authMiddleware, async (req, res) => {
+//   // TODO logic to update existing documents
+// });
 
 module.exports = router;
