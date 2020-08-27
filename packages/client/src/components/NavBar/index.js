@@ -1,21 +1,15 @@
-import React, { useState } from "react";
-import IconButton from '@material-ui/core/IconButton';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PropTypes from 'prop-types';
-import Modal from '../Modal';
-import Wizard from '../Wizard';
 import Button from '../Button';
 import styled from 'styled-components';
 import { FONTS, COLORS } from '../../constants';
-
-
-const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
+import MobileNav from './MobileNav';
 
 const TextThemes = {
   fontSize: {
@@ -51,85 +45,84 @@ const LinkStyled = styled(Link)`
   }
 `
 
-export default function NavBar(props)  {
+const UserLinkWrapper = styled.div`
+  margin-left: auto;
+`;
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  let menuOpen = false;
-
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+export default function NavBar(props) {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [menuDropdownAnchor, setMenuDropdownAnchor] = useState(null);
+  const handleMenuDropdownClick = (event) => {
+    setMenuDropdownAnchor(event.currentTarget);
+    event.stopPropagation();
+  };
+  const handleMenuDropdownClose = () => {
+    setMenuDropdownAnchor(null);
   };
 
-  const handleClose = () => {
-    menuOpen = false;
-    setAnchorEl(null);
-  };
-
-  let userLinks;
-  if (true) {
-    userLinks = (
+  // TODO(mi-yu): conditionally render the logged-in routes
+  const userLinks = (
       <>
-        <LinkStyled to='/login' ver='default'>Login</LinkStyled>
-        <div/>
-        <Modal title="Sign Up" trigger={<Button theme='accent' size='sm'> Sign Up </Button>}> <Wizard content={Wiz_content} /> </Modal>
+        <LinkStyled to='/signin' ver='default'>Login</LinkStyled>
+        <LinkStyled to='/signup' ver='default'>
+          <Button theme='accent' size='sm'>
+            Sign Up
+          </Button>
+        </LinkStyled>
       </>
     );
-  } else {
-    userLinks = (
-      <>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="menu-navbar"
-          aria-haspopup="true"
-          onClick={handleMenu}
-          color="inherit"
-          onMouseOver={handleMenu}
-        >
-          <AccountCircleIcon/>
-          <div style={{ padding:'10px' }}/>
-          <LinkStyled ver='default' style={{ color: COLORS.blue }}>
-            {'Tim Beaver'}
-          </LinkStyled>
-        </IconButton>
-        <Menu
-          id="menu-navbar"
-          anchorEl={anchorEl}
-          getContentAnchorEl={null}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{ onMouseLeave: handleClose }}
-        >
-          <MenuItem component={Link} to="/profile" style={{ fontSize: TextThemes.fontSize['default'] }}>Dashboard</MenuItem>
-          <MenuItem style={{ color: 'red', fontSize: TextThemes.fontSize['default'] }}>Sign Out</MenuItem>
-        </Menu>
-      </>
-    )
+
+  useEffect(() => {
+    const updateWindowWidth = () => {
+      setWindowWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', updateWindowWidth);
+
+    return () => {
+      window.removeEventListener('resize', updateWindowWidth);
+    }
+  }, []);
+
+  if (windowWidth < 1024) {
+    return <MobileNav links={props.links} />
   }
 
   return (
     <>
-      <AppBar color='white' flex-direction='row' position={props.position} >
+      <AppBar color='default' flex-direction='row' position={props.position} elevation={0}>
         <Toolbar>
           <Grid>
             <LinkStyled to='/' ver='lg'>CovEd</LinkStyled>
+            <LinkStyled to='#' ver='default' onClick={handleMenuDropdownClick}>How It Works</LinkStyled>
+            <Menu
+              id="howitworks"
+              anchorEl={menuDropdownAnchor}
+              getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+              open={Boolean(menuDropdownAnchor)}
+              onClose={handleMenuDropdownClose}
+              MenuListProps={{ onMouseLeave: handleMenuDropdownClose }}
+            >
+              <MenuItem component={LinkStyled} to="/parents">For Parents</MenuItem>
+              <MenuItem component={LinkStyled} to="/mentors">For Mentors</MenuItem>
+            </Menu>
             {props.links.map(link =>(
-              <LinkStyled to={link.link} ver='default'>
+              <LinkStyled key={link.link} to={link.link} ver='default'>
                 {link.title}
               </LinkStyled>
             ))}
-            </Grid>
-          <div style={{marginLeft: 'auto'}}/>
-          {userLinks}
+          </Grid>
+          <UserLinkWrapper>
+            {userLinks}
+          </UserLinkWrapper>
         </Toolbar>
       </AppBar>
     </>
@@ -137,17 +130,13 @@ export default function NavBar(props)  {
 }
 
 NavBar.propTypes = {
-  links: PropTypes.object,
+  links: PropTypes.array,
   position: PropTypes.string,
   ver: PropTypes.string,
 }
 
 NavBar.defaultProps = {
   links: [
-    {
-      title: 'How It Works',
-      link: '/howitworks',
-    },
     {
       title: 'Resources',
       link: '/resources',
@@ -162,7 +151,7 @@ NavBar.defaultProps = {
     },
     {
       title: 'Contact Us',
-      link: '/contact us',
+      link: '/contactus',
     },
   ],
   // sticky: stays with user as they scroll,
