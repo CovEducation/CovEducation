@@ -1,20 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 import PropTypes from 'prop-types';
-import Modal from '../Modal';
-import Wizard from '../Wizard';
 import Button from '../Button';
 import styled from 'styled-components';
-import { COLORS, FONTS } from '../../constants';
-
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import Signin from '../SignIn';
-
-const SignUpWizard = ['page1', <Button> Sign up Wizard </Button>, 'page3']
+import { FONTS, COLORS } from '../../constants';
+import MobileNav from './MobileNav';
 
 const TextThemes = {
   fontSize: {
@@ -50,51 +45,84 @@ const LinkStyled = styled(Link)`
   }
 `
 
-export default function NavBar(props)  {
-  const [loginOpen, setLoginOpen] = useState(false);
+const UserLinkWrapper = styled.div`
+  margin-left: auto;
+`;
 
-  const toggleLogin = () => {
-    setLoginOpen(!loginOpen);
+export default function NavBar(props) {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [menuDropdownAnchor, setMenuDropdownAnchor] = useState(null);
+  const handleMenuDropdownClick = (event) => {
+    setMenuDropdownAnchor(event.currentTarget);
+    event.stopPropagation();
+  };
+  const handleMenuDropdownClose = () => {
+    setMenuDropdownAnchor(null);
   };
 
-  const handleLoginClose = () => {
-    setLoginOpen(false);
-  };
-
-  const SignUpButton = <Button theme='accent' size='sm'> Sign Up </Button>;
-  // TODO: Change the user links based on auth state.
-  let loggedInUserLinks = (
+  // TODO(mi-yu): conditionally render the logged-in routes
+  const userLinks = (
       <>
-        <Button size='sm' onClick={toggleLogin}>Log In</Button>
-        <div/>
-        <Modal 
-          title='Sign Up' 
-          trigger={SignUpButton}>
-          <Wizard
-            content={SignUpWizard}/> 
-        </Modal>
-        <Dialog open={loginOpen} onClose={handleLoginClose}>
-          <DialogContent>
-            <Signin/>
-          </DialogContent>
-        </Dialog>
+        <LinkStyled to='/signin' ver='default'>Login</LinkStyled>
+        <LinkStyled to='/signup' ver='default'>
+          <Button theme='accent' size='sm'>
+            Sign Up
+          </Button>
+        </LinkStyled>
       </>
-  );
+    );
+
+  useEffect(() => {
+    const updateWindowWidth = () => {
+      setWindowWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', updateWindowWidth);
+
+    return () => {
+      window.removeEventListener('resize', updateWindowWidth);
+    }
+  }, []);
+
+  if (windowWidth < 1024) {
+    return <MobileNav links={props.links} />
+  }
 
   return (
     <>
-      <AppBar color='white' flex-direction='row' position={props.position} >
+      <AppBar color='default' flex-direction='row' position={props.position} elevation={0}>
         <Toolbar>
           <Grid>
             <LinkStyled to='/' ver='lg'>CovEd</LinkStyled>
+            <LinkStyled to='#' ver='default' onClick={handleMenuDropdownClick}>How It Works</LinkStyled>
+            <Menu
+              id="howitworks"
+              anchorEl={menuDropdownAnchor}
+              getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'center',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'center',
+              }}
+              open={Boolean(menuDropdownAnchor)}
+              onClose={handleMenuDropdownClose}
+              MenuListProps={{ onMouseLeave: handleMenuDropdownClose }}
+            >
+              <MenuItem component={LinkStyled} to="/parents">For Parents</MenuItem>
+              <MenuItem component={LinkStyled} to="/mentors">For Mentors</MenuItem>
+            </Menu>
             {props.links.map(link =>(
-              <LinkStyled to={link.link} ver='default' key={link}>
+              <LinkStyled key={link.link} to={link.link} ver='default'>
                 {link.title}
               </LinkStyled>
             ))}
-            </Grid>
-          <div style={{ marginLeft: 'auto' }}/>
-          {loggedInUserLinks}
+          </Grid>
+          <UserLinkWrapper>
+            {userLinks}
+          </UserLinkWrapper>
         </Toolbar>
       </AppBar>
     </>
@@ -102,17 +130,13 @@ export default function NavBar(props)  {
 }
 
 NavBar.propTypes = {
-  links: PropTypes.object,
+  links: PropTypes.array,
   position: PropTypes.string,
   ver: PropTypes.string,
 }
 
 NavBar.defaultProps = {
   links: [
-    {
-      title: 'How It Works',
-      link: '/howitworks',
-    },
     {
       title: 'Resources',
       link: '/resources',
