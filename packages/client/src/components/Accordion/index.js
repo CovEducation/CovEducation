@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { COLORS } from '../../constants';
+import { COLORS, FONTS } from '../../constants';
 import ArrowDown from '../Icons/ArrowDown';
 
 /**
@@ -26,10 +26,19 @@ import ArrowDown from '../Icons/ArrowDown';
 const AccordionRowHeader = styled.div`
   height: auto;
   cursor: pointer;
-  padding: 10px;
+  padding: 20px;
   display: flex;
+  max-width: 700px;
+  width: 95%;
   justify-content: space-between;
   align-items: center;
+  background-color: ${COLORS.white};
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  color:  ${COLORS.blue};
+  font-weight: 600;
+  border-bottom: 1px solid ${COLORS.lightgray};
 `;
 
 const AccordionRowIcon = styled(ArrowDown)`
@@ -38,10 +47,15 @@ const AccordionRowIcon = styled(ArrowDown)`
 `;
 
 const AccordionRowContent = styled.div`
-  background-color: ${COLORS.grey};
-  max-height: ${props => props.open ? '80vh': 0};
-  transition: 0.25s ease-in-out max-height;
+  background-color: ${COLORS.white};
+  height: ${props => props.open ? 'auto' : 0};
+  transition: 0.2s ease height;
   overflow: hidden;
+  max-width: 700px;
+  width: 95%;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const AccordionRow = ({ children, title }) => {
@@ -51,7 +65,7 @@ export const AccordionRow = ({ children, title }) => {
     <div>
       <AccordionRowHeader onClick={() => setOpen(!open)}>
         {title}
-        <AccordionRowIcon open={open} />
+        <AccordionRowIcon open={open}/>
       </AccordionRowHeader>
       <AccordionRowContent open={open}>
         {children}
@@ -67,8 +81,12 @@ AccordionRow.propTypes = {
 const AccordionWrapper = styled.div`
   background-color: ${COLORS.white};
   height: auto;
-  font-size: 12px;
+  font-size: 14px;
+  font-family: ${FONTS.font2};
   color: black;
+  min-width: 220px;
+  justify-content: 'center';
+  align: 'center;'
 `;
 
 const Accordion = ({ children }) => {

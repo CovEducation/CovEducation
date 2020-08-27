@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import AppBar from '@material-ui/core/AppBar';
+
+const COLORS = {
+    CovedYellow: '#F2BE32',
+}
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`
+    };
+}
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -13,8 +25,8 @@ function TabPanel(props) {
         <div
             role="tabpanel"
             hidden={value !== index}
-            id={`vertical-tabpanel-${index}`}
-            aria-labelledby={`vertical-tab-${index}`}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
             {...other}
         >
             {value === index && (
@@ -32,92 +44,70 @@ TabPanel.propTypes = {
     value: PropTypes.any.isRequired
 };
 
-function a11yProps(index) {
-    return {
-        id: `tab-${index}`,
-        'aria-controls': `tabpanel-${index}`
-    };
-}
-
-const ProcessTabs = withStyles({
+const AntTabs = withStyles({
+    root: {
+        borderBottom: '1px solid #e8e8e8'
+    },
     indicator: {
-        display: 'flex',
-        backgroundColor: '#F2BE32',
-        justifyContent: 'center',
-        '& > span': {
-            maxWidth: 40,
-            width: '100%'
-        }
+        backgroundColor: COLORS.CovedYellow,
     }
 })(Tabs);
 
-const useStyles = makeStyles({
+const AntTab = withStyles((theme) => ({
     root: {
-        flexGrow: 1,
-        backgroundColor: 'transparent',
-        display: 'flex',
-        height: 448
-    },
-    tabs: {
-        borderRight: '1px solid rgba(0, 0, 0, 0.12)'
-    },
-    process: {
         textTransform: 'none',
-        color: 'var(--text)',
-        backgroundColor: 'var(--background)',
-        borderRight: '3px solid #F2BE32',
-        borderLeft: '3px solid #F2BE32',
-        borderTop: '3px solid #F2BE32',
-        borderBottom: '3px solid #F2BE32'
+        minWidth: 200,
+        fontWeight: theme.typography.fontWeightRegular,
+        fontFamily: [
+            '-apple-system',
+            'BlinkMacSystemFont',
+            '"Segoe UI"',
+            'Roboto',
+            '"Helvetica Neue"'
+        ].join(','),
+        '&:hover': {
+            color: '#003c5e',
+            opacity: 1
+        },
+        '&$selected': {
+            color: '#003c5e',
+            fontWeight: theme.typography.fontWeightBold
+        },
+        '&:focus': {
+            color: '#003c5e'
+        }
+    },
+    selected: {}
+}))((props) => <Tab disableRipple {...props} />);
+
+const HTabStyle = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1
+    },
+    padding: {
+        padding: theme.spacing(3)
     }
-});
+}));
 
-const selected = {
-    '--background': '#F2BE32',
-    '--text': '#fff'
-};
+export default function HTabs(props) {
+    const classes = HTabStyle();
+    const [value, setValue] = useState(0);
 
-const defaultColor = {
-    '--background': '#ffffff',
-    '--text': '#003c5e'
-};
-
-export default function VTabs(props) {
-    const classes = useStyles();
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event, newValue) => {
+    const handleChange = (_, newValue) => {
         setValue(newValue);
     };
 
-    // the text inside each
-    const texts = props.texts;
-    // the labels of each
-    const labels = props.labels;
-
     return (
         <div className={classes.root}>
-            <ProcessTabs
-                orientation="vertical"
-                indicatorColor="primary"
-                value={value}
-                onChange={handleChange}
-                aria-label="Tabs Example"
-                className={classes.tabs}
-            >
-                {labels.map((label, index) => (
-                    <Tab
-                        disableRipple={ true }
-                        key={index}
-                        label={label}
-                        style={index === value ? selected : defaultColor}
-                        className={classes.process}
-                        {...a11yProps({ index })}
-                    />
-                ))}
-            </ProcessTabs>
-            {texts.map((text, index) => (
-                <TabPanel value={text} index={index} key={index}>
+            <AppBar position="static" color="default">
+                <AntTabs value={value} onChange={handleChange} aria-label="ant example">
+                    {props.labels.map((label, index) => (
+                        <AntTab key={label} label={label} {...a11yProps(index)} />
+                    ))}
+                </AntTabs>
+            </AppBar>
+            {props.texts.map((text, index) => (
+                <TabPanel value={value} index={index} key={index}>
                     {text}
                 </TabPanel>
             ))}

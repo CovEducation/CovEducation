@@ -37,4 +37,22 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
+/* POST a new user given the firebase token */
+router.post('/', authMiddleware, async (req, res) => {
+  const { uid } = req.user;
+
+  try {
+    const user = await db.createUser(uid, req.body);
+    res.send(user);
+  } catch (err) {
+    // TODO we will want to delete the firebase auth document if there is any error
+    // creating the new user.
+    res.status(500).send(err);
+  }
+});
+
+// router.patch('/', authMiddleware, async (req, res) => {
+//   // TODO logic to update existing documents
+// });
+
 module.exports = router;
