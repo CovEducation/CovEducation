@@ -8,9 +8,13 @@ import Menu from '@material-ui/core/Menu';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 import styled from 'styled-components';
+import Signin from '../SignIn/index';
+import Modal from '../Modal';
+import Wizard from '../Wizard';
 import { FONTS, COLORS } from '../../constants';
 import MobileNav from './MobileNav';
 
+const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
 const TextThemes = {
   fontSize: {
     default: 'max(16px,1vw)',
@@ -47,11 +51,14 @@ const LinkStyled = styled(Link)`
 
 const UserLinkWrapper = styled.div`
   margin-left: auto;
+  flex-direction: row;
+  display: flex;
 `;
 
 export default function NavBar(props) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [menuDropdownAnchor, setMenuDropdownAnchor] = useState(null);
+  
   const handleMenuDropdownClick = (event) => {
     setMenuDropdownAnchor(event.currentTarget);
     event.stopPropagation();
@@ -59,18 +66,29 @@ export default function NavBar(props) {
   const handleMenuDropdownClose = () => {
     setMenuDropdownAnchor(null);
   };
+  
 
-  // TODO(mi-yu): conditionally render the logged-in routes
   const userLinks = (
       <>
-        <LinkStyled to='/signin' ver='default'>Login</LinkStyled>
-        <LinkStyled to='/signup' ver='default'>
-          <Button theme='accent' size='sm'>
-            Sign Up
-          </Button>
-        </LinkStyled>
+        
+        <Modal
+              title="Login"
+              trigger={
+                <Button theme='primary' size='sm'> Login </Button>}
+          >
+            <Signin />
+        </Modal>
+        <Modal
+              title="Sign Up"
+              trigger={
+                <Button theme='accent' size='sm'> Sign Up </Button>}
+          >
+            <Wizard
+                content={Wiz_content}
+            />
+        </Modal>
       </>
-    );
+  );
 
   useEffect(() => {
     const updateWindowWidth = () => {
