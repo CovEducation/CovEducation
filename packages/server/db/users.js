@@ -113,8 +113,24 @@ const createUser = async (uid, body) => {
   return batch.commit();
 };
 
-// const updateUser = async (uid) => {
-//   // TODO
-// };
+const updateUser = async (uid, body) => {
+  const user = await getUser(uid);
+  if (user.role === PARENT) {
+    console.warn('Updates for Parent objects not supported yet');
+    return Promise.resolve(body);
+  }
+  console.log(user);
+  console.log(body);
 
-module.exports = { getUser, createUser };
+  // Assumes this is a Mentor
+  // const mentorUpdate = await parseMentor(body);
+  try {
+    const mentorRef = mentorsCollectionRef.doc(uid);
+    return mentorRef.update({ ...body });
+  } catch (err) {
+    console.error(err);
+    throw new Error(err);
+  }
+};
+
+module.exports = { getUser, createUser, updateUser };

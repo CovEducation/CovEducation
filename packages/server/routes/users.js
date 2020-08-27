@@ -30,8 +30,15 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
-// router.patch('/', authMiddleware, async (req, res) => {
-//   // TODO logic to update existing documents
-// });
+router.patch('/', authMiddleware, async (req, res) => {
+  const { uid } = req.user;
+
+  try {
+    const updated = await db.updateUser(uid, req.body);
+    res.send(updated);
+  } catch (err) {
+    res.status(500).send(err);
+  }
+});
 
 module.exports = router;
