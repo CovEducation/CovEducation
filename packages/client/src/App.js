@@ -7,6 +7,7 @@ import HomePage from './pages/Home';
 import FAQsPage from './pages/FAQs';
 import ProfilePage from './pages/Profile';
 import SignUpPage from './pages/SignUp';
+import MeetOurTeam from './pages/MeetOurTeam';
 import NavBar from './components/NavBar';
 import ForMentors from './pages/HowItWorks/ForMentors';
 import ForParents from './pages/HowItWorks/ForParents';
@@ -40,6 +41,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignUpPage />
+          </Route>
+          <Route path="/team">
+            <MeetOurTeam/>
           </Route>
           <Route path="/forgot-password">
             <br/>

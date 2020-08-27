@@ -8,8 +8,6 @@ import Menu from '@material-ui/core/Menu';
 import PropTypes from 'prop-types';
 import Button from '../Button';
 import styled from 'styled-components';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
 import Signin from '../SignIn/index';
 import Modal from '../Modal';
 import Wizard from '../Wizard';
@@ -20,7 +18,7 @@ const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
 const TextThemes = {
   fontSize: {
     default: 'max(16px,1vw)',
-    lg: 'max(22px,1.2vw)',
+    lg: 'max(24px,1.2vw)',
   },
   fontWeight: {
     default: '400',
@@ -60,7 +58,6 @@ const UserLinkWrapper = styled.div`
 export default function NavBar(props) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [menuDropdownAnchor, setMenuDropdownAnchor] = useState(null);
-  const [loginOpen, setLoginOpen] = useState(false);
   
   const handleMenuDropdownClick = (event) => {
     setMenuDropdownAnchor(event.currentTarget);
@@ -70,13 +67,6 @@ export default function NavBar(props) {
     setMenuDropdownAnchor(null);
   };
   
-  const toggleLogin = () => {
-    setLoginOpen(!loginOpen);
-  };
-
-  const handleLoginClose = () => {
-    setLoginOpen(false);
-  };
 
   let userLinks;
   userLinks = (
@@ -183,8 +173,6 @@ NavBar.defaultProps = {
       link: '/contactus',
     },
   ],
-  // sticky: stays with user as they scroll,
-  // absolute: disappears after user scrolls past
   position: 'sticky',
   ver: 'default',
 }
