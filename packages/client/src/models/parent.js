@@ -101,6 +101,9 @@ export class Student {
 
     async validate() {
         const valid = await studentSchema.isValid(Student);
+        if (!valid) {
+            throw Error('Malformed student object.');
+        }
     }
 }
 
@@ -126,6 +129,9 @@ export default class Parent {
      */
     async validate() {
         const valid = await parentSchema.isValid(Parent);
+        if (!valid) {
+            throw Error('Malformed parent object.');
+        }
     }
 
     /**

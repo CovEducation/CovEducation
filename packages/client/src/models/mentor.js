@@ -123,6 +123,9 @@ export default class Mentor {
      */
     async validate() {
         const valid = await mentorSchema.isValid(Mentor);
+        if (!valid){
+            throw Error('Malformed mentor object.');
+        }
     }
 
     /**

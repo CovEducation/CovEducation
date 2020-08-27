@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
-import { get } from '../../utilities.js';
 import MentorFilters from './MentorFilters';
 import MentorGrid from './MentorGrid';
 import styled from 'styled-components';
-import useAuth from '../../providers/AuthProvider';
 
 const FindAMentorWrapper = styled.div`
     display: grid;
@@ -35,27 +33,14 @@ const FindAMentorPage = () => {
     //     the mentor results. The tags set by the user should propagate to the mentorship
     //     column - the only shared state component.
 
-    const { user } = useAuth();
-    const { tags, setTags } = useState([]);
-    const { subjects, setSubjects } = useState([]);
-
     // Lazily initialize the filter settings
     const [filters, setFilters] = useState({
         'gradeLevel': {},
         'subject': {},
         'specialNeeds': {},
     });
-    const handleMentorshipRequest = (event) => {
-        // TODO(johanc): Implement.
-
-    };
-
-    const openModal = (mentor) => {
-        // TODO(johanc): Implement.
-    }
 
     const handleFilterChange = (filterCategory, change) => {
-        console.log(filterCategory, change);
         if (filters[filterCategory]) {
             const currentCategoryFilters = filters[filterCategory];
             setFilters({
