@@ -123,7 +123,7 @@ NavBar.defaultProps = {
     },
     {
       title: 'Meet Our Team',
-      link: '/meetourteam',
+      link: '/team',
     },
     {
       title: 'Contact Us',

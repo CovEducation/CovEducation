@@ -1,5 +1,5 @@
 import React from 'react';
-import HTabs from './components/Tabs/index.js';
+import HTabs from '../../components/Tabs';
 
 const MeetOurTeam = () => {
 
