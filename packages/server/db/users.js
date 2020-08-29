@@ -1,9 +1,10 @@
-import * as Yup from 'yup';
+const Yup = require('yup');
 
 const firebase = require('firebase-admin');
 
 const db = firebase.firestore();
 db.settings({ ignoreUndefinedProperties: true });
+
 const usersCollectionRef = db.collection('users');
 const mentorsCollectionRef = db.collection('mentors');
 const parentsCollectionRef = db.collection('parents');
