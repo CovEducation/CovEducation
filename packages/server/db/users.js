@@ -1,12 +1,12 @@
+import * as Yup from 'yup';
+
 const firebase = require('firebase-admin');
 
 const db = firebase.firestore();
 db.settings({ ignoreUndefinedProperties: true });
-
 const usersCollectionRef = db.collection('users');
 const mentorsCollectionRef = db.collection('mentors');
 const parentsCollectionRef = db.collection('parents');
-
 const MENTOR = 'MENTOR';
 const PARENT = 'PARENT';
 
@@ -19,8 +19,80 @@ const getDoc = async (collection, uid) => {
   throw new Error(`Unable to find '${uid}' in '${collection}' collection`);
 };
 
+const phoneRegex = RegExp(
+  /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
+);
+
+const mentorSchema = Yup.object().shape({
+  email: Yup
+    .string()
+    .email()
+    .required('Email Required'),
+  name: Yup
+    .string()
+    .required('Name Required'),
+  timezone: Yup
+    .string()
+    .required('Timezone Required'),
+  phone: Yup
+    .string()
+    .matches(phoneRegex, 'Phone number is not valid'),
+  pronouns: Yup
+    .string(),
+  college: Yup
+    .string(),
+  avatar: Yup
+    .string()
+    .required('Avatar Required'),
+  bio: Yup
+    .string()
+    .required('Bio Required'),
+  major: Yup
+    .string(),
+  subjects: Yup
+    .array()
+    .required('Subjects Required'),
+  gradeLevels: Yup
+    .array()
+    .required('Grade Levels Required'),
+});
+const parentSchema = Yup.object().shape({
+  email: Yup
+    .string()
+    .email()
+    .required('Email Required'),
+  name: Yup
+    .string()
+    .required('Name Required'),
+  timezone: Yup
+    .string()
+    .required('Timezone Required'),
+  phone: Yup
+    .string()
+    .matches(phoneRegex, 'Phone number is not valid'),
+  pronouns: Yup
+    .string(),
+  avatar: Yup
+    .string()
+    .required('Avatar Required'),
+});
+const studentSchema = Yup.object().shape({
+  email: Yup
+    .string()
+    .email(),
+  name: Yup
+    .string()
+    .required('Name Required'),
+  subjects: Yup
+    .array()
+    .required('Subjects Required'),
+  grade: Yup
+    .number()
+    .required('Grade Required'),
+});
+
 // Validation Functions
-const parseMentor = async (body) => {
+const parseMentor = (body) => {
   const mentor = {
     name: body.name,
     email: body.email,
@@ -32,15 +104,22 @@ const parseMentor = async (body) => {
     tags: body.tags,
     subjects: body.subjects,
     gradeLevels: body.gradeLevels,
-    timzone: body.timezone,
+    timezone: body.timezone,
   };
 
-  // TODO: validate data
+  /**
+   * The validation asynchronously checks the data against the restrictions of Yup
+   * TODO: More validation needs to be done on how the error is returned to the server.
+   */
+  async function validate() {
+    const valid = await mentorSchema.isValid(mentor);
+  }
+  validate().then(() => true);
 
   return mentor;
 };
 
-const parseParent = async (body) => {
+const parseParent = (body) => {
   const parent = {
     name: body.name,
     email: body.email,
@@ -50,12 +129,19 @@ const parseParent = async (body) => {
     timezone: body.timezone,
   };
 
-  // TODO: validate data
+  /**
+   * The validation asynchronously checks the data against the restrictions of Yup
+   * TODO: More validation needs to be done on how the error is returned to the server.
+   */
+  async function validate() {
+    const valid = await parentSchema.isValid(parent);
+  }
+  validate().then(() => true);
 
   return parent;
 };
 
-const parseStudent = async (body) => {
+const parseStudent = (body) => {
   const student = {
     name: body.name,
     email: body.email,
@@ -63,13 +149,19 @@ const parseStudent = async (body) => {
     subjects: body.subjects,
   };
 
-  // TODO: validate data
+  /**
+   * The validation asynchronously checks the data against the restrictions of Yup
+   * TODO: More validation needs to be done on how the error is returned to the server.
+   */
+  async function validate() {
+    const valid = await studentSchema.isValid(student);
+  }
+  validate().then(() => true);
 
   return student;
 };
 
 // These are the three main methods to interact with the user schemas
-
 const getUser = async (uid) => {
   const userDoc = await getDoc('users', uid);
   let user;
