@@ -10,5 +10,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 11,
   },
-  rules: {},
+  rules: {
+    'no-unused-vars': [1, { vars: 'all', args: 'after-used' }],
+  },
 };
