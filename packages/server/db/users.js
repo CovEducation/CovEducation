@@ -22,7 +22,7 @@ const getDoc = async (collection, uid) => {
 };
 
 // Validation Functions
-const parseMentor = (body) => {
+const parseMentor = async (body) => {
   const mentor = {
     name: body.name,
     email: body.email,
@@ -41,15 +41,12 @@ const parseMentor = (body) => {
    * The validation asynchronously checks the data against the restrictions of Yup
    * TODO: More validation needs to be done on how the error is returned to the server.
    */
-  async function validate() {
-    const valid = await mentorSchema.isValid(mentor);
-  }
-  validate().then(() => true);
+  await mentorSchema.isValid(mentor).then(() => true);
 
   return mentor;
 };
 
-const parseParent = (body) => {
+const parseParent = async (body) => {
   const parent = {
     name: body.name,
     email: body.email,
@@ -63,15 +60,12 @@ const parseParent = (body) => {
    * The validation asynchronously checks the data against the restrictions of Yup
    * TODO: More validation needs to be done on how the error is returned to the server.
    */
-  async function validate() {
-    const valid = await parentSchema.isValid(parent);
-  }
-  validate().then(() => true);
+  await parentSchema.isValid(parent).then(() => true);
 
   return parent;
 };
 
-const parseStudent = (body) => {
+const parseStudent = async (body) => {
   const student = {
     name: body.name,
     email: body.email,
@@ -83,10 +77,7 @@ const parseStudent = (body) => {
    * The validation asynchronously checks the data against the restrictions of Yup
    * TODO: More validation needs to be done on how the error is returned to the server.
    */
-  async function validate() {
-    const valid = await studentSchema.isValid(student);
-  }
-  validate().then(() => true);
+  await studentSchema.isValid(student).then(() => true);
 
   return student;
 };
