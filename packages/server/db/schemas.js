@@ -4,7 +4,7 @@ const phoneRegex = RegExp(
   /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
 );
 
-export const mentorSchema = Yup.object().shape({
+const mentor = Yup.object().shape({
   email: Yup
     .string()
     .email()
@@ -37,7 +37,7 @@ export const mentorSchema = Yup.object().shape({
     .array()
     .required('Grade Levels Required'),
 });
-export const parentSchema = Yup.object().shape({
+const parent = Yup.object().shape({
   email: Yup
     .string()
     .email()
@@ -57,7 +57,7 @@ export const parentSchema = Yup.object().shape({
     .string()
     .required('Avatar Required'),
 });
-export const studentSchema = Yup.object().shape({
+const student = Yup.object().shape({
   email: Yup
     .string()
     .email(),

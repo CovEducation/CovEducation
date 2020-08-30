@@ -1,8 +1,7 @@
-import {
-  studentSchema, parentSchema, mentorSchema,
-} from './schemas';
-
 const firebase = require('firebase-admin');
+const Schemas = require('./schemas');
+
+const { mentor: mentorSchema, parent: parentSchema, student: studentSchema } = Schemas;
 
 const db = firebase.firestore();
 db.settings({ ignoreUndefinedProperties: true });
