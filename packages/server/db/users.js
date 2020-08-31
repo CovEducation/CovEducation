@@ -32,7 +32,7 @@ const parseMentor = async (body) => {
     tags: body.tags,
     subjects: body.subjects,
     gradeLevels: body.gradeLevels,
-    timzone: body.timezone,
+    timezone: body.timezone,
   };
 
   // TODO: validate data
@@ -119,18 +119,24 @@ const updateUser = async (uid, body) => {
     console.warn('Updates for Parent objects not supported yet');
     return Promise.resolve(body);
   }
-  console.log(user);
-  console.log(body);
 
-  // Assumes this is a Mentor
-  // const mentorUpdate = await parseMentor(body);
-  try {
-    const mentorRef = mentorsCollectionRef.doc(uid);
-    return mentorRef.update({ ...body });
-  } catch (err) {
-    console.error(err);
-    throw new Error(err);
+  if (user.role === MENTOR) {
+    try {
+      const mentor = await mentorsCollectionRef.doc(uid);
+      await mentor.set({
+        ...body,
+      }, {
+        merge: true,
+      });
+      const updated = await mentor.get();
+
+      return updated.data();
+    } catch (err) {
+      throw new Error(err);
+    }
   }
+
+  throw new Error(`Unexpected role: ${user.role}`);
 };
 
 module.exports = { getUser, createUser, updateUser };
