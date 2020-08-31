@@ -91,6 +91,6 @@ const student = Yup.object().shape({
 
 module.exports = {
   mentorSchema: mentor,
-  studentSchema: student,
   parentSchema: parent,
+  studentSchema: student,
 };
