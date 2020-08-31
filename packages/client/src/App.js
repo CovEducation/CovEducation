@@ -16,6 +16,7 @@ import ContactUsPage from './pages/ContactUs';
 import SignInPage from './pages/SignIn';
 
 import { AuthProvider } from './providers/AuthProvider';
+import Upload from './components/Upload';
 
 function App() {
   return (

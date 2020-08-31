@@ -16,5 +16,9 @@
   "functions": {
     "source": "packages/server",
     "runtime": "nodejs12"
+  },
+
+  "storage": {
+    "rules": "storage.rules"
   }
 }
