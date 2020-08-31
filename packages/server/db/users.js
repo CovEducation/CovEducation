@@ -35,8 +35,6 @@ const parseMentor = async (body) => {
     timzone: body.timezone,
   };
 
-  // TODO: validate data
-
   return mentor;
 };
 
@@ -112,9 +110,5 @@ const createUser = async (uid, body) => {
 
   return batch.commit();
 };
-
-// const updateUser = async (uid) => {
-//   // TODO
-// };
 
 module.exports = { getUser, createUser };

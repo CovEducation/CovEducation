@@ -12,6 +12,7 @@ const serviceAccount = require('./service_account.json');
 
 firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
+  databaseURL: process.env.FIREBASE_URL,
 });
 
 const indexRouter = require('./routes/index');
@@ -31,10 +32,6 @@ const firebaseCredentials = JSON.parse(fs.readFileSync(process.env.FIREBASE_CRED
 if (!firebaseCredentials) {
   throw new Error('Cannot find google service account credentials');
 }
-firebase.initializeApp({
-  credential: firebase.credential.cert(firebaseCredentials),
-  databaseURL: process.env.FIREBASE_URL,
-});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

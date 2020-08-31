@@ -9,6 +9,8 @@ const Roles = {
     PARENT: 'PARENT',
 }
 
+const userIsInitialized = () =>  (Auth.currentUser !== undefined && Auth.currentUser !== null);
+
 export const getMentor = async () => await getUser(Roles.MENTOR);
 
 export const getParent = async () => await getUser(Roles.PARENT);
@@ -22,11 +24,19 @@ export const createMentorWithEmail = async (email, password, mentor) => {
 };
 
 export const getUser = async () => {
-    if (Auth.currentUser === undefined || Auth.currentUser === null) {
+    if (!userIsInitialized()) {
         throw Error('Unable to retrive user data with uninitilized Auth user.');
     }
     const token = await Auth.currentUser.getIdToken();
-    return await get('/users', {}, {token});
+    return await get('/users', {}, { token });
+}
+
+export const getAlgoliaKey = async () => {
+    if (!userIsInitialized()) {
+        throw Error('Unabel to retrieve user otken for uninitialized Auth user.');
+    }
+    const token = await Auth.currentUser.getIdToken();
+    return await get('/algoliaKey', {}, { token })
 }
 
 const createUserWithEmail = async (email, password, data, role) => {
