@@ -1,7 +1,6 @@
 const firebase = require('firebase-admin');
 
 const db = firebase.firestore();
-db.settings({ ignoreUndefinedProperties: true });
 
 const usersCollectionRef = db.collection('users');
 const mentorsCollectionRef = db.collection('mentors');
@@ -22,6 +21,7 @@ const getDoc = async (collection, uid) => {
 // Validation Functions
 const parseMentor = async (body) => {
   const mentor = {
+    uid: body.uid,
     name: body.name,
     email: body.email,
     pronouns: body.pronouns,
@@ -42,6 +42,7 @@ const parseMentor = async (body) => {
 
 const parseParent = async (body) => {
   const parent = {
+    uid: body.uid,
     name: body.name,
     email: body.email,
     phone: body.phone,
@@ -57,6 +58,7 @@ const parseParent = async (body) => {
 
 const parseStudent = async (body) => {
   const student = {
+    uid: body.uid,
     name: body.name,
     email: body.email,
     gradeLevel: body.gradeLevel,
@@ -68,6 +70,15 @@ const parseStudent = async (body) => {
   return student;
 };
 
+// Removes all keys with value 'undefined' from object
+// Optionally pass other keys to remove
+const cleanObject = (obj, disallowedKeys = []) => Object.keys(obj).reduce((acc, curr) => {
+  if (curr !== 'uid' && obj[curr] !== undefined && !disallowedKeys.includes(curr)) {
+    acc[curr] = obj[curr];
+  }
+  return acc;
+}, {});
+
 // These are the three main methods to interact with the user schemas
 
 const getUser = async (uid) => {
@@ -78,10 +89,11 @@ const getUser = async (uid) => {
   } else if (userDoc.role === PARENT) {
     user = await getDoc('parents', uid);
     const studentSnapshot = await parentsCollectionRef.doc(uid).collection('students').get();
-    user.students = studentSnapshot.docs.map((s) => s.data());
+    user.students = studentSnapshot.docs.map((s) => ({ uid: s.id, ...s.data() }));
   }
 
   user.role = userDoc.role;
+  user.uid = uid;
 
   return user;
 };
@@ -102,7 +114,7 @@ const createUser = async (uid, body) => {
     batch.set(parentsCollectionRef.doc(uid), parent);
 
     const validatedStudents = await Promise.all(body.students.map((s) => parseStudent(s)));
-    validatedStudents.students.forEach((student) => {
+    validatedStudents.forEach((student) => {
       const newStudentRef = parentsCollectionRef.doc(uid).collection('students').doc();
       batch.set(newStudentRef, student);
     });
@@ -118,7 +130,7 @@ const updateUser = async (uid, body) => {
 
   if (user.role === PARENT) {
     try {
-      const parentUpdate = await parseParent(body);
+      const parentUpdate = cleanObject(await parseParent(body));
       const parent = parentsCollectionRef.doc(uid);
       await parent.set({
         ...parentUpdate,
@@ -127,17 +139,21 @@ const updateUser = async (uid, body) => {
       });
 
       if (body.students && body.students.length) {
-        const validatedStudents = await Promise.all(body.students.map((s) => validatedStudents(s)));
+        const validatedStudents = await Promise.all(body.students.map((s) => parseStudent(s)));
         const batch = db.batch();
         validatedStudents.forEach((student) => {
           const studentRef = parentsCollectionRef.doc(uid).collection('students').doc(student.uid);
-          batch.set(studentRef, { ...student }, { merge: true });
+          batch.set(studentRef, { ...cleanObject(student) }, { merge: true });
         });
         await batch.commit();
       }
-      const updated = await parent.get();
 
-      return updated.data();
+      const updated = await parent.get();
+      const updatedStudents = await parent.collection('students').get();
+      const result = updated.data();
+      result.students = updatedStudents.docs.map((doc) => ({ uid: doc.id, ...doc.data() }));
+      result.uid = parent.id;
+      return result;
     } catch (err) {
       throw new Error(err);
     }
@@ -153,8 +169,9 @@ const updateUser = async (uid, body) => {
         merge: true,
       });
       const updated = await mentor.get();
-
-      return updated.data();
+      const result = updated.data();
+      result.uid = mentor.id;
+      return result;
     } catch (err) {
       throw new Error(err);
     }

@@ -24,6 +24,7 @@ router.post('/', authMiddleware, async (req, res) => {
     const user = await db.createUser(uid, req.body);
     res.send(user);
   } catch (err) {
+    console.error(err);
     // TODO we will want to delete the firebase auth document if there is any error
     // creating the new user.
     res.status(500).send(err);
