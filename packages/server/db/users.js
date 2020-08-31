@@ -90,12 +90,12 @@ const createUser = async (uid, body) => {
   batch.set(usersCollectionRef.doc(uid), user);
 
   if (user.role === MENTOR) {
-    const mentor = await parseMentor(body).catch((err) => {
+    const mentor = parseMentor(body).catch((err) => {
       throw new Error(`Unable to parse mentor: ${err}`);
     });
     batch.set(mentorsCollectionRef.doc(uid), mentor);
   } else if (user.role === PARENT) {
-    const parent = await parseParent(body).catch((err) => {
+    const parent = parseParent(body).catch((err) => {
       throw new Error(`Unable to parse parent: ${err}`);
     });
     batch.set(parentsCollectionRef.doc(uid), parent);
@@ -113,5 +113,9 @@ const createUser = async (uid, body) => {
 
   return batch.commit();
 };
+
+// const updateUser = async (uid) => {
+//   // TODO
+// };
 
 module.exports = { getUser, createUser };

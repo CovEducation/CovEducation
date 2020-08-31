@@ -85,6 +85,7 @@ describe('Test Parent Data Validation', () => {
       timezone: 'UTC',
       phone: '1234567890',
       pronouns: 'he/him',
+      gradeLevel: 12,
       avatar: 'https://cdn.pixabay.com/photo/2017/11/30/15/26/landscape-2988663_960_720.jpg',
     };
     expect(parentSchema.isValidSync(parent)).toBeTruthy();
