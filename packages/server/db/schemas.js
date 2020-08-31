@@ -3,6 +3,9 @@ const Yup = require('yup');
 const phoneRegex = RegExp(
   /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/,
 );
+const urlRegex = RegExp(
+  /(https?:\/\/.*\.(?:png|jpg|jpeg|svg))/i,
+);
 
 const mentor = Yup.object().shape({
   email: Yup
@@ -24,6 +27,10 @@ const mentor = Yup.object().shape({
     .string(),
   avatar: Yup
     .string()
+    .matches(
+      urlRegex,
+      'Enter correct url!',
+    )
     .required('Avatar Required'),
   bio: Yup
     .string()
@@ -32,12 +39,15 @@ const mentor = Yup.object().shape({
     .string(),
   subjects: Yup
     .array()
-    .required('Subjects Required'),
+    .of(Yup.string())
+    .min(1)
+    .required('Valid Subjects Required'),
   gradeLevels: Yup
     .array()
-    .required('Grade Levels Required'),
+    .of(Yup.string())
+    .min(1)
+    .required('Valid Grade Levels Required'),
 });
-
 const parent = Yup.object().shape({
   email: Yup
     .string()
@@ -56,6 +66,10 @@ const parent = Yup.object().shape({
     .string(),
   avatar: Yup
     .string()
+    .matches(
+      urlRegex,
+      'Enter correct url!',
+    )
     .required('Avatar Required'),
 });
 const student = Yup.object().shape({
@@ -67,7 +81,9 @@ const student = Yup.object().shape({
     .required('Name Required'),
   subjects: Yup
     .array()
-    .required('Subjects Required'),
+    .of(Yup.string())
+    .min(1)
+    .required('Valid Subjects Required'),
   gradeLevel: Yup
     .number()
     .required('Grade Level Required'),
