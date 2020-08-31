@@ -22,6 +22,6 @@ describe('Test User Database Actions', () => {
     const user = await userDb.getUser('asdf');
 
     expect(get).toHaveBeenCalledTimes(2);
-    expect(user).toStrictEqual({ role: 'MENTOR', value: 'this is my user' });
+    expect(user).toStrictEqual({ role: 'MENTOR', value: 'this is my user', uid: 'asdf' });
   });
 });
