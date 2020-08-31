@@ -1,4 +1,5 @@
 const firebase = require('firebase-admin');
+const { FieldValueContext } = require('twilio/lib/rest/autopilot/v1/assistant/fieldType/fieldValue');
 
 const db = firebase.firestore();
 db.settings({ ignoreUndefinedProperties: true });
@@ -6,6 +7,7 @@ db.settings({ ignoreUndefinedProperties: true });
 const usersCollectionRef = db.collection('users');
 const mentorsCollectionRef = db.collection('mentors');
 const parentsCollectionRef = db.collection('parents');
+const messageCollectionRef = db.collection('messages');
 
 const MENTOR = 'MENTOR';
 const PARENT = 'PARENT';
@@ -113,8 +115,19 @@ const createUser = async (uid, body) => {
   return batch.commit();
 };
 
-// const updateUser = async (uid) => {
-//   // TODO
-// };
+const addMessageToDB = async (mentorUID, parentUID, studentUID, message) => {
+  if (!mentorUID) throw new Error('mentorUID not provided.');
+  if (!parentUID) throw new Error('parentUID not provided.');
+  if (!studentUID) throw new Error('studentUID not provided.');
+  if (!message) throw new Error('message not provided.');
 
-module.exports = { getUser, createUser };
+  const newMessage = {
+    mentorUID, parentUID, studentUID, message,
+  };
+  const newMessageRef = await messageCollectionRef.add(newMessage);
+  return mentorsCollectionRef.doc(mentorUID).update({
+    requests: FieldValue.arrayUnion(newMessageRef.id);
+  });
+};
+
+module.exports = { getUser, createUser, addMessageToDB };

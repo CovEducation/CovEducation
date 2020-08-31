@@ -1,7 +1,8 @@
 const express = require('express');
 const authMiddleware = require('../middleware/auth');
 const { sendEmail, sendTextMessage } = require('../messaging');
-const db = require('../db/user');
+const db = require('../db/users');
+const { addMessageToDB } = require('../db/users');
 
 const router = express.Router();
 
@@ -10,7 +11,15 @@ const NOTIFICATION_PREFERENCES = {
   EMAIL: 'EMAIL',
 };
 
-const generateSmsMessage = (mentorName, parentName, studentName, message) => {
+/**
+ * Wraps around the parent's message with a template written by CovEd
+ * staff.
+ * @param {String} mentorName mentorName
+ * @param {String} parentName parentName
+ * @param {String} studentName studentName
+ * @param {String} message message the parent wrote.
+ */
+const generateSmsMessageFromTemplate = (mentorName, parentName, studentName, message) => {
   const intro = `Hello ${mentorName}, you have a mentorship request from ${parentName}. `;
   const studentInfo = `The student's name is ${studentName}. `;
   return `${intro + studentInfo} Parent's message: ${message}`;
@@ -22,13 +31,19 @@ const generateSmsMessage = (mentorName, parentName, studentName, message) => {
  * Defaults to email if the mentor did not specify a preference.
  * Arguments:
  *  mentorUID - The FirebaseUID of the mentor the parent is requesting.
+ *  studentUID - The FirebaseUID of the student who needs mentorship.
  *  message - The message the parent wants to send the mentor.
- *
  */
 router.post('/requestMentor', authMiddleware, async (req, res) => {
   // Get the mentor's preference.
-  const { mentorUID, message } = req.body;
+  const { mentorUID, studentUID, message } = req.body;
+  const parentUID = req.user.uid;
+
   const mentor = await db.getUser(mentorUID);
+
+  // We want to keep logs of all messages on Firestore.
+  await addMessageToDB(mentorUID, parentUID, studentUID, message);
+
   // Default to email if preference not specify
   const mentorPreference = mentor.communicationPref || NOTIFICATION_PREFERENCES.EMAIL;
   if (mentorPreference === NOTIFICATION_PREFERENCES.EMAIL) {
@@ -38,9 +53,11 @@ router.post('/requestMentor', authMiddleware, async (req, res) => {
     sendEmail(mentor.email, emailBody).then(() => res.send({}));
   } else if (mentorPreference === NOTIFICATION_PREFERENCES.SMS) {
     // Use Twilio.
-    const fullMessage = generateSmsMessage(message);
+    const fullMessage = generateSmsMessageFromTemplate(message);
     sendTextMessage(mentor.phone, fullMessage).then(() => res.send({}));
   } else {
     res.sendStatus(400);
   }
 });
+
+module.exports = router;
