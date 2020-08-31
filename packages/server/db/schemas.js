@@ -37,6 +37,7 @@ const mentor = Yup.object().shape({
     .array()
     .required('Grade Levels Required'),
 });
+
 const parent = Yup.object().shape({
   email: Yup
     .string()
@@ -67,7 +68,13 @@ const student = Yup.object().shape({
   subjects: Yup
     .array()
     .required('Subjects Required'),
-  grade: Yup
+  gradeLevel: Yup
     .number()
-    .required('Grade Required'),
+    .required('Grade Level Required'),
 });
+
+module.exports = {
+  mentorSchema: mentor,
+  studentSchema: student,
+  parentSchema: parent,
+};

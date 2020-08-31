@@ -1,7 +1,7 @@
 const firebase = require('firebase-admin');
 const Schemas = require('./schemas');
 
-const { mentor: mentorSchema, parent: parentSchema, student: studentSchema } = Schemas;
+const { mentorSchema, parentSchema, studentSchema } = Schemas;
 
 const db = firebase.firestore();
 db.settings({ ignoreUndefinedProperties: true });
@@ -37,13 +37,7 @@ const parseMentor = async (body) => {
     timezone: body.timezone,
   };
 
-  /**
-   * The validation asynchronously checks the data against the restrictions of Yup
-   * TODO: More validation needs to be done on how the error is returned to the server.
-   */
-  await mentorSchema.isValid(mentor).then(() => true);
-
-  return mentor;
+  return mentorSchema.isValid(mentor).then(() => mentor);
 };
 
 const parseParent = async (body) => {
@@ -56,13 +50,7 @@ const parseParent = async (body) => {
     timezone: body.timezone,
   };
 
-  /**
-   * The validation asynchronously checks the data against the restrictions of Yup
-   * TODO: More validation needs to be done on how the error is returned to the server.
-   */
-  await parentSchema.isValid(parent).then(() => true);
-
-  return parent;
+  return parentSchema.isValid(parent).then(() => parent);
 };
 
 const parseStudent = async (body) => {
@@ -73,13 +61,7 @@ const parseStudent = async (body) => {
     subjects: body.subjects,
   };
 
-  /**
-   * The validation asynchronously checks the data against the restrictions of Yup
-   * TODO: More validation needs to be done on how the error is returned to the server.
-   */
-  await studentSchema.isValid(student).then(() => true);
-
-  return student;
+  return studentSchema.isValid(student).then(() => student);
 };
 
 // These are the three main methods to interact with the user schemas
@@ -108,14 +90,20 @@ const createUser = async (uid, body) => {
   batch.set(usersCollectionRef.doc(uid), user);
 
   if (user.role === MENTOR) {
-    const mentor = await parseMentor(body);
+    const mentor = await parseMentor(body).catch((err) => {
+      throw new Error(`Unable to parse mentor: ${err}`);
+    });
     batch.set(mentorsCollectionRef.doc(uid), mentor);
   } else if (user.role === PARENT) {
-    const parent = await parseParent(body);
+    const parent = await parseParent(body).catch((err) => {
+      throw new Error(`Unable to parse parent: ${err}`);
+    });
     batch.set(parentsCollectionRef.doc(uid), parent);
 
     body.students.forEach(async (student) => {
-      const newStudent = await parseStudent(student);
+      const newStudent = await parseStudent(student).catch((err) => {
+        throw new Error(`Unable to parse student: ${err}`);
+      });
       const newStudentRef = parentsCollectionRef.doc(uid).collection('students').doc();
       batch.set(newStudentRef, newStudent);
     });
@@ -125,9 +113,5 @@ const createUser = async (uid, body) => {
 
   return batch.commit();
 };
-
-// const updateUser = async (uid) => {
-//   // TODO
-// };
 
 module.exports = { getUser, createUser };
