@@ -120,6 +120,7 @@ const useAuthProvider = () => {
     useEffect(() => {
         const unsubscribe = Auth.onAuthStateChanged(async (auth) => {
             if (auth) {
+                console.log(await auth.getIdToken());
                 setAuth(auth);
             } else {
                 setAuth(AUTH_STATE.LOGGED_OUT);

@@ -92,7 +92,7 @@ const createUser = async (uid, body) => {
   };
 
   const batch = db.batch();
-  batch.set(usersCollectionRef.doc(uid), user);
+  batch.set(usersCollectionRef.doc(uid), user, { merge: true });
 
   if (user.role === MENTOR) {
     const mentor = await parseMentor(body);
@@ -101,10 +101,10 @@ const createUser = async (uid, body) => {
     const parent = await parseParent(body);
     batch.set(parentsCollectionRef.doc(uid), parent);
 
-    body.students.forEach(async (student) => {
-      const newStudent = await parseStudent(student);
+    const validatedStudents = await Promise.all(body.students.map((s) => parseStudent(s)));
+    validatedStudents.students.forEach((student) => {
       const newStudentRef = parentsCollectionRef.doc(uid).collection('students').doc();
-      batch.set(newStudentRef, newStudent);
+      batch.set(newStudentRef, student);
     });
   } else {
     throw new Error(`Unexpected role: ${body.role}`);
@@ -115,16 +115,40 @@ const createUser = async (uid, body) => {
 
 const updateUser = async (uid, body) => {
   const user = await getUser(uid);
+
   if (user.role === PARENT) {
-    console.warn('Updates for Parent objects not supported yet');
-    return Promise.resolve(body);
+    try {
+      const parentUpdate = await parseParent(body);
+      const parent = parentsCollectionRef.doc(uid);
+      await parent.set({
+        ...parentUpdate,
+      }, {
+        merge: true,
+      });
+
+      if (body.students && body.students.length) {
+        const validatedStudents = await Promise.all(body.students.map((s) => validatedStudents(s)));
+        const batch = db.batch();
+        validatedStudents.forEach((student) => {
+          const studentRef = parentsCollectionRef.doc(uid).collection('students').doc(student.uid);
+          batch.set(studentRef, { ...student }, { merge: true });
+        });
+        await batch.commit();
+      }
+      const updated = await parent.get();
+
+      return updated.data();
+    } catch (err) {
+      throw new Error(err);
+    }
   }
 
   if (user.role === MENTOR) {
     try {
-      const mentor = await mentorsCollectionRef.doc(uid);
+      const mentorUpdate = await parseMentor(body);
+      const mentor = mentorsCollectionRef.doc(uid);
       await mentor.set({
-        ...body,
+        ...mentorUpdate,
       }, {
         merge: true,
       });
