@@ -10,6 +10,7 @@ import SignInPage from './pages/SignIn';
 import Signin from './components/SignIn';
 import NavBar from './components/NavBar';
 import { AuthProvider } from './providers/AuthProvider';
+import Upload from './components/Upload';
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignUpPage />
+          </Route>
+          <Route path="/upload"> 
+            <Upload />
           </Route>
           <Route path="/signin">
             <SignInPage />
