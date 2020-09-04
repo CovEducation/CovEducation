@@ -10,20 +10,6 @@ const firebase = require('firebase-admin');
 
 const serviceAccount = require('./service_account.json');
 
-firebase.initializeApp({
-  credential: firebase.credential.cert(serviceAccount),
-});
-
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-
-const app = express();
-
-// disable when running unit tests
-if (process.env.NODE_ENV !== 'test') {
-  app.use(logger('dev'));
-}
-
 // firebase setup
 // the google service account file path should be in FIREBASE_CREDENTIALS
 // the database name should be in FIREBASE_URL
@@ -35,6 +21,16 @@ firebase.initializeApp({
   credential: firebase.credential.cert(firebaseCredentials),
   databaseURL: process.env.FIREBASE_URL,
 });
+
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
+
+const app = express();
+
+// disable when running unit tests
+if (process.env.NODE_ENV !== 'test') {
+  app.use(logger('dev'));
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
