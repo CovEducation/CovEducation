@@ -1,5 +1,7 @@
 const firebase = require('firebase-admin');
-const { FieldValueContext } = require('twilio/lib/rest/autopilot/v1/assistant/fieldType/fieldValue');
+const Schemas = require('./schemas');
+
+const { mentorSchema, parentSchema, studentSchema } = Schemas;
 
 const db = firebase.firestore();
 db.settings({ ignoreUndefinedProperties: true });
@@ -34,12 +36,10 @@ const parseMentor = async (body) => {
     tags: body.tags,
     subjects: body.subjects,
     gradeLevels: body.gradeLevels,
-    timzone: body.timezone,
+    timezone: body.timezone,
   };
 
-  // TODO: validate data
-
-  return mentor;
+  return mentorSchema.isValid(mentor).then(() => mentor);
 };
 
 const parseParent = async (body) => {
@@ -52,9 +52,7 @@ const parseParent = async (body) => {
     timezone: body.timezone,
   };
 
-  // TODO: validate data
-
-  return parent;
+  return parentSchema.isValid(parent).then(() => parent);
 };
 
 const parseStudent = async (body) => {
@@ -65,13 +63,10 @@ const parseStudent = async (body) => {
     subjects: body.subjects,
   };
 
-  // TODO: validate data
-
-  return student;
+  return studentSchema.isValid(student).then(() => student);
 };
 
 // These are the three main methods to interact with the user schemas
-
 const getUser = async (uid) => {
   const userDoc = await getDoc('users', uid);
   let user;
@@ -97,14 +92,20 @@ const createUser = async (uid, body) => {
   batch.set(usersCollectionRef.doc(uid), user);
 
   if (user.role === MENTOR) {
-    const mentor = await parseMentor(body);
+    const mentor = parseMentor(body).catch((err) => {
+      throw new Error(`Unable to parse mentor: ${err}`);
+    });
     batch.set(mentorsCollectionRef.doc(uid), mentor);
   } else if (user.role === PARENT) {
-    const parent = await parseParent(body);
+    const parent = parseParent(body).catch((err) => {
+      throw new Error(`Unable to parse parent: ${err}`);
+    });
     batch.set(parentsCollectionRef.doc(uid), parent);
 
     body.students.forEach(async (student) => {
-      const newStudent = await parseStudent(student);
+      const newStudent = await parseStudent(student).catch((err) => {
+        throw new Error(`Unable to parse student: ${err}`);
+      });
       const newStudentRef = parentsCollectionRef.doc(uid).collection('students').doc();
       batch.set(newStudentRef, newStudent);
     });
@@ -126,7 +127,7 @@ const addMessageToDB = async (mentorUID, parentUID, studentUID, message) => {
   };
   const newMessageRef = await messageCollectionRef.add(newMessage);
   return mentorsCollectionRef.doc(mentorUID).update({
-    requests: FieldValue.arrayUnion(newMessageRef.id);
+    requests: firebase.firestore.FieldValue.arrayUnion(newMessageRef.id),
   });
 };
 

@@ -14,7 +14,8 @@
     "express": "~4.16.1",
     "firebase-admin": "^9.1.0",
     "morgan": "~1.9.1",
-    "twilio": "^3.49.0"
+    "twilio": "^3.49.0",
+    "yup": "^0.29.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
