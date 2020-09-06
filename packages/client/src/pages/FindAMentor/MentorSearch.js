@@ -6,7 +6,6 @@ import MentorRequestFrame from './MentorRequestFrame.js';
 import Modal from '../../components/Modal';
 
 import './MentorSearch.css';
-console.log(process.env);
 
 const ALGOLIA_API_KEY = process.env.REACT_APP_ALGOLIA_API_KEY;
 const ALGOLIA_APP_ID = process.env.REACT_APP_ALGOLIA_APP_ID;
