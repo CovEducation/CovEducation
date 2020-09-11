@@ -1,12 +1,12 @@
-const nodemailer = require('nodemailer');
-const handlebars = require('handlebars');
-const fs = require('fs');
-const path = require('path');
-const mandrillTransport = require('nodemailer-mandrill-transport');
+import { createTransport } from 'nodemailer';
+import { compile } from 'handlebars';
+import { readFileSync } from 'fs';
+import { join } from 'path';
+import mandrillTransport from 'nodemailer-mandrill-transport';
 
 require('dotenv').config();
 
-const transactionalTransporter = nodemailer.createTransport(mandrillTransport({
+const transactionalTransporter = createTransport(mandrillTransport({
   auth: {
     apiKey: process.env.MANDRILL_KEY,
   },
@@ -14,17 +14,17 @@ const transactionalTransporter = nodemailer.createTransport(mandrillTransport({
 
 // HTML Templates
 
-const matchFilepath = path.join(__dirname, 'templates/match.html');
-const matchSource = fs.readFileSync(matchFilepath, 'utf-8').toString();
-const matchTemplate = handlebars.compile(matchSource);
+const matchFilepath = join(__dirname, 'templates/match.html');
+const matchSource = readFileSync(matchFilepath, 'utf-8').toString();
+const matchTemplate = compile(matchSource);
 
-const verificationFilepath = path.join(__dirname, 'templates/verification.html');
-const verificationSource = fs.readFileSync(verificationFilepath, 'utf-8').toString();
-const verificationTemplate = handlebars.compile(verificationSource);
+const verificationFilepath = join(__dirname, 'templates/verification.html');
+const verificationSource = readFileSync(verificationFilepath, 'utf-8').toString();
+const verificationTemplate = compile(verificationSource);
 
-const reminderFilepath = path.join(__dirname, 'templates/reminder.html');
-const reminderSource = fs.readFileSync(reminderFilepath, 'utf-8').toString();
-const reminderTemplate = handlebars.compile(reminderSource);
+const reminderFilepath = join(__dirname, 'templates/reminder.html');
+const reminderSource = readFileSync(reminderFilepath, 'utf-8').toString();
+const reminderTemplate = compile(reminderSource);
 
 /**
  * Sends an email to a mentor based on the CovEd match template.
@@ -87,7 +87,7 @@ async function sendPrivacyReminderEmail(userEmail) {
   await transactionalTransporter.sendMail(mailOptions);
 }
 
-module.exports = {
+export default {
   emailMentorRequest,
   emailGuardianConfirmation,
   sendPrivacyReminderEmail,
