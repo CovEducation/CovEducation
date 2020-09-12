@@ -28,6 +28,10 @@ initializeApp({
   databaseURL: process.env.FIREBASE_URL,
 });
 
+/**
+ * Converts the MongoDB mentor to a new Firebase mentor
+ * @param {Mentor} oldMentor - old MongoDB mentor object
+ */
 const addOldMentorToNewSite = (oldMentor) => {
   const adaptedMentor = {
     email: oldMentor.email,
@@ -49,6 +53,10 @@ const addOldMentorToNewSite = (oldMentor) => {
 const CURRENT_MENTORS = JSON.parse(readFileSync(BACKUP_PATH));
 CURRENT_MENTORS.map((mentor) => addOldMentorToNewSite(mentor));
 
+/**
+ * Converts the MongoDB parent to a new Firebase parent
+ * @param {Parent} oldParent - old MongoDB parent object
+ */
 const addOldParentToNewSite = (oldParent) => {
   const adaptedParent = {
     email: oldParent.email,
