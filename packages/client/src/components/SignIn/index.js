@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Container from '@material-ui/core/Container';
 import Text from '../../components/TextBox';
 import Checkbox from '@material-ui/core/Checkbox';
 import useAuth from '../../providers/AuthProvider'
 import Button from '../Button';
 import UncontrolledAlert from '../Notification/UncontrolledAlert';
+import { FormControl } from '@material-ui/core';
 
 const Notification = styled(UncontrolledAlert)`
     .section {
@@ -25,9 +28,6 @@ const Notification = styled(UncontrolledAlert)`
     margin-bottom: 1rem;
     width: 33ch;
     border: 0.0625rem solid transparent;
-    border-radius: 0.2857rem; }
-    color: #ffffff;
-    background-color: rgba(255, 14, 14, 0.51);
 `
 const PassForget = styled.p`
     text-align: right;
@@ -86,8 +86,8 @@ const Signin = () => {
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     }
-    
-    
+
+
     const ShowNotifications = () => {
         if (!formError && !serverError) return <></>;
 
@@ -95,7 +95,7 @@ const Signin = () => {
             return (
                 <Notification>
                     <span>
-                      The email and/or password are in the wrong format. Please try again.
+                        The email and/or password are in the wrong format. Please try again.
                     </span>
                 </Notification>
             )
@@ -104,7 +104,7 @@ const Signin = () => {
             return (
                 <Notification>
                     <span>
-                      Wrong email and password.
+                        Wrong email and password.
                     </span>
                 </Notification>
             )
@@ -125,99 +125,74 @@ const Signin = () => {
                 setServerError(true);
             });
     }
-    
+
     return (
-        <form>
-            <Title>Sign In</Title>
-            <table>
-                <tr>
-                    <td align="center">
-                        <div className="form-group">
-                            <Text
-                                autoFocus
-                                id='email'
-                                placeholder="Email"
-                                value={email}
-                                onChange={handleChange('email')}
-                                required
-                            />
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                        <div className="form-group">
-                            <Text
-                                id="password"
-                                placeholder="Password"
-                                type={showPassword ? 'text' : 'password'}
-                                value={password}
-                                onChange={handleChange('password')}
-                                required
-                                endAdornment={{
-                                    endAdornment:
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                onClick={handleClickShowPassword}
-                                                onMouseDown={handleMouseDownPassword}
-                                            >
-                                                {showPassword ? <Visibility/> : <VisibilityOff/>}
-                                            </IconButton>
-                                        </InputAdornment>
-                                }}
-                            />
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div className="form-group">
-                            <FormControlLabel
-                                style={{
-                                    paddingLeft: '13px'
-                                }}
-                                control={
-                                    <Checkbox
-                                        id="checkbox"
-                                        onChange={handleChange('remember')}
-                                        value={remember}
-                                        name="remember"
-                                        color="primary"
-                                    />
-                                }
-                                label="Remember Me"
-                            />
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center">
-                        <br/>
-                        <Button 
-                            theme="default" 
-                            size="md" 
-                            type="button"
-                            onClick={handleSubmit}>
-                            Login
-                        </Button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <br/>
-                        {submittedOnce && <ShowNotifications/>}
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        <PassForget>
-                            <a href="/forgot-password">Forgot password?</a>
-                        </PassForget>
-                    </td>
-                </tr>
-            </table>
-            <br/>
-        </form>
+        <Container component="form" maxWidth="xs">
+            <Grid container justify='center'>
+                <Grid item xs={12} align='center'>
+                    <Title>Sign In</Title>
+                </Grid>
+                <Text
+                    autoFocus
+                    id='email'
+                    placeholder="Email"
+                    value={email}
+                    onChange={handleChange('email')}
+                    required
+                />
+                <Text
+                    id="password"
+                    placeholder="Password"
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={handleChange('password')}
+                    required
+                    endAdornment={{
+                        endAdornment:
+                            <InputAdornment position="end">
+                                <IconButton
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                >
+                                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                            </InputAdornment>
+                    }}
+                />
+                <Grid item xs={12} align='left'>
+                    <FormControl>
+                        <FormControlLabel
+                            style={{
+                                paddingLeft: '13px'
+                            }}
+                            control={
+                                <Checkbox
+                                    id="checkbox"
+                                    onChange={handleChange('remember')}
+                                    value={remember}
+                                    name="remember"
+                                    color="primary"
+                                />
+                            }
+                            label="Remember Me"
+                        />
+                    </FormControl>
+                </Grid>
+                <Grid item xs={12} align='center'>
+                    <Button
+                        theme="default"
+                        size="md"
+                        type="button"
+                        onClick={handleSubmit}>
+                        Login
+                    </Button>
+                </Grid>
+                {submittedOnce && <ShowNotifications />}
+                <Grid item xs={12} align='right'>
+                    <a href="/forgot-password">Forgot password?</a>
+                </Grid>
+            </Grid>
+        </Container>
     );
 }
 
