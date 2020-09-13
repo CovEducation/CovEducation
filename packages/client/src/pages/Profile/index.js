@@ -46,7 +46,7 @@ const ProfileDetailItem = ({ header, value }) => {
   }
   return (
     <div>
-      <p>{header}</p>
+      <p><b>{header}</b></p>
       <p>{valueParsed}</p>
     </div>
   )
@@ -61,8 +61,8 @@ const ProfilePage = () => {
         <ProfilePicture src="https://via.placeholder.com/115" alt="profile pic" />
         <div>
           <h2>{user.user.name}</h2>
-          <p>Beverly High School</p>
-          <p>9th Grade</p>
+          <p>{user.user.email}</p>
+          <p>{user.user.phone}</p>
         </div>
       </ProfileHeaderWrapper>
       <ProfileDetailsGrid>
