@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from "react-router-dom";
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
@@ -63,6 +64,7 @@ const Signin = () => {
     const [serverError, setServerError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [submittedOnce, setSubmittedOnce] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
         const valid = validateUserFields(email, password);
@@ -86,8 +88,8 @@ const Signin = () => {
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     }
-    
-    
+
+
     const ShowNotifications = () => {
         if (!formError && !serverError) return <></>;
 
@@ -117,10 +119,10 @@ const Signin = () => {
         // Notification component will alert the user.
         if (formError || serverError) return;
         signin(email, password)
-            .then(() => console.log('Signed in!'))
+            .then(() => history.push("/"))
             .catch(() => setServerError(true));
     }
-    
+
     return (
         <form>
             <Title>Sign In</Title>
@@ -188,9 +190,9 @@ const Signin = () => {
                 <tr>
                     <td align="center">
                         <br/>
-                        <Button 
-                            theme="default" 
-                            size="md" 
+                        <Button
+                            theme="default"
+                            size="md"
                             type="button"
                             onClick={handleSubmit}>
                             Login

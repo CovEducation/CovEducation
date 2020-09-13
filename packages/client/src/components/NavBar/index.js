@@ -58,7 +58,7 @@ const UserLinkWrapper = styled.div`
 export default function NavBar(props) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [menuDropdownAnchor, setMenuDropdownAnchor] = useState(null);
-  
+
   const handleMenuDropdownClick = (event) => {
     setMenuDropdownAnchor(event.currentTarget);
     event.stopPropagation();
@@ -66,11 +66,10 @@ export default function NavBar(props) {
   const handleMenuDropdownClose = () => {
     setMenuDropdownAnchor(null);
   };
-  
+
 
   const userLinks = (
       <>
-        
         <Modal
               title="Login"
               trigger={
@@ -100,7 +99,7 @@ export default function NavBar(props) {
   }, []);
 
   if (windowWidth < 1024) {
-    return <MobileNav links={props.links} />
+    return <MobileNav links={props.links}/>
   }
 
   return (
