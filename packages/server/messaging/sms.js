@@ -37,7 +37,7 @@ const textGuardianConfirmation = () => { throw new Error('Not implemented yet.')
 
 const textPrivacyReminder = () => { throw new Error('Not implemented yet.'); };
 
-export default {
+module.exports = {
   textMentorRequest,
   textGuardianConfirmation,
   textPrivacyReminder,

@@ -5,7 +5,6 @@ const path = require('path');
 const mandrillTransport = require('nodemailer-mandrill-transport');
 
 require('dotenv').config();
-
 const transactionalTransporter = nodemailer.createTransport(mandrillTransport({
   auth: {
     apiKey: process.env.MANDRILL_KEY,
@@ -25,6 +24,14 @@ const verificationTemplate = handlebars.compile(verificationSource);
 const reminderFilepath = path.join(__dirname, 'templates/reminder.html');
 const reminderSource = fs.readFileSync(reminderFilepath, 'utf-8').toString();
 const reminderTemplate = handlebars.compile(reminderSource);
+
+const signUpVerificationMentorPath = path.join(__dirname, 'templates/signUpVerificationMentor.html');
+const signUpVerificationMentorSource = fs.readFileSync(signUpVerificationMentorPath, 'utf-8').toString();
+const signUpVerificationMentorTemplate = handlebars.compile(signUpVerificationMentorSource);
+
+const signUpVerificationParentPath = path.join(__dirname, 'templates/signUpVerificationParent.html');
+const signUpVerificationParentSource = fs.readFileSync(signUpVerificationParentPath, 'utf-8').toString();
+const signUpVerificationParentTemplate = handlebars.compile(signUpVerificationParentSource);
 
 /**
  * Sends an email to a mentor based on the CovEd match template.
@@ -87,8 +94,31 @@ async function sendPrivacyReminderEmail(userEmail) {
   await transactionalTransporter.sendMail(mailOptions);
 }
 
+/**
+ * Sends a email verification email after sign up.
+ * @param {Object} user A Mentor or Parent object.
+ */
+async function emailSignUpVerification(user) {
+  if (user.role !== 'MENTOR' && user.role !== 'PARENT') {
+    throw new Error(`Invalid user role, cannot send verification email: ${user.role}`);
+  }
+  if (user.email === undefined || user.email === null) {
+    throw new Error('User does not have an email, annot send verification email.');
+  }
+  const htmlToSend = user.role === 'MENTOR' ? signUpVerificationMentorTemplate({ name: user.name })
+    : signUpVerificationParentTemplate({ name: user.name });
+  const mailOptions = {
+    from: 'CovEd <coved@coved.org>',
+    to: user.email,
+    subject: 'Welcome to CovEd! [ACTION REQUIRED]',
+    html: htmlToSend,
+  };
+  await transactionalTransporter.sendMail(mailOptions);
+}
+
 module.exports = {
   emailMentorRequest,
   emailGuardianConfirmation,
   sendPrivacyReminderEmail,
+  emailSignUpVerification,
 };

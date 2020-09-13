@@ -7,11 +7,15 @@ const logger = require('morgan');
 
 // Firebase boilerplate.
 const firebase = require('firebase-admin');
-
-const serviceAccount = require('./service_account.json');
-
+// the google service account file path should be in FIREBASE_CREDENTIALS
+// the database name should be in FIREBASE_URL
+const firebaseCredentials = JSON.parse(fs.readFileSync(process.env.FIREBASE_CREDENTIALS || './service_account.json'));
+if (!firebaseCredentials) {
+  throw new Error('Cannot find google service account credentials');
+}
 firebase.initializeApp({
-  credential: firebase.credential.cert(serviceAccount),
+  credential: firebase.credential.cert(firebaseCredentials),
+  databaseURL: process.env.FIREBASE_URL,
 });
 
 const indexRouter = require('./routes/index');
@@ -25,16 +29,6 @@ if (process.env.NODE_ENV !== 'test') {
 }
 
 // firebase setup
-// the google service account file path should be in FIREBASE_CREDENTIALS
-// the database name should be in FIREBASE_URL
-const firebaseCredentials = JSON.parse(fs.readFileSync(process.env.FIREBASE_CREDENTIALS || './service_account.json'));
-if (!firebaseCredentials) {
-  throw new Error('Cannot find google service account credentials');
-}
-firebase.initializeApp({
-  credential: firebase.credential.cert(firebaseCredentials),
-  databaseURL: process.env.FIREBASE_URL,
-});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

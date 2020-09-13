@@ -6,14 +6,16 @@ const {
 const {
   emailMentorRequest,
   emailGuardianConfirmation,
-  sendPrivacyReminderEmail,
+  emailPrivacyReminder,
+  emailSignUpVerification,
 } = require('./email');
 
-export default {
+module.exports =  {
   textMentorRequest,
   textGuardianConfirmation,
   textPrivacyReminder,
   emailMentorRequest,
   emailGuardianConfirmation,
-  sendPrivacyReminderEmail,
+  emailPrivacyReminder,
+  emailSignUpVerification,
 };
