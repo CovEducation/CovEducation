@@ -4,7 +4,9 @@ const fs = require('fs');
 const serviceAccount = require('../service_account.json');
 const userDb = require('../db/users');
 
-const BACKUP_PATH = ''; // Later.
+const MENTOR_BACKUP_PATH = './tests/scripts/testMentor.json';
+const MENTEE_BACKUP_PATH = './tests/scripts/testMentee.json';
+
 firebase.initializeApp({
   credential: firebase.credential.cert(serviceAccount),
 });
@@ -42,8 +44,8 @@ const addOldMentorToNewSite = (oldMentor) => {
   return userDb.createUser(oldMentor.uid, adaptedMentor);
 };
 
-const CURRENT_MENTORS = JSON.parse(fs.readFileSync(BACKUP_PATH));
-CURRENT_MENTORS.map((mentor) => addOldMentorToNewSite(mentor));
+// const CURRENT_MENTORS = JSON.parse(fs.readFileSync(MENTOR_BACKUP_PATH));
+// CURRENT_MENTORS.map((mentor) => addOldMentorToNewSite(mentor));
 
 /**
  * Converts the MongoDB parent to a new Firebase parent
@@ -67,5 +69,10 @@ const addOldParentToNewSite = (oldParent) => {
   return userDb.createUser(oldParent.uid, adaptedParent);
 };
 
-const CURRENT_PARENTS = JSON.parse(fs.readFileSync(BACKUP_PATH));
-CURRENT_PARENTS.map((parent) => addOldParentToNewSite(parent));
+// const CURRENT_PARENTS = JSON.parse(fs.readFileSync(MENTEE_BACKUP_PATH));
+// CURRENT_PARENTS.map((parent) => addOldParentToNewSite(parent));
+
+module.exports = {
+  addOldMentorToNewSite: addOldMentorToNewSite(),
+  addOldParentToNewSite: addOldParentToNewSite()
+};

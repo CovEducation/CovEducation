@@ -1,11 +1,12 @@
 // const firebase = require('firebase-admin');
 const userDb = require('../../db/users');
-const mongoToFirebase = require('../../scripts/mongo_to_firebase');
+const mongoToFirebase = require('../../../server/scripts/mongo_to_firebase');
 jest.mock('firebase-admin');
 
 describe('Mongo to Firebase', () => {
   test('oldMentor', async () => {
     const mongoMentor = {
+      email: "johanc@mit.edu",
       subjects: ["Science", "Physics", "College Prep - Essays", "Computer Science"],
       languages_spoken: [],
       grade_levels_to_mentor: [],
@@ -13,13 +14,11 @@ describe('Mongo to Firebase', () => {
       tags: ["High School"],
       firebase_uid: "JTWXFGxohRdzdd0b4eiDwYxxBLH2",
       name: "Johan Cervantes",
-      email: "johanc@mit.edu",
       timezone: "Pacific Daylight Time - Los Angeles (GMT-7)",
       bio: "A bit about me: I am from LA, have 2 dogs, and ran up 720 flights of stairs in 4 hours last January. ",
-      major: "Computer Science, Minor in Statistics, Concentration in Acting",
-      last_request: "2020-07-06T22:45:58.222Z",
+      major: "Computer Science, Minor in Statistics, Concentration in Acting"
     }
-
+    
     mongoToFirebase.addOldMentorToNewSite(mongoMentor);
     expect(userDb.getUser(mongoMentor.firebase_uid).toEqual(mongoMentor)).toBeTruthy();
   });
@@ -37,7 +36,7 @@ describe('Mongo to Firebase', () => {
       bio: "",
       __v: 0,
       student_email: "lilg@gmail.com",
-      student_name: "bigG",
+      student_name: "bigG"
     }
 
     mongoToFirebase.addOldParentToNewSite(mongoParent);
