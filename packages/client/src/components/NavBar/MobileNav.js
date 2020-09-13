@@ -5,8 +5,6 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import MenuIcon from '@material-ui/icons/Menu';
-import Button from '../Button';
-import Modal from '../Modal';
 import { COLORS } from '../../constants';
 
 const MobileMenuIconWrapper = styled.div`

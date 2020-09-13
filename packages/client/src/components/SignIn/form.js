@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Text from '../../components/TextBox';
 import Checkbox from '@material-ui/core/Checkbox';
-import useAuth from '../../providers/AuthProvider'
+import useAuth from '../../providers/AuthProvider';
 import Button from '../Button';
 import UncontrolledAlert from '../Notification/UncontrolledAlert';
 
