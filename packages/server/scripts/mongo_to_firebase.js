@@ -1,30 +1,22 @@
 // Firebase boilerplate.
-import {
-  initializeApp,
-  credential as _credential,
-} from 'firebase-admin';
-import {
-  readFileSync,
-} from 'fs';
-import serviceAccount from '../service_account.json';
-
-import {
-  createUser,
-} from '../db/users';
+const firebase = require('firebase-admin');
+const fs = require('fs');
+const serviceAccount = require('../service_account.json');
+const userDb = require('../db/users');
 
 const BACKUP_PATH = ''; // Later.
-initializeApp({
-  credential: _credential.cert(serviceAccount),
+firebase.initializeApp({
+  credential: firebase.credential.cert(serviceAccount),
 });
 
 // the google service account file path should be in FIREBASE_CREDENTIALS
 // the database name should be in FIREBASE_URL
-const firebaseCredentials = JSON.parse(readFileSync(process.env.FIREBASE_CREDENTIALS || './service_account.json'));
+const firebaseCredentials = JSON.parse(fs.readFileSync(process.env.FIREBASE_CREDENTIALS || './service_account.json'));
 if (!firebaseCredentials) {
   throw new Error('Cannot find google service account credentials');
 }
-initializeApp({
-  credential: _credential.cert(firebaseCredentials),
+firebase.initializeApp({
+  credential: firebase.credential.cert(firebaseCredentials),
   databaseURL: process.env.FIREBASE_URL,
 });
 
@@ -47,10 +39,10 @@ const addOldMentorToNewSite = (oldMentor) => {
     phone: '',
     role: 'MENTOR',
   };
-  return createUser(oldMentor.uid, adaptedMentor);
+  return userDb.createUser(oldMentor.uid, adaptedMentor);
 };
 
-const CURRENT_MENTORS = JSON.parse(readFileSync(BACKUP_PATH));
+const CURRENT_MENTORS = JSON.parse(fs.readFileSync(BACKUP_PATH));
 CURRENT_MENTORS.map((mentor) => addOldMentorToNewSite(mentor));
 
 /**
@@ -72,8 +64,8 @@ const addOldParentToNewSite = (oldParent) => {
       gradeLevel: oldParent.grade_level,
     }],
   };
-  return createUser(oldParent.uid, adaptedParent);
+  return userDb.createUser(oldParent.uid, adaptedParent);
 };
 
-const CURRENT_PARENTS = JSON.parse(readFileSync(BACKUP_PATH));
+const CURRENT_PARENTS = JSON.parse(fs.readFileSync(BACKUP_PATH));
 CURRENT_PARENTS.map((parent) => addOldParentToNewSite(parent));

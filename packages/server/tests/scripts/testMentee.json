@@ -1,0 +1,16 @@
+{
+  "subjects": ["Math"],
+  "mentors": [],
+  "tags": ["Elementary School"],
+  "_id": "5eac53057b1df905046f1a5d",
+  "firebase_uid": "ZN99Nhaql5MWdf4mcO0zLjxIodI2",
+  "name": "Carlos Funes",
+  "email": "jccamacho19992@gmail.com",
+  "timezone": "Mountain Daylight Time - Denver (GMT-6)",
+  "bio": "",
+  "__v": 0,
+  "verified_date": "2020-05-01T18:00:00.554Z",
+  "reminder_sent": true,
+  "student_email": "lilg@gmail.com",
+  "student_name": "bigG"
+}
