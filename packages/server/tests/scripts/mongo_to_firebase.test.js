@@ -1,6 +1,9 @@
 // const firebase = require('firebase-admin');
 // const userDb = require('../../db/users');
-import { addOldMentorToNewSite, addOldParentToNewSite } from '../../scripts/mongo_to_firebase';
+import {
+  addOldMentorToNewSite,
+  addOldParentToNewSite
+} from '../../scripts/mongo_to_firebase';
 
 jest.mock('firebase-admin');
 
@@ -23,7 +26,7 @@ describe('Mongo to Firebase', () => {
       public: true,
       __v: 0
     }
-    addOldMentorToNewSite(mongoMentor);
+    expect(addOldMentorToNewSite(mongoMentor)).toBeTruthy();
     // expect();
   });
   test('oldParent', async () => {
@@ -41,7 +44,7 @@ describe('Mongo to Firebase', () => {
       student_email: "lilg@gmail.com",
       student_name: "bigG",
     }
-    addOldParentToNewSite(mongoParent);
-    // expect();
+    expect(addOldParentToNewSite(mongoParent)).toBeTruthy();
+
   });
 });
