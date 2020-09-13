@@ -3,8 +3,8 @@ const handlebars = require('handlebars');
 const fs = require('fs');
 const path = require('path');
 const mandrillTransport = require('nodemailer-mandrill-transport');
-
 require('dotenv').config();
+
 const transactionalTransporter = nodemailer.createTransport(mandrillTransport({
   auth: {
     apiKey: process.env.MANDRILL_KEY,
@@ -98,15 +98,15 @@ async function sendPrivacyReminderEmail(userEmail) {
  * Sends a email verification email after sign up.
  * @param {Object} user A Mentor or Parent object.
  */
-async function emailSignUpVerification(user) {
+async function emailSignUpVerification(user, link) {
   if (user.role !== 'MENTOR' && user.role !== 'PARENT') {
     throw new Error(`Invalid user role, cannot send verification email: ${user.role}`);
   }
   if (user.email === undefined || user.email === null) {
-    throw new Error('User does not have an email, annot send verification email.');
+    throw new Error('User does not have an email, cannot send verification email.');
   }
-  const htmlToSend = user.role === 'MENTOR' ? signUpVerificationMentorTemplate({ name: user.name })
-    : signUpVerificationParentTemplate({ name: user.name });
+  const htmlToSend = user.role === 'MENTOR' ? signUpVerificationMentorTemplate({ name: user.name, link })
+    : signUpVerificationParentTemplate({ name: user.name, link });
   const mailOptions = {
     from: 'CovEd <coved@coved.org>',
     to: user.email,
