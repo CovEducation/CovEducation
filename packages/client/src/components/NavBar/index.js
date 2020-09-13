@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import PropTypes from 'prop-types';
 import Modal from '../Modal';
 import Button from '../Button';
 import styled from 'styled-components';
 import Signin from '../SignIn/index';
-import useAuth from '../../providers/AuthProvider';
 import { FONTS, COLORS } from '../../constants';
 import SignUp from '../../pages/SignUp';
+import useAuth from '../../providers/AuthProvider';
+import IconButton from '@material-ui/core/IconButton';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+
 import MobileNav from './MobileNav';
-import {useHistory} from 'react-router-dom';
 
 const TextThemes = {
   fontSize: {
@@ -59,12 +59,9 @@ const UserLinkWrapper = styled.div`
 `;
 
 export default function NavBar(props) {
-  const history = useHistory();
+  const user = useAuth();
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [menuDropdownAnchor, setMenuDropdownAnchor] = useState(null);
-  const user = useAuth();
-
-  console.log(user);
 
   const handleMenuDropdownClick = (event) => {
     setMenuDropdownAnchor(event.currentTarget);
@@ -74,37 +71,55 @@ export default function NavBar(props) {
     setMenuDropdownAnchor(null);
   };
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
-  let menuOpen = false;
+  const [userDropdownAnchor, setUserDropdownAnchor] = useState(null);
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleUserDropdownClick = (event) => {
+    setUserDropdownAnchor(event.currentTarget);
+    event.stopPropagation();
+  };
+  const handleUserDropdownClose = () => {
+    setUserDropdownAnchor(null);
   };
 
-  const handleClose = () => {
-    menuOpen = false;
-    setAnchorEl(null);
-  };
 
-  useEffect(() => {
-    const updateWindowWidth = () => {
-      setWindowWidth(window.innerWidth);
-    }
-    window.addEventListener('resize', updateWindowWidth);
-
-    return () => {
-      window.removeEventListener('resize', updateWindowWidth);
-    }
-  }, []);
-
-  if (windowWidth < 1024) {
-    return <MobileNav links={props.links}/>
-  }
-
-  let userLinks;
-  if (user.user == null) {
-    userLinks = (
+  const userLinks = ( user.user ?
+    <>
+    <IconButton
+          aria-label="account of current user"
+          aria-controls="menu-navbar"
+          aria-haspopup="true"
+          onClick={handleUserDropdownClick}
+          color="inherit"
+          onMouseOver={handleUserDropdownClick}
+        >
+          <AccountCircleIcon/>
+          <div style={{ padding:'10px' }}/>
+          <LinkStyled ver='default' style={{ color: COLORS.blue }}>
+            {user.user.name}
+          </LinkStyled>
+        </IconButton>
+        <Menu
+          id="menu"
+          anchorEl={userDropdownAnchor}
+          getContentAnchorEl={null}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'center',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'center',
+          }}
+          open={Boolean(userDropdownAnchor)}
+          onClose={handleUserDropdownClose}
+          MenuListProps={{ onMouseLeave: handleUserDropdownClose }}
+        >
+          <MenuItem component={Link} to="/dashboard" style={{ fontSize: TextThemes.fontSize['default'] }}>Dashboard</MenuItem>
+          <MenuItem style={{ color: 'red', fontSize: TextThemes.fontSize['default'] }} onClick={() => user.signout()}>Sign Out</MenuItem>
+        </Menu>
+    </>
+    :
       <>
         <Modal
               title="Login"
@@ -121,47 +136,22 @@ export default function NavBar(props) {
             <SignUp/>
         </Modal>
       </>
-    );
-  } else {
-    userLinks = (
-      <>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="menu-navbar"
-          aria-haspopup="true"
-          onClick={handleMenu}
-          color="inherit"
-          onMouseOver={handleMenu}
-        >
-          <AccountCircleIcon/>
-          <div style={{ padding:'10px' }}/>
-          <LinkStyled ver='default' style={{ color: COLORS.blue }}>
-            {user.user.name}
-          </LinkStyled>
-        </IconButton>
-        <Menu
-          id="menu-navbar"
-          anchorEl={anchorEl}
-          getContentAnchorEl={null}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-          }}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{ onMouseLeave: handleClose }}
-        >
-          <MenuItem component={Link} to="/profile" style={{ fontSize: TextThemes.fontSize['default'] }}>Dashboard</MenuItem>
-          <MenuItem style={{ color: 'red', fontSize: TextThemes.fontSize['default'] }} onClick={() => {user.signout(); history.push("/");}}>Sign Out</MenuItem>
-        </Menu>
-      </>
-    )
-  };
+  );
+
+  useEffect(() => {
+    const updateWindowWidth = () => {
+      setWindowWidth(window.innerWidth);
+    }
+    window.addEventListener('resize', updateWindowWidth);
+
+    return () => {
+      window.removeEventListener('resize', updateWindowWidth);
+    }
+  }, []);
+
+  if (windowWidth < 1024) {
+    return <MobileNav links={props.links} />
+  }
 
   return (
     <>
@@ -213,9 +203,6 @@ NavBar.propTypes = {
 
 NavBar.defaultProps = {
   links: [
-    { title: 'Dashboard',
-      link: '/dashboard'
-    },
     {
       title: 'Resources',
       link: '/resources',
