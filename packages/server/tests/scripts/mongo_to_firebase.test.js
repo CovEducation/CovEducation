@@ -18,9 +18,10 @@ describe('Mongo to Firebase', () => {
       bio: "A bit about me: I am from LA, have 2 dogs, and ran up 720 flights of stairs in 4 hours last January. ",
       major: "Computer Science, Minor in Statistics, Concentration in Acting"
     }
-    
+
     mongoToFirebase.addOldMentorToNewSite(mongoMentor);
-    expect(userDb.getUser(mongoMentor.firebase_uid).toEqual(mongoMentor)).toBeTruthy();
+    // TODO: cannot equate an object to a promise
+    expect(userDb.getUser(mongoMentor.firebase_uid)).toBe(mongoMentor).toBeTruthy();
   });
 
   test('oldParent', async () => {
@@ -40,6 +41,7 @@ describe('Mongo to Firebase', () => {
     }
 
     mongoToFirebase.addOldParentToNewSite(mongoParent);
-    expect(userDb.getUser(mongoParent.firebase_uid).toEqual(mongoParent)).toBeTruthy();
+    // TODO: cannot equate an object to the promise
+    expect(userDb.getUser(mongoParent.firebase_uid)).toBe(mongoParent).toBeTruthy();
   });
 });

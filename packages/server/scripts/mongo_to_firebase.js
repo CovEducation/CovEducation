@@ -73,6 +73,6 @@ const addOldParentToNewSite = (oldParent) => {
 // CURRENT_PARENTS.map((parent) => addOldParentToNewSite(parent));
 
 module.exports = {
-  addOldMentorToNewSite: addOldMentorToNewSite(),
-  addOldParentToNewSite: addOldParentToNewSite()
+  addOldMentorToNewSite,
+  addOldParentToNewSite
 };
