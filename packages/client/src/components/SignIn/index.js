@@ -12,7 +12,7 @@ import useAuth from '../../providers/AuthProvider'
 import Button from '../Button';
 import UncontrolledAlert from '../Notification/UncontrolledAlert';
 import { FormControl } from '@material-ui/core';
-
+import * as Yup from 'yup';
 import { useFormik } from 'formik';
 
 const Notification = styled(UncontrolledAlert)`
@@ -56,43 +56,27 @@ const validateUserFields = (email, password) => {
     return validEmail && longEnough;
 }
 
+const SigninSchema = Yup.object().shape({
+    email: Yup.string().email('Please enter a valid email')
+            .required('Please enter your email.'),
+    password: Yup.string().required('Please enter your password.')
+});
+
 const Signin = () => {
     const { signin } = useAuth();
-    const [email, setEmail] = useState('');
     const [formError, setFormError] = useState(false);
-    const [password, setPassword] = useState('');
     const [remember, setRemember] = useState(false);
     const [serverError, setServerError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [submittedOnce, setSubmittedOnce] = useState(false);
 
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
         },
+        validationSchema: SigninSchema,
         onSubmit: values => console.log(JSON.stringify(values))
     });
-
-    useEffect(() => {
-        const valid = validateUserFields(email, password);
-        setFormError(!valid);
-    }, [email, password]);
-
-
-    const handleChange = (prop) => (event) => {
-        if (prop === 'email') {
-            setEmail(event.target.value);
-        } else if (prop === 'password') {
-            setPassword(event.target.value);
-        } else if (prop === 'serverError') {
-            setServerError(!serverError);
-        } else if (prop === 'remember') {
-            setRemember(!remember);
-        } else if (prop === 'formError') {
-            setFormError(!formError);
-        }
-    }
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -122,21 +106,6 @@ const Signin = () => {
         }
     }
 
-    const handleSubmit = () => {
-        setSubmittedOnce(true);
-        // We don't have to return anything since the
-        // Notification component will alert the user.
-        if (formError || serverError) return;
-        signin(email, password)
-            .then((resp) => {
-                // Redirect.
-                alert('Success! Redirecting to sign in...');
-            })
-            .catch(() => {
-                setServerError(true);
-            });
-    }
-
     return (
         <Container component="form" maxWidth="xs" onSubmit={formik.handleSubmit}>
             <Grid container justify='center'>
@@ -147,16 +116,20 @@ const Signin = () => {
                     autoFocus
                     id='email'
                     placeholder="Email"
+                    error={formik.touched.email && formik.errors.email}
                     value={formik.values.email}
                     onChange={formik.handleChange}
+                    helperText={formik.touched.email && formik.errors.email}
                     required
                 />
                 <Text
                     id="password"
                     placeholder="Password"
+                    error={formik.touched.password && formik.errors.password}
                     type={showPassword ? 'text' : 'password'}
                     value={formik.values.password}
                     onChange={formik.handleChange}
+                    helperText={formik.touched.password && formik.errors.password}
                     required
                     endAdornment={{
                         endAdornment:
@@ -170,7 +143,7 @@ const Signin = () => {
                             </InputAdornment>
                     }}
                 />
-                <Grid item xs={12} align='left'>
+                {/* <Grid item xs={12} align='left'>
                     <FormControl>
                         <FormControlLabel
                             style={{
@@ -188,17 +161,16 @@ const Signin = () => {
                             label="Remember Me"
                         />
                     </FormControl>
-                </Grid>
+                </Grid> */}
                 <Grid item xs={12} align='center'>
                     <Button
+                        type="submit"
                         theme="default"
                         size="md"
-                        type="button"
-                        onClick={formik.handleSubmit}>
+                        >
                         Login
                     </Button>
                 </Grid>
-                {submittedOnce && <ShowNotifications />}
                 <Grid item xs={12} align='right'>
                     <a href="/forgot-password">Forgot password?</a>
                 </Grid>
