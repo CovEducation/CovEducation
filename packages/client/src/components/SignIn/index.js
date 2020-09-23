@@ -13,6 +13,8 @@ import Button from '../Button';
 import UncontrolledAlert from '../Notification/UncontrolledAlert';
 import { FormControl } from '@material-ui/core';
 
+import { useFormik } from 'formik';
+
 const Notification = styled(UncontrolledAlert)`
     .section {
         padding: 70px 0;
@@ -64,10 +66,19 @@ const Signin = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [submittedOnce, setSubmittedOnce] = useState(false);
 
+    const formik = useFormik({
+        initialValues: {
+            email: '',
+            password: '',
+        },
+        onSubmit: values => console.log(JSON.stringify(values))
+    });
+
     useEffect(() => {
         const valid = validateUserFields(email, password);
         setFormError(!valid);
     }, [email, password]);
+
 
     const handleChange = (prop) => (event) => {
         if (prop === 'email') {
@@ -127,7 +138,7 @@ const Signin = () => {
     }
 
     return (
-        <Container component="form" maxWidth="xs">
+        <Container component="form" maxWidth="xs" onSubmit={formik.handleSubmit}>
             <Grid container justify='center'>
                 <Grid item xs={12} align='center'>
                     <Title>Sign In</Title>
@@ -136,16 +147,16 @@ const Signin = () => {
                     autoFocus
                     id='email'
                     placeholder="Email"
-                    value={email}
-                    onChange={handleChange('email')}
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
                     required
                 />
                 <Text
                     id="password"
                     placeholder="Password"
                     type={showPassword ? 'text' : 'password'}
-                    value={password}
-                    onChange={handleChange('password')}
+                    value={formik.values.password}
+                    onChange={formik.handleChange}
                     required
                     endAdornment={{
                         endAdornment:
@@ -167,9 +178,9 @@ const Signin = () => {
                             }}
                             control={
                                 <Checkbox
-                                    id="checkbox"
-                                    onChange={handleChange('remember')}
-                                    value={remember}
+                                    id="remember"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.remember}
                                     name="remember"
                                     color="primary"
                                 />
@@ -183,7 +194,7 @@ const Signin = () => {
                         theme="default"
                         size="md"
                         type="button"
-                        onClick={handleSubmit}>
+                        onClick={formik.handleSubmit}>
                         Login
                     </Button>
                 </Grid>
