@@ -4,7 +4,18 @@ const path = require('path');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+
+// Firebase boilerplate.
 const firebase = require('firebase-admin');
+
+const serviceAccount = require('./service_account.json');
+
+firebase.initializeApp({
+  credential: firebase.credential.cert(serviceAccount),
+});
+
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
 const app = express();
 
@@ -25,10 +36,6 @@ firebase.initializeApp({
   databaseURL: process.env.FIREBASE_URL,
 });
 
-// import routes
-const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -36,5 +43,4 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
 module.exports = app;

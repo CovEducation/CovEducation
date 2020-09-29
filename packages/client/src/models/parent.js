@@ -119,7 +119,7 @@ export default class Parent {
         this.timezone = timezone;
         this.number_requests = number_requests;
         this.students = students;
-
+        this.role = 'PARENT';
         this.validate();
     }
 

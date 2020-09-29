@@ -40,13 +40,13 @@ const MentorStep4 = (props) => {
 
     return (
         <div>
-            {JSON.stringify(props.data)}
             <FormGroup>
                 {termsOfServiceControl}
                 {privacyPolicyControl}
                 <Button
                     disabled={isDisabled}
                     children={<div>Submit</div>}
+                    onClick={props.onClick}
                 />
             </FormGroup>
         </div>

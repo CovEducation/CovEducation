@@ -54,7 +54,6 @@ const MentorStep2 = (props) => {
 
     return (
         <div>
-            {JSON.stringify(props.data)}
             <WizardInput>
                 <TextField
                     fullWidth

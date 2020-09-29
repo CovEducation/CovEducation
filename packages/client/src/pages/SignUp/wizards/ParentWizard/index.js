@@ -8,6 +8,8 @@ import ParentStep2 from './forms/ParentStep2.js';
 import ParentStep3 from './forms/ParentStep3.js';
 import ParentStep4 from './forms/ParentStep4.js';
 
+import useAuth from '../../../../providers/AuthProvider';
+
 const SignUpChildWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -42,7 +44,7 @@ let parentWizardSignUpData = {
     registeredChildren: [{
         studentName: undefined,
         studentEmail: undefined,
-        seletedGradeLevel: '',
+        selectedGradeLevel: '',
         selectedSubjects: [],
     }],
 
@@ -59,6 +61,33 @@ const updateRegisteredChild = (index, data) => {
     let childRegistrationInfo = parentWizardSignUpData.registeredChildren[index];
     let mergedChildRegistration = { ...childRegistrationInfo, ...data };
     parentWizardSignUpData.registeredChildren[index] = mergedChildRegistration;
+}
+
+
+const createStudentModel = (studentData) => {
+    return {
+        name: studentData.studentName,
+        email: studentData.studentEmail,
+        gradeLevel: studentData.selectedGradeLevel,
+        subjects: studentData.selectedSubjects,
+    }
+}
+
+/**
+ * Gets all the data from the from and creates a parent 
+ * object based on the parent schema.
+ * @param {object} parentData - Fields the parent filled out.
+ */
+const createParentModel = (parentData) => {
+    return {
+        name: parentData.parentName,
+        phone: parentData.parentPhoneNumber,
+        timezone: parentData.timeZone,
+        email: parentData.parentEmail,
+        students: parentData.registeredChildren
+            .map((studentData) => createStudentModel(studentData)),
+        role: 'PARENT',
+    }
 }
 
 const FirstPage = () => {
@@ -105,7 +134,7 @@ const ThirdPage = () => {
         event.preventDefault();
         parentWizardSignUpData.registeredChildren.push({
             selectedSubjects: [],
-            seletedGradeLevel: '',
+            selectedGradeLevel: '',
         });
         setState({ ...state });
     }
@@ -123,7 +152,7 @@ const ThirdPage = () => {
             {children}
             <ChildSignUpButtonWrapper>
                 <Button onClick={handleAddClick}>
-                    Add Child
+                    Add Another Child
                     </Button>
                 {showRemoveChildButton ?
                     <Button onClick={handleRemoveClick}>
@@ -135,9 +164,8 @@ const ThirdPage = () => {
 }
 
 const FourthPage = () => {
-
     const [state, setState] = useState({});
-
+    const { signup } = useAuth();
     const handleCheck = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
         updateParentWizardSignUpData({ [event.target.name]: event.target.checked });
@@ -145,7 +173,14 @@ const FourthPage = () => {
 
     return (
         <SignUpChildWrapper>
-            <ParentStep4 data={parentWizardSignUpData} handleCheck={handleCheck} />
+            <ParentStep4 data={parentWizardSignUpData} 
+                handleCheck={handleCheck} 
+                onClick={ async () => 
+                    await signup(
+                        parentWizardSignUpData.parentEmail, 
+                        parentWizardSignUpData.password1, 
+                        createParentModel(parentWizardSignUpData)
+                        )}/>
         </SignUpChildWrapper>
     );
 }
