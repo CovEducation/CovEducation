@@ -74,5 +74,9 @@ const addOldParentToNewSite = (oldParent) => {
 
 module.exports = {
   addOldMentorToNewSite,
+<<<<<<< HEAD
   addOldParentToNewSite,
+=======
+  addOldParentToNewSite
+>>>>>>> eeb34796ca83e4677b050d9f864f026001c539bb
 };
