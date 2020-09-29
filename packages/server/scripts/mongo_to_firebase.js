@@ -41,7 +41,7 @@ const addOldMentorToNewSite = (oldMentor) => {
     phone: '',
     role: 'MENTOR',
   };
-  return userDb.createUser(oldMentor.uid, adaptedMentor);
+  return userDb.createUser(oldMentor.firebase_uid, adaptedMentor);
 };
 
 // const CURRENT_MENTORS = JSON.parse(fs.readFileSync(MENTOR_BACKUP_PATH));
@@ -66,13 +66,13 @@ const addOldParentToNewSite = (oldParent) => {
       gradeLevel: oldParent.grade_level,
     }],
   };
-  return userDb.createUser(oldParent.uid, adaptedParent);
+  return userDb.createUser(oldParent.firebase_uid, adaptedParent);
 };
 
 // const CURRENT_PARENTS = JSON.parse(fs.readFileSync(MENTEE_BACKUP_PATH));
 // CURRENT_PARENTS.map((parent) => addOldParentToNewSite(parent));
 
 module.exports = {
-  addOldMentorToNewSite: addOldMentorToNewSite(),
-  addOldParentToNewSite: addOldParentToNewSite()
+  addOldMentorToNewSite,
+  addOldParentToNewSite,
 };

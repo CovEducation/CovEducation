@@ -112,7 +112,6 @@ const createUser = async (uid, body) => {
   } else {
     throw new Error(`Unexpected role: ${body.role}`);
   }
-
   return batch.commit();
 };
 
