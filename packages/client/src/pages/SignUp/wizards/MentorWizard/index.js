@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Wizard from '../../../../components/Wizard';
 import useAuth from '../../../../providers/AuthProvider';
+import Stepper from '../../../../components/Stepper';
 
 import MentorStep1 from './forms/MentorStep1.js';
 import MentorStep2 from './forms/MentorStep2.js';
@@ -9,6 +9,7 @@ import MentorStep3 from './forms/MentorStep3.js';
 import MentorStep4 from './forms/MentorStep4.js';
 
 import { createMentorModel } from '../../../../models';
+
 
 const SignUpChildWrapper = styled.div`
     display: flex;
@@ -47,7 +48,6 @@ const updateMentorWizardSignUpData = (data) => {
 }
 
 const FirstPage = () => {
-
     const [state, setState] = useState({});
 
     const handleChange = (event) => {
@@ -112,9 +112,9 @@ const FourthPage = () => {
 
     return (
         <SignUpChildWrapper>
-            <MentorStep4 
+            <MentorStep4
                 data={mentorWizardSignUpData}
-                handleChange={handleChange} 
+                handleChange={handleChange}
                 onClick={ async () => {
                     await signup(
                         mentorWizardSignUpData.mentorEmail,
@@ -122,7 +122,7 @@ const FourthPage = () => {
                         createMentorModel(mentorWizardSignUpData)
                     )
                     alert('Signed in! Redirecting to dashboard...');
-                }} 
+                }}
                 />
         </SignUpChildWrapper>
     );
@@ -130,8 +130,30 @@ const FourthPage = () => {
 
 const MentorWizard = () => {
 
-    const children = [<FirstPage />, <SecondPage />, <ThirdPage />, <FourthPage />];
-    return <Wizard content={children} />;
+    const children = [
+        {
+            title: "Login Information",
+            form: <FirstPage />
+        },
+        {
+            title: "Mentor Information",
+            form: <SecondPage />
+        },
+        {
+            title: "Mentor Bio",
+            form: <ThirdPage />
+        },
+        {
+            title: "Terms of Service & Privacy Policy",
+            form: <FourthPage />
+        }
+    ];
+
+    const handleSubmit = () => {
+        console.log(JSON.stringify(mentorWizardSignUpData));
+    };
+
+    return <Stepper steps={children} handleSubmit={handleSubmit} />;
 }
 
 export default MentorWizard;

@@ -47,7 +47,7 @@ const ParentStep3 = (props) => {
             </MenuItem>
         );
     });
-        
+
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.value });
         props.updateRegisteredChild(props.index, { ...state, [event.target.name]: event.target.value });
