@@ -97,7 +97,7 @@ const useAuthProvider = () => {
     // Register firebase state handler
     // Note that this only gets called once on mount
     useEffect(() => {
-        const unsubscribe = Auth.onAuthStateChanged(async (auth) => {
+        const unsubscribe = Auth.onAuthStateChanged( async (auth) => {
             if (authState === AUTH_STATES.CREATING_USER) {
                 // Avoids race-condition between firebase and firestore user creation.
                 return;  

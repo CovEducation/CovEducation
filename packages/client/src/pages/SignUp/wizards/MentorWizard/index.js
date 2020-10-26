@@ -8,6 +8,8 @@ import MentorStep2 from './forms/MentorStep2.js';
 import MentorStep3 from './forms/MentorStep3.js';
 import MentorStep4 from './forms/MentorStep4.js';
 
+import { createMentorModel } from '../../../../models';
+
 const SignUpChildWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -39,16 +41,6 @@ let mentorWizardSignUpData = {
     agreeTermsOfServce: undefined,
     agreePrivacyPolicy: undefined,
 };
-
-const createMentorModel = (mentorData) => ({
-    name: mentorData.mentorName,
-    email: mentorData.mentorEmail,
-    gradeLevels: mentorData.selectedGradeLevels,
-    subjects: mentorData.selectedSubjects,
-    major: mentorData.major,
-    role: 'MENTOR', 
-    introduction: mentorData.introduction,
-})
 
 const updateMentorWizardSignUpData = (data) => {
     mentorWizardSignUpData = { ...mentorWizardSignUpData, ...data };

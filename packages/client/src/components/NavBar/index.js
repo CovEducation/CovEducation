@@ -169,10 +169,6 @@ NavBar.defaultProps = {
       link: '/team',
     },
     {
-      title: 'Dashboard',
-      link: '/dashboard',
-    },
-    {
       title: 'Contact Us',
       link: '/contactus',
     },

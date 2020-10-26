@@ -7,7 +7,7 @@ import ParentStep1 from './forms/ParentStep1.js';
 import ParentStep2 from './forms/ParentStep2.js';
 import ParentStep3 from './forms/ParentStep3.js';
 import ParentStep4 from './forms/ParentStep4.js';
-
+import { createParentModel } from '../../../../models';
 import useAuth from '../../../../providers/AuthProvider';
 
 const SignUpChildWrapper = styled.div`
@@ -61,33 +61,6 @@ const updateRegisteredChild = (index, data) => {
     let childRegistrationInfo = parentWizardSignUpData.registeredChildren[index];
     let mergedChildRegistration = { ...childRegistrationInfo, ...data };
     parentWizardSignUpData.registeredChildren[index] = mergedChildRegistration;
-}
-
-
-const createStudentModel = (studentData) => {
-    return {
-        name: studentData.studentName,
-        email: studentData.studentEmail,
-        gradeLevel: studentData.selectedGradeLevel,
-        subjects: studentData.selectedSubjects,
-    }
-}
-
-/**
- * Gets all the data from the from and creates a parent 
- * object based on the parent schema.
- * @param {object} parentData - Fields the parent filled out.
- */
-const createParentModel = (parentData) => {
-    return {
-        name: parentData.parentName,
-        phone: parentData.parentPhoneNumber,
-        timezone: parentData.timeZone,
-        email: parentData.parentEmail,
-        students: parentData.registeredChildren
-            .map((studentData) => createStudentModel(studentData)),
-        role: 'PARENT',
-    }
 }
 
 const FirstPage = () => {
@@ -152,7 +125,7 @@ const ThirdPage = () => {
             {children}
             <ChildSignUpButtonWrapper>
                 <Button onClick={handleAddClick}>
-                    Add Another Child
+                    Add Child
                     </Button>
                 {showRemoveChildButton ?
                     <Button onClick={handleRemoveClick}>

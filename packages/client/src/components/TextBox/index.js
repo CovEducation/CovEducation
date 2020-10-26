@@ -6,8 +6,9 @@ export default function Text(props) {
         <TextField
             style={{
                 margin: '12px',
-                width: '35ch',
             }}
+            fullWidth
+            margin="normal"
             autoFocus={props.autoFocus}
             id={props.id}
             label={props.label}

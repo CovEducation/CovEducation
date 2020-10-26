@@ -1,6 +1,6 @@
 // Set of API endpoints available to all pages. This should make the get, post, update, and delete
 // requests necessary.
-// TODO: Handle profile pictures and set them as the photoURL.
+// TODO: Handle profile pictures and set them as the avatar.
 import { post, get } from './utilities.js';
 import { Auth } from './providers/FirebaseProvider/index.js';
 
