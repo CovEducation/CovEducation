@@ -53,11 +53,8 @@ const Signin = () => {
         setShowPassword(!showPassword);
     }
 
-    const handleSubmit = (values) => {
+    const handleSubmit = ({ email, password }) => {
         setSubmittedOnce(true);
-        // We don't have to return anything since the
-        // Notification component will alert the user.
-        if (formError || serverError) return;
         signin(email, password)
             .then(() => alert('Signed in!'))
             .catch(() => setServerError(true));

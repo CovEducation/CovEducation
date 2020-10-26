@@ -51,6 +51,9 @@ function App() {
               <Route path="/team">
                 <MeetOurTeam/>
               </Route>
+              <Route path="/signin">
+                <SignInPage/>
+              </Route>
               <Route path="/forgot-password">
                 <br/>
               </Route>
