@@ -117,7 +117,7 @@ const Signin = () => {
         // Notification component will alert the user.
         if (formError || serverError) return;
         signin(email, password)
-            .then(() => console.log('Signed in!'))
+            .then(() => alert('Signed in!'))
             .catch(() => setServerError(true));
     }
     

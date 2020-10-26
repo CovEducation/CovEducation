@@ -8,8 +8,6 @@ const logger = require('morgan');
 // Firebase boilerplate.
 const firebase = require('firebase-admin');
 
-const serviceAccount = require('./service_account.json');
-
 // firebase setup
 // the google service account file path should be in FIREBASE_CREDENTIALS
 // the database name should be in FIREBASE_URL
