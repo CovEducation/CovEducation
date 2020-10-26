@@ -1,7 +1,4 @@
 const firebase = require('firebase-admin');
-const Schemas = require('./schemas');
-
-const { mentorSchema, parentSchema, studentSchema } = Schemas;
 
 const db = firebase.firestore();
 db.settings({ ignoreUndefinedProperties: true });
@@ -9,19 +6,11 @@ db.settings({ ignoreUndefinedProperties: true });
 const usersCollectionRef = db.collection('users');
 const mentorsCollectionRef = db.collection('mentors');
 const parentsCollectionRef = db.collection('parents');
+
 const MENTOR = 'MENTOR';
 const PARENT = 'PARENT';
 
-const getDoc = async (collection, uid) => {
-  const obj = await db.collection(collection).doc(uid).get();
-  if (obj.exists) {
-    return obj.data();
-  }
-
-  throw new Error(`Unable to find '${uid}' in '${collection}' collection`);
-};
-
-// Validation Functions
+// Helper function
 const parseMentor = async (body) => {
   const mentor = {
     name: body.name,
@@ -29,7 +18,7 @@ const parseMentor = async (body) => {
     pronouns: body.pronouns,
     college: body.college,
     avatar: body.avatar,
-    bio: body.bio,
+    introduction: body.introduction,
     major: body.major,
     tags: body.tags,
     subjects: body.subjects,
@@ -37,7 +26,9 @@ const parseMentor = async (body) => {
     timezone: body.timezone,
   };
 
-  return mentorSchema.isValid(mentor).then(() => mentor);
+  // TODO: validate data
+
+  return mentor;
 };
 
 const parseParent = async (body) => {
@@ -50,7 +41,9 @@ const parseParent = async (body) => {
     timezone: body.timezone,
   };
 
-  return parentSchema.isValid(parent).then(() => parent);
+  // TODO: validate data
+
+  return parent;
 };
 
 const parseStudent = async (body) => {
@@ -61,12 +54,25 @@ const parseStudent = async (body) => {
     subjects: body.subjects,
   };
 
-  return studentSchema.isValid(student).then(() => student);
+  // TODO: validate data
+
+  return student;
+};
+
+const getDoc = async (collection, uid) => {
+  const obj = await db.collection(collection).doc(uid).get();
+
+  if (obj.exists) {
+    return obj.data();
+  }
+  throw Error(`Unable to find '${uid}' in '${collection}' collection`);
 };
 
 // These are the three main methods to interact with the user schemas
+
 const getUser = async (uid) => {
   const userDoc = await getDoc('users', uid);
+
   let user;
   if (userDoc.role === MENTOR) {
     user = await getDoc('mentors', uid);
@@ -82,40 +88,33 @@ const getUser = async (uid) => {
 };
 
 const createUser = async (uid, body) => {
+  // TODO user yup data validation.
   const user = {
     role: body.role,
   };
+  if (user.role !== MENTOR && user.role !== PARENT) {
+    throw Error(`Unexpected user type: ${user.role}`);
+  }
 
   const batch = db.batch();
   batch.set(usersCollectionRef.doc(uid), user);
 
   if (user.role === MENTOR) {
-    const mentor = parseMentor(body).catch((err) => {
-      throw new Error(`Unable to parse mentor: ${err}`);
-    });
+    const mentor = await parseMentor(body);
     batch.set(mentorsCollectionRef.doc(uid), mentor);
   } else if (user.role === PARENT) {
-    const parent = parseParent(body).catch((err) => {
-      throw new Error(`Unable to parse parent: ${err}`);
-    });
+    const parent = await parseParent(body);
     batch.set(parentsCollectionRef.doc(uid), parent);
-
-    body.students.forEach(async (student) => {
-      const newStudent = await parseStudent(student).catch((err) => {
-        throw new Error(`Unable to parse student: ${err}`);
-      });
+    await body.students.map(async (student) => {
+      const newStudent = await parseStudent(student);
       const newStudentRef = parentsCollectionRef.doc(uid).collection('students').doc();
       batch.set(newStudentRef, newStudent);
     });
-  } else {
-    throw new Error(`Unexpected role: ${body.role}`);
   }
-
   return batch.commit();
 };
 
-// const updateUser = async (uid) => {
-//   // TODO
-// };
+// TODO - Implement update user endpoints.
+const updateUser = () => {};
 
-module.exports = { getUser, createUser };
+module.exports = { getUser, createUser, updateUser };

@@ -10,7 +10,6 @@ const WizardInput = styled.div`
 const ParentStep1 = (props) => {
     return (
         <div>
-            {JSON.stringify(props.data)}
             <WizardInput>
                 <TextField
                     fullWidth

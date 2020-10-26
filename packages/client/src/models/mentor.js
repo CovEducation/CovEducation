@@ -113,7 +113,7 @@ export default class Mentor {
         this.subjects = subjects;
         this.tags = tags;
         this.gradeLevels = gradeLevels;
-
+        this.role = 'MENTOR';
         this.validate();
     }
 

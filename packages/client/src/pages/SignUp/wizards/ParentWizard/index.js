@@ -7,6 +7,8 @@ import ParentStep1 from './forms/ParentStep1.js';
 import ParentStep2 from './forms/ParentStep2.js';
 import ParentStep3 from './forms/ParentStep3.js';
 import ParentStep4 from './forms/ParentStep4.js';
+import { createParentModel } from '../../../../models';
+import useAuth from '../../../../providers/AuthProvider';
 
 const SignUpChildWrapper = styled.div`
     display: flex;
@@ -42,7 +44,7 @@ let parentWizardSignUpData = {
     registeredChildren: [{
         studentName: undefined,
         studentEmail: undefined,
-        seletedGradeLevel: '',
+        selectedGradeLevel: '',
         selectedSubjects: [],
     }],
 
@@ -105,7 +107,7 @@ const ThirdPage = () => {
         event.preventDefault();
         parentWizardSignUpData.registeredChildren.push({
             selectedSubjects: [],
-            seletedGradeLevel: '',
+            selectedGradeLevel: '',
         });
         setState({ ...state });
     }
@@ -135,9 +137,8 @@ const ThirdPage = () => {
 }
 
 const FourthPage = () => {
-
     const [state, setState] = useState({});
-
+    const { signup } = useAuth();
     const handleCheck = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
         updateParentWizardSignUpData({ [event.target.name]: event.target.checked });
@@ -145,7 +146,14 @@ const FourthPage = () => {
 
     return (
         <SignUpChildWrapper>
-            <ParentStep4 data={parentWizardSignUpData} handleCheck={handleCheck} />
+            <ParentStep4 data={parentWizardSignUpData} 
+                handleCheck={handleCheck} 
+                onClick={ async () => 
+                    await signup(
+                        parentWizardSignUpData.parentEmail, 
+                        parentWizardSignUpData.password1, 
+                        createParentModel(parentWizardSignUpData)
+                        )}/>
         </SignUpChildWrapper>
     );
 }

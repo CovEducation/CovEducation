@@ -4,14 +4,9 @@ const path = require('path');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+
+// Firebase boilerplate.
 const firebase = require('firebase-admin');
-
-const app = express();
-
-// disable when running unit tests
-if (process.env.NODE_ENV !== 'test') {
-  app.use(logger('dev'));
-}
 
 // firebase setup
 // the google service account file path should be in FIREBASE_CREDENTIALS
@@ -25,9 +20,15 @@ firebase.initializeApp({
   databaseURL: process.env.FIREBASE_URL,
 });
 
-// import routes
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+
+const app = express();
+
+// disable when running unit tests
+if (process.env.NODE_ENV !== 'test') {
+  app.use(logger('dev'));
+}
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,5 +37,4 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
 module.exports = app;

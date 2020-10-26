@@ -117,13 +117,8 @@ const Signin = () => {
         // Notification component will alert the user.
         if (formError || serverError) return;
         signin(email, password)
-            .then((resp) => {
-                // Redirect.
-                alert('Success! Redirecting to sign in...');
-            })
-            .catch(() => {
-                setServerError(true);
-            });
+            .then(() => alert('Signed in!'))
+            .catch(() => setServerError(true));
     }
     
     return (

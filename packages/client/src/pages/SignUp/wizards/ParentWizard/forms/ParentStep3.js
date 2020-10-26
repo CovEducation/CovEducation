@@ -55,7 +55,6 @@ const ParentStep3 = (props) => {
 
     return (
         <div>
-            {JSON.stringify(props.data)}
             <WizardInput>
                 <TextField
                     fullWidth
@@ -81,9 +80,9 @@ const ParentStep3 = (props) => {
                 <Select
                     children={gradeLevelMenuItems}
                     fullWidth
-                    name="seletedGradeLevel"
+                    name="selectedGradeLevel"
                     onChange={handleChange}
-                    value={props.data.registeredChildren[props.index].seletedGradeLevel}
+                    value={props.data.registeredChildren[props.index].selectedGradeLevel}
                     required
                 />
             </WizardInput>

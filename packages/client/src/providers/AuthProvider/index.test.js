@@ -13,13 +13,7 @@ test('useAuth', () => {
     const { value } = renderHook(() => useAuth(), { provider });
 
     // Note: the hook needs to be tested; however, the AuthProvider component does
-    // not render it's children until `auth` is not `AUTH_STATE.UINITIALZED`.
-
-    // expect(value.current.auth).toBe('UNINITIALIZED');
-    // expect(value.current.user).toBeFalsy();
-
-    // value.current.signin('test@email.com',  'password', { })
-    //     .rejects.toBe('Error creating account: Unexpected user type: ');
+    // not render it's children until `auth` is not `AUTH_STATE.UNINITIALiZED`.
 
 });
 
