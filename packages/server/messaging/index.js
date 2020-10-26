@@ -10,7 +10,7 @@ const {
   emailSignUpVerification,
 } = require('./email');
 
-module.exports = {
+module.exports =  {
   textMentorRequest,
   textGuardianConfirmation,
   textPrivacyReminder,

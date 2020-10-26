@@ -1,5 +1,5 @@
 const firebase = require('firebase-admin');
-const userDb = require('../../db/user');
+const userDb = require('../../db/users');
 
 jest.mock('firebase-admin');
 
