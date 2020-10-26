@@ -7,8 +7,6 @@ const logger = require('morgan');
 
 // Firebase boilerplate.
 const firebase = require('firebase-admin');
-
-// firebase setup
 // the google service account file path should be in FIREBASE_CREDENTIALS
 // the database name should be in FIREBASE_URL
 const firebaseCredentials = JSON.parse(fs.readFileSync(process.env.FIREBASE_CREDENTIALS || './service_account.json'));
@@ -29,6 +27,8 @@ const app = express();
 if (process.env.NODE_ENV !== 'test') {
   app.use(logger('dev'));
 }
+
+// firebase setup
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
