@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import Wizard from '../../../../components/Wizard';
+import useAuth from '../../../../providers/AuthProvider';
 
 import MentorStep1 from './forms/MentorStep1.js';
 import MentorStep2 from './forms/MentorStep2.js';
 import MentorStep3 from './forms/MentorStep3.js';
 import MentorStep4 from './forms/MentorStep4.js';
+
+import { createMentorModel } from '../../../../models';
 
 const SignUpChildWrapper = styled.div`
     display: flex;
@@ -38,7 +41,6 @@ let mentorWizardSignUpData = {
     agreeTermsOfServce: undefined,
     agreePrivacyPolicy: undefined,
 };
-
 
 const updateMentorWizardSignUpData = (data) => {
     mentorWizardSignUpData = { ...mentorWizardSignUpData, ...data };
@@ -101,6 +103,7 @@ const ThirdPage = () => {
 const FourthPage = () => {
 
     const [state, setState] = useState({});
+    const { signup } = useAuth();
 
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
@@ -109,7 +112,18 @@ const FourthPage = () => {
 
     return (
         <SignUpChildWrapper>
-            <MentorStep4 data={mentorWizardSignUpData} handleChange={handleChange} />
+            <MentorStep4 
+                data={mentorWizardSignUpData}
+                handleChange={handleChange} 
+                onClick={ async () => {
+                    await signup(
+                        mentorWizardSignUpData.mentorEmail,
+                        mentorWizardSignUpData.password1,
+                        createMentorModel(mentorWizardSignUpData)
+                    )
+                    alert('Signed in! Redirecting to dashboard...');
+                }} 
+                />
         </SignUpChildWrapper>
     );
 }

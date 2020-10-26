@@ -57,6 +57,7 @@ const Signin = () => {
         setSubmittedOnce(true);
         // We don't have to return anything since the
         // Notification component will alert the user.
+<<<<<<< HEAD
         signin(values.email, values.password)
             .then((resp) => {
                 // Redirect.
@@ -66,6 +67,12 @@ const Signin = () => {
                 console.log(err);
                 setServerError(true);
             });
+=======
+        if (formError || serverError) return;
+        signin(email, password)
+            .then(() => alert('Signed in!'))
+            .catch(() => setServerError(true));
+>>>>>>> master
     }
 
 

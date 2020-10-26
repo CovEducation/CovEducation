@@ -6,15 +6,15 @@ import { Link } from 'react-router-dom';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import PropTypes from 'prop-types';
+import Modal from '../Modal';
 import Button from '../Button';
 import styled from 'styled-components';
 import Signin from '../SignIn/index';
-import Modal from '../Modal';
-import Wizard from '../Wizard';
 import { FONTS, COLORS } from '../../constants';
+import SignUp from '../../pages/SignUp';
+
 import MobileNav from './MobileNav';
 
-const Wiz_content = ['page1', <Button>oh boi</Button>, 'page3']
 const TextThemes = {
   fontSize: {
     default: 'max(16px,1vw)',
@@ -83,9 +83,7 @@ export default function NavBar(props) {
               trigger={
                 <Button theme='accent' size='sm'> Sign Up </Button>}
           >
-            <Wizard
-                content={Wiz_content}
-            />
+            <SignUp/>
         </Modal>
       </>
   );
@@ -155,6 +153,9 @@ NavBar.propTypes = {
 
 NavBar.defaultProps = {
   links: [
+    { title: 'Dashboard',
+      link: '/dashboard'
+    },
     {
       title: 'Resources',
       link: '/resources',
