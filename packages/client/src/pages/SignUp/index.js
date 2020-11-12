@@ -38,13 +38,13 @@ const TabManager = (tabChildren) => {
     });
 
     return (
-        <Paper position="static">
+        <>
             <Tabs value={value} onChange={handleChange} variant="fullWidth">
                 <Tab label="For Parents" />
                 <Tab label="For Mentors" />
             </Tabs>
             {tabChildComponents}
-        </Paper>
+        </>
     );
 }
 
@@ -53,11 +53,9 @@ const SignUpPage = () => {
     const tabChildren = [<ParentWizard />, <MentorWizard />];
     const tabManager = TabManager(tabChildren);
     return (
-        <SignUpPageWrapper>
-            <SignUpWizardWrapper>
-                {tabManager}
-            </SignUpWizardWrapper>
-        </SignUpPageWrapper>
+        <SignUpWizardWrapper>
+            {tabManager}
+        </SignUpWizardWrapper>
     );
 }
 

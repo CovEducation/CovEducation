@@ -56,7 +56,7 @@ const Signin = () => {
     const handleSubmit = ({ email, password }) => {
         setSubmittedOnce(true);
         signin(email, password)
-            .then(() => alert('Signed in!'))
+            .then(() => console.log("signed in"))
             .catch(() => setServerError(true));
     }
 

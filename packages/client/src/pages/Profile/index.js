@@ -45,24 +45,24 @@ const ProfileDetailItem = ({ header, value }) => {
   )
 }
 
-const ProfilePage = () => {
+const ProfilePage = ({ user }) => {
   return (
     <ProfilePageWrapper>
       <ProfileHeaderWrapper>
         <ProfilePicture src="https://via.placeholder.com/115" alt="profile pic" />
         <div>
-          <h2>Sally Student</h2>
+          <h2> { user.name } </h2>
           <p>Beverly High School</p>
           <p>9th Grade</p>
         </div>
       </ProfileHeaderWrapper>
       <ProfileDetailsGrid>
-        <ProfileDetailItem header="Subjects" value={MOCK_PROFILE_DATA.subjects} />
+        <ProfileDetailItem header="Subjects" value={user.subjects} />
         <ProfileDetailItem header="Grade Level" value={MOCK_PROFILE_DATA.grade} />
         <ProfileDetailItem header="Languages" value={MOCK_PROFILE_DATA.languages} />
         <ProfileDetailItem header="Location" value={MOCK_PROFILE_DATA.location} />
-        <ProfileDetailItem header="Time Zone" value={MOCK_PROFILE_DATA.timezone} />
-        <ProfileDetailItem header="Email" value={MOCK_PROFILE_DATA.email} />
+        <ProfileDetailItem header="Time Zone" value={user.timezone} />
+        <ProfileDetailItem header="Email" value={user.email} />
       </ProfileDetailsGrid>
     </ProfilePageWrapper>
   )

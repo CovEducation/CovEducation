@@ -85,25 +85,29 @@ const useAuthProvider = () => {
     const getCurrentUser = async () => {
         if (authState !== AUTH_STATES.LOGGED_IN) {
             return Promise.reject('No user currently logged in.');
-        }  
+        }
         // Query for the user if not cached.
         if (user) {
             return Promise.resolve(user);
         }
         return getUser();
-        
+
     };
 
+    // TODO this may have to be done synchronously
     // Register firebase state handler
     // Note that this only gets called once on mount
     useEffect(() => {
         const unsubscribe = Auth.onAuthStateChanged( async (auth) => {
             if (authState === AUTH_STATES.CREATING_USER) {
                 // Avoids race-condition between firebase and firestore user creation.
-                return;  
+                return;
             }
-            if (authState === AUTH_STATES.LOGGED_IN) {
+            if (auth != null) {
                 setAuth(auth);
+                setAuthState(AUTH_STATES.LOGGED_IN);
+            } else {
+                setAuthState(AUTH_STATES.LOGGED_OUT);
             }
         });
         return () => unsubscribe();
@@ -111,13 +115,15 @@ const useAuthProvider = () => {
 
     // Attempt to fetch the user on update
     useEffect(() => {
+        if (authState !== AUTH_STATES.LOGGED_IN) return;
+
         getCurrentUser()
             .then((user) => setUser(user))
             .catch((err) => {
                 console.log(`Error fetching user: ${err}`);
                 setUser(null);
             });
-    });
+    }, [authState, auth]);
 
     return {
         auth,

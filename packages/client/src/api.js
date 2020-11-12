@@ -9,6 +9,8 @@ const Roles = {
     PARENT: 'PARENT',
 }
 
+const host = process.env.REACT_APP_COVED_API;
+
 export const getMentor = async () => await getUser(Roles.MENTOR);
 
 export const getParent = async () => await getUser(Roles.PARENT);
@@ -26,7 +28,7 @@ export const getUser = async () => {
         throw Error('Unable to retrive user data with uninitilized Auth user.');
     }
     const token = await Auth.currentUser.getIdToken();
-    return await get('/users', {}, {token});
+    return await get(host + 'users', {}, {token});
 }
 
 const createUserWithEmail = async (email, password, data, role) => {
@@ -34,9 +36,9 @@ const createUserWithEmail = async (email, password, data, role) => {
     try {
         await Auth.createUserWithEmailAndPassword(email, password);
         token = await Auth.currentUser.getIdToken();
-        await post('/users', { role: role, ...data}, { token });
+        await post(host + 'users', { role: role, ...data}, { token });
         await Auth.currentUser.sendEmailVerification();
-        
+
     } catch (err) {
         if (token) await Auth.currentUser.delete();
         throw new Error(`Error creating ${role}: ${err}`);
