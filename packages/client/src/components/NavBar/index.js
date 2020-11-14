@@ -12,8 +12,9 @@ import styled from 'styled-components';
 import Signin from '../SignIn/index';
 import { FONTS, COLORS } from '../../constants';
 import SignUp from '../../pages/SignUp';
-
 import MobileNav from './MobileNav';
+
+import useAuth, {AUTH_STATES} from '../../providers/AuthProvider';
 
 const TextThemes = {
   fontSize: {
@@ -55,10 +56,28 @@ const UserLinkWrapper = styled.div`
   display: flex;
 `;
 
+
+const Links = ({ links }) => {
+  return (
+    <>
+      {
+        links.map(
+          link =>(
+            <LinkStyled key={link.link} to={link.link} ver='default'>
+              {link.title}
+            </LinkStyled>
+          )
+        )
+      }
+    </>
+  )
+}
+
 export default function NavBar(props) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [menuDropdownAnchor, setMenuDropdownAnchor] = useState(null);
-  
+  const { user, authState, signout } = useAuth();
+
   const handleMenuDropdownClick = (event) => {
     setMenuDropdownAnchor(event.currentTarget);
     event.stopPropagation();
@@ -66,11 +85,10 @@ export default function NavBar(props) {
   const handleMenuDropdownClose = () => {
     setMenuDropdownAnchor(null);
   };
-  
 
-  const userLinks = (
+  const loggedOutUserLinks = (
       <>
-        
+
         <Modal
               title="Login"
               trigger={
@@ -86,6 +104,14 @@ export default function NavBar(props) {
             <SignUp/>
         </Modal>
       </>
+  );
+
+  const loggedInUserLinks = (
+    // TODO there is a bug in the dashboard when trying to navigate to /dashboard
+    <>
+      <Link to='/dashboard/profile'> <Button theme='accent' size='sm'>Dashboard</Button></Link>
+      <Button theme='primary' size='sm' onClick={signout}> Sign Out </Button>
+    </>
   );
 
   useEffect(() => {
@@ -137,7 +163,7 @@ export default function NavBar(props) {
             ))}
           </Grid>
           <UserLinkWrapper>
-            {userLinks}
+            {authState === AUTH_STATES.LOGGED_IN ? loggedInUserLinks : loggedOutUserLinks}
           </UserLinkWrapper>
         </Toolbar>
       </AppBar>
@@ -153,9 +179,6 @@ NavBar.propTypes = {
 
 NavBar.defaultProps = {
   links: [
-    { title: 'Dashboard',
-      link: '/dashboard'
-    },
     {
       title: 'Resources',
       link: '/resources',

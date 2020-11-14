@@ -1,0 +1,20 @@
+{
+  "hosting": {
+    "public": "packages/client/build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": {
+    "source": "packages/server",
+    "runtime": "nodejs12"
+  }
+}

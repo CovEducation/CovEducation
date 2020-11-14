@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import AppBar from '@material-ui/core/AppBar';
+import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import MentorWizard from './wizards/MentorWizard';
@@ -25,7 +25,7 @@ function TabPanel(props) {
 const TabManager = (tabChildren) => {
     const [value, setValue] = useState(0);
 
-    const handleChange = (event, newValue) => {
+    const handleChange = (_event, newValue) => {
         setValue(newValue);
     };
 
@@ -38,13 +38,13 @@ const TabManager = (tabChildren) => {
     });
 
     return (
-        <AppBar position="static">
+        <>
             <Tabs value={value} onChange={handleChange} variant="fullWidth">
                 <Tab label="For Parents" />
                 <Tab label="For Mentors" />
             </Tabs>
             {tabChildComponents}
-        </AppBar>
+        </>
     );
 }
 
@@ -53,11 +53,9 @@ const SignUpPage = () => {
     const tabChildren = [<ParentWizard />, <MentorWizard />];
     const tabManager = TabManager(tabChildren);
     return (
-        <SignUpPageWrapper>
-            <SignUpWizardWrapper>
-                {tabManager}
-            </SignUpWizardWrapper>
-        </SignUpPageWrapper>
+        <SignUpWizardWrapper>
+            {tabManager}
+        </SignUpWizardWrapper>
     );
 }
 

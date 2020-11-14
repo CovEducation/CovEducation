@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Wizard from '../../../../components/Wizard';
+import Stepper from '../../../../components/Stepper';
 import Button from '../../../../components/Button';
 
 import ParentStep1 from './forms/ParentStep1.js';
@@ -159,8 +159,30 @@ const FourthPage = () => {
 }
 
 const ParentWizard = () => {
-    const children = [<FirstPage />, <SecondPage />, <ThirdPage />, <FourthPage />];    
-    return <Wizard content={children} />;
+    const children = [
+        {
+            title: "Login Information",
+            form: <FirstPage />
+        },
+        {
+            title: "Parent Information",
+            form: <SecondPage />
+        },
+        {
+            title: "Student Information",
+            form: <ThirdPage />
+        },
+        {
+            title: "Terms of Service & Privacy Policy",
+            form: <FourthPage />
+        }
+    ];
+
+    const handleSubmit = () => {
+        console.log(JSON.stringify(parentWizardSignUpData));
+    };
+
+    return <Stepper steps={children} handleSubmit={handleSubmit}/>;
 }
 
 export default ParentWizard;

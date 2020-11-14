@@ -4,6 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
 
 // Firebase boilerplate.
 const firebase = require('firebase-admin');
@@ -18,10 +19,14 @@ firebase.initializeApp({
   databaseURL: process.env.FIREBASE_URL,
 });
 
+// firebase.initializeApp();
+
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
+
+app.use(cors({ origin: true }));
 
 // disable when running unit tests
 if (process.env.NODE_ENV !== 'test') {

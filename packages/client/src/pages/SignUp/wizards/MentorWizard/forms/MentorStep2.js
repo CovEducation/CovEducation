@@ -30,7 +30,7 @@ const MentorStep2 = (props) => {
         selectedGradeLevels: [],
         selectedSubjects: [],
     });
-    
+
     const { selectedGradeLevels, selectedSubjects } = state;
 
     const gradeLevelMenuItems = tags.map(item => (

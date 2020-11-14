@@ -4,10 +4,10 @@ import FindAMentorPage from '../FindAMentor';
 import { COLORS } from '../../constants';
 import { Route, Link, useRouteMatch, useLocation, Redirect } from 'react-router-dom';
 import ProfilePage from '../Profile';
+import useAuth, { AUTH_STATES } from "../../providers/AuthProvider";
 
 const DashboardWrapper = styled.div`
-  height: calc(100vh - 64px - 195px); // subtract heights for navbar and footer
-  margin-top: 64px; // remove this line once navbar is in
+  height: calc(100vh - 64px); // subtract heights for navbar and footer
 
   display: grid;
   grid-template-rows: 200px auto;
@@ -71,17 +71,25 @@ const DashboardContent = styled.div`
 
 const DashboardPage = () => {
   const { url, path } = useRouteMatch();
+  const { user, authState } = useAuth();
   const location = useLocation();
-  console.log(location.pathname);
-  console.log(path);
+
+  // TODO move this logic to a dedicated component
+  if ( authState === AUTH_STATES.UNINITIALIZED
+    || (authState === AUTH_STATES.LOGGED_IN && !user)) return <>loading</>
+
+  else if (authState !== AUTH_STATES.LOGGED_IN) return <> not logged in </>
+
+  const userType = user.role === "PARENT" ? "Parent "
+    : user.role === "MENTOR" ? "Mentor " : "";
 
   return (
     <DashboardWrapper>
       <DashboardHeader>
         <img src="https://via.placeholder.com/100" alt="profile pic" />
         <div>
-          <h1>Sally Student</h1>
-          <p>Mentee Dashboard</p>
+          <h1>{user.name}</h1>
+          <p>{userType} Dashboard</p>
         </div>
       </DashboardHeader>
       <DashboardSidenav>
@@ -92,7 +100,7 @@ const DashboardPage = () => {
       </DashboardSidenav>
       <DashboardContent>
         <Route path={`${path}/profile`} exact>
-          <ProfilePage />
+          <ProfilePage user={user} />
         </Route>
         <Route path={`${path}/mentors`} exact>
           <FindAMentorPage />
