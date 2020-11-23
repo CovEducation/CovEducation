@@ -85,7 +85,7 @@ const student = Yup.object().shape({
     .min(1)
     .required('Valid Subjects Required'),
   gradeLevel: Yup
-    .number()
+    .string()
     .required('Grade Level Required'),
 });
 

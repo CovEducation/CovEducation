@@ -102,13 +102,14 @@ const createUser = async (uid, body) => {
     });
     batch.set(parentsCollectionRef.doc(uid), parent);
 
-    body.students.forEach(async (student) => {
+    for (student of body.students) {
       const newStudent = await parseStudent(student).catch((err) => {
         throw new Error(`Unable to parse student: ${err}`);
       });
       const newStudentRef = parentsCollectionRef.doc(uid).collection('students').doc();
       batch.set(newStudentRef, newStudent);
-    });
+    }
+
   } else {
     throw new Error(`Unexpected role: ${body.role}`);
   }
