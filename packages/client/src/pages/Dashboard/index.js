@@ -4,6 +4,7 @@ import FindAMentorPage from '../FindAMentor';
 import { COLORS } from '../../constants';
 import { Route, Link, useRouteMatch, useLocation, Redirect } from 'react-router-dom';
 import ProfilePage from '../Profile';
+import RequestsPage from '../Requests';
 import useAuth, { AUTH_STATES } from "../../providers/AuthProvider";
 
 const DashboardWrapper = styled.div`
@@ -107,6 +108,9 @@ const DashboardPage = () => {
         </Route>
         <Route path={path}>
           <Redirect to={`${url}/profile`} />
+        </Route>
+        <Route path={`${path}/requests`} exact>
+          <RequestsPage user={user}/>
         </Route>
       </DashboardContent>
     </DashboardWrapper>

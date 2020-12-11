@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 
-import { Auth } from '../FirebaseProvider';
-import { getUser, createMentorWithEmail, createParentWithEmail } from '../../api';
+import { Auth,Db } from '../FirebaseProvider';
+import { getUser, createMentorWithEmail, createParentWithEmail, getUserDetailByEmail } from '../../api';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 
 export const AUTH_STATES  = {
     LOGGED_OUT: 'LOGGED_OUT',
@@ -93,6 +96,10 @@ const useAuthProvider = () => {
         return getUser();
 
     };
+    const getUserDataByEmail = async (email) => {
+        await getUserDetailByEmail(email);
+    }
+   
 
     // TODO this may have to be done synchronously
     // Register firebase state handler
@@ -129,6 +136,7 @@ const useAuthProvider = () => {
         auth,
         authState,
         user,
+        getUserDataByEmail,
         signin,
         signup,
         signout

@@ -4,7 +4,8 @@ import MentorCard from './MentorCard';
 import MentorRequestFrame from './MentorRequestFrame.js';
 import Modal from '../../components/Modal';
 
-// const mentors = await get("/api/mentors", {tags: tags, subjects: subjects});
+const mentors1 = await get("/api/mentors", {tags: [], subjects: ['Physics', 'Math']});
+console.log('nnenenen',mentors1);
 const mentors = [
     {
         '_id' : '5ee15af7e790bd0a065b70f9',

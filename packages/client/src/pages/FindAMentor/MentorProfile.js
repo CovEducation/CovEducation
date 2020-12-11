@@ -1,5 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import Button from '../../components/Button';
+import TextField from '@material-ui/core/TextField';
+
+const WizardInput = styled.div`
+    margin-bottom: 1em;
+    min-width: 120px;
+`;
 
 const MentorProfileContainer = styled.div`
     padding: 0 5rem;
@@ -22,6 +29,14 @@ const MentorProfilePicture = styled.img`
 
 const MentorProfileText = styled.p`
     margin-right: 0.5rem;
+`
+
+
+const ButtonBlock = styled.div`
+    text-align: right;
+    button {
+        margin-right: 0px;
+    }
 `
 
 
@@ -57,6 +72,18 @@ const MentorProfile = ({ mentor }) => {
             <MentorProfileInformation>
                 {relevantInformation.map(field => displayField(field, mentor))}
             </MentorProfileInformation>
+            <WizardInput>
+                <TextField
+                    fullWidth
+                    label="Request Message"
+                    name="request"
+                />
+            </WizardInput>
+            <ButtonBlock>
+            <Button theme="accent" size="md" onClick={ async () => {
+                    alert('Request Button Pressed');
+                }}>Send Request</Button>
+            </ButtonBlock>
         </MentorProfileContainer>
     )
 }
@@ -68,6 +95,7 @@ const validateMentorData = (mentor) => {
 }
 
 const displayField = (field, mentor) => {
+    console.log("mentor", mentor);
     let mentorInfo = mentor[field[0]];
     if (Array.isArray(mentorInfo)) {
         mentorInfo = mentorInfo.join(', ');

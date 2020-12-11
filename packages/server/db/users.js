@@ -1,6 +1,5 @@
 const firebase = require('firebase-admin');
 const Schemas = require('./schemas');
-
 const { mentorSchema, parentSchema, studentSchema } = Schemas;
 
 const db = firebase.firestore();

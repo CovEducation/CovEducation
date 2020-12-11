@@ -22,7 +22,7 @@ const MentorCard = ({ mentor }) => {
             <MentorCardText><b>{mentor.name}</b></MentorCardText>
             <MentorCardText>{mentor.timezone}</MentorCardText>
             <MentorCardText>{mentor.subjects.join(', ')}</MentorCardText>
-            <MentorCardText>{mentor.grade_levels_to_mentor.join(', ')}</MentorCardText>
+            <MentorCardText>{mentor.gradelevels.join(', ')}</MentorCardText>
         </MentorCardContainer>
     );
 }

@@ -43,4 +43,17 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
+
+
+router.post('/getUserbyEmail', authMiddleware, async (req, res) => {
+  const { email } = req.body;
+  firebase.auth().getUserByEmail(email).then((userRecord) => {
+    // See the UserRecord reference doc for the contents of userRecord.
+    console.log('Successfully fetched user data',userRecord);
+  })
+  .catch((error) => {
+    console.log('Error fetching user data:', error);
+  })
+});
+
 module.exports = router;

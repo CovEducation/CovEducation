@@ -14,6 +14,7 @@ import ForMentors from './pages/HowItWorks/ForMentors';
 import ForParents from './pages/HowItWorks/ForParents';
 import ContactUsPage from './pages/ContactUs';
 import SignInPage from './pages/SignIn';
+import RequestsPage from './pages/Requests';
 
 import { AuthProvider } from './providers/AuthProvider';
 
@@ -35,6 +36,9 @@ function App() {
               </Route>
               <Route path="/mentors">
                 <ForMentors />
+              </Route>
+              <Route path="/requests">
+                <RequestsPage/>
               </Route>
               <Route path="/contactus">
                 <ContactUsPage />

@@ -6,6 +6,7 @@ export const createMentorModel = (mentorData) => ({
     major: mentorData.major,
     role: 'MENTOR', 
     introduction: mentorData.introduction,
+    notificationPreference:mentorData.notificationPreference
 })
 
 
@@ -32,6 +33,7 @@ export const createParentModel = (parentData) => {
         students: parentData.registeredChildren
             .map((studentData) => createStudentModel(studentData)),
         role: 'PARENT',
+        notificationPreference:parentData.notificationPreference
     }
 }
 

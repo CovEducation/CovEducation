@@ -9,8 +9,8 @@ const Roles = {
     PARENT: 'PARENT',
 }
 
-const host = process.env.REACT_APP_COVED_API;
-
+// const host = process.env.REACT_APP_COVED_API;
+const host = window.location.origin+'/';
 export const getMentor = async () => await getUser(Roles.MENTOR);
 
 export const getParent = async () => await getUser(Roles.PARENT);
@@ -44,3 +44,7 @@ const createUserWithEmail = async (email, password, data, role) => {
         throw new Error(`Error creating ${role}: ${err}`);
     }
 }
+
+export const getUserDetailByEmail = async (email) => {
+    return await post(host + 'getUserbyEmail', {email: "jamesgonzalez@ross-hill.biz"}, {  });
+};

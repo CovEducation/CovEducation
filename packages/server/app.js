@@ -23,7 +23,7 @@ firebase.initializeApp({
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-
+const requestRouter = require('./routes/notifications');
 const app = express();
 
 app.use(cors({ origin: true }));
@@ -42,4 +42,5 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/requestMentor', requestRouter);
 module.exports = app;
