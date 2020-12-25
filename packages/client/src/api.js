@@ -2,7 +2,7 @@
 // requests necessary.
 // TODO: Handle profile pictures and set them as the avatar.
 import { post, get } from './utilities.js';
-import { Auth } from './providers/FirebaseProvider/index.js';
+import { Auth, storage } from './providers/FirebaseProvider/index.js';
 
 const Roles = {
     MENTOR: 'MENTOR',
@@ -42,5 +42,26 @@ const createUserWithEmail = async (email, password, data, role) => {
     } catch (err) {
         if (token) await Auth.currentUser.delete();
         throw new Error(`Error creating ${role}: ${err}`);
+    }
+}
+
+
+export const uploadProfilePicture = async (image) => {
+    const user = Auth.currentUser; 
+
+    if (user == undefined) {
+        throw Error('cannot upload profile picture: not logged in');
+    }
+    const path = `${user}/profilePicture/${image.name}`;
+    const proPicRef = storage.ref(path);
+
+    try  {
+        // upload image
+        await proPicRef.put(image);
+        const downloadUrl = await proPicRef.getDownloadURL();
+        return downloadUrl;
+    } catch (err) {
+        console.log(err)
+        throw Error(err)
     }
 }

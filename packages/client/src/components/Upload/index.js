@@ -1,55 +1,42 @@
-import React, { Component } from "react";
-import { Auth, Db, storage} from '../../../src/providers/FirebaseProvider/firebase';
+import React, { useState } from "react";
 
-class Upload extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      image: null,
-      url: "",
-      
-    };
+import { uploadProfilePicture } from "../../api";
+
+const TestUpload = () => {
+  const [image, setImage] = useState(undefined);
+  const [url, setUrl] = useState(undefined);
+
+  const imageChange = (e) => {
+    setImage(e.target.files[0]);
+    console.log(e.target.files[0])
   }
 
-  handleChange = e => {
-    if (e.target.files[0]) {
-      const image = e.target.files[0];
-      this.setState(() => ({ image }));
+  const handleUpload = () => {
+    if (!image) {
+      console.log("No image selected");
     }
-  };
+    console.log(image)
 
-  handleUpload = () => {
-    const { image } = this.state;
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
-    uploadTask.on(
-      "state_changed",
-      error => {
-        console.log(error);
-      },
-      () => {
-        storage
-          .ref("images")
-          .child(image.name)
-          .getDownloadURL()
-          .then(url => {
-            this.setState({ url });
-          });
-      }
-    );
-  };
-  render() {
-    return (
-      <div>
-          <br/>
-          React Firebase Image Uploader
-          <br/> 
-            File
-            <input type="file" onChange={this.handleChange} />
-        <button onClick={this.handleUpload}>Upload</button>
-        <br />  
-      </div>
-    );
+    uploadProfilePicture(image)
+      .then(url => {
+        console.log(url);
+        setUrl(url);
+      });
   }
+
+  return (
+    <>
+      <h1>
+        Upload Profile Picture
+      </h1>
+      <input type="file" onChange={imageChange} />
+      <br></br>
+      <button onClick={handleUpload}> Upload </button>
+
+      { url ? <img src={url} /> : <></> }
+    </>
+  )
+
 }
 
-export default Upload;
+export default TestUpload;

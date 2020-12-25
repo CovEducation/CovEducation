@@ -58,6 +58,9 @@ function App() {
               <Route path="/forgot-password">
                 <br/>
               </Route>
+              <Route path="/upload">
+                <Upload/>
+              </Route>
             </Switch>
           </Router>
         </AuthProvider>
