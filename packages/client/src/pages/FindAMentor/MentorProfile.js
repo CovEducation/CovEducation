@@ -18,11 +18,11 @@ const MentorProfileInformation = styled.div`
 const MentorProfilePicture = styled.img`
     width: 30%;
     margin-right: 1rem;
-`
+`;
 
 const MentorProfileText = styled.p`
     margin-right: 0.5rem;
-`
+`;
 
 
 // Displays the picture, name, and major of a mentor.
