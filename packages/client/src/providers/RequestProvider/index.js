@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 
 import { Auth,Db } from '../FirebaseProvider';
-import { getUser, createMentorWithEmail, createParentWithEmail, getUserDetailByEmail, getRequests, acceptStudentRequest, updateSessionHours, updateRatingss } from '../../api';
+import { getUser, createMentorWithEmail, createParentWithEmail, getUserDetailByEmail, getRequests, acceptStudentRequest } from '../../api';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -18,8 +18,8 @@ const authContext = createContext(null);
 /**
  * AuthProvider class to inject the UserContext into child components
  */
-const AuthProvider = ({ children, fallback }) => {
-    const auth = useAuthProvider();
+const RequestProvider = ({ children, fallback }) => {
+    const auth = useRequestProvider();
 
     // this renders the fallback component until firebase has initialized
     return (
@@ -31,18 +31,18 @@ const AuthProvider = ({ children, fallback }) => {
     )
 }
 
-const useAuth = () => {
+const useRequest = () => {
     return useContext(authContext);
 }
 
 
 
-const useAuthProvider = () => {
+const useRequestProvider = () => {
     const [authState, setAuthState] = useState(AUTH_STATES.UNINITIALIZED);
     const [auth, setAuth] = useState(null);
     const [user, setUser] = useState(null);
     const [request, setRequest] = useState(null);
-    const [requestOther, setRequestOther] = useState(null);
+
     /**
      * Signs a user in. This triggers pulling the correct user information.
      * @param {string} email
@@ -102,7 +102,7 @@ const useAuthProvider = () => {
     }
    
     const getRequestList = async() => {
-        await getRequests(["Pending"])
+        await getRequests()
         .then((request) => setRequest(request))
         .catch((err) => {
             console.log(`Error fetching Request: ${err}`);
@@ -110,90 +110,10 @@ const useAuthProvider = () => {
         });
     }
 
-    const getRequestListOther = async() => {
-        await getRequests(["Pending"])
-        .then((request) => setRequestOther(request))
-        .catch((err) => {
-            console.log(`Error fetching Request: ${err}`);
-            setRequestOther(null);
-        });
-    }
-
-    const acceptRequest = async (messageID, status, studentName) => {
+    const acceptRequest = async (messageID) => {
         console.log('await',messageID)
-        await acceptStudentRequest(messageID, status, studentName)
-        .then(() => {
-            console.log('request Accepted'); 
-            var a = getRequests(["Pending"])
-            .then((request) => setRequest(request))
-            .catch((err) => {
-                console.log(`Error fetching Request: ${err}`);
-                setRequest(null);
-            });
-            alert("Request accepted successfully.");
-        })
-        .catch((err) => {
-            console.log(`Error fetching Request: ${err}`);
-        });
-    }
-
-    const archiveRequest = async (messageID, status, studentName) => {
-        console.log('await',messageID)
-        await acceptStudentRequest(messageID, status, studentName)
-        .then(() => {console.log('request Archived'); 
-        var a = getRequests(["Pending"])
-        .then((request) => setRequest(request))
-        .catch((err) => {
-            console.log(`Error fetching Request: ${err}`);
-            setRequest(null);
-        });
-        alert("Request archived successfully.");})
-        .catch((err) => {
-            console.log(`Error fetching Request: ${err}`);
-        });
-    }
-
-    const rejectRequest = async (messageID, status, studentName) => {
-        console.log('await',messageID)
-        await acceptStudentRequest(messageID, status, studentName)
-        .then(() => {console.log('request Rejected'); 
-        var a = getRequests(["Pending"])
-        .then((request) => setRequest(request))
-        .catch((err) => {
-            console.log(`Error fetching Request: ${err}`);
-            setRequest(null);
-        });
-        alert("Request rejected successfully.");})
-        .catch((err) => {
-            console.log(`Error fetching Request: ${err}`);
-        });
-    }
-
-    const updateSessionHoursss = async (messageID, hours, studentName) => {
-        await updateSessionHours(messageID, hours, studentName)
-        .then(() => {console.log('session hours updated'); 
-        var a = getRequests(["Pending"])
-        .then((request) => setRequest(request))
-        .catch((err) => {
-            console.log(`Error fetching Request: ${err}`);
-            setRequest(null);
-        });
-        alert("Session hours was updated successfully.");})
-        .catch((err) => {
-            console.log(`Error fetching Request: ${err}`);
-        });
-    }
-
-    const updateRatings = async (messageID, ratings, studentName) => {
-        await updateRatingss(messageID, ratings, studentName)
-        .then(() => {console.log('ratings updated'); 
-        var a = getRequests(["Pending"])
-        .then((request) => setRequest(request))
-        .catch((err) => {
-            console.log(`Error fetching Request: ${err}`);
-            setRequest(null);
-        });
-        alert("Ratings was added successfully.");})
+        await acceptStudentRequest(messageID)
+        .then(() => console.log('request Accepted'))
         .catch((err) => {
             console.log(`Error fetching Request: ${err}`);
         });
@@ -229,8 +149,7 @@ const useAuthProvider = () => {
                 console.log(`Error fetching user: ${err}`);
                 setUser(null);
             });
-            getRequestList();
-            getRequestListOther();
+            //getRequestList();
     }, [authState, auth]);
 
     return {
@@ -242,15 +161,9 @@ const useAuthProvider = () => {
         signup,
         signout,
         request,
-        requestOther,
         getRequestList,
-        acceptRequest,
-        rejectRequest,
-        archiveRequest,
-        updateRatings,
-        updateSessionHoursss,
-        getRequestListOther
+        acceptRequest
     };
 }
 
-export { useAuth as default, AuthProvider };
+export { useRequest as default, RequestProvider };

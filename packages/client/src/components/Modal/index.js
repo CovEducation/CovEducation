@@ -58,8 +58,8 @@ export default function Modal(props) {
   return (
     <div>
       { props.trigger && cloneElement(props.trigger,{ onClick: handleClickOpen }) }
-      <Dialog aria-labelledby="customized-dialog-title" open={props.open || open}>
-        <ModalTitle id="customized-dialog-title" onClose={props.handleClose || handleClose}>
+      <Dialog aria-labelledby="customized-dialog-title" open={open}>
+        <ModalTitle id="customized-dialog-title" onClose={handleClose}>
           {props.title}
         </ModalTitle>
         <ModalContent dividers>

@@ -1,56 +1,62 @@
-import { FormControl, FormControlLabel, makeStyles } from "@material-ui/core";
-import React from "react";
-import { connectRefinementList } from "react-instantsearch-dom";
-import Accordion, { AccordionRow } from "../../components/Accordion";
-import Checkbox from "@material-ui/core/Checkbox";
+import React from 'react';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    padding: "0 2em 0 2em"
-  },
-  formControl: {
-    // margin: theme.spacing(3),
-  },
-}));
+import Accordion, { AccordionRow } from '../../components/Accordion';
+import Checkbox from '../../components/Checkbox';
 
-const MentorRefinementList = connectRefinementList(
-  ({ items, currentRefinement, refine }) => {
-    const classes = useStyles();
-
-    return items.map((item) => {
-      return (
-        <div className={classes.root}>
-          <FormControl className={classes.formControl}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={item.isRefined}
-                  onChange={() => refine(item.value)}
-                  name={item.label}
-                />
-              }
-              label={item.label}
-            />
-          </FormControl>
-        </div>
-      );
-    });
+const MentorFilters = ({ onChange }) => {
+  const handleChange = (filterCategory, change) => {
+    if (onChange instanceof Function) {
+      onChange(filterCategory, change);
+    }
   }
-);
 
-const MentorFilters = () => {
   return (
     <div>
       <Accordion>
-        <AccordionRow title="Tags">
-          <MentorRefinementList attribute="tags" />
+        <AccordionRow title="Grade Level">
+          <Checkbox
+            name="es"
+            label="Elementary School (K-5)"
+            onChange={(change) => handleChange('gradeLevel', change)}
+          />
+          <Checkbox
+            name="ms"
+            label="Middle School (6-8)"
+            onChange={(change) => handleChange('gradeLevel', change)}
+          />
+          <Checkbox
+            name="hs"
+            label="High School (9-12)"
+            onChange={(change) => handleChange('gradeLevel', change)}
+          />
         </AccordionRow>
-        <AccordionRow title="Languages">
-          <MentorRefinementList attribute="languages_spoken" />
+        <AccordionRow title="Subject">
+        <Checkbox
+          name="math"
+          label="Math"
+          onChange={(change) => handleChange('subject', change)}
+        />
+        <Checkbox
+          name="physics"
+          label="Physics"
+          onChange={(change) => handleChange('subject', change)}
+        />
+        <Checkbox
+          name="reading"
+          label="Reading"
+          onChange={(change) => handleChange('subject', change)}
+        />
+        </AccordionRow>
+        <AccordionRow title="Special Needs">
+          <Checkbox
+            name="specialNeeds"
+            label="Special Needs"
+            onChange={(change) => handleChange('specialNeeds', change)}
+          />
         </AccordionRow>
       </Accordion>
     </div>
-  );
-};
+  )
+}
+
 export default MentorFilters;

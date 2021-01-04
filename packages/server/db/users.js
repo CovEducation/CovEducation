@@ -9,7 +9,7 @@ db.settings({ ignoreUndefinedProperties: true });
 const usersCollectionRef = db.collection('users');
 const mentorsCollectionRef = db.collection('mentors');
 const parentsCollectionRef = db.collection('parents');
-const messageCollectionRef = db.collection('messages');
+const messageCollectionRef = db.collection('requests');
 
 const MENTOR = 'MENTOR';
 const PARENT = 'PARENT';
@@ -19,7 +19,6 @@ const getDoc = async (collection, uid) => {
   if (obj.exists) {
     return obj.data();
   }
-
   throw new Error(`Unable to find '${uid}' in '${collection}' collection`);
 };
 
@@ -77,10 +76,23 @@ const getUser = async (uid) => {
     const studentSnapshot = await parentsCollectionRef.doc(uid).collection('students').get();
     user.students = studentSnapshot.docs.map((s) => s.data());
   }
-
   user.role = userDoc.role;
-
   return user;
+};
+
+//Get user details using email address
+const getUserByEmail = async (emailAddress) => {
+  let user;
+  return firebase.auth().getUserByEmail(emailAddress).then((userRecord) => {
+      // See the UserRecord reference doc for the contents of userRecord.
+      user = userRecord;
+      return user;
+  })
+  .catch((error) => {
+      console.log('Error fetching user data:', error);
+  })
+
+  //return user;
 };
 
 const createUser = async (uid, body) => {
@@ -117,19 +129,25 @@ const createUser = async (uid, body) => {
   return batch.commit();
 };
 
-const addMessageToDB = async (mentorUID, parentUID, studentUID, message) => {
+const addMessageToDB = async (mentorUID, parentUID, students, message) => {
+  console.log("in addMessageToDB");
   if (!mentorUID) throw new Error('mentorUID not provided.');
   if (!parentUID) throw new Error('parentUID not provided.');
-  if (!studentUID) throw new Error('studentUID not provided.');
+  //if (!studentUID) throw new Error('studentUID not provided.');
   if (!message) throw new Error('message not provided.');
-
+  const requestStatus = "Pending";
+  const createdDate = new Date();
+  const sessionHours = 0;
+  const sessionDate = new Date();
   const newMessage = {
-    mentorUID, parentUID, studentUID, message,
+    mentorUID, parentUID, students, message
   };
+  console.log("in addMessageToDB", newMessage);
   const newMessageRef = await messageCollectionRef.add(newMessage);
+  console.log("newMessageRef", newMessageRef);
   return mentorsCollectionRef.doc(mentorUID).update({
     requests: firebase.firestore.FieldValue.arrayUnion(newMessageRef.id),
   });
 };
 
-module.exports = { getUser, createUser, addMessageToDB };
+module.exports = { getUser, createUser, addMessageToDB, getUserByEmail };

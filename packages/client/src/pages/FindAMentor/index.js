@@ -4,10 +4,10 @@ import styled from 'styled-components';
 // import useAuth from '../../providers/AuthProvider';
 
 const FindAMentorWrapper = styled.div`
-    // display: grid;
-    // width: 100%,
-    // grid-template-columns: 200px auto;
-    // grid-template-areas: "main";
+    display: grid;
+    width: 100%,
+    grid-template-columns: 200px auto;
+    grid-template-areas: "main";
 `;
 
 const FindAMentorMainWrapper = styled.div`
@@ -26,7 +26,11 @@ const FindAMentorPage = () => {
     // const { user } = useAuth();
 
     return (
-        <MentorSearch/>
+        <FindAMentorWrapper>
+            <FindAMentorMainWrapper>
+                <MentorSearch/>
+            </FindAMentorMainWrapper>
+        </FindAMentorWrapper>
     )
 }
 

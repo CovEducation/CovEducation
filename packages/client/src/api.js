@@ -9,8 +9,8 @@ const Roles = {
     PARENT: 'PARENT',
 }
 
-const host = process.env.REACT_APP_COVED_API;
-
+// const host = process.env.REACT_APP_COVED_API;
+const host = window.location.origin+'/';
 export const getMentor = async () => await getUser(Roles.MENTOR);
 
 export const getParent = async () => await getUser(Roles.PARENT);
@@ -24,6 +24,7 @@ export const createMentorWithEmail = async (email, password, mentor) => {
 };
 
 export const getUser = async () => {
+    console.log('Auth.currentUser',Auth.currentUser)
     if (Auth.currentUser === undefined || Auth.currentUser === null) {
         throw Error('Unable to retrive user data with uninitilized Auth user.');
     }
@@ -43,4 +44,40 @@ const createUserWithEmail = async (email, password, data, role) => {
         if (token) await Auth.currentUser.delete();
         throw new Error(`Error creating ${role}: ${err}`);
     }
+}
+
+export const getUserDetailByEmail = async (email) => {
+    return await post(host + 'getUserbyEmail', {email: "jamesgonzalez@ross-hill.biz"}, {  });
+};
+
+export const getRequests = async (arr) => {
+    if (Auth.currentUser === undefined || Auth.currentUser === null) {
+        throw Error('Unable to retrive user data with uninitilized Auth user.');
+    }
+    const token = await Auth.currentUser.getIdToken();
+    return await post(host + 'request/getRequests', {id : Auth.currentUser.uid, status: arr}, {token});
+}
+
+export const acceptStudentRequest = async (messageID, status, studentName) => {
+    if (Auth.currentUser === undefined || Auth.currentUser === null) {
+        throw Error('Unable to retrive user data with uninitilized Auth user.');
+    }
+    const token = await Auth.currentUser.getIdToken();
+    return await post(host + 'request/changeRequestStatus', {mentorUID : Auth.currentUser.uid, messageID:messageID, requestStatus: status, studentName: studentName}, {token});
+}
+
+export const updateSessionHours = async (messageID, hours, studentName) => {
+    if (Auth.currentUser === undefined || Auth.currentUser === null) {
+        throw Error('Unable to retrive user data with uninitilized Auth user.');
+    }
+    const token = await Auth.currentUser.getIdToken();
+    return await post(host + 'request/updateSessionHours', {mentorUID : Auth.currentUser.uid, messageID:messageID, sessionHours: hours, studentName: studentName}, {token});
+}
+
+export const updateRatingss = async (messageID, ratings, studentName) => {
+    if (Auth.currentUser === undefined || Auth.currentUser === null) {
+        throw Error('Unable to retrive user data with uninitilized Auth user.');
+    }
+    const token = await Auth.currentUser.getIdToken();
+    return await post(host + 'request/updateRatings', {mentorUID : Auth.currentUser.uid, messageID:messageID, ratings: ratings, studentName: studentName}, {token});
 }

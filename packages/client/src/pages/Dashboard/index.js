@@ -4,7 +4,9 @@ import FindAMentorPage from '../FindAMentor';
 import { COLORS } from '../../constants';
 import { Route, Link, useRouteMatch, useLocation, Redirect } from 'react-router-dom';
 import ProfilePage from '../Profile';
+import RequestsPage from '../Requests';
 import useAuth, { AUTH_STATES } from "../../providers/AuthProvider";
+import SpeakerSeriesPage from '../SpeakerSeries';
 
 const DashboardWrapper = styled.div`
   height: calc(100vh - 64px); // subtract heights for navbar and footer
@@ -71,7 +73,7 @@ const DashboardContent = styled.div`
 
 const DashboardPage = () => {
   const { url, path } = useRouteMatch();
-  const { user, authState } = useAuth();
+  const { user, authState, request } = useAuth();
   const location = useLocation();
 
   // TODO move this logic to a dedicated component
@@ -94,7 +96,9 @@ const DashboardPage = () => {
       </DashboardHeader>
       <DashboardSidenav>
         <SidenavLink to={`${url}/profile`} active={location.pathname.endsWith('profile')}>My Profile</SidenavLink>
-        <SidenavLink to={`${url}/mentors`} active={location.pathname.endsWith('mentors')}>Find a Mentor</SidenavLink>
+        {user.role === 'PARENT' && 
+          <SidenavLink to={`${url}/mentors`} active={location.pathname.endsWith('mentors')}>Find a Mentor</SidenavLink>
+        }
         <SidenavLink to={`${url}/speaker-series`} active={location.pathname.endsWith('speaker-series')}>Speaker Series</SidenavLink>
         <SidenavLink to={`${url}/requests`} active={location.pathname.endsWith('requests')}>Requests</SidenavLink>
       </DashboardSidenav>
@@ -105,8 +109,11 @@ const DashboardPage = () => {
         <Route path={`${path}/mentors`} exact>
           <FindAMentorPage />
         </Route>
-        <Route path={path}>
-          <Redirect to={`${url}/profile`} />
+        <Route path={`${path}/speaker-series`}>
+        <SpeakerSeriesPage user={user}/>
+        </Route>
+        <Route path={`${path}/requests`} exact>
+          <RequestsPage request={request}/>
         </Route>
       </DashboardContent>
     </DashboardWrapper>

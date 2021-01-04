@@ -18,7 +18,8 @@ const MentorConverter = {
             timezone: mentor.timezone,
             subjects: mentor.subjects,
             tags: mentor.tags,
-            gradeLevels: mentor.gradeLevels
+            gradeLevels: mentor.gradeLevels,
+            notificationPreference:mentor.notificationPreference
         };
     },
 
@@ -36,7 +37,8 @@ const MentorConverter = {
             data.timezone,
             data.subjects,
             data.tags,
-            data.gradeLevels
+            data.gradeLevels,
+            data.notificationPreference
         );
     }
 };
@@ -76,7 +78,9 @@ const mentorSchema = Yup.object().shape({
         .required('Subjects Required'),
     gradeLevels: Yup
         .array()
-        .required('Grade Levels Required')
+        .required('Grade Levels Required'),
+    notificationPreference: Yup
+        .string()
 });
 
 /** Firebase Mentor Object */
@@ -98,7 +102,8 @@ export default class Mentor {
         timezone,
         subjects,
         tags,
-        gradeLevels
+        gradeLevels,
+        notificationPreference
     ) {
         this.id = undefined;
         this.name = name;
@@ -114,6 +119,7 @@ export default class Mentor {
         this.tags = tags;
         this.gradeLevels = gradeLevels;
         this.role = 'MENTOR';
+        this.notificationPreference = notificationPreference
         this.validate();
     }
 

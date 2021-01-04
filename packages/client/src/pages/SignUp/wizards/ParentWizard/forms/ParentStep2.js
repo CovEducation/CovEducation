@@ -4,7 +4,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import Select from '@material-ui/core/Select';
-import { timeZones } from '../../../../../constants.js';
+import { timeZones, proNouns } from '../../../../../constants.js';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const WizardInput = styled.div`
     margin-bottom: 1em;
@@ -21,14 +24,36 @@ const SelectMenuProps = {
     },
 };
 
+
 const ParentStep2 = (props) => {
 
     const timeZoneMenuItems = timeZones.map(item => {
         return <MenuItem key={item.value} value={item.timezone}>{item.timezone}</MenuItem>;
     });
 
+
+    const proNounsMenuItems = proNouns.map(item => {
+        return <MenuItem key={item.value} value={item.pronoun}>{item.pronoun}</MenuItem>;
+    });
+
+
     return (
         <div>
+             <WizardInput>
+                <InputLabel id="wizard-pronouns" required>Pronouns</InputLabel>
+                <Select
+                    children={proNounsMenuItems}
+                    displayEmpty
+                    fullWidth
+                    labelId="wizard-pronoun"
+                    MenuProps={SelectMenuProps}
+                    name="pronouns"
+                    onChange={props.handleChange}
+                    renderValue={(selected) => selected}
+                    value={props.data.pronouns}
+                    required
+                />
+            </WizardInput>
             <WizardInput>
                 <TextField
                     fullWidth
@@ -73,6 +98,13 @@ const ParentStep2 = (props) => {
                     value={props.data.timeZone}
                     required
                 />
+            </WizardInput>
+            <WizardInput>
+                <InputLabel id="wizard-notification-preference">Notification preference</InputLabel>
+                <RadioGroup row name="notification-preference" defaultValue="phone">
+                    <FormControlLabel value="phone" control={<Radio color="primary" />} label="Phone" />
+                    <FormControlLabel value="email" control={<Radio color="primary" />} label="Email" />
+                </RadioGroup>
             </WizardInput>
         </div>
     );

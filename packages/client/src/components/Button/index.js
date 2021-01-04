@@ -8,11 +8,13 @@ const ButtonThemes = {
     default: COLORS.blue,
     accent: COLORS.yellow,
     light: COLORS.lightblue,
+    danger: COLORS.red
   },
   fontColor: {
     default: COLORS.white,
     acccent: COLORS.white,
     light: COLORS.black,
+    danger: COLORS.white
   },
   width: {
     sm: 120,
