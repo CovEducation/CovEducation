@@ -314,7 +314,7 @@ const HomePage = () => {
           <h2>{t('home.questions')}</h2>
           <p>
             <Trans i18nKey="home.questionsans">
-              Check out our <Link href='/faqs'> FAQs page </Link> to see if we've already answered your question or Contact Us!
+              Check out our <Link href='/faqs'> FAQs page </Link> to see if we've already answered your question or <Link href='/contactus'> Contact Us </Link>!
         </Trans>
           </p>
         </Section>
