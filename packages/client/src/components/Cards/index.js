@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { COLORS, FONTS } from '../../constants';
-import ArrowDown from '../Icons/ArrowDown';
 
 /**
  * Example usage:
@@ -23,43 +22,68 @@ import ArrowDown from '../Icons/ArrowDown';
  * }
  */
 
-const CardFooter = styled.div`
-  height: auto;
-  cursor: pointer;
-  padding: 5px;
-  display: flex;
-  max-width: 400px;
-  justify-content: space-between;
-  align-items: center;
-  background-color: ${COLORS.lightblue};
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-  color:  ${COLORS.blue};
-  font-weight: 600;
+const CardFooter = styled.a`=
+    cursor: pointer;
+    margin: 0px auto;
+    color:  ${COLORS.blue};
+    font-weight: 600;
+    text-decoration: none;
+    display: block;
 `;
 
 const CardContent = styled.div`
-  background-color: ${COLORS.lightgray};
-  height: auto;
-  overflow: hidden;
-  max-width: 400px;
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+    display: block;
+    padding: 10px;
+    color:  ${COLORS.blue};
+    height: 200px;
+    width: 300px;
+    text-align: center;
 `;
+
+const CardTags = styled.div`
+    margin: 10px auto;
+    color:  ${COLORS.blue};
+    font-size: 12px;
+    display: block;
+    margins: auto;
+`;
+
+const CardWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 300px;
+    background: linear-gradient(180deg, rgba(210,210,210,1) 34%, rgba(237,237,237,1) 100%);
+    margin: 20px;
+    border-radius: 10px;
+
+    &:hover {
+        background: linear-gradient(180deg, rgba(210,210,210,0.5) 34%, rgba(237,237,237,0.5) 100%);
+    }
+`;
+
+const CardsContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-height: 300px;
+    justify-content: center;
+`;
+
 
 export const Card = ({ children, title, url, tags }) => {
     return (
         <div>
-            <CardContent>
-                {children}
-            </CardContent>
-            <a href={url}>
-                <CardFooter>
+            <CardWrapper>
+                <CardContent>
+                    {children}
+                </CardContent>
+                <CardFooter href={url}>
                     {title}
                 </CardFooter>
-            </a>
+                <CardTags>
+                    {tags? tags.join(", "): ""}
+                </CardTags>
+            </CardWrapper>
         </div>
     )
 }
@@ -73,9 +97,9 @@ Card.propTypes = {
 
 const Cards = ({ children }) => {
     return (
-        <Card>
+        <CardsContainer>
             {children}
-        </Card>
+        </CardsContainer>
     )
 }
 
