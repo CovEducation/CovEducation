@@ -1,4 +1,5 @@
 import React from 'react';
+import Carousel from 'react-elastic-carousel';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
@@ -73,9 +74,10 @@ const HomepageSubtitle = styled.p`
 const HomepageBody = styled.div`
   p{
     font-family: ${FONTS.font2};
-    font-weight: 300;
+    font-weight: 400;
   }
   h2 {
+    font-size: max(2.25vw, 21px);
     font-family: ${FONTS.font1};
     font-weight: 500;
   }
@@ -85,14 +87,14 @@ const HomepageBody = styled.div`
     font-family: ${FONTS.font2};
   }
   p.title {
-    font-size: max(1.5vw, 18px);
+    font-size: max(1.75vw, 18px);
     font-weight: 400;
     font-family: ${FONTS.font2};
     color: ${COLORS.darkblue};
   }
   p.desc {
-    font-size: max(1vw, 16px);
-    font-weight: 300;
+    font-size: max(1.25vw, 16px);
+    font-weight: 400;
     font-family: ${FONTS.font2};
   }
   @media (min-width: 768px){
@@ -217,7 +219,7 @@ const WhyJoin = [
   {
     key: 3,
     title: 'home.whyJoin.classroomTitle',
-    desc: 'home.whyJoin.classroomTitle',
+    desc: 'home.whyJoin.classroom',
     imgsrc: classroom
   },
   {
@@ -225,6 +227,39 @@ const WhyJoin = [
     title: 'home.whyJoin.freeTitle',
     desc: 'home.whyJoin.costFree',
     imgsrc: free
+  }
+]
+
+const Testimonials = [
+  {
+    key: 1,
+    text: 'home.testimonials.testimonial1', 
+    auth: 'home.testimonialauths.testimonial1auth'
+  },
+  {
+    key: 2,
+    text: 'home.testimonials.testimonial3',
+    auth: 'home.testimonialauths.testimonial3auth'
+  },
+  {
+    key: 3,
+    text: 'home.testimonials.testimonial5',
+    auth: 'home.testimonialauths.testimonial5auth'
+  },
+  {
+    key: 4,
+    text: 'home.testimonials.testimonial2',
+    auth: 'home.testimonialauths.testimonial2auth'
+  },
+  {
+    key: 5,
+    text: 'home.testimonials.testimonial4',
+    auth: 'home.testimonialauths.testimonial4auth'
+  },
+  {
+    key: 6,
+    text: 'home.testimonials.testimonial6',
+    auth: 'home.testimonialauths.testimonial6auth'
   }
 ]
 
@@ -237,8 +272,8 @@ const HomePage = () => {
         <div>
           <HomepageTitle>CovEd<span>ucation</span></HomepageTitle>
           <HomepageSubtitle>{t('home.subtitle')}</HomepageSubtitle>
-          <Button theme="accent" size="md" round>{t('home.forMenteesButton')}</Button>
-          <Button theme="accent" size="md" round>{t('home.forMentorsButton')}</Button>
+          <a href="/parents"><Button onclick="window.location='/parents'" theme="accent" size="md" round>{t('home.forMenteesButton')}</Button></a>
+          <a href="/mentors"><Button theme="accent" size="md" round>{t('home.forMentorsButton')}</Button></a>
         </div>
       </HomepageSection>
       <HomepageBody>
@@ -261,7 +296,7 @@ const HomePage = () => {
             })}
           </Grid>
         </Section>
-        <Section backgroundColor='lightorange' p="100px">
+        <Section backgroundColor='lightorange' p="75px">
           <h2>{t('home.howCovEdWorks')}</h2><br />
           <Grid container direction="row" spacing={3} justify="center">
             {howItWorks.map((s) => {
@@ -273,18 +308,32 @@ const HomePage = () => {
               )
             })}
           </Grid><br /><br />
-          <Button theme="accent" size="md">{t('home.MenteesLearnMoreButton')}</Button>
-          <Button theme="accent" size="md">{t('home.MentorsLearnMoreButton')}</Button>
+          <span>{t('home.learnMore')}</span><br /><br />
+          <a href="/parents"><Button theme="accent" size="md">{t('home.MenteesLearnMoreButton')}</Button></a>
+          <a href="/mentors"><Button theme="accent" size="md">{t('home.MentorsLearnMoreButton')}</Button></a>
         </Section>
-        <Section p="100px">
-          statistics here
+        <Section p="75px">
+          <h2>{t('home.hearFromUs')}</h2><br />
+          {/* <p className="title">{t('home.testimonials.testimonial6')}</p>
+          <p>{t('home.testimonialauths.testimonial6auth')}</p> */}
+          <Carousel>
+            {Testimonials.map((s) => 
+              <div key={s.key}>
+                <p className="title">{t(s.text)}</p>
+                <p>{t(s.auth)}</p>
+              </div>
+            )}
+          </Carousel>
+          {/* carousel currently kind of ugly and i don't think formatting can be changed */}
+          {/* may have to custom create Carousel in components and dictate formatting there, 
+          but i'm not sure how to actually put all of the pieces together */}
         </Section>
         <Section backgroundColor='lightblue' p="100px">
           <span>"{t('home.quote')}"</span>
           <br />
           <p>- {t('home.quoteauth')}</p>
         </Section>
-        <Section p="100px">
+        <Section p="75px">
           <h2>{t('home.findTutors')}</h2> <br /><br />
           <Grid container direction="row" spacing={3} justify="center">
             {Subjects.map((s) => {
