@@ -320,5 +320,23 @@ export const subjects = [
   }
 ];
 
+export const resources = [
+  {
+    key: "1",
+    label: "Khan Academy",
+    description: "yeet",
+    url: "https://www.khanacademy.org/",
+    tags: ["High School"],
+    subjects: ["Economics"]
+  },
+  {
+    key: "2",
+    label: "MIT",
+    description: "yeet :))))))",
+    url: "https://www.mit.edu",
+    subjects: ["Economics"]
+  }
+];
+
 export const tags = ["Early Childhood Learning", "Preschool", "Elementary School", "Middle School", "High School"]
   .map(k => { return { label: k, value: k } });
