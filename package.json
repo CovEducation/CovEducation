@@ -1,0 +1,30 @@
+{
+  "name": "coved",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "lerna run start --stream",
+    "build": "lerna run build --stream",
+    "test": "lerna run test --stream",
+    "preproduction": "npm run build",
+    "production": "NODE_ENV=production node packages/server/bin/www"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.22.1",
+    "lerna": "^3.22.1",
+    "typescript": "^4.0.3"
+  },
+  "dependencies": {
+    "algoliasearch": "^4.4.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "firebase-admin": "^9.2.0",
+    "react-instantsearch-dom": "^6.7.0",
+    "redoc-cli": "^0.9.12",
+    "supertest": "^5.0.0",
+    "yup": "^0.29.3"
+  }
+}

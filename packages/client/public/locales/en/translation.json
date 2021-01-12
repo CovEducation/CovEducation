@@ -1,0 +1,71 @@
+{
+  "home": {
+    "subtitle": "Continuing K-12 education in the US during the COVID-19 outbreak",
+    "forMentorsButton": "For Mentors",
+    "forMenteesButton": "For Mentees",
+    "MenteesLearnMoreButton": "Learn More (for Mentees)",
+    "MentorsLearnMoreButton": "Learn More (for Mentors)",
+    "whyBePartOfCovEd": "Why Be Part of CovEd?",
+    "howCovEdWorks": "How CovEd Works",
+    "findTutors": "Find Online Tutors in Any Subject",
+    "questions": "Questions?",
+    "questionsans": "Check out our <1> FAQs page</1> to see if we've already answered your question or Contact Us!",
+    "quote":" I am so grateful for how much my CovEd mentor has taught me! Where would I have been without him, I truly don't know! Thanks CovEducation!",
+    "quoteauth": "John Smith",
+     "subjects": {
+        "Writing": "Writing",
+        "Math": "Math",
+        "Science": "Writing",
+        "History": "History",
+        "ComputerScience": "Computer Science",
+        "Economics": "Economics",
+        "Music": "Music",
+        "Art": "Art",
+        "Languages": "Languages",
+        "testPrep": "Test Prep"
+        },
+     "whyJoin": {
+       "mentoringTitle": "One on One Mentoring",
+       "mentoring": "You get to have mentorship beyond academics.",
+       "communityTitle": "Lifelong Community",
+       "community": "You get to form lifelong friendships and expand your network.",
+       "classroomTitle": "Events Beyond The Classroom",
+       "classroom": "Access our speaker series, career panels, and networking sessions!",
+       "freeTitle": "It's Free",
+       "costFree": "It's entirely cost-free!"
+      },
+      "howItWorks": {
+          "step1": "Mentors sign up to mentor via a quick & easy registration page.",
+          "step2": "Mentees register, and then look for an available mentor who tutors in their desired subjects of choice.",
+          "step3": "Once you’ve requested your mentor, they will receive a notification to then reach out to you."
+      }
+  },
+  "howItWorksMentors": {
+      "Title": "How It Works",
+      "Subtitle": "For Mentors",
+      "RegisterTitle": "Register",
+      "Register": "Register for an account here! Make sure to input the correct institutional email because you will receive an email-verification link!",
+      "EditTitle": "Edit Your Profile",
+      "Edit": "Log in to visit your Profile page, where you will be able to edit your information including a bio. Make sure you check off 'Listed as Available Mentor'.",
+      "ContactTitle": "Contact Mentee",
+      "Contact": "When a parent requests you as a mentor, you will receive an email with further instructions and contact information. Be sure to contact them as soon as possible to introduce yourself!"
+    },
+  "howItWorksParents": {
+      "Title": "How It Works",
+      "Subtitle": "For Parents",
+      "RegisterTitle": "Register",
+      "Register": "Register for an account here! Make sure you input your correct parent email because you will receive an email verification link!",
+      "FindTitle": "Find A Mentor",
+      "FindAMentor": "Log in to visit the Find A Mentor page, where you will be able to search for and request a mentor. Please only contact one mentor per student at a time.",
+      "ContactTitle": "Meet Mentor",
+      "Contact": "Your mentor will email you to set up an initial meeting time. If you do not hear from your mentor within 48 hours, please request another mentor."
+    },
+
+    "Contact" : {
+      "Title": "Contact Us",
+      "Subtitle" : "Make sure to check out our FAQs page first!",
+      "Name": "Name",
+      "Email": "Email",
+      "Message": "Message"
+    }
+}

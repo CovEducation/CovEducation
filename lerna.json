@@ -1,0 +1,14 @@
+{
+  "packages": [
+    "packages/client",
+    "packages/server"
+  ],
+  "version": "0.1.1",
+  "command": {
+    "publish": {
+      "allowBranch": [
+        "master"
+      ]
+    }
+  }
+}
