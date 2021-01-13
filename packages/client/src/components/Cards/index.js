@@ -27,6 +27,7 @@ const CardFooter = styled.a`=
     margin: 0px auto;
     color:  ${COLORS.blue};
     font-weight: 600;
+    font-size: 18px;
     text-decoration: none;
     display: block;
 `;
@@ -34,30 +35,43 @@ const CardFooter = styled.a`=
 const CardContent = styled.div`
     display: block;
     padding: 10px;
-    color:  ${COLORS.blue};
+    color:  ${COLORS.darkblue};
     height: 200px;
     width: 300px;
-    text-align: center;
+    font-weight: 400;
 `;
 
 const CardTags = styled.div`
-    margin: 10px auto;
-    color:  ${COLORS.blue};
-    font-size: 12px;
+    padding: 4px;
+    margin: 5px 5px;
+    background: ${COLORS.lightgray};
+    font-size: 15px;
     display: block;
-    margins: auto;
+    border-color: ${COLORS.grey};
+    border-style: solid;
+    border-width: thin;
+    border-radius: 10px;
+    color: ${COLORS.black};
+`;
+
+const TagsContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-height = 200px;
+    justify-content: center;
 `;
 
 const CardWrapper = styled.div`
     display: flex;
     flex-direction: column;
     height: 300px;
-    background: linear-gradient(180deg, rgba(210,210,210,1) 34%, rgba(237,237,237,1) 100%);
+    background: ${COLORS.lightblue};
     margin: 20px;
     border-radius: 10px;
 
     &:hover {
-        background: linear-gradient(180deg, rgba(210,210,210,0.5) 34%, rgba(237,237,237,0.5) 100%);
+        background: ${COLORS.lightgray};
     }
 `;
 
@@ -70,6 +84,7 @@ const CardsContainer = styled.div`
 `;
 
 
+
 export const Card = ({ children, title, url, tags }) => {
     return (
         <div>
@@ -80,11 +95,17 @@ export const Card = ({ children, title, url, tags }) => {
                 <CardFooter href={url}>
                     {title}
                 </CardFooter>
-                <CardTags>
-                    {tags? tags.join(", "): ""}
-                </CardTags>
+                <TagsContainer>
+                    {tags.map((r) => {
+                        return (
+                            <CardTags>
+                                {r}
+                            </CardTags>
+                        )
+                    })}
+                </TagsContainer>
             </CardWrapper>
-        </div>
+        </div >
     )
 }
 

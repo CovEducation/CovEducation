@@ -324,36 +324,36 @@ export const resources = [
   {
     key: "1",
     label: "Khan Academy",
-    description: "yeet",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.    ",
     url: "https://www.khanacademy.org/",
     tags: ["High School"],
     subjects: ["Economics"]
   },
   {
     key: "2",
-    label: "MIT",
-    description: "yeet :))))))",
-    url: "https://www.mit.edu",
-    subjects: ["Economics"]
+    label: "College Application Handbook",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    url: "https://drive.google.com/file/d/1-s5C0_57b0fp1ZEXyMLyAldIJ9UmpsFF/view?usp=sharing",
+    tags: ["High School"]
   },
   {
     key: "3",
     label: "Test",
-    description: "yeet :))))))",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.    ",
     url: "https://www.mit.edu",
-    tags: ["Economics", "Middle School"]
+    tags: ["Economics", "Computer Science"]
   },
   {
     key: "4",
     label: "Test",
-    description: "yeet :))))))",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.    ",
     url: "https://www.mit.edu",
     tags: ["Economics", "Middle School"]
   },
   {
     key: "5",
     label: "Test",
-    description: "yeet :))))))",
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.    ",
     url: "https://www.mit.edu",
     tags: ["Economics", "Middle School"]
   }

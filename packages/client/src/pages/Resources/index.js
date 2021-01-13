@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FONTS, subjects, resources, tags } from '../../constants';
 import Section from '../../components/Section';
 import Cards, { Card } from '../../components/Cards';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import TextField from '@material-ui/core/TextField';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const ResourcesWrapper = styled.div`
   text-align: center;
@@ -23,12 +28,15 @@ const ResourcesWrapper = styled.div`
     padding-top: 30px;
   }
 `;
+
 const Resources = () => {
+
     return (
         <ResourcesWrapper>
+
             <Section p="100px">
                 <div>
-                    <h1 style={{ textAlign: 'center' }}>Test Test </h1>
+                    <h1 style={{ textAlign: 'center' }}> Resources </h1>
                 </div>
                 <Cards>
                     {resources.map((r) => {
@@ -39,6 +47,7 @@ const Resources = () => {
                         )
                     })}
                 </Cards>
+
             </Section>
         </ResourcesWrapper>
     )
