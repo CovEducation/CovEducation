@@ -272,7 +272,7 @@ const HomePage = () => {
         <div>
           <HomepageTitle>CovEd<span>ucation</span></HomepageTitle>
           <HomepageSubtitle>{t('home.subtitle')}</HomepageSubtitle>
-          <a href="/parents"><Button onclick="window.location='/parents'" theme="accent" size="md" round>{t('home.forMenteesButton')}</Button></a>
+          <a href="/parents"><Button theme="accent" size="md" round>{t('home.forMenteesButton')}</Button></a>
           <a href="/mentors"><Button theme="accent" size="md" round>{t('home.forMentorsButton')}</Button></a>
         </div>
       </HomepageSection>
