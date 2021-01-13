@@ -41,11 +41,12 @@ const ModalTitle = withStyles(styles)(props => {
 
 const ModalContent = withStyles(theme => ({
   root: {
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    border: 0
   }
 }))(MuiDialogContent);
 
-export default function Modal(props) {
+export default function ModalNew(props) {
   // Called as so <Modal text="test" title="ahh" trigger={<Button> Test </Button>}> stuff to show up in modal </Modal>
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
@@ -60,7 +61,6 @@ export default function Modal(props) {
       { props.trigger && cloneElement(props.trigger,{ onClick: handleClickOpen }) }
       <Dialog aria-labelledby="customized-dialog-title" open={props.open || open}>
         <ModalTitle id="customized-dialog-title" onClose={props.handleClose || handleClose}>
-          {props.title}
         </ModalTitle>
         <ModalContent dividers>
           {props.children}
@@ -70,11 +70,11 @@ export default function Modal(props) {
   );
 }
 
-Modal.propTypes = {
+ModalNew.propTypes = {
   title: PropTypes.string,
 };
 
-Modal.defaultProps = {
+ModalNew.defaultProps = {
   title: 'title',
   trigger: <button> Use Button Component as trigger! </button>
 };

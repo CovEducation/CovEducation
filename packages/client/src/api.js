@@ -50,6 +50,14 @@ export const getUserDetailByEmail = async (email) => {
     return await post(host + 'getUserbyEmail', {email: "jamesgonzalez@ross-hill.biz"}, {  });
 };
 
+export const sendRequest = async (email,message) => {
+    if (Auth.currentUser === undefined || Auth.currentUser === null) {
+        throw Error('Unable to retrive user data with uninitilized Auth user.');
+    }
+    const token = await Auth.currentUser.getIdToken();
+    return await post(host + 'request/sendRequest', {mentorEmailAddress: email, message: message, parentId: Auth.currentUser.uid}, {token});
+}
+
 export const getRequests = async (arr) => {
     if (Auth.currentUser === undefined || Auth.currentUser === null) {
         throw Error('Unable to retrive user data with uninitilized Auth user.');
@@ -57,6 +65,7 @@ export const getRequests = async (arr) => {
     const token = await Auth.currentUser.getIdToken();
     return await post(host + 'request/getRequests', {id : Auth.currentUser.uid, status: arr}, {token});
 }
+
 
 export const acceptStudentRequest = async (messageID, status, studentName) => {
     if (Auth.currentUser === undefined || Auth.currentUser === null) {
@@ -80,4 +89,20 @@ export const updateRatingss = async (messageID, ratings, studentName) => {
     }
     const token = await Auth.currentUser.getIdToken();
     return await post(host + 'request/updateRatings', {mentorUID : Auth.currentUser.uid, messageID:messageID, ratings: ratings, studentName: studentName}, {token});
+}
+
+export const getSpeakerSeriesList = async () => {
+    if (Auth.currentUser === undefined || Auth.currentUser === null) {
+        throw Error('Unable to retrive user data with uninitilized Auth user.');
+    }
+    const token = await Auth.currentUser.getIdToken();
+    return await post(host + 'staticData/getSpeakerSeries', {}, {token});
+}
+
+export const getTeamDataList = async () => {
+    // if (Auth.currentUser === undefined || Auth.currentUser === null) {
+    //     throw Error('Unable to retrive user data with uninitilized Auth user.');
+    // }
+    // const token = await Auth.currentUser.getIdToken();
+    return await post(host + 'staticData/getTeamData', {}, {});
 }

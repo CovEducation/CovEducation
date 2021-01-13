@@ -28,7 +28,6 @@ router.post("/sendRequest", async function(req, res, next) {
 
     const mentor = await db.getUser(user.uid);
     const parent = await db.getUser(req.body.parentId);
-    console.log("parent", parent);
     if(typeof parent.students !== "undefined")
     {
         var studentsArray = parent.students;
@@ -63,7 +62,6 @@ router.post("/sendRequest", async function(req, res, next) {
     }
     // We want to keep logs of all messages on Firestore.
     const a = await db.addMessageToDB(user.uid, req.body.parentId, studentsName, message);
-    console.log("a", a);
 
     // Default to email if preference not specify
     const mentorPreference = mentor.communicationPref || NOTIFICATION_PREFERENCES.EMAIL;
@@ -82,7 +80,6 @@ router.post("/sendRequest", async function(req, res, next) {
 });
 
 router.post("/getRequests", async function(req, res, next) {
-    console.log(req.body);
     var id = req.body.id;
     const requesterDetails = await db.getUser(id);    
     var requesterRole = requesterDetails.role;
@@ -99,7 +96,6 @@ router.post("/getRequests", async function(req, res, next) {
             {
                 var requestId = requestsCollection[requestRow];
                 var requestDetails = await dbRequest.getRequestData(requestId);
-                console.log("requestDetails", requestDetails);
                 if(requestDetails)
                 {
                     
@@ -111,7 +107,6 @@ router.post("/getRequests", async function(req, res, next) {
                         {
                             for(var j = 0; j < parentDetails.students.length; j++)
                             {
-                                console.log("parentDetails.students[j]", parentDetails.students[j]);
                                 var obj = {
                                     "messageId": requestId,
                                     "parentDetails": parentDetails,
@@ -145,7 +140,6 @@ router.post("/getRequests", async function(req, res, next) {
                     }
                 }
             }
-            console.log("finalOutput", finalOutput);
             res.send({status:200,result:finalOutput,message:"Requests found."});
         }
         else {

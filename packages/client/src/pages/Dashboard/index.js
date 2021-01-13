@@ -73,7 +73,7 @@ const DashboardContent = styled.div`
 
 const DashboardPage = () => {
   const { url, path } = useRouteMatch();
-  const { user, authState, request } = useAuth();
+  const { user, authState, request, speakerSeries } = useAuth();
   const location = useLocation();
 
   // TODO move this logic to a dedicated component
@@ -96,9 +96,7 @@ const DashboardPage = () => {
       </DashboardHeader>
       <DashboardSidenav>
         <SidenavLink to={`${url}/profile`} active={location.pathname.endsWith('profile')}>My Profile</SidenavLink>
-        {user.role === 'PARENT' && 
-          <SidenavLink to={`${url}/mentors`} active={location.pathname.endsWith('mentors')}>Find a Mentor</SidenavLink>
-        }
+        <SidenavLink to={`${url}/mentors`} active={location.pathname.endsWith('mentors')}>Find a Mentor</SidenavLink>
         <SidenavLink to={`${url}/speaker-series`} active={location.pathname.endsWith('speaker-series')}>Speaker Series</SidenavLink>
         <SidenavLink to={`${url}/requests`} active={location.pathname.endsWith('requests')}>Requests</SidenavLink>
       </DashboardSidenav>
@@ -110,7 +108,7 @@ const DashboardPage = () => {
           <FindAMentorPage />
         </Route>
         <Route path={`${path}/speaker-series`}>
-        <SpeakerSeriesPage user={user}/>
+        <SpeakerSeriesPage speakerSeries={speakerSeries}/>
         </Route>
         <Route path={`${path}/requests`} exact>
           <RequestsPage request={request}/>

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 
 const SpeakerProfileContainer = styled.div`
     padding: 0 2rem;
@@ -41,7 +42,7 @@ const SpeakerProfile = ({ speaker }) => {
             <SpeakerProfileHeader>
                 <SpeakerProfilePicture src={`https://via.placeholder.com/300x200?text=${speaker.name}`} alt='Profile' />
                 <div>
-                    <h3>{speaker.date}</h3>
+                    <h3>{moment(speaker.date).format('LL')}</h3>
                     <h4>{speaker.name}</h4>
                     <p>{speaker.description}</p>
                 </div>

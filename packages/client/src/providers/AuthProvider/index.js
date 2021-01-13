@@ -1,7 +1,19 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 
 import { Auth,Db } from '../FirebaseProvider';
-import { getUser, createMentorWithEmail, createParentWithEmail, getUserDetailByEmail, getRequests, acceptStudentRequest, updateSessionHours, updateRatingss } from '../../api';
+import { 
+    getUser, 
+    createMentorWithEmail, 
+    createParentWithEmail, 
+    getUserDetailByEmail, 
+    sendRequest,
+    getRequests, 
+    acceptStudentRequest, 
+    updateSessionHours, 
+    updateRatingss,
+    getSpeakerSeriesList,
+    getTeamDataList
+ } from '../../api';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
@@ -43,6 +55,8 @@ const useAuthProvider = () => {
     const [user, setUser] = useState(null);
     const [request, setRequest] = useState(null);
     const [requestOther, setRequestOther] = useState(null);
+    const [speakerSeries, setSpeakerSeries] = useState(null);
+    const [teamData, setTeamData] = useState(null);
     /**
      * Signs a user in. This triggers pulling the correct user information.
      * @param {string} email
@@ -101,6 +115,16 @@ const useAuthProvider = () => {
         await getUserDetailByEmail(email);
     }
    
+    const sendRequestToMentor = async(email,message) => {
+        await sendRequest(email, message)
+        .then(() => {
+            alert("Request Send successfully.");
+        })
+        .catch((err) => {
+            console.log(`Error Sending Request: ${err}`);
+        });
+    }
+
     const getRequestList = async() => {
         await getRequests(["Pending"])
         .then((request) => setRequest(request))
@@ -110,7 +134,7 @@ const useAuthProvider = () => {
         });
     }
 
-    const getRequestListOther = async() => {
+    const getPendingRequestList = async() => {
         await getRequests(["Pending"])
         .then((request) => setRequestOther(request))
         .catch((err) => {
@@ -120,7 +144,6 @@ const useAuthProvider = () => {
     }
 
     const acceptRequest = async (messageID, status, studentName) => {
-        console.log('await',messageID)
         await acceptStudentRequest(messageID, status, studentName)
         .then(() => {
             console.log('request Accepted'); 
@@ -200,6 +223,25 @@ const useAuthProvider = () => {
     }
 
 
+    // 
+    const getSpeakerSeries = async() => {
+        await getSpeakerSeriesList()
+        .then((data) => setSpeakerSeries(data))
+        .catch((err) => {
+            console.log(`Error fetching Speaker Series: ${err}`);
+            setSpeakerSeries(null);
+        });
+    }
+
+
+    const getTeamData = async() => {
+        await getTeamDataList()
+        .then((data) => setTeamData(data))
+        .catch((err) => {
+            console.log(`Error fetching Team Data: ${err}`);
+            setTeamData(null);
+        });
+    }
     // TODO this may have to be done synchronously
     // Register firebase state handler
     // Note that this only gets called once on mount
@@ -230,9 +272,12 @@ const useAuthProvider = () => {
                 setUser(null);
             });
             getRequestList();
-            getRequestListOther();
+            getPendingRequestList();
+            getSpeakerSeries();
     }, [authState, auth]);
-
+    useEffect(() => {
+        getTeamData();
+    }, []);
     return {
         auth,
         authState,
@@ -243,13 +288,18 @@ const useAuthProvider = () => {
         signout,
         request,
         requestOther,
+        speakerSeries,
+        teamData,
+        sendRequestToMentor,
         getRequestList,
         acceptRequest,
         rejectRequest,
         archiveRequest,
         updateRatings,
         updateSessionHoursss,
-        getRequestListOther
+        getPendingRequestList,
+        getSpeakerSeries,
+        getTeamData
     };
 }
 

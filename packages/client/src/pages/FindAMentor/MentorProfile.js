@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from '../../components/Button';
 import TextField from '@material-ui/core/TextField';
@@ -11,7 +11,7 @@ const WizardInput = styled.div`
 `;
 
 const MentorProfileContainer = styled.div`
-    padding: 0 5rem;
+    padding: 0 50px;
 `;
 
 const MentorProfileHeader = styled.div`
@@ -25,9 +25,23 @@ const MentorProfileInformation = styled.div`
 `;
 
 const MentorProfilePicture = styled.img`
-    width: 30%;
+    width: 20%;
     margin-right: 1rem;
+    border-radius: 100%;
 `
+
+const MentorDetailsBlock = styled.div`
+    h3 {
+        font-size: 1.5rem;
+        font-weight: 400;
+        margin: 10px 0;
+    }
+    h4 {
+        font-weight: 400;
+        margin: 0;
+        font-size: 1.2rem;
+    }
+`;
 
 const MentorProfileText = styled.p`
     margin-right: 0.5rem;
@@ -43,12 +57,13 @@ const ButtonBlock = styled.div`
 
 
 // Displays the picture, name, and major of a mentor.
-const MentorProfile = ({ mentor }) => {
-    const { user } = useAuth();
+const MentorProfile = ({ mentor, onSubmit }) => {
+    const { user, sendRequestToMentor } = useAuth();
+    const [userMessage, setUserMessage] = useState("Hi New Parent Request");
 
     if (!validateMentorData(mentor)) return (<></>);
 
-    const relevantInformation = [
+    const relevantInformationMentor = [
         ['subjects', 'Subjects'],
         ['location', 'Location'],
         ['grade_levels_to_mentor', 'Grades'],
@@ -57,54 +72,43 @@ const MentorProfile = ({ mentor }) => {
         ['email', 'Email']
     ];
 
+    const relevantInformationParent = [
+        ['subjects', 'Subjects'],
+        ['location', 'Location'],
+        ['grade_levels_to_mentor', 'Grades'],
+        ['timezone', 'Timezone'],
+        ['languages_spoken', 'Languages'],
+    ];
 
-    const sendRequest = async (email) => {
-        if (Auth.currentUser === undefined || Auth.currentUser === null) {
-            throw Error('Unable to retrive user data with uninitilized Auth user.');
-        }
-        var message = document.getElementById('request').value
-        const data = { mentorEmailAddress: mentor.email, message: message, parentId: Auth.currentUser.uid};
-        //const data = {messageID: "rS3KmaQH5wZs8mIKazqT", requestStatus: "Rejected"};
-        //const data = {messageID: "rS3KmaQH5wZs8mIKazqT", ratings: 4.3};
-        //const data = { id: "wp68UuyOlmUQmqMWMSKv1SC9ozz1"};
-        fetch('http://localhost:3000/request/sendRequest', {
-            method: 'POST', // or 'PUT'
-            headers: {
-            'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("data", data);
-            if(data.status == 200)
-            {
-                alert("Request was sent successfully.");
-            }
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
+    const sendRequest = async(email) => {
+        await onSubmit(email,userMessage);
     }
-
+    
     return (
-        <MentorProfileContainer>
+        <MentorProfileContainer key={mentor.objectID}>
             <MentorProfileHeader>
                 <MentorProfilePicture src={mentor.avatar || `${process.env.PUBLIC_URL}/stock-profile.png`} alt='Profile' />
-                <div>
+                <MentorDetailsBlock>
                     <h3>{mentor.name}</h3>
                     <h4>{mentor.school}</h4>
                     <h4>{mentor.major}</h4>
+                </MentorDetailsBlock>
+                <div>
+                    
                 </div>
             </MentorProfileHeader>
             {mentor.bio !== null &&
                 <div>
-                    <p>Bio</p>
+                    <p><b>Bio</b></p>
                     <p>{mentor.bio}</p>
                 </div>
             }
             <MentorProfileInformation>
-                {relevantInformation.map(field => displayField(field, mentor))}
+            {user.role === 'PARENT' ? (
+                relevantInformationParent.map(field => displayField(field, mentor))
+            ) : (
+                relevantInformationMentor.map(field => displayField(field, mentor))
+            )} 
             </MentorProfileInformation>
             {user.role === 'PARENT' && 
             <>
@@ -114,10 +118,11 @@ const MentorProfile = ({ mentor }) => {
                     label="Request Message"
                     name="request"
                     id="request"
+                    onChange={(e) => {setUserMessage(e.target.value);}}
                 />
             </WizardInput>
             <ButtonBlock>
-            <Button theme="accent" size="md" onClick={sendRequest}>Send Request</Button>
+            <Button theme="accent" size="md" onClick={ () => sendRequest(mentor.email)}>Send Request</Button>
             </ButtonBlock>
             </>
             }
@@ -138,10 +143,14 @@ const displayField = (field, mentor) => {
         mentorInfo = mentorInfo.join(', ');
     }
     return (
+        <>
+        {mentorInfo && 
         <div>
-            <MentorProfileText>{field[1]}</MentorProfileText>
+            <MentorProfileText><b>{field[1]}</b></MentorProfileText>
             <MentorProfileText>{mentorInfo}</MentorProfileText>
         </div>
+        }
+        </>
     )
 };
 

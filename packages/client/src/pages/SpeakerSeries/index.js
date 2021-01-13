@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import styled from 'styled-components';
 import { COLORS } from '../../constants';
 import Button from '../../components/Button';
@@ -6,6 +6,7 @@ import useAuth, { AUTH_STATES } from "../../providers/AuthProvider";
 import Modal from '../../components/Modal';
 import SpeakerCard from './SpeakerCard';
 import SpeakerDetailFrame from './SpeakerDetailFrame.js';
+import moment from 'moment';
 
 const SpeakerSeriesPageWrapper = styled.div`
   padding: 100px;
@@ -34,7 +35,7 @@ const SpeakerSeriesHeader = styled.div`
 
   p {
     font-size: 24px;
-    margin: 0;
+    margin-top: 20;
   }
 `;
 const SpeakerSeriesWrapper = styled.div`
@@ -55,66 +56,81 @@ const RequestDetailsBlock = styled.div`
   }
 `;
 
-
-const speakerSeries = [
-  {
-      '_id' : '5ee15af7e790bd0a065b70f9',
-      'image': `${process.env.PUBLIC_URL}/stock-profile.png`,
-      'date' : 'March 06,2020',
-      'name' : 'Speaker Event 1',
-      'description' : 'This event was a speaker panel involving a group of leaders',
-  },
-  {
-    '_id' : '5ee15af7e790bd0a065b70f9',
-    'image': `${process.env.PUBLIC_URL}/stock-profile.png`,
-    'date' : 'March 06,2020',
-    'name' : 'Speaker Event 2',
-    'description' : 'This event was a speaker panel involving a group of leaders',
-  },
-  {
-    '_id' : '5ee15af7e790bd0a065b70f9',
-    'image': `${process.env.PUBLIC_URL}/stock-profile.png`,
-    'date' : 'March 06,2020',
-    'name' : 'Speaker Event 3',
-    'description' : 'This event was a speaker panel involving a group of leaders',
-  },
-  {
-    '_id' : '5ee15af7e790bd0a065b70f9',
-    'image': `${process.env.PUBLIC_URL}/stock-profile.png`,
-    'date' : 'March 06,2020',
-    'name' : 'Speaker Event 4',
-    'description' : 'This event was a speaker panel involving a group of leaders',
-  },
-];
-
 const SpeakerSeriesContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  padding: 50px;
+  padding: 0px 50px;
+  margin:0 auto;
+  
 `
-const SpeakerSeriesPage = () => {
- 
+const UpcomingEventsHeader =  styled.div `
+    text-align: center;
+    h2 {
+      color:${COLORS.blue};
+    }
+`
+const PastEventsHeader =  styled.div `
+    text-align: center;
+    h2 {
+      color:${COLORS.blue};
+    }
+`
+const SpeakerSeriesPage = ({speakerSeries}) => {
+  const speakerSeriesPastData = speakerSeries.filter((data) => moment(data.date).isBefore(new Date()))
+  const speakerSeriesUpComingData = speakerSeries.filter((data) => moment(data.date).isAfter(new Date()))
 
   return (
     <SpeakerSeriesPageWrapper>
       <SpeakerSeriesHeader>
         <div>
           <h1>Speaker Series</h1>
+          <p>This Speaker series is series of event hosted by CovEd.</p>
         </div>
       </SpeakerSeriesHeader>
+      <UpcomingEventsHeader>
+            <h2>Upcoming Events</h2>
+      </UpcomingEventsHeader>
+  
       <SpeakerSeriesWrapper>
+
       <SpeakerSeriesContainer>
-            {speakerSeries.map(speaker => {
-                return (
-                    <Modal title={speaker.name} key={speaker._id} trigger={<div><SpeakerCard speaker={speaker} /></div>}>
-                        <SpeakerDetailFrame speaker={speaker}/>
-                    </Modal>
-                );
-            })}
+        {speakerSeriesUpComingData.length > 0 ? (
+            speakerSeriesUpComingData.map(speaker => {
+              return (
+                  <Modal title={speaker.name} key={speaker._id} trigger={<div><SpeakerCard speaker={speaker} /></div>}>
+                      <SpeakerDetailFrame speaker={speaker}/>
+                  </Modal>
+              );
+            })
+        ) : (
+          <p>There are no upcoming events to display at this time.</p>
+        ) 
+        }   
         </SpeakerSeriesContainer>
+
       </SpeakerSeriesWrapper>
+      <PastEventsHeader>
+            <h2>Past Events</h2>
+      </PastEventsHeader>
+      <SpeakerSeriesWrapper>
+
+      <SpeakerSeriesContainer>
+      {speakerSeriesPastData.length > 0 ? (
+            speakerSeriesPastData.map(speaker => {
+              return (
+                  <Modal title={speaker.name} key={speaker._id} trigger={<div><SpeakerCard speaker={speaker} /></div>}>
+                      <SpeakerDetailFrame speaker={speaker}/>
+                  </Modal>
+              );
+            })
+        ) : (
+          <p>There are no past events to display at this time.</p>
+        ) 
+        }
+        </SpeakerSeriesContainer>
+        </SpeakerSeriesWrapper>
     </SpeakerSeriesPageWrapper>
   )
 }

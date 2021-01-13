@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 
 const SpeakerCardContainer = styled.div`
     display: flex;
@@ -24,7 +25,7 @@ const SpeakerCard = ({ speaker }) => {
     return (
         <SpeakerCardContainer>
             <img src={`https://via.placeholder.com/300x200?text=${speaker.name}`} alt='profile pic' style={{marginBottom:15}}/>
-            <SpeakerCardText>{speaker.date}</SpeakerCardText>
+            <SpeakerCardText>{moment(speaker.date).format('LL')}</SpeakerCardText>
             <SpeakerCardText>{speaker.name}</SpeakerCardText>
             <SpeakerCardDescription>{speaker.description}</SpeakerCardDescription>
         </SpeakerCardContainer>
