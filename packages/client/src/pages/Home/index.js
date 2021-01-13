@@ -81,6 +81,11 @@ const HomepageBody = styled.div`
     font-family: ${FONTS.font1};
     font-weight: 500;
   }
+  h3 {
+    font-size: max(1.6vw, 18px);
+    font-family: ${FONTS.font2};
+    font-weight: 200;
+  }
   span {
     font-size: min(3.5vw, 24px);
     font-weight: 400;
@@ -319,7 +324,7 @@ const HomePage = () => {
           <Carousel>
             {Testimonials.map((s) => 
               <div key={s.key}>
-                <p className="title">{t(s.text)}</p>
+                <h3>{t(s.text)}</h3>
                 <p>{t(s.auth)}</p>
               </div>
             )}
