@@ -268,6 +268,36 @@ const Testimonials = [
   }
 ]
 
+const CovEdCarousel = styled(Carousel)`
+  button.rec-dot{
+    background-color: white;
+    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.5);
+  };
+
+  button.rec-dot:hover {
+    background-color: white;
+    box-shadow: 0 0 1px 3px rgba(25, 84, 160, 0.5);
+  };
+
+  button.rec-dot_focus, button.rec-dot_active {
+    background-color: rgba(25, 84, 160, 0.5);
+    box-shadow: 0 0 1px 3px rgba(25, 84, 160, 1);
+  };
+
+  button.rec-arrow {
+    background-color: rgba(25, 84, 160, 0.05);
+  };
+
+  button.rec-arrow:hover:enabled, button.rec-arrow:focus:enabled {
+    background-color: rgba(25, 84, 160, 1);
+    box-shadow: 0 0 0px 0px #333;
+  };
+
+  .rec.rec-arrow:disabled {
+    visibility: hidden;
+  }
+`;
+
 const HomePage = () => {
   const { t } = useTranslation();
   return (
@@ -319,17 +349,14 @@ const HomePage = () => {
         </Section>
         <Section p="75px">
           <h2>{t('home.hearFromUs')}</h2><br />
-          <Carousel>
+          <CovEdCarousel>
             {Testimonials.map((s) => 
               <div key={s.key}>
                 <h3>{t(s.text)}</h3>
                 <p>{t(s.auth)}</p>
               </div>
             )}
-          </Carousel>
-          {/* carousel currently kind of ugly and i don't think formatting can be changed */}
-          {/* may have to custom create Carousel in components and dictate formatting there, 
-          but i'm not sure how to actually put all of the pieces together */}
+          </CovEdCarousel>
         </Section>
         <Section backgroundColor='lightblue' p="100px">
           <span>"{t('home.quote')}"</span>
