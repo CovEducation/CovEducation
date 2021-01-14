@@ -324,38 +324,37 @@ export const resources = [
   {
     key: "1",
     label: "Khan Academy",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.    ",
-    url: "https://www.khanacademy.org/",
-    tags: ["High School"],
-    subjects: ["Economics"]
+    description: "A comprehensive schedule template for K-12 students with additional links to Khan Academy resources to replicate consistent learning at home.",
+    url: "https://docs.google.com/document/d/e/2PACX-1vSZhOdEPAWjUQpqDkVAlJrFwxxZ9Sa6zGOq0CNRms6Z7DZNq-tQWS3OhuVCUbh_-P-WmksHAzbsrk9d/pub",
+    tags: ["Elementary School", "Middle School", "High School"],
   },
   {
     key: "2",
     label: "College Application Handbook",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    description: "A College Application handbook made by the CovEd team to help you navigate the college application process!",
     url: "https://drive.google.com/file/d/1-s5C0_57b0fp1ZEXyMLyAldIJ9UmpsFF/view?usp=sharing",
     tags: ["High School"]
   },
   {
     key: "3",
-    label: "Test",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.    ",
-    url: "https://www.mit.edu",
-    tags: ["Economics", "Computer Science"]
+    label: "Scholastic Learning",
+    description: "Daily projects to keep students engaged with reading.",
+    url: "https://learnathome.scholastic.com/thanks.html",
+    tags: ["English"]
   },
   {
     key: "4",
-    label: "Test",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.    ",
-    url: "https://www.mit.edu",
-    tags: ["Economics", "Middle School"]
+    label: "Mystery Science",
+    description: "Free elementary school science lessons.",
+    url: "https://mysteryscience.com/distance-learning",
+    tags: ["Physics", "Chemistry", "Biology", "Elementary School"]
   },
   {
     key: "5",
-    label: "Test",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.    ",
-    url: "https://www.mit.edu",
-    tags: ["Economics", "Middle School"]
+    label: "Audible",
+    description: "Collection of children's books available online for free while schools are closed. Includes titles in multiple languages.",
+    url: "https://stories.audible.com/start-listen",
+    tags: ["Elementary School", "English"]
   }
 ];
 

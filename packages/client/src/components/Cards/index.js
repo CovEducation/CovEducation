@@ -58,7 +58,7 @@ const TagsContainer = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    min-height = 200px;
+    max-width: 300px;
     justify-content: center;
 `;
 
