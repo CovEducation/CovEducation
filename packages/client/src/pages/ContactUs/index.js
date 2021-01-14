@@ -66,17 +66,19 @@ const ContactUsPage = () => {
   const { t } = useTranslation();
 
   const handleSubmit = event => {
-    console.log("button pressed");
     event.preventDefault();
+
     axios({
       method: 'post',
-      url: `${API_PATH}`,
+      url: '/send',
       headers: { 'content-type': 'application/json' },
       data: formData
     })
-    .then(result => {
-      setSubmitted(true);
-      setSubmitMessage("Thank you for contacting us! Your message has been submitted.");
+    .then((result) => {
+      if (result.data.status === 'success'){
+        setSubmitted(true);
+        setSubmitMessage("Thank you for contacting us! Your message has been submitted.");
+      } 
       setTimeout(() => {
         setSubmitted(false);
         setSubmitMessage("");
@@ -84,8 +86,8 @@ const ContactUsPage = () => {
           reset: true
         })
       }, 3000);
-    })
-    .catch(error => {
+    }).catch(error => {
+      console.log(error.response.data);
       setSubmitMessage("There was an error submitting your message. Please try again later.");
       setTimeout(() => {
         setSubmitMessage("");
