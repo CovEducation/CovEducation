@@ -286,6 +286,7 @@ const CovEdCarousel = styled(Carousel)`
 
   button.rec-arrow {
     background-color: rgba(25, 84, 160, 0.05);
+    cursor: allowed;
   };
 
   button.rec-arrow:hover:enabled, button.rec-arrow:focus:enabled {
