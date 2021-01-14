@@ -238,33 +238,33 @@ const WhyJoin = [
 const Testimonials = [
   {
     key: 1,
-    text: 'home.testimonials.testimonial1', 
-    auth: 'home.testimonialauths.testimonial1auth'
+    text: 'home.testimonials.0.testimonial', 
+    auth: 'home.testimonials.0.author'
   },
   {
     key: 2,
-    text: 'home.testimonials.testimonial3',
-    auth: 'home.testimonialauths.testimonial3auth'
+    text: 'home.testimonials.1.testimonial',
+    auth: 'home.testimonials.1.author'
   },
   {
     key: 3,
-    text: 'home.testimonials.testimonial5',
-    auth: 'home.testimonialauths.testimonial5auth'
+    text: 'home.testimonials.2.testimonial',
+    auth: 'home.testimonials.2.author'
   },
   {
     key: 4,
-    text: 'home.testimonials.testimonial2',
-    auth: 'home.testimonialauths.testimonial2auth'
+    text: 'home.testimonials.3.testimonial',
+    auth: 'home.testimonials.3.author'
   },
   {
     key: 5,
-    text: 'home.testimonials.testimonial4',
-    auth: 'home.testimonialauths.testimonial4auth'
+    text: 'home.testimonials.4.testimonial',
+    auth: 'home.testimonials.4.author'
   },
   {
     key: 6,
-    text: 'home.testimonials.testimonial6',
-    auth: 'home.testimonialauths.testimonial6auth'
+    text: 'home.testimonials.5.testimonial',
+    auth: 'home.testimonials.5.author'
   }
 ]
 
