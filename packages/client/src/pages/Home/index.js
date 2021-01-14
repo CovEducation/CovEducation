@@ -319,8 +319,6 @@ const HomePage = () => {
         </Section>
         <Section p="75px">
           <h2>{t('home.hearFromUs')}</h2><br />
-          {/* <p className="title">{t('home.testimonials.testimonial6')}</p>
-          <p>{t('home.testimonialauths.testimonial6auth')}</p> */}
           <Carousel>
             {Testimonials.map((s) => 
               <div key={s.key}>
