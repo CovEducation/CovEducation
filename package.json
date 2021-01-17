@@ -26,5 +26,6 @@
     "redoc-cli": "^0.9.12",
     "supertest": "^5.0.0",
     "yup": "^0.29.3"
-  }
+  },
+  "proxy": "http://localhost:8080/"
 }
