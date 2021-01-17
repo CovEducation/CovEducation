@@ -320,5 +320,43 @@ export const subjects = [
   }
 ];
 
+export const resources = [
+  {
+    key: "1",
+    label: "Khan Academy",
+    description: "A comprehensive schedule template for K-12 students with additional links to Khan Academy resources to replicate consistent learning at home.",
+    url: "https://docs.google.com/document/d/e/2PACX-1vSZhOdEPAWjUQpqDkVAlJrFwxxZ9Sa6zGOq0CNRms6Z7DZNq-tQWS3OhuVCUbh_-P-WmksHAzbsrk9d/pub",
+    tags: ["Elementary School", "Middle School", "High School"],
+  },
+  {
+    key: "2",
+    label: "College Application Handbook",
+    description: "A College Application handbook made by the CovEd team to help you navigate the college application process!",
+    url: "https://drive.google.com/file/d/1-s5C0_57b0fp1ZEXyMLyAldIJ9UmpsFF/view?usp=sharing",
+    tags: ["High School"]
+  },
+  {
+    key: "3",
+    label: "Scholastic Learning",
+    description: "Daily projects to keep students engaged with reading.",
+    url: "https://learnathome.scholastic.com/thanks.html",
+    tags: ["English"]
+  },
+  {
+    key: "4",
+    label: "Mystery Science",
+    description: "Free elementary school science lessons.",
+    url: "https://mysteryscience.com/distance-learning",
+    tags: ["Physics", "Chemistry", "Biology", "Elementary School"]
+  },
+  {
+    key: "5",
+    label: "Audible",
+    description: "Collection of children's books available online for free while schools are closed. Includes titles in multiple languages.",
+    url: "https://stories.audible.com/start-listen",
+    tags: ["Elementary School", "English"]
+  }
+];
+
 export const tags = ["Early Childhood Learning", "Preschool", "Elementary School", "Middle School", "High School"]
   .map(k => { return { label: k, value: k } });
