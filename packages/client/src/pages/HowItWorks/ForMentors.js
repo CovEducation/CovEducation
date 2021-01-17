@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 const Title = styled.h1`
   padding-top: 50px;
   font-size: max(1.5vw, 32px);
-  font-weight: 400;
+  font-weight: 900;
   font-family: ${FONTS.font2};
   left: calc(50% - 267px/2 + 0.5px)
   top: 86px
@@ -47,6 +47,7 @@ const Body = styled.div`
     line-height: 27px;
     display: flex;
     font-feature-settings: 'pnum' on, 'lnum' on;
+    padding-bottom: 3%;
 `;
 
 const Circle = styled.circle`
@@ -102,7 +103,7 @@ const ForMentors = () => {
     <Wrapper>
       <Title>{t('howItWorksMentors.Title')}</Title>
       <Subtitle>{t('howItWorksMentors.Subtitle')}</Subtitle>
-      <Button theme="light" size="md" color="accent" fontSize="14">{('Skip To Application')}</Button>
+      <a href="/signup"><Button theme="light" size="md" color="accent" fontSize="14">{('Skip To Application')}</Button> </a>
       <Body>
         <Grid container direction="row" justify="center" spacing={3} alignItems="center">
           {HowItWorks.map((s) => {
