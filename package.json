@@ -21,6 +21,7 @@
   "dependencies": {
     "algoliasearch": "^4.4.0",
     "eslint-config-airbnb": "^18.2.0",
+    "express-validator": "^6.9.2",
     "firebase-admin": "^9.2.0",
     "moment": "^2.29.1",
     "react-instantsearch-dom": "^6.8.2",
