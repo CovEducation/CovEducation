@@ -29,6 +29,7 @@ const AccordionRowHeader = styled.div`
   padding: 20px;
   display: flex;
   max-width: 700px;
+  width: 95%;
   justify-content: space-between;
   align-items: center;
   background-color: ${COLORS.white};
@@ -51,6 +52,7 @@ const AccordionRowContent = styled.div`
   transition: 0.2s ease height;
   overflow: hidden;
   max-width: 700px;
+  width: 95%;
   text-align: left;
   margin-left: 20px;
   margin-right: 20px;

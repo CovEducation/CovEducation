@@ -61,7 +61,6 @@ const Checkbox = ({ name, value, label, onChange, ...rest }) => {
       });
     }
   }
-  console.log(value);
 
   return (
     <CheckboxWrapper>

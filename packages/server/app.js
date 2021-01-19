@@ -23,7 +23,8 @@ firebase.initializeApp({
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-
+const requestRouter = require("./routes/request");
+const staticDataRouter = require("./routes/staticData");
 const app = express();
 
 app.use(cors({ origin: true }));
@@ -42,4 +43,6 @@ app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use("/request", requestRouter);
+app.use("/staticData", staticDataRouter);
 module.exports = app;

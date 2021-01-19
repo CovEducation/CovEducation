@@ -6,11 +6,41 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import AppBar from '@material-ui/core/AppBar';
+import styled from 'styled-components';
 
 const COLORS = {
     CovedYellow: '#F2BE32',
 }
+const TeamDataMainContainer = styled.div`
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+`
+const TeamDataContainer = styled.div`
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+    max-width: 280px;
+    min-width: 180px;
+    margin: 0.75rem;
+    cursor: pointer;
+    h2 {
+        font-weight: normal;
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+    img {
+        width:50%;
+        border-radius:50%;
+    }
+`
 
+const TeamDataText = styled.p`
+    font-size: 14px;
+    margin-bottom: 5px;
+    margin-top: 0px;
+`
 function a11yProps(index) {
     return {
         id: `simple-tab-${index}`,
@@ -96,7 +126,6 @@ export default function HTabs(props) {
     const handleChange = (_, newValue) => {
         setValue(newValue);
     };
-    console.log(props.texts)
     return (
         <div className={classes.root}>
             <AppBar position="static" color="default">
@@ -106,10 +135,25 @@ export default function HTabs(props) {
                     ))}
                 </AntTabs>
             </AppBar>
-            {props.texts.map((text, index) => (
-                <TabPanel value={value} index={index} key={index}>
-                 {text}
-                </TabPanel>
+            {props.texts.map((data, index) => (
+                
+
+                        <TabPanel value={value} index={index} key={index}>
+                                                <TeamDataMainContainer>
+
+                       { data && data.map((subData, id) => (
+                        <TeamDataContainer key={id}>
+                            <img src={`${process.env.PUBLIC_URL}/stock-profile.png`}  alt='profile pic'/>
+                            <h2>{subData.name}</h2>
+                            <TeamDataText>{subData.designation}, {subData.position}</TeamDataText>
+                         </TeamDataContainer>
+                            ))
+                       } 
+                        </TeamDataMainContainer>
+                    </TabPanel>
+                   
+
+         
             ))}
         </div>
     );

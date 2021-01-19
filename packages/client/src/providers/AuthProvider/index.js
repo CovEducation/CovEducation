@@ -1,7 +1,22 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 
-import { Auth } from '../FirebaseProvider';
-import { getUser, createMentorWithEmail, createParentWithEmail } from '../../api';
+import { Auth,Db } from '../FirebaseProvider';
+import { 
+    getUser, 
+    createMentorWithEmail, 
+    createParentWithEmail, 
+    getUserDetailByEmail, 
+    sendRequest,
+    getRequests, 
+    acceptStudentRequest, 
+    updateSessionHours, 
+    updateRatingss,
+    getSpeakerSeriesList,
+    getTeamDataList
+ } from '../../api';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/firestore';
 
 export const AUTH_STATES  = {
     LOGGED_OUT: 'LOGGED_OUT',
@@ -38,7 +53,10 @@ const useAuthProvider = () => {
     const [authState, setAuthState] = useState(AUTH_STATES.UNINITIALIZED);
     const [auth, setAuth] = useState(null);
     const [user, setUser] = useState(null);
-
+    const [request, setRequest] = useState(null);
+    const [requestOther, setRequestOther] = useState(null);
+    const [speakerSeries, setSpeakerSeries] = useState(null);
+    const [teamData, setTeamData] = useState(null);
     /**
      * Signs a user in. This triggers pulling the correct user information.
      * @param {string} email
@@ -93,7 +111,137 @@ const useAuthProvider = () => {
         return getUser();
 
     };
+    const getUserDataByEmail = async (email) => {
+        await getUserDetailByEmail(email);
+    }
+   
+    const sendRequestToMentor = async(email,message) => {
+        await sendRequest(email, message)
+        .then(() => {
+            alert("Request Send successfully.");
+        })
+        .catch((err) => {
+            console.log(`Error Sending Request: ${err}`);
+        });
+    }
 
+    const getRequestList = async() => {
+        await getRequests(["Pending"])
+        .then((request) => setRequest(request))
+        .catch((err) => {
+            console.log(`Error fetching Request: ${err}`);
+            setRequest(null);
+        });
+    }
+
+    const getPendingRequestList = async() => {
+        await getRequests(["Pending"])
+        .then((request) => setRequestOther(request))
+        .catch((err) => {
+            console.log(`Error fetching Request: ${err}`);
+            setRequestOther(null);
+        });
+    }
+
+    const acceptRequest = async (messageID, status, studentName) => {
+        await acceptStudentRequest(messageID, status, studentName)
+        .then(() => {
+            console.log('request Accepted'); 
+            var a = getRequests(["Pending"])
+            .then((request) => setRequest(request))
+            .catch((err) => {
+                console.log(`Error fetching Request: ${err}`);
+                setRequest(null);
+            });
+            alert("Request accepted successfully.");
+        })
+        .catch((err) => {
+            console.log(`Error fetching Request: ${err}`);
+        });
+    }
+
+    const archiveRequest = async (messageID, status, studentName) => {
+        console.log('await',messageID)
+        await acceptStudentRequest(messageID, status, studentName)
+        .then(() => {console.log('request Archived'); 
+        var a = getRequests(["Pending"])
+        .then((request) => setRequest(request))
+        .catch((err) => {
+            console.log(`Error fetching Request: ${err}`);
+            setRequest(null);
+        });
+        alert("Request archived successfully.");})
+        .catch((err) => {
+            console.log(`Error fetching Request: ${err}`);
+        });
+    }
+
+    const rejectRequest = async (messageID, status, studentName) => {
+        console.log('await',messageID)
+        await acceptStudentRequest(messageID, status, studentName)
+        .then(() => {console.log('request Rejected'); 
+        var a = getRequests(["Pending"])
+        .then((request) => setRequest(request))
+        .catch((err) => {
+            console.log(`Error fetching Request: ${err}`);
+            setRequest(null);
+        });
+        alert("Request rejected successfully.");})
+        .catch((err) => {
+            console.log(`Error fetching Request: ${err}`);
+        });
+    }
+
+    const updateSessionHoursss = async (messageID, hours, studentName) => {
+        await updateSessionHours(messageID, hours, studentName)
+        .then(() => {console.log('session hours updated'); 
+        var a = getRequests(["Pending"])
+        .then((request) => setRequest(request))
+        .catch((err) => {
+            console.log(`Error fetching Request: ${err}`);
+            setRequest(null);
+        });
+        alert("Session hours was updated successfully.");})
+        .catch((err) => {
+            console.log(`Error fetching Request: ${err}`);
+        });
+    }
+
+    const updateRatings = async (messageID, ratings, studentName) => {
+        await updateRatingss(messageID, ratings, studentName)
+        .then(() => {console.log('ratings updated'); 
+        var a = getRequests(["Pending"])
+        .then((request) => setRequest(request))
+        .catch((err) => {
+            console.log(`Error fetching Request: ${err}`);
+            setRequest(null);
+        });
+        alert("Ratings was added successfully.");})
+        .catch((err) => {
+            console.log(`Error fetching Request: ${err}`);
+        });
+    }
+
+
+    // 
+    const getSpeakerSeries = async() => {
+        await getSpeakerSeriesList()
+        .then((data) => setSpeakerSeries(data))
+        .catch((err) => {
+            console.log(`Error fetching Speaker Series: ${err}`);
+            setSpeakerSeries(null);
+        });
+    }
+
+
+    const getTeamData = async() => {
+        await getTeamDataList()
+        .then((data) => setTeamData(data))
+        .catch((err) => {
+            console.log(`Error fetching Team Data: ${err}`);
+            setTeamData(null);
+        });
+    }
     // TODO this may have to be done synchronously
     // Register firebase state handler
     // Note that this only gets called once on mount
@@ -123,15 +271,35 @@ const useAuthProvider = () => {
                 console.log(`Error fetching user: ${err}`);
                 setUser(null);
             });
+            getRequestList();
+            getPendingRequestList();
+            getSpeakerSeries();
     }, [authState, auth]);
-
+    useEffect(() => {
+        getTeamData();
+    }, []);
     return {
         auth,
         authState,
         user,
+        getUserDataByEmail,
         signin,
         signup,
-        signout
+        signout,
+        request,
+        requestOther,
+        speakerSeries,
+        teamData,
+        sendRequestToMentor,
+        getRequestList,
+        acceptRequest,
+        rejectRequest,
+        archiveRequest,
+        updateRatings,
+        updateSessionHoursss,
+        getPendingRequestList,
+        getSpeakerSeries,
+        getTeamData
     };
 }
 
