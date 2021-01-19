@@ -1,4 +1,5 @@
 import React from 'react';
+import Carousel from 'react-elastic-carousel';
 import Grid from '@material-ui/core/Grid';
 import styled from 'styled-components';
 import { Trans, useTranslation } from 'react-i18next';
@@ -73,11 +74,17 @@ const HomepageSubtitle = styled.p`
 const HomepageBody = styled.div`
   p{
     font-family: ${FONTS.font2};
-    font-weight: 300;
+    font-weight: 400;
   }
   h2 {
+    font-size: max(2.25vw, 21px);
     font-family: ${FONTS.font1};
     font-weight: 500;
+  }
+  h3 {
+    font-size: max(1.6vw, 18px);
+    font-family: ${FONTS.font2};
+    font-weight: 200;
   }
   span {
     font-size: min(3.5vw, 24px);
@@ -85,14 +92,14 @@ const HomepageBody = styled.div`
     font-family: ${FONTS.font2};
   }
   p.title {
-    font-size: max(1.5vw, 18px);
+    font-size: max(1.75vw, 18px);
     font-weight: 400;
     font-family: ${FONTS.font2};
     color: ${COLORS.darkblue};
   }
   p.desc {
-    font-size: max(1vw, 16px);
-    font-weight: 300;
+    font-size: max(1.25vw, 16px);
+    font-weight: 400;
     font-family: ${FONTS.font2};
   }
   @media (min-width: 768px){
@@ -217,7 +224,7 @@ const WhyJoin = [
   {
     key: 3,
     title: 'home.whyJoin.classroomTitle',
-    desc: 'home.whyJoin.classroomTitle',
+    desc: 'home.whyJoin.classroom',
     imgsrc: classroom
   },
   {
@@ -228,6 +235,70 @@ const WhyJoin = [
   }
 ]
 
+const Testimonials = [
+  {
+    key: 1,
+    text: 'home.testimonials.0.testimonial', 
+    auth: 'home.testimonials.0.author'
+  },
+  {
+    key: 2,
+    text: 'home.testimonials.1.testimonial',
+    auth: 'home.testimonials.1.author'
+  },
+  {
+    key: 3,
+    text: 'home.testimonials.2.testimonial',
+    auth: 'home.testimonials.2.author'
+  },
+  {
+    key: 4,
+    text: 'home.testimonials.3.testimonial',
+    auth: 'home.testimonials.3.author'
+  },
+  {
+    key: 5,
+    text: 'home.testimonials.4.testimonial',
+    auth: 'home.testimonials.4.author'
+  },
+  {
+    key: 6,
+    text: 'home.testimonials.5.testimonial',
+    auth: 'home.testimonials.5.author'
+  }
+]
+
+const CovEdCarousel = styled(Carousel)`
+  button.rec-dot{
+    background-color: white;
+    box-shadow: 0 0 1px 2px rgba(0, 0, 0, 0.5);
+  };
+
+  button.rec-dot:hover {
+    background-color: white;
+    box-shadow: 0 0 1px 3px rgba(25, 84, 160, 0.5);
+  };
+
+  button.rec-dot_focus, button.rec-dot_active {
+    background-color: rgba(25, 84, 160, 0.5);
+    box-shadow: 0 0 1px 3px rgba(25, 84, 160, 1);
+  };
+
+  button.rec-arrow {
+    background-color: rgba(25, 84, 160, 0.05);
+    cursor: allowed;
+  };
+
+  button.rec-arrow:hover:enabled, button.rec-arrow:focus:enabled {
+    background-color: rgba(25, 84, 160, 1);
+    box-shadow: 0 0 0px 0px #333;
+  };
+
+  .rec.rec-arrow:disabled {
+    visibility: hidden;
+  }
+`;
+
 const HomePage = () => {
   const { t } = useTranslation();
   return (
@@ -237,8 +308,8 @@ const HomePage = () => {
         <div>
           <HomepageTitle>CovEd<span>ucation</span></HomepageTitle>
           <HomepageSubtitle>{t('home.subtitle')}</HomepageSubtitle>
-          <Button theme="accent" size="md" round>{t('home.forMenteesButton')}</Button>
-          <Button theme="accent" size="md" round>{t('home.forMentorsButton')}</Button>
+          <a href="/parents"><Button theme="accent" size="md" round>{t('home.forMenteesButton')}</Button></a>
+          <a href="/mentors"><Button theme="accent" size="md" round>{t('home.forMentorsButton')}</Button></a>
         </div>
       </HomepageSection>
       <HomepageBody>
@@ -261,7 +332,7 @@ const HomePage = () => {
             })}
           </Grid>
         </Section>
-        <Section backgroundColor='lightorange' p="100px">
+        <Section backgroundColor='lightorange' p="75px">
           <h2>{t('home.howCovEdWorks')}</h2><br />
           <Grid container direction="row" spacing={3} justify="center">
             {howItWorks.map((s) => {
@@ -273,18 +344,27 @@ const HomePage = () => {
               )
             })}
           </Grid><br /><br />
-          <Button theme="accent" size="md">{t('home.MenteesLearnMoreButton')}</Button>
-          <Button theme="accent" size="md">{t('home.MentorsLearnMoreButton')}</Button>
+          <span>{t('home.learnMore')}</span><br /><br />
+          <a href="/parents"><Button theme="accent" size="md">{t('home.MenteesLearnMoreButton')}</Button></a>
+          <a href="/mentors"><Button theme="accent" size="md">{t('home.MentorsLearnMoreButton')}</Button></a>
         </Section>
-        <Section p="100px">
-          statistics here
+        <Section p="75px">
+          <h2>{t('home.hearFromUs')}</h2><br />
+          <CovEdCarousel>
+            {Testimonials.map((s) => 
+              <div key={s.key}>
+                <h3>{t(s.text)}</h3>
+                <p>{t(s.auth)}</p>
+              </div>
+            )}
+          </CovEdCarousel>
         </Section>
         <Section backgroundColor='lightblue' p="100px">
           <span>"{t('home.quote')}"</span>
           <br />
           <p>- {t('home.quoteauth')}</p>
         </Section>
-        <Section p="100px">
+        <Section p="75px">
           <h2>{t('home.findTutors')}</h2> <br /><br />
           <Grid container direction="row" spacing={3} justify="center">
             {Subjects.map((s) => {
@@ -314,7 +394,7 @@ const HomePage = () => {
           <h2>{t('home.questions')}</h2>
           <p>
             <Trans i18nKey="home.questionsans">
-              Check out our <Link href='/faqs'> FAQs page </Link> to see if we've already answered your question or Contact Us!
+              Check out our <Link href='/faqs'> FAQs page </Link> to see if we've already answered your question or <Link href='/contactus'> Contact Us </Link>!
         </Trans>
           </p>
         </Section>

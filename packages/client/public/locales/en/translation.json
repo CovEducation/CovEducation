@@ -3,19 +3,21 @@
     "subtitle": "Continuing K-12 education in the US during the COVID-19 outbreak",
     "forMentorsButton": "For Mentors",
     "forMenteesButton": "For Mentees",
-    "MenteesLearnMoreButton": "Learn More (for Mentees)",
-    "MentorsLearnMoreButton": "Learn More (for Mentors)",
+    "MenteesLearnMoreButton": "Mentees",
+    "MentorsLearnMoreButton": "Mentors",
     "whyBePartOfCovEd": "Why Be Part of CovEd?",
     "howCovEdWorks": "How CovEd Works",
+    "learnMore": "Learn More:",
+    "hearFromUs": "Hear From Our Community",
     "findTutors": "Find Online Tutors in Any Subject",
     "questions": "Questions?",
-    "questionsans": "Check out our <1> FAQs page</1> to see if we've already answered your question or Contact Us!",
-    "quote":" I am so grateful for how much my CovEd mentor has taught me! Where would I have been without him, I truly don't know! Thanks CovEducation!",
+    "questionsans": "Check out our <1> FAQs page</1> to see if we've already answered your question or <1>Contact Us!</1>",
+    "quote":"I am so grateful for how much my CovEd mentor has taught me! Where would I have been without him? I truly don't know! Thanks CovEducation!",
     "quoteauth": "John Smith",
      "subjects": {
         "Writing": "Writing",
         "Math": "Math",
-        "Science": "Writing",
+        "Science": "Science",
         "History": "History",
         "ComputerScience": "Computer Science",
         "Economics": "Economics",
@@ -38,7 +40,33 @@
           "step1": "Mentors sign up to mentor via a quick & easy registration page.",
           "step2": "Mentees register, and then look for an available mentor who tutors in their desired subjects of choice.",
           "step3": "Once you’ve requested your mentor, they will receive a notification to then reach out to you."
-      }
+      },
+      "testimonials": [
+        {
+          "testimonial": "“Our tutor has been wonderful. When she started, I had no idea what to do. She assessed where my daughter was and they have been flying high ever since. My daughter, who tends to be a little withdrawn, is comfortable with and likes her mentor. Our mentor emails their work to me and sometimes sends my daughter other practice work she can do. It’s been such a lifesaver during this unchartered time and I’m so grateful for the help. Thank you to our mentor and CovEd!”",
+          "author": "- Jimelle, Mother of 3rd Grade Student"
+        },
+        {
+          "testimonial": "“Getting paired with my mentor was honestly one of the best things that have happened to me. The insight and experience that he brings to each and every tutoring session is enormous. He isn’t just a mentor to me, he is my gateway to an unexplored world that I am going to enter soon.”",
+          "author": "- Harsh, CovEd Mentee"
+        },
+        {
+          "testimonial": "“I met the mother and it was so touching to see how grateful she was that I am here to help. She kept repeating 'Thank you so much. I am so grateful.' As a first-gen, low income student myself, I strive to uplift other FGLI students and give them a leg up in this world - CovEd gives me the opportunity to do that!”",
+          "author": "- Karen, Undergraduate Mentor"
+        },
+        {
+          "testimonial": "“Thanks to our CovEd mentor’s time with my son, his brothers are now referring to my son as a Scientist.  My son’s eyes light up every time his brothers call him a scientist, this tutoring has simultaneously sparked a love for science and self confidence for my son. I did not think my son would be able to stay on a Zoom call for more than 30 minutes, but our mentor keeps him engaged and the time passes until I have to remind them when it gets to almost an hour.  Our mentor is patient and skilled at breaking down complex information. The experiments with the mentor has been the highlight of my son’s week, and my son is sure that they will come up with a cure with COVID-19 together. My heart is filled with thankfulness to you and the program because seeing my son enjoy learning and connect to someone intellectually is such a gift.”",
+          "author": "- Mother of a First Grade Student"
+        },
+        {
+          "testimonial": "“My mentor helped me get writing ideas and get me through the horrors of homework. Math was so scary! She helped me with my writing to send to harvard. I always look forward to getting tutored by her. Even in the SUMMER.”",
+          "author": "- Alicia, CovEd Mentee"
+        },
+        {
+          "testimonial": "“It’s been wonderful meeting her and her father over zoom! We get together twice a week–I help her with biology, math, and English while she teaches me about astronomy in return. I’ve been so inspired by her sense of curiosity and constant pursuit of new knowledge. Her family just immigrated to the United States a few years ago, and they’re grateful for the support provided by CovEd during this time. I’m excited to get to know her even better as we continue to learn from each other!”",
+          "author": "- Jessica, Undergraduate Mentor"
+        }
+      ]
   },
   "howItWorksMentors": {
       "Title": "How It Works",
