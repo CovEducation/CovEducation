@@ -68,6 +68,7 @@ export const AccordionRow = ({ children, title }) => {
         <AccordionRowIcon open={open}/>
       </AccordionRowHeader>
       <AccordionRowContent open={open}>
+        <br/>
         {children}
         <br/>
       </AccordionRowContent>

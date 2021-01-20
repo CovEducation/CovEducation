@@ -363,29 +363,29 @@ export const tags = ["Early Childhood Learning", "Preschool", "Elementary School
   .map(k => { return { label: k, value: k } });
 
 
-  export const proNouns = [
-    {
-      value: "mr",
-      pronoun: "Mr."
-    },
-    {
-      value: "mrs",
-      pronoun: "Mrs."
-    },
-    {
-      value: "miss",
-      pronoun: "Miss."
-    },
-    {
-      value: "dr",
-      pronoun: "Dr."
-    },
-    {
-      value: "ca",
-      pronoun: "CA"
-    },
-    {
-      value: "er",
-      pronoun: "Er."
-    },
-  ]
+export const proNouns = [
+  {
+    value: "mr",
+    pronoun: "Mr."
+  },
+  {
+    value: "mrs",
+    pronoun: "Mrs."
+  },
+  {
+    value: "miss",
+    pronoun: "Miss."
+  },
+  {
+    value: "dr",
+    pronoun: "Dr."
+  },
+  {
+    value: "ca",
+    pronoun: "CA"
+  },
+  {
+    value: "er",
+    pronoun: "Er."
+  },
+]

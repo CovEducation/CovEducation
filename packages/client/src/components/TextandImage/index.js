@@ -28,11 +28,11 @@ const HorzIm = ({ children, imgpath, shape, alt }) => {
 
 const VertIm = ({ children, imgpath, shape, alt }) => {
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={1} justify="center" alignItems="center">
       <Grid item xs={12}>
       {shape === "circle"? <img className="circle" src={imgpath} alt={alt} /> : <img src={imgpath} alt={alt} /> }
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={8}>
       {children}
       </Grid>
     </Grid>

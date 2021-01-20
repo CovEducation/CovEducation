@@ -31,12 +31,14 @@ import step2 from './img/step2.svg';
 import step3 from './img/step3.svg';
 
 const Circle = styled.div`
-    height: 20px;
-    width: 20px;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
     background-color: ${COLORS.yellow};
-    border-radius: 50%;
+    border-radius: 80%;
     display: inline-block;
     margin-right: 10px;
+    text-align: center;
 `;
 
 const HomeWrapper = styled.div`
@@ -77,28 +79,28 @@ const HomepageBody = styled.div`
     font-weight: 400;
   }
   h2 {
-    font-size: max(2.25vw, 21px);
+    font-size: 28px;
     font-family: ${FONTS.font1};
     font-weight: 500;
   }
   h3 {
-    font-size: max(1.6vw, 18px);
+    font-size: 18px;
     font-family: ${FONTS.font2};
     font-weight: 200;
   }
   span {
-    font-size: min(3.5vw, 24px);
+    font-size: 24px;
     font-weight: 400;
     font-family: ${FONTS.font2};
   }
   p.title {
-    font-size: max(1.75vw, 18px);
+    font-size: 22px;
     font-weight: 400;
     font-family: ${FONTS.font2};
     color: ${COLORS.darkblue};
   }
   p.desc {
-    font-size: max(1.25vw, 16px);
+    font-size: 16px;
     font-weight: 400;
     font-family: ${FONTS.font2};
   }
@@ -238,7 +240,7 @@ const WhyJoin = [
 const Testimonials = [
   {
     key: 1,
-    text: 'home.testimonials.0.testimonial', 
+    text: 'home.testimonials.0.testimonial',
     auth: 'home.testimonials.0.author'
   },
   {
@@ -338,31 +340,30 @@ const HomePage = () => {
             {howItWorks.map((s) => {
               return (
                 <Grid key={s.step} item md={4} sm={12} xs={12}>
-                  <ImText arrangement="vertical" img={s.imgsrc}> <Circle>{s.key}</Circle> {t(s.step)}
+                <Circle>{s.key}</Circle>
+                <br />
+                <br />
+                  <ImText arrangement="vertical" img={s.imgsrc}> {t(s.step)}
                   </ImText>
                 </Grid>
               )
             })}
           </Grid><br /><br />
-          <span>{t('home.learnMore')}</span><br /><br />
-          <a href="/parents"><Button theme="accent" size="md">{t('home.MenteesLearnMoreButton')}</Button></a>
-          <a href="/mentors"><Button theme="accent" size="md">{t('home.MentorsLearnMoreButton')}</Button></a>
         </Section>
-        <Section p="75px">
+        <Section backgroundColor='lightblue' p="100px">
           <h2>{t('home.hearFromUs')}</h2><br />
-          <CovEdCarousel>
-            {Testimonials.map((s) => 
+          <Grid container direction="row" justify="center" spacing={6}>
+          <Grid item xs={8}>
+          <CovEdCarousel enableAutoPlay={true} showArrows={false} autoPlaySpeed={10000}>
+            {Testimonials.map((s) =>
               <div key={s.key}>
                 <h3>{t(s.text)}</h3>
-                <p>{t(s.auth)}</p>
+                <p><b>{t(s.auth)}</b></p>
               </div>
             )}
           </CovEdCarousel>
-        </Section>
-        <Section backgroundColor='lightblue' p="100px">
-          <span>"{t('home.quote')}"</span>
-          <br />
-          <p>- {t('home.quoteauth')}</p>
+          </Grid>
+          </Grid>
         </Section>
         <Section p="75px">
           <h2>{t('home.findTutors')}</h2> <br /><br />

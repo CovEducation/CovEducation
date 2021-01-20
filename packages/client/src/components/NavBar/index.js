@@ -135,7 +135,7 @@ export default function NavBar(props) {
         <Toolbar>
           <Grid>
             <LinkStyled to='/' ver='lg'>CovEd</LinkStyled>
-            <LinkStyled to='#' ver='default' onClick={handleMenuDropdownClick}>How It Works</LinkStyled>
+            {/*<LinkStyled to='#' ver='default' onClick={handleMenuDropdownClick}>How It Works</LinkStyled>
             <Menu
               id="howitworks"
               anchorEl={menuDropdownAnchor}
@@ -155,7 +155,7 @@ export default function NavBar(props) {
             >
               <MenuItem component={LinkStyled} to="/parents">For Parents</MenuItem>
               <MenuItem component={LinkStyled} to="/mentors">For Mentors</MenuItem>
-            </Menu>
+            </Menu>*/}
             {props.links.map(link =>(
               <LinkStyled key={link.link} to={link.link} ver='default'>
                 {link.title}
