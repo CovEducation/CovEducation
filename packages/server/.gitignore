@@ -12,6 +12,7 @@
 /build
 
 # misc
+coved-test-firebase-admin
 .DS_Store
 .env.local
 .env.development.local
