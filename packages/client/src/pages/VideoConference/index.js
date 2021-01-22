@@ -1,31 +1,36 @@
-import React, { useState } from 'react';
-import Jitsi from 'react-jitsi';
+import React, { useState } from 'react'
 
-/*hello testing*/
+import { Jutsu } from 'react-jutsu'
+
 const VideoConferencePage = () => {
-
-  const [displayName, setDisplayName] = useState('')
-  const [roomName, setRoomName] = useState('')
+  const [room, setRoom] = useState('')
+  const [name, setName] = useState('')
+  const [call, setCall] = useState(false)
   const [password, setPassword] = useState('')
-  const [onCall, setOnCall] = useState(false)
 
-  return onCall
-    ? (
-      <Jitsi
-        roomName={roomName}
-        displayName={displayName}
-        password={password}
-        onAPILoad={JitsiMeetAPI => console.log('Good Morning everyone!')}
-      />)
-    : (
-      <>
-        <h1>Create a Meeting</h1>
-        <input type='text' placeholder='Room name' value={roomName} onChange={e => setRoomName(e.target.value)} />
-        <input type='text' placeholder='Your name' value={displayName} onChange={e => setDisplayName(e.target.value)} />
-        <button onClick={() => setOnCall(true)}> Let&apos;s start!</button>
-      </>
+  const handleClick = event => {
+    event.preventDefault()
+    if (room && name) setCall(true)
+  }
+
+  return call ? (
+    <Jutsu
+      roomName={room}
+      displayName={name}
+      password={password}
+      onMeetingEnd={() => console.log('Meeting has ended')}
+      loadingComponent={<p>loading ...</p>}
+      errorComponent={<p>Oops, something went wrong</p>} />
+  ) : (
+      <form>
+        <input id='room' type='text' placeholder='Room' value={room} onChange={(e) => setRoom(e.target.value)} />
+        <input id='name' type='text' placeholder='Name' value={name} onChange={(e) => setName(e.target.value)} />
+        <input id='password' type='text' placeholder='Password (optional)' value={password} onChange={(e) => setPassword(e.target.value)} />
+        <button onClick={handleClick} type='submit'>
+          Start / Join
+      </button>
+      </form>
     )
-
 }
 
-export default VideoConferencePage;
+export default VideoConferencePage

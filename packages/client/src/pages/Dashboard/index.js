@@ -5,6 +5,7 @@ import { COLORS } from '../../constants';
 import { Route, Link, useRouteMatch, useLocation, Redirect } from 'react-router-dom';
 import ProfilePage from '../Profile';
 import useAuth, { AUTH_STATES } from "../../providers/AuthProvider";
+import VideoConferencePage from "../VideoConference"
 
 const DashboardWrapper = styled.div`
   height: calc(100vh - 64px); // subtract heights for navbar and footer
@@ -75,7 +76,7 @@ const DashboardPage = () => {
   const location = useLocation();
 
   // TODO move this logic to a dedicated component
-  if ( authState === AUTH_STATES.UNINITIALIZED
+  if (authState === AUTH_STATES.UNINITIALIZED
     || (authState === AUTH_STATES.LOGGED_IN && !user)) return <>loading</>
 
   else if (authState !== AUTH_STATES.LOGGED_IN) return <> not logged in </>
@@ -97,6 +98,7 @@ const DashboardPage = () => {
         <SidenavLink to={`${url}/mentors`} active={location.pathname.endsWith('mentors')}>Find a Mentor</SidenavLink>
         <SidenavLink to={`${url}/speaker-series`} active={location.pathname.endsWith('speaker-series')}>Speaker Series</SidenavLink>
         <SidenavLink to={`${url}/requests`} active={location.pathname.endsWith('requests')}>Requests</SidenavLink>
+        <SidenavLink to={`${url}/videoconference`} active={location.pathname.endsWith('videoconference')}>VideoConference</SidenavLink>
       </DashboardSidenav>
       <DashboardContent>
         <Route path={`${path}/profile`} exact>
@@ -107,6 +109,10 @@ const DashboardPage = () => {
         </Route>
         <Route path={path}>
           <Redirect to={`${url}/profile`} />
+        </Route>
+        <Route path={`${path}/videoconference`} exact>
+          <Redirect to={`${url}/videoconference`} />
+          <VideoConferencePage />
         </Route>
       </DashboardContent>
     </DashboardWrapper>
