@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Jutsu } from 'react-jutsu'
 
 const VideoConferencePage = () => {
-  const [room, setRoom] = useState('test')
+  const [room, setRoom] = useState('CovEd-hfiaf8932hgWHIG3g028ha')
   const [password, setPassword] = useState('password')
   const [userPassword, setUserPassword] = useState(password)
   const [mentor, setMentor] = useState('')
