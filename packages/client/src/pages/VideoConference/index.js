@@ -49,6 +49,11 @@ const VideoConferencePage = ({ user }) => {
       })
     );
 
+    let videoId = id + userId;
+    if (user.role === "MENTOR"){
+      videoId = userId + id;
+    }
+    
     console.log(partnerNames);
     setPartnerList(partnerNames);
     setVideoIdList(pairIds.map(id => id + userId));
