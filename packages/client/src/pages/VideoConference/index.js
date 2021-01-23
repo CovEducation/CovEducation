@@ -6,10 +6,10 @@ const VideoConferencePage = ({ user }) => {
   const [room, setRoom] = useState('CovEd-hfiaf8932hgWHIG3g028ha')
   const [password, setPassword] = useState('password')
   const [userPassword, setUserPassword] = useState(password)
-  const [name, setName] = useState('')
+  const name = user.name
   const [call, setCall] = useState(false)
 
-  const [mentorList, setMentorList] = useState([])
+  const [partnerList, setPartnerList] = useState([])
   const [videoIdList, setVideoIdList] = useState([])
    
 
@@ -19,30 +19,39 @@ const VideoConferencePage = ({ user }) => {
 
   const updateMentorList = async() => {
     const userId = Auth.currentUser.uid;
-    const userName = user.name;
-    setName(userName);
+    let pairCollection = 'mentors';
+    let selfSearch = 'mentee'; 
 
-    const pairs = await Db.collection('mentorpairings').where('mentee', '==', userId).get();
-    const mentorIds = []
+    if (user.role === "MENTOR") {
+      pairCollection = 'parents';
+      selfSearch = 'mentor'; 
+    }
+
+    const pairs = await Db.collection('mentorpairings').where(selfSearch, '==', userId).get();
+    const pairIds = []
 
     pairs.forEach(pair => {
       console.log(pair.id, '=>', pair.data());
-      let mentorId = pair.data().mentor;
-      mentorIds.push(mentorId)
+
+      let partnerId = pair.data().mentor;
+      if (user.role === "MENTOR"){
+        partnerId = pair.data().mentee;
+      }
+      pairIds.push(partnerId)
     });
 
-    const mentorNames = [];
+    const partnerNames = [];
     await Promise.all(
-      mentorIds.map(async id => {
-        console.log(id);
-        let mentor = await Db.collection('mentors').doc(id).get();
-        mentorNames.push(mentor.data().name);
+      pairIds.map(async id => {
+        console.log(id, pairCollection);
+        let other = await Db.collection(pairCollection).doc(id).get();
+        partnerNames.push(other.data().name);
       })
     );
 
-    console.log(mentorNames);
-    setMentorList(mentorNames);
-    setVideoIdList(mentorIds.map(id => id + userId));
+    console.log(partnerNames);
+    setPartnerList(partnerNames);
+    setVideoIdList(pairIds.map(id => id + userId));
     
   }
 
@@ -55,7 +64,7 @@ const VideoConferencePage = ({ user }) => {
 
   const handleClick = event => {
     event.preventDefault()
-    console.log(mentorList, videoIdList, room, password, userPassword);
+    console.log(partnerList, videoIdList, room, password, userPassword);
     if (room && name && userPassword == password) setCall(true)
   }
   
@@ -71,7 +80,7 @@ const VideoConferencePage = ({ user }) => {
       <form>
         <select id='mentor' placeholder='Mentor Name' onChange={updateRoomConfig}>
           <option value="default">Select One</option>
-          {mentorList.map((name, index) => 
+          {partnerList.map((name, index) => 
             <option value = {index}> {name} </option>
           )}
         </select>
