@@ -112,7 +112,7 @@ const DashboardPage = () => {
         </Route>
         <Route path={`${path}/videoconference`} exact>
           <Redirect to={`${url}/videoconference`} />
-          <VideoConferencePage />
+          <VideoConferencePage user={user}/>
         </Route>
       </DashboardContent>
     </DashboardWrapper>
