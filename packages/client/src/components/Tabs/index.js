@@ -96,7 +96,6 @@ export default function HTabs(props) {
     const handleChange = (_, newValue) => {
         setValue(newValue);
     };
-    console.log(props.texts)
     return (
         <div className={classes.root}>
             <AppBar position="static" color="default">

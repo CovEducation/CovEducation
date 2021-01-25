@@ -11,6 +11,7 @@ const MentorStep3 = (props) => {
 
     return (
         <div>
+            <label>Mentor Bio</label>
             <WizardInput>
                 <TextField
                     fullWidth

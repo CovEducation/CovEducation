@@ -1,6 +1,17 @@
 import React from 'react';
 import HTabs from './Tabs';
 import useAuth from "../../providers/AuthProvider";
+import styled from 'styled-components';
+
+
+const TabsContainer = styled.div`
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+    width: 70%;
+    margin: 0 auto;
+`
 
 const MeetOurTeam = () => {
   const { teamData } = useAuth();
@@ -17,6 +28,7 @@ const MeetOurTeam = () => {
   return (
     <div>
         <h1 style={{ textAlign: 'center' }}>Meet Our Team </h1>
+        <TabsContainer>
         <HTabs 
         texts={
           [ 
@@ -31,7 +43,7 @@ const MeetOurTeam = () => {
         labels={['All', 'Management', 'Coordinators', 'Public Relations', 'Outreach', 'Speaker Series', 'Technology Team']} 
         class="process"
         />
-
+      </TabsContainer>
     </div>
   )
 }

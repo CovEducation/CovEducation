@@ -24,7 +24,6 @@ export const createMentorWithEmail = async (email, password, mentor) => {
 };
 
 export const getUser = async () => {
-    console.log('Auth.currentUser',Auth.currentUser)
     if (Auth.currentUser === undefined || Auth.currentUser === null) {
         throw Error('Unable to retrive user data with uninitilized Auth user.');
     }
@@ -39,10 +38,10 @@ const createUserWithEmail = async (email, password, data, role) => {
         token = await Auth.currentUser.getIdToken();
         await post(host + 'users', { role: role, ...data}, { token });
         await Auth.currentUser.sendEmailVerification();
-
+        return {success:1,message:"User Created Successfully."}
     } catch (err) {
         if (token) await Auth.currentUser.delete();
-        throw new Error(`Error creating ${role}: ${err}`);
+        return {success:0,message:err}
     }
 }
 

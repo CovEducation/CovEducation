@@ -39,7 +39,10 @@ const ParentStep2 = (props) => {
 
     return (
         <div>
+            <br />
+            <label>Parent Information</label>
              <WizardInput>
+                <br />
                 <InputLabel id="wizard-pronouns" required>Pronouns</InputLabel>
                 <Select
                     children={proNounsMenuItems}
@@ -101,9 +104,9 @@ const ParentStep2 = (props) => {
             </WizardInput>
             <WizardInput>
                 <InputLabel id="wizard-notification-preference">Notification preference</InputLabel>
-                <RadioGroup row name="notification-preference" defaultValue="phone">
-                    <FormControlLabel value="phone" control={<Radio color="primary" />} label="Phone" />
-                    <FormControlLabel value="email" control={<Radio color="primary" />} label="Email" />
+                <RadioGroup row name="notificationPreference" defaultValue="phone">
+                    <FormControlLabel value="phone" control={<Radio color="primary" />} label="Phone" onChange={props.handleChange}/>
+                    <FormControlLabel value="email" control={<Radio color="primary" />} label="Email" onChange={props.handleChange}/>
                 </RadioGroup>
             </WizardInput>
         </div>

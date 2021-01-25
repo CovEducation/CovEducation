@@ -23,7 +23,7 @@ const TeamDataContainer = styled.div`
     align-items: center;
     max-width: 280px;
     min-width: 180px;
-    margin: 0.75rem;
+    margin: 40px 0.75rem;
     cursor: pointer;
     h2 {
         font-weight: normal;
@@ -31,7 +31,7 @@ const TeamDataContainer = styled.div`
         margin-top: 0px;
     }
     img {
-        width:50%;
+        width:60%;
         border-radius:50%;
     }
 `
@@ -76,18 +76,26 @@ TabPanel.propTypes = {
 
 const AntTabs = withStyles({
     root: {
-        borderBottom: '1px solid #e8e8e8'
+        borderBottom: '2px solid #e8e8e8',
+        background: "#fff",
+        boxShadow:'none'
     },
     indicator: {
         backgroundColor: COLORS.CovedYellow,
+    },
+    flexContainer: {
+        boxShadow:'none'
     }
 })(Tabs);
 
 const AntTab = withStyles((theme) => ({
     root: {
         textTransform: 'none',
-        minWidth: 200,
-        fontWeight: theme.typography.fontWeightRegular,
+        minWidth: 150,
+        fontWeight: theme.typography.fontWeightMedium,
+        fontSize:16,
+        color: "#000",
+        opacity: 1,
         fontFamily: [
             '-apple-system',
             'BlinkMacSystemFont',
@@ -96,15 +104,15 @@ const AntTab = withStyles((theme) => ({
             '"Helvetica Neue"'
         ].join(','),
         '&:hover': {
-            color: '#003c5e',
+            color: COLORS.CovedYellow,
             opacity: 1
         },
         '&$selected': {
-            color: '#003c5e',
+            color: COLORS.CovedYellow,
             fontWeight: theme.typography.fontWeightBold
         },
         '&:focus': {
-            color: '#003c5e'
+            color: COLORS.CovedYellow
         }
     },
     selected: {}
@@ -112,7 +120,8 @@ const AntTab = withStyles((theme) => ({
 
 const HTabStyle = makeStyles((theme) => ({
     root: {
-        flexGrow: 1
+        flexGrow: 1,
+        boxShadow:'none'
     },
     padding: {
         padding: theme.spacing(3)
@@ -128,8 +137,8 @@ export default function HTabs(props) {
     };
     return (
         <div className={classes.root}>
-            <AppBar position="static" color="default">
-                <AntTabs value={value} onChange={handleChange} aria-label="ant example">
+            <AppBar position="static" color="default" className={classes.root}>
+                <AntTabs variant="standard" value={value} onChange={handleChange} aria-label="ant example" centered>
                     {props.labels.map((label, index) => (
                         <AntTab key={label} label={label} {...a11yProps(index)} />
                     ))}

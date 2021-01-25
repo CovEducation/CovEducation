@@ -29,9 +29,7 @@ const generateMentorMessage = (mentorFirstName, parentName, studentName, message
 };
 
 const textMentorRequest = async (mentor, parent, student, parentMessage) => {
-  console.log("message", "message");
   const message = generateMentorMessage(mentor.name, parent.email, (student.length > 0)?student[0]:parent.name, parentMessage);
-  console.log("message", message);
   return sendTextMessage(mentor.phone, message);
 };
 

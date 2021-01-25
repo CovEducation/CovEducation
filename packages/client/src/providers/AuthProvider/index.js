@@ -77,11 +77,19 @@ const useAuthProvider = () => {
         }
         setAuthState(AUTH_STATES.CREATING_USER);
         if (user.role === 'MENTOR') {
-            await createMentorWithEmail(email, password, user);
+            var a = await createMentorWithEmail(email, password, user);
+            if(a.success){
+                setAuthState(AUTH_STATES.LOGGED_IN);
+            }
+            return a;
         } else {
-            await createParentWithEmail(email, password, user);
+           var a = await createParentWithEmail(email, password, user);
+           if(a.success){
+                setAuthState(AUTH_STATES.LOGGED_IN);
+            }
+            return a;
         }
-        setAuthState(AUTH_STATES.LOGGED_IN);
+        
     }
 
     /**
@@ -146,7 +154,6 @@ const useAuthProvider = () => {
     const acceptRequest = async (messageID, status, studentName) => {
         await acceptStudentRequest(messageID, status, studentName)
         .then(() => {
-            console.log('request Accepted'); 
             var a = getRequests(["Pending"])
             .then((request) => setRequest(request))
             .catch((err) => {
@@ -161,7 +168,6 @@ const useAuthProvider = () => {
     }
 
     const archiveRequest = async (messageID, status, studentName) => {
-        console.log('await',messageID)
         await acceptStudentRequest(messageID, status, studentName)
         .then(() => {console.log('request Archived'); 
         var a = getRequests(["Pending"])
@@ -177,7 +183,6 @@ const useAuthProvider = () => {
     }
 
     const rejectRequest = async (messageID, status, studentName) => {
-        console.log('await',messageID)
         await acceptStudentRequest(messageID, status, studentName)
         .then(() => {console.log('request Rejected'); 
         var a = getRequests(["Pending"])

@@ -137,7 +137,6 @@ const validateMentorData = (mentor) => {
 }
 
 const displayField = (field, mentor) => {
-    console.log("mentor", mentor);
     let mentorInfo = mentor[field[0]];
     if (Array.isArray(mentorInfo)) {
         mentorInfo = mentorInfo.join(', ');

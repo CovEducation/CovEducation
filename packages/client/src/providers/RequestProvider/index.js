@@ -111,7 +111,6 @@ const useRequestProvider = () => {
     }
 
     const acceptRequest = async (messageID) => {
-        console.log('await',messageID)
         await acceptStudentRequest(messageID)
         .then(() => console.log('request Accepted'))
         .catch((err) => {

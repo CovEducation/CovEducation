@@ -60,6 +60,8 @@ const RequestsWrapperPending = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 50px;
+  width: 50%;
+  float: left;
   justify-content: center;
 `;
 const RequestDetailsBlock = styled.div`
@@ -104,7 +106,6 @@ const RedColor = styled.span`
 `;
 
 const RequestsPage = ({ request, requestOther }) => {
-  console.log("request", request);
   
   const { getRequestList,user,acceptRequest, rejectRequest, updateSessionHoursss, archiveRequest, updateRatings } = useAuth();
   const [serverError, setServerError] = useState(false);  
@@ -118,9 +119,7 @@ const RequestsPage = ({ request, requestOther }) => {
     const onPressAccept = (messageId) => {
       acceptRequest(messageId, 'Active')
     }
-    console.log("requestOther", requestOther);
     const getDate = (d) => {
-      console.log("d", d._seconds);
       var a = new Date(d._seconds * 1000);
       return ("0" + a.getDate()).slice(-2) + "/" + ("0" + a.getMonth()).slice(-2) + "/" + a.getFullYear();
     }
@@ -141,7 +140,6 @@ const RequestsPage = ({ request, requestOther }) => {
         return;
       }
       else{
-        console.log(sessionVal);
         var rec = sessionVal;
         if(rec.val == "")
         {
@@ -162,7 +160,6 @@ const RequestsPage = ({ request, requestOther }) => {
         return;
       }
       else{
-        console.log(ratingsVal);
         var rec = ratingsVal;
         if(rec.val == "")
         {
@@ -220,10 +217,10 @@ const RequestsPage = ({ request, requestOther }) => {
           {user.role === 'MENTOR' && 
           <RequestDetailsBlock>
             {!item.accepted && 
-              <Button theme='accent' size='md' onClick={() =>  acceptRequest(item.messageId, "Active", item.studentDetails.name)}> Accept </Button>
+              <Button theme='accent' size='sm' onClick={() =>  acceptRequest(item.messageId, "Active", item.studentDetails.name)}> Accept </Button>
             }
             {!item.accepted && 
-              <Button theme='danger' size='md' onClick={() =>  rejectRequest(item.messageId, "Rejected", item.studentDetails.name)}> Reject </Button>
+              <Button theme='danger' size='sm' onClick={() =>  rejectRequest(item.messageId, "Rejected", item.studentDetails.name)}> Reject </Button>
             }
           </RequestDetailsBlock>
           }
@@ -236,7 +233,7 @@ const RequestsPage = ({ request, requestOther }) => {
           {(user.role === 'PARENT' && item.requestStatus === "Active") && 
             <FlexClass1>
               <UserPicture src="http://via.placeholder.com/115" alt="profile pic" />
-              <Button theme='danger' size='md' onClick={() =>  archiveRequest(item.messageId, "Archived", item.studentDetails.name)}> End Membership </Button>
+              <Button theme='danger' size='sm' onClick={() =>  archiveRequest(item.messageId, "Archived", item.studentDetails.name)}> End Membership </Button>
             </FlexClass1>
            }
            {(user.role === 'MENTOR' && item.requestStatus === "Active") && 
@@ -276,7 +273,7 @@ const RequestsPage = ({ request, requestOther }) => {
                   <p><b>Session Hours: </b>
                   <input type="number" id="sessionHours" onChange={(e) => {setsessionHours({val:e.target.value,student:item.studentDetails.name,messageId:item.messageId});}}></input>
                   </p>
-                  <Button theme='accent' size='md' onClick={() => updateSessionHourss()}>Submit Session Hours</Button>
+                  <Button theme='accent' size='sm' onClick={() => updateSessionHourss()}>Submit Session Hours</Button>
                 </div>
             }
             {(user.role === 'PARENT' && item.requestStatus === "Active") && 
@@ -284,7 +281,7 @@ const RequestsPage = ({ request, requestOther }) => {
                 <p><b>Rate my last session: </b>
                 <input type="number" id="ratingsInput" onChange={(e) => {setRatings({val:e.target.value,student:item.studentDetails.name,messageId:item.messageId});}} max="5"></input>
                 </p>
-                <Button theme='accent' size='md' onClick={() => addRatings()}>Submit Ratings</Button>
+                <Button theme='accent' size='sm' onClick={() => addRatings()}>Submit Ratings</Button>
               </div>
             }
           </div>

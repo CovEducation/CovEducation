@@ -88,7 +88,6 @@ const ThirdPage = () => {
     const { selectedGradeLevels, selectedSubjects } = state;
 
     const handleChange = (event) => {
-        console.log("clicked", event.target.name, event.target.value);
         setState({ ...state, [event.target.name]: event.target.value });
         updateMentorWizardSignUpData({ [event.target.name]: event.target.value });
     };

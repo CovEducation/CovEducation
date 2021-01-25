@@ -4,7 +4,15 @@ import MentorRequestFrame from "./MentorRequestFrame.js";
 import GridList from "@material-ui/core/GridList";
 import { connectHits } from "react-instantsearch-dom";
 import ModalNew from '../../components/ModalNew';
+import MentorCard from "./MentorCard.js";
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import Button from '@material-ui/core/Button';
 import useAuth from "../../providers/AuthProvider";
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 
 const GridListContainer = styled.div`
   display: flex;
@@ -43,6 +51,7 @@ const MentorCardText = styled.p`
 `
 
 const MentorGrid = ({ hits }) => {
+  const [open, setOpen] = React.useState(false);
   const { sendRequestToMentor } = useAuth();
 
   const [selectedMentor, setSelectedMentor] = useState({
@@ -57,6 +66,19 @@ const MentorGrid = ({ hits }) => {
   const handleClose = () => {
     setSelectedMentor({ open: false });
   };
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleCloses = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   const sendRequest = async (email,message) => {
     try {
       await sendRequestToMentor(email,message);
@@ -68,6 +90,18 @@ const MentorGrid = ({ hits }) => {
   // A grid of mentor components.
   return (
     <GridListContainer>
+       {/* <Button variant="outlined" onClick={handleClick}>
+          Open success snackbar
+        </Button>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleCloses} severity="warning">
+          This is a success message!
+        </Alert>
+      </Snackbar>
+      <Alert severity="error">This is an error message!</Alert>
+      <Alert severity="warning">This is a warning message!</Alert>
+      <Alert severity="info">This is an information message!</Alert>
+      <Alert severity="success">This is a success message!</Alert> */}
       <StyledGridList cellHeight={180} cols={3}>
         {hits.map((mentor) => {
           return (

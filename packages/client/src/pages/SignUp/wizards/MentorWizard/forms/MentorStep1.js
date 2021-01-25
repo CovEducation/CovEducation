@@ -10,6 +10,7 @@ const WizardInput = styled.div`
 const MentorStep1 = (props) => {
     return (
         <div>
+            <label>Login Information</label>
             <WizardInput>
                 <TextField
                     fullWidth
