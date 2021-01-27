@@ -45,12 +45,15 @@ const VideoConferencePage = ({ user }) => {
 
   const [partnerList, setPartnerList] = useState([])
   const [videoIdList, setVideoIdList] = useState([])
+  const [childList, setChildList] = useState([])
    
 
   useEffect(() => {
     updateMentorList();
   }, []);
 
+  // Creates a list of mentors (if on parent account) or students (if on mentor account) associated with the user
+  // Pulls both the IDs and the names of the partners and saves them into lists
   const updateMentorList = async() => {
     const userId = Auth.currentUser.uid;
     let pairCollection = 'mentors';
@@ -66,34 +69,48 @@ const VideoConferencePage = ({ user }) => {
 
     pairs.forEach(pair => {
       console.log(pair.id, '=>', pair.data());
+      pairIds.push(pair.id)
 
-      let partnerId = pair.data().mentor;
-      if (user.role === "MENTOR"){
-        partnerId = pair.data().mentee;
-      }
-      pairIds.push(partnerId)
     });
+
+    const childNames = [] 
+    if (user.role === "PARENT"){
+      const children = await Db.collection('parents').doc(userId).collection('students').get();
+      const childIDs = []
+      children.forEach(child => {
+        childIDs.push(child.id);
+      })
+  
+      await Promise.all(
+        childIDs.map(async id => {
+          let childData = await Db.collection('parents').doc(userId).collection('students').doc(id).get();
+          childNames.push(childData.data().name);
+        })
+      )
+    }
+
 
     const partnerNames = [];
     await Promise.all(
       pairIds.map(async id => {
-        console.log(id, pairCollection);
-        let other = await Db.collection(pairCollection).doc(id).get();
+        let pair = await Db.collection('mentorpairings').doc(id).get();
+        let partnerId = pair.data().mentor;
+        let other = await Db.collection(pairCollection).doc(partnerId).get(); //parent side
+
+        if (user.role === "MENTOR"){
+          partnerId = pair.data().mentee;
+          let parentID = pair.data().parent;
+          other = await Db.collection(pairCollection).doc(parentID).collection('students').doc(partnerId).get();
+        }
+
         partnerNames.push(other.data().name);
       })
     );
 
-
-
-    console.log(partnerNames);
     setPartnerList(partnerNames);
-    setVideoIdList(pairIds.map(id => {
-      let videoId = id + userId;
-      if (user.role === "MENTOR"){
-        videoId = userId + id;
-      }
-      return videoId;
-    }));
+    setVideoIdList(pairIds);
+    setChildList(childNames);
+
     
   }
 
@@ -133,6 +150,21 @@ const VideoConferencePage = ({ user }) => {
                 <option value = {index}> {name} </option>
               )}
             </select>
+              
+            <div>
+                <br />
+                {`${user.role === "PARENT" ? 
+                  <select id='child' placeholder='Child Name' onChange={updateRoomConfig}>
+                    <option value="default">Select One</option>
+                    {childList.map((name, index) => 
+                      <option value = {index}> {name} </option>
+                    )}
+                  </select>
+              
+                :
+                "" }`}
+            </div>
+
             <br /> <br />
             <Button theme="accent" size="md" onClick={handleClick} type='submit'>
               Join
