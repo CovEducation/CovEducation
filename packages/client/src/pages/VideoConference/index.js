@@ -57,7 +57,7 @@ const VideoConferencePage = ({ user }) => {
   const updateMentorList = async() => {
     const userId = Auth.currentUser.uid;
     let pairCollection = 'mentors';
-    let selfSearch = 'mentee'; 
+    let selfSearch = 'parent'; 
 
     if (user.role === "MENTOR") {
       pairCollection = 'parents';
@@ -67,7 +67,10 @@ const VideoConferencePage = ({ user }) => {
     const pairs = await Db.collection('mentorpairings').where(selfSearch, '==', userId).get();
     const pairIds = []
 
+    console.log("pairs:", pairs);
+
     pairs.forEach(pair => {
+      console.log(pair);
       console.log(pair.id, '=>', pair.data());
       pairIds.push(pair.id)
 
@@ -78,6 +81,7 @@ const VideoConferencePage = ({ user }) => {
       const children = await Db.collection('parents').doc(userId).collection('students').get();
       const childIDs = []
       children.forEach(child => {
+        console.log(child);
         childIDs.push(child.id);
       })
   
@@ -152,17 +156,15 @@ const VideoConferencePage = ({ user }) => {
             </select>
               
             <div>
-                <br />
-                {`${user.role === "PARENT" ? 
+                {user.role === "PARENT" ? 
                   <select id='child' placeholder='Child Name' onChange={updateRoomConfig}>
                     <option value="default">Select One</option>
                     {childList.map((name, index) => 
                       <option value = {index}> {name} </option>
                     )}
                   </select>
-              
                 :
-                "" }`}
+                <div/> }
             </div>
 
             <br /> <br />
