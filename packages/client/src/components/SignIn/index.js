@@ -11,6 +11,7 @@ import Button from '../Button';
 import UncontrolledAlert from '../Notification/UncontrolledAlert';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { useHistory } from "react-router-dom";
 
 const Notification = styled(UncontrolledAlert)`
     .section {
@@ -42,7 +43,8 @@ const SigninSchema = Yup.object().shape({
     password: Yup.string().required('Please enter your password.')
 });
 
-const Signin = () => {
+const Signin = (props) => {
+    const history = useHistory();
     const { signin } = useAuth();
     const [serverError, setServerError] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
@@ -56,7 +58,7 @@ const Signin = () => {
     const handleSubmit = ({ email, password }) => {
         setSubmittedOnce(true);
         signin(email, password)
-            .then(() => console.log("signed in"))
+            .then(() => history.push('/dashboard/profile'))
             .catch(() => setServerError(true));
     }
 

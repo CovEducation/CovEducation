@@ -12,7 +12,8 @@ import {
     updateSessionHours, 
     updateRatingss,
     getSpeakerSeriesList,
-    getTeamDataList
+    getTeamDataList,
+    saveProfileData
  } from '../../api';
 import firebase from 'firebase/app';
 import 'firebase/auth';
@@ -100,6 +101,7 @@ const useAuthProvider = () => {
             .then(() => {
                 setUser(null);
                 setAuthState(AUTH_STATES.LOGGED_OUT);
+                window.location.href = window.location.origin;
             });
     };
 
@@ -123,10 +125,10 @@ const useAuthProvider = () => {
         await getUserDetailByEmail(email);
     }
    
-    const sendRequestToMentor = async(email,message) => {
-        await sendRequest(email, message)
+    const sendRequestToMentor = async(email,studentID,studentName,message) => {
+        await sendRequest(email, studentID,studentName,message)
         .then(() => {
-            alert("Request Send successfully.");
+            console.log("Request Send successfully.");
         })
         .catch((err) => {
             console.log(`Error Sending Request: ${err}`);
@@ -135,7 +137,9 @@ const useAuthProvider = () => {
 
     const getRequestList = async() => {
         await getRequests(["Pending"])
-        .then((request) => setRequest(request))
+        .then((request) => {
+            setRequest(request)
+        })
         .catch((err) => {
             console.log(`Error fetching Request: ${err}`);
             setRequest(null);
@@ -160,7 +164,6 @@ const useAuthProvider = () => {
                 console.log(`Error fetching Request: ${err}`);
                 setRequest(null);
             });
-            alert("Request accepted successfully.");
         })
         .catch((err) => {
             console.log(`Error fetching Request: ${err}`);
@@ -175,8 +178,7 @@ const useAuthProvider = () => {
         .catch((err) => {
             console.log(`Error fetching Request: ${err}`);
             setRequest(null);
-        });
-        alert("Request archived successfully.");})
+        });})
         .catch((err) => {
             console.log(`Error fetching Request: ${err}`);
         });
@@ -190,8 +192,7 @@ const useAuthProvider = () => {
         .catch((err) => {
             console.log(`Error fetching Request: ${err}`);
             setRequest(null);
-        });
-        alert("Request rejected successfully.");})
+        });})
         .catch((err) => {
             console.log(`Error fetching Request: ${err}`);
         });
@@ -206,7 +207,7 @@ const useAuthProvider = () => {
             console.log(`Error fetching Request: ${err}`);
             setRequest(null);
         });
-        alert("Session hours was updated successfully.");})
+})
         .catch((err) => {
             console.log(`Error fetching Request: ${err}`);
         });
@@ -221,9 +222,20 @@ const useAuthProvider = () => {
             console.log(`Error fetching Request: ${err}`);
             setRequest(null);
         });
-        alert("Ratings was added successfully.");})
+       })
         .catch((err) => {
             console.log(`Error fetching Request: ${err}`);
+        });
+    }
+
+    const saveProfileDetails = async(uid,data) => {
+        await saveProfileData(uid,data)
+        .then((data) => {
+            alert("Profile was saved successfully.");
+            setUser(data);
+        })
+        .catch((err) => {
+            console.log(`Error saving profile: ${err}`);
         });
     }
 
@@ -236,6 +248,10 @@ const useAuthProvider = () => {
             console.log(`Error fetching Speaker Series: ${err}`);
             setSpeakerSeries(null);
         });
+    }
+
+    const setUserData = async(data) => {
+        setUser(data);
     }
 
 
@@ -304,7 +320,9 @@ const useAuthProvider = () => {
         updateSessionHoursss,
         getPendingRequestList,
         getSpeakerSeries,
-        getTeamData
+        getTeamData,
+        saveProfileDetails,
+        setUserData
     };
 }
 

@@ -23,19 +23,57 @@ const getRequestData = async (id) => {
     return requestDoc;
 };
 
+const getRequestByMentor = async (id) => {
+    var temp = [];
+    //return messageCollectionRef.where("parentUID", "==", id).get();
+    const requestDocs = await db.collection('requests').where("mentorUID", "==", id)
+        .get()
+        .then(function(querySnapshot) {
+            //console.log("querySnapshot", querySnapshot);
+            querySnapshot.forEach(function(doc) {
+                //doc.data()
+                var d = doc.data();
+                if(typeof d.requestStatus !== "undefined")
+                {
+                    temp.push({
+                        "messageId": doc.id,
+                        "messageObj": doc.data()
+                    });
+                }
+                // temp.push({
+                //     "messageId": doc.id,
+                //     "messageObj": doc.data()
+                // });
+            });
+            return temp;
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+        });
+    return requestDocs;
+};
+
 const getParentsRequest = async (id) => {
     var temp = [];
+    //return messageCollectionRef.where("parentUID", "==", id).get();
     const requestDocs = await db.collection('requests').where("parentUID", "==", id)
         .get()
         .then(function(querySnapshot) {
             //console.log("querySnapshot", querySnapshot);
             querySnapshot.forEach(function(doc) {
-                // doc.data() is never undefined for query doc snapshots
-                //console.log(doc.data());
-                temp.push({
-                    "messageId": doc.id,
-                    "messageObj": doc.data()
-                });
+                //doc.data()
+                var d = doc.data();
+                if(typeof d.requestStatus !== "undefined")
+                {
+                    temp.push({
+                        "messageId": doc.id,
+                        "messageObj": doc.data()
+                    });
+                }
+                // temp.push({
+                //     "messageId": doc.id,
+                //     "messageObj": doc.data()
+                // });
             });
             return temp;
         })
@@ -51,146 +89,76 @@ const acceptRequest = async (mentorId, messageId) => {
     });
 };
 
-const requestStatusUpdate = async (messageId, status, studentName) => {
+const requestStatusUpdate = async (messageId, status) => {
     const requestDoc = await getDoc('requests', messageId);
-    var studentArray = [];
-    if(typeof requestDoc.students !== "undefined")
+    var obj;
+    if(status == "Active")
     {
-        studentArray = requestDoc.students;
-    }
-    if(studentArray.length > 0)
-    {
-        var finalStudentArray = [];
-        for(var i = 0; i < studentArray.length; i++)
-        {
-            var rec = studentArray[i];
-            if(rec.name == studentName)
-            {
-                rec["requestStatus"] = status;
-                if(status == "Active")
-                {
-                    rec["acceptedDate"] = new Date();
-                }
-                else if(status == "Archived")
-                {
-                    rec["archivedDate"] = new Date();
-                }
-                else if(status == "Rejected")
-                {
-                    rec["rejectedDate"] = new Date();
-                }
-            }
-            finalStudentArray.push(rec);
-        }
-        return messageCollectionRef.doc(messageId).update({
-            students: finalStudentArray
-        });
-    }
-    else
-    {
-        if(status == "Active")
-        {
-            return messageCollectionRef.doc(messageId).update({
-                requestStatus: status,
-                acceptedDate: new Date()
-            });
-        }
-        else if(status == "Archived")
-        {
-            return messageCollectionRef.doc(messageId).update({
-                requestStatus: status,
-                archivedDate: new Date()
-            });
-        }
-        else if(status == "Rejected")
-        {
-            return messageCollectionRef.doc(messageId).update({
-                requestStatus: status,
-                rejectedDate: new Date()
-            });
+        obj = {
+            requestStatus: status,
+            acceptedDate: new Date().toISOString()
         }
     }
+    else if(status == "Archived")
+    {
+        obj = {
+            requestStatus: status,
+            archivedDate: new Date().toISOString()
+        }
+    }
+    else if(status == "Rejected")
+    {
+        obj = {
+            requestStatus: status,
+            rejectedDate: new Date().toISOString()
+        }
+    }
+    return messageCollectionRef.doc(messageId).update(obj);
 };
 
 const updateSessionHours = async (messageId, sessionHours, studentName) => {
     const requestDoc = await getDoc('requests', messageId);
-    var studentArray = [];
-    if(typeof requestDoc.students !== "undefined")
+    if(typeof requestDoc.sessionHours == "undefined")
     {
-        studentArray = requestDoc.students;
+        var lastSessionHours = 0;
     }
-    if(studentArray.length > 0)
-    {
-        var finalStudentArray = [];
-        for(var i = 0; i < studentArray.length; i++)
-        {
-            var rec = studentArray[i];
-            if(rec.name == studentName)
-            {
-                if(typeof rec.sessionHours == "undefined")
-                {
-                    var lastSessionHours = 0;
-                }
-                else {
-                    var lastSessionHours = rec.sessionHours;
-                }
-                sessionHours = parseInt(sessionHours) + parseInt(lastSessionHours);
-                rec["sessionHours"] = sessionHours;
-                rec["sessionDate"] = new Date();
-            }
-            finalStudentArray.push(rec);
-        }
-        return messageCollectionRef.doc(messageId).update({
-            students: finalStudentArray
-        });
+    else {
+        var lastSessionHours = requestDoc.sessionHours;
     }
+    sessionHours = parseInt(sessionHours) + parseInt(lastSessionHours);
+    return messageCollectionRef.doc(messageId).update({
+        sessionHours: sessionHours,
+        sessionDate: new Date().toISOString()
+    });
 };
 
 const updateMentorRatings = async (messageId, ratings, studentName) => {
     const requestDoc = await getDoc('requests', messageId);
-    var studentArray = [];
-    if(typeof requestDoc.students !== "undefined")
+    rec = requestDoc;
+    var mentorUID = requestDoc.mentorUID;
+    const mentorDetails = await getDoc('mentors', mentorUID);
+    var noOfRatings = 0;
+    if(typeof mentorDetails.noOfRatings !== "undefined")
     {
-        studentArray = requestDoc.students;
+        noOfRatings = parseInt(mentorDetails.noOfRatings);
     }
-    if(studentArray.length > 0)
+    var oldAvgRatings = 0;
+    if(typeof mentorDetails.avgRatings !== "undefined")
     {
-        var finalStudentArray = [];
-        for(var i = 0; i < studentArray.length; i++)
-        {
-            var rec = studentArray[i];
-            if(rec.name == studentName)
-            {
-                rec["ratings"] = ratings;
-                rec["ratingsDate"] = new Date();
-            }
-            finalStudentArray.push(rec);
-        }
-
-        var mentorUID = requestDoc.mentorUID;
-        const mentorDetails = await getDoc('mentors', mentorUID);
-        var noOfRatings = 0;
-        if(typeof mentorDetails.noOfRatings !== "undefined")
-        {
-            noOfRatings = parseInt(mentorDetails.noOfRatings);
-        }
-        var oldAvgRatings = 0;
-        if(typeof mentorDetails.avgRatings !== "undefined")
-        {
-            oldAvgRatings = parseFloat(mentorDetails.avgRatings);
-        }
-        var runningAverageRatings = (parseFloat(noOfRatings * oldAvgRatings) + parseFloat(ratings))/(noOfRatings + 1);
-        var newNoOfRatings = noOfRatings + 1;
-
-        var updateMentor = await mentorsCollectionRef.doc(mentorUID).update({
-            noOfRatings: newNoOfRatings,
-            avgRatings: runningAverageRatings
-        });
-        return messageCollectionRef.doc(messageId).update({
-            students: finalStudentArray
-        });
+        oldAvgRatings = parseFloat(mentorDetails.avgRatings);
     }
+    var runningAverageRatings = (parseFloat(noOfRatings * oldAvgRatings) + parseFloat(ratings))/(noOfRatings + 1);
+    var newNoOfRatings = noOfRatings + 1;
+
+    var updateMentor = await mentorsCollectionRef.doc(mentorUID).update({
+        noOfRatings: newNoOfRatings,
+        avgRatings: runningAverageRatings
+    });
+    return messageCollectionRef.doc(messageId).update({
+        ratings: ratings,
+        ratingsDate: new Date().toISOString()
+    });
 };
 
 
-module.exports = { getRequestData, getParentsRequest, acceptRequest, requestStatusUpdate, updateSessionHours, updateMentorRatings };
+module.exports = { getRequestData, getParentsRequest, acceptRequest, requestStatusUpdate, updateSessionHours, updateMentorRatings, getRequestByMentor };

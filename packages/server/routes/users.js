@@ -43,4 +43,14 @@ router.post('/', authMiddleware, async (req, res) => {
   }
 });
 
+
+//User Profile Update
+router.post("/saveProfile", async function(req, res, next) {
+  const { uid } = req.body.uid;
+  
+  const user = await db.saveUserDetails(req.body.uid, req.body.dataToSave);
+  res.send(user);
+});
+
+
 module.exports = router;

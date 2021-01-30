@@ -4,6 +4,20 @@ import Button from '../../components/Button';
 import TextField from '@material-ui/core/TextField';
 import {Auth} from '../../providers/FirebaseProvider';
 import useAuth from "../../providers/AuthProvider";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+
+
+const SELECT_ITEM_HEIGHT = 48;
+const SELECT_ITEM_PADDING_TOP = 8;
+const SelectMenuProps = {
+    PaperProps: {
+        style: {
+            maxHeight: SELECT_ITEM_HEIGHT * 4.5 + SELECT_ITEM_PADDING_TOP,
+        },
+    },
+};
 
 const WizardInput = styled.div`
     margin-bottom: 1em;
@@ -56,11 +70,15 @@ const ButtonBlock = styled.div`
 `
 
 
-// Displays the picture, name, and major of a mentor.
-const MentorProfile = ({ mentor, onSubmit }) => {
-    const { user, sendRequestToMentor } = useAuth();
-    const [userMessage, setUserMessage] = useState("Hi New Parent Request");
 
+// Displays the picture, name, and major of a mentor.
+const MentorProfile = ({ mentor, onSubmit, disable }) => {
+    const { user } = useAuth();
+    const { students } = user;
+    const [userMessage, setUserMessage] = useState("Hi New Parent Request");
+    const [studentName, setStudentName] = useState('');
+    const [studentID, setStudentID] = useState('');
+    const [validation, setValidation] = useState(true);
     if (!validateMentorData(mentor)) return (<></>);
 
     const relevantInformationMentor = [
@@ -79,11 +97,23 @@ const MentorProfile = ({ mentor, onSubmit }) => {
         ['timezone', 'Timezone'],
         ['languages_spoken', 'Languages'],
     ];
-
+    
     const sendRequest = async(email) => {
-        await onSubmit(email,userMessage);
+        await onSubmit(email,studentID,studentName, userMessage);
     }
     
+    const stundetsList = students && students.map(item => {
+        return <MenuItem key={item.id} value={item.name} data-id={item.id}>{item.name}</MenuItem>;
+    });
+
+
+    const handleChange = (event) => {
+        const { id } = event.currentTarget.dataset;
+        setStudentName(event.target.value);
+        setStudentID(id);
+        setValidation(false);
+      };
+
     return (
         <MentorProfileContainer key={mentor.objectID}>
             <MentorProfileHeader>
@@ -113,6 +143,20 @@ const MentorProfile = ({ mentor, onSubmit }) => {
             {user.role === 'PARENT' && 
             <>
             <WizardInput>
+                <InputLabel id="wizard-pronouns" required>Please Select Student</InputLabel>
+                <Select
+                    children={stundetsList}
+                    fullWidth
+                    labelId="wizard-pronoun"
+                    MenuProps={SelectMenuProps}
+                    name="studentName"
+                    onChange={handleChange}
+                    renderValue={(selected) => selected}
+                    value={studentName}
+                    required
+                />
+            </WizardInput>
+            <WizardInput>
                 <TextField
                     fullWidth
                     label="Request Message"
@@ -122,7 +166,7 @@ const MentorProfile = ({ mentor, onSubmit }) => {
                 />
             </WizardInput>
             <ButtonBlock>
-            <Button theme="accent" size="md" onClick={ () => sendRequest(mentor.email)}>Send Request</Button>
+            <Button disabled={disable || validation} theme="accent" size="md" onClick={ () => sendRequest(mentor.email)}>Send Request</Button>
             </ButtonBlock>
             </>
             }

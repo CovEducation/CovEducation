@@ -4,6 +4,7 @@ import { COLORS } from '../../constants';
 import Button from '../../components/Button';
 import useAuth from "../../providers/AuthProvider";
 import { getTrailingCommentRanges } from 'typescript';
+import Toast from "../../components/Toast/index.js";
 
 
 
@@ -111,7 +112,9 @@ const RequestsPage = ({ request, requestOther }) => {
   const [serverError, setServerError] = useState(false);  
   const [sessionHours, setsessionHours] = useState([]);
   const [ratings, setRatings] = useState([]);
-
+  const [toastOpen, setToastOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [status, setStatus] = useState("");
     useEffect(() => {
       getRequestList()
     }, []);
@@ -120,8 +123,8 @@ const RequestsPage = ({ request, requestOther }) => {
       acceptRequest(messageId, 'Active')
     }
     const getDate = (d) => {
-      var a = new Date(d._seconds * 1000);
-      return ("0" + a.getDate()).slice(-2) + "/" + ("0" + a.getMonth()).slice(-2) + "/" + a.getFullYear();
+      var a = new Date(d);
+      return ("0" + a.getDate()).slice(-2) + "/" + ("0" + a.getMonth()+1).slice(-2) + "/" + a.getFullYear();
     }
 
     const hasRequests = () => {
@@ -136,18 +139,36 @@ const RequestsPage = ({ request, requestOther }) => {
       var sessionVal = sessionHours;
       if(sessionVal.length == 0)
       {
-        alert("Please add session hours to continue.");
+        setStatus("error");
+        setMessage("Please add session hours to continue.");
+        setToastOpen(true);
+        setTimeout(() => {
+          setToastOpen(false);
+        }, 3000);
+        // alert("Please add session hours to continue.");
         return;
       }
       else{
         var rec = sessionVal;
         if(rec.val == "")
         {
-          alert("Please add session hours to continue.");
+          setStatus("error");
+          setMessage("Please add session hours to continue.");
+          setToastOpen(true);
+          setTimeout(() => {
+            setToastOpen(false);
+          }, 3000);
           return;
         }
         else {
-          updateSessionHoursss(rec.messageId, rec.val, rec.student)
+          updateSessionHoursss(rec.messageId, rec.val, rec.student).then(() => {
+            setStatus("success");
+            setMessage("Session Hours Updated.");
+            setToastOpen(true);
+            setTimeout(() => {
+              setToastOpen(false);
+            }, 3000);
+          })
         }
       }
     }
@@ -156,18 +177,35 @@ const RequestsPage = ({ request, requestOther }) => {
       var ratingsVal = ratings;
       if(ratingsVal.length == 0)
       {
-        alert("Please add ratings to continue.");
+        setStatus("error");
+        setMessage("Please add ratings to continue.");
+        setToastOpen(true);
+        setTimeout(() => {
+          setToastOpen(false);
+        }, 3000);
         return;
       }
       else{
         var rec = ratingsVal;
         if(rec.val == "")
         {
-          alert("Please add ratings to continue.");
+          setStatus("error");
+          setMessage("Please add ratings to continue.");
+          setToastOpen(true);
+          setTimeout(() => {
+            setToastOpen(false);
+          }, 3000);
           return;
         }
         else {
-          updateRatings(rec.messageId, rec.val, rec.student)
+          updateRatings(rec.messageId, rec.val, rec.student).then(() => {
+            setStatus("success");
+            setMessage("Rating Updated.");
+            setToastOpen(true);
+            setTimeout(() => {
+              setToastOpen(false);
+            }, 3000);
+          })
         }
       }
     }
@@ -217,10 +255,24 @@ const RequestsPage = ({ request, requestOther }) => {
           {user.role === 'MENTOR' && 
           <RequestDetailsBlock>
             {!item.accepted && 
-              <Button theme='accent' size='sm' onClick={() =>  acceptRequest(item.messageId, "Active", item.studentDetails.name)}> Accept </Button>
+              <Button theme='accent' size='sm' onClick={() =>  acceptRequest(item.messageId, "Active", item.studentDetails.name).then(() => {
+                setStatus("success");
+                setMessage("Request Accepted");
+                setToastOpen(true);
+                setTimeout(() => {
+                  setToastOpen(false);
+                }, 3000);
+              })}> Accept </Button>
             }
             {!item.accepted && 
-              <Button theme='danger' size='sm' onClick={() =>  rejectRequest(item.messageId, "Rejected", item.studentDetails.name)}> Reject </Button>
+              <Button theme='danger' size='sm' onClick={() =>  rejectRequest(item.messageId, "Rejected", item.studentDetails.name).then(() => {
+                setStatus("success");
+                setMessage("Request Rejected");
+                setToastOpen(true);
+                setTimeout(() => {
+                  setToastOpen(false);
+                }, 3000);
+              })}> Reject </Button>
             }
           </RequestDetailsBlock>
           }
@@ -233,7 +285,14 @@ const RequestsPage = ({ request, requestOther }) => {
           {(user.role === 'PARENT' && item.requestStatus === "Active") && 
             <FlexClass1>
               <UserPicture src="http://via.placeholder.com/115" alt="profile pic" />
-              <Button theme='danger' size='sm' onClick={() =>  archiveRequest(item.messageId, "Archived", item.studentDetails.name)}> End Membership </Button>
+              <Button theme='danger' size='sm' onClick={() =>  archiveRequest(item.messageId, "Archived", item.studentDetails.name).then(() => {
+                setStatus("success");
+                setMessage("Request Archived");
+                setToastOpen(true);
+                setTimeout(() => {
+                  setToastOpen(false);
+                }, 3000);
+              })}> End Membership </Button>
             </FlexClass1>
            }
            {(user.role === 'MENTOR' && item.requestStatus === "Active") && 
@@ -261,9 +320,9 @@ const RequestsPage = ({ request, requestOther }) => {
                 <RedColor>{item.requestStatus}</RedColor>
               }
             </p>
-            <p><b>Session Hours: </b><span>{item.studentDetails.sessionHours}</span></p>
+            <p><b>Session Hours: </b><span>{item.requestDetails.sessionHours}</span></p>
             {user.role === 'MENTOR' && 
-              <p><b>Ratings: </b><span>{getRatingsFixed(item.studentDetails.ratings)}</span></p>
+              <p><b>Ratings: </b><span>{item.requestDetails.ratings?getRatingsFixed(item.requestDetails.ratings):0}</span></p>
             }
             {user.role === 'PARENT' && 
               <p><b>Avg. Ratings: </b><span>{getRatingsFixed(item.mentorDetails.avgRatings)}</span></p>
@@ -292,6 +351,7 @@ const RequestsPage = ({ request, requestOther }) => {
 
   return (
     <RequestsPageWrapper>
+        <Toast open={toastOpen} message={message} status={status}/>
       <RequestsHeader>
         <div>
           <h1>Pending Requests</h1>

@@ -24,6 +24,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { useHistory } from "react-router-dom";
 
 const SignUpPageWrapper = styled.div`
     align-items: center;
@@ -114,7 +115,7 @@ let mentorWizardSignUpData = {
 const SignUpPage = (props) => {
 
     const [userTypes, setUserTypes] = useState("MENTOR")
-
+    const history = useHistory();
     const updateParentWizardSignUpData = (data) => {
         parentWizardSignUpData = { ...parentWizardSignUpData, ...data };
     }
@@ -234,7 +235,9 @@ const SignUpPage = (props) => {
                             );
                             if(res.success)
                             {
-                                alert('Signed in! Redirecting to dashboard...');
+                                // alert('Signed in! Redirecting to dashboard...');
+                                history.push('/dashboard/profile');
+
                             }
                             else {
                                 alert(res.message);
@@ -322,7 +325,8 @@ const SignUpPage = (props) => {
                         )
                         if(response.success)
                         {
-                            alert('Signed in! Redirecting to dashboard...');
+                            // alert('Signed in! Redirecting to dashboard...');
+                            history.push('/dashboard/profile');
                         }
                         else {
                             alert(response.message);

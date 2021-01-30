@@ -49,13 +49,23 @@ export const getUserDetailByEmail = async (email) => {
     return await post(host + 'getUserbyEmail', {email: "jamesgonzalez@ross-hill.biz"}, {  });
 };
 
-export const sendRequest = async (email,message) => {
+export const sendRequest = async (email,studentID,studentName,message) => {
     if (Auth.currentUser === undefined || Auth.currentUser === null) {
         throw Error('Unable to retrive user data with uninitilized Auth user.');
     }
     const token = await Auth.currentUser.getIdToken();
-    return await post(host + 'request/sendRequest', {mentorEmailAddress: email, message: message, parentId: Auth.currentUser.uid}, {token});
+    return await post(host + 'request/sendRequest', {mentorEmailAddress: email, message: message, parentId: Auth.currentUser.uid, studentID, studentName}, {token});
 }
+
+export const saveProfileData = async (uid, data) => {
+    if (Auth.currentUser === undefined || Auth.currentUser === null) {
+        throw Error('Unable to retrive user data with uninitilized Auth user.');
+    }
+    const token = await Auth.currentUser.getIdToken();
+    var a = await post(host + 'users/saveProfile', {uid: uid, dataToSave: JSON.stringify(data)});
+    console.log("a", a);
+    return a;
+};
 
 export const getRequests = async (arr) => {
     if (Auth.currentUser === undefined || Auth.currentUser === null) {
