@@ -38,7 +38,13 @@ const ButtonThemes = {
     default: 5,
     round: 30,
   },
+  hover: {
+    light: COLORS.lightorange,
+
+  },
+
 };
+
 
 const ButtonStyled = styled.button`
   font-family: ${FONTS.font1};
@@ -72,6 +78,8 @@ const ButtonStyled = styled.button`
   &:hover {
     cursor: ${(props) => props.disabled ? "not-allowed" : "pointer"};
     opacity: ${(props) => props.disabled ? "1.0" : "0.9"};
+    background-color: ${(props) =>
+    props.basic ? ButtonThemes.backgroundColor[props.theme] : ButtonThemes.hover[props.theme]};
   }
 `;
 
@@ -84,6 +92,7 @@ const Button = ({
   type = 'submit',
   round = false,
   disabled = false,
+
 }) => {
   return (
     <ButtonStyled theme={theme} size={size} basic={basic} onClick={onClick} round={round} disabled={disabled} type={type}>
@@ -99,5 +108,6 @@ Button.propTypes = {
   basic: PropTypes.bool,
   disabled: PropTypes.bool,
   type: PropTypes.string,
+
 };
 export default Button;

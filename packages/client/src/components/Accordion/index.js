@@ -54,8 +54,8 @@ const AccordionRowContent = styled.div`
   max-width: 700px;
   width: 95%;
   text-align: left;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 20px;
+  margin-right: 20px;
 `;
 
 export const AccordionRow = ({ children, title }) => {
@@ -69,6 +69,7 @@ export const AccordionRow = ({ children, title }) => {
       </AccordionRowHeader>
       <AccordionRowContent open={open}>
         {children}
+        <br/>
       </AccordionRowContent>
     </div>
   )
