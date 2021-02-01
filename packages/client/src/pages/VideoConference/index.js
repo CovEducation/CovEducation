@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Jutsu } from 'react-jutsu'
+import { useJitsi } from 'react-jutsu'
 import { Auth, Db } from '../../providers/FirebaseProvider/index.js';
-import TextField from '@material-ui/core/TextField';
 import {FONTS} from '../../constants';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 import Button from '../../components/Button';
 import Container from '@material-ui/core/Container';
 
@@ -35,6 +33,71 @@ const Headings = styled.p`
   font-family: ${FONTS.font2};
   text-align: left;
 `;
+
+const MaxDiv = styled.div`
+  width: 100%;
+  height: 100%;
+`
+
+const Video = ({room, name, password, post}) => {
+  const jitsiConfig = {
+    roomName: room,
+    displayName: name,
+    password: password,
+    subject: "",
+    parentNode: 'jitsi-container',
+    width: '100%', 
+    height: '100%',
+  };
+  
+  const [listeners, setListeners] = useState(false)
+  const { loading, error, jitsi } = useJitsi(jitsiConfig);
+
+  useEffect(() => {
+    addListeners();
+  })
+
+  const addListeners = async() => {
+    if (!listeners && jitsi && post) {
+      const pair = Db.collection('mentorpairings').doc(room);
+      const video = await pair.collection('videoconferences').add({
+        start: 0,
+        end: 0
+      });
+    
+      jitsi.once('participantJoined', async (args, pairId=room, videoId=video.id) => {
+        const start = Date.now();
+        const video = await Db.collection('mentorpairings').doc(pairId).collection('videoconferences').doc(videoId).get();
+        const existingStart = video.data().start;
+
+        if (existingStart === 0) {
+          console.log("MEETING JOINED", pairId, videoId);
+          Db.collection('mentorpairings').doc(pairId).collection('videoconferences').doc(videoId).update({
+            start: start
+          })
+        }
+      })
+  
+      jitsi.once('participantLeft', async (args, pairId=room, videoId=video.id) => {
+        console.log("MEETING ENDED", pairId, videoId);
+        const end = Date.now();
+        Db.collection('mentorpairings').doc(pairId).collection('videoconferences').doc(videoId).update({
+          end: end
+        })
+      })
+  
+      setListeners(true);
+    }
+  }
+
+  return (
+    <MaxDiv>
+      {error && <p>{error}</p>}
+      <MaxDiv id={jitsiConfig.parentNode} />
+    </MaxDiv>
+  )
+}
+
 
 const VideoConferencePage = ({ user }) => {
   const [room, setRoom] = useState('CovEd-hfiaf8932hgWHIG3g028ha')
@@ -89,20 +152,19 @@ const VideoConferencePage = ({ user }) => {
       )
     }
 
-
     const partnerNames = [];
     await Promise.all(
       pairIds.map(async id => {
         let pair = await Db.collection('mentorpairings').doc(id).get();
         let partnerId = pair.data().mentor;
         let other = await Db.collection(pairCollection).doc(partnerId).get(); //parent side
-
+        
         if (user.role === "MENTOR"){
           partnerId = pair.data().mentee;
           let parentID = pair.data().parent;
           other = await Db.collection(pairCollection).doc(parentID).collection('students').doc(partnerId).get();
         }
-
+        
         partnerNames.push(other.data().name);
       })
     );
@@ -110,8 +172,6 @@ const VideoConferencePage = ({ user }) => {
     setPartnerList(partnerNames);
     setVideoIdList(pairIds);
     setChildList(childNames);
-
-    
   }
 
   const updateRoomConfig = (e) => {
@@ -126,18 +186,14 @@ const VideoConferencePage = ({ user }) => {
     console.log(partnerList, videoIdList, room, password, userPassword);
     if (room && name && userPassword == password) setCall(true)
   }
-  
+
   return call ? (
-    <Jutsu
-      roomName={room}
-      displayName={name}
-      password={userPassword}
-      onMeetingEnd={() => console.log('Meeting has ended')}
-      loadingComponent={<p>loading ...</p>}
-      errorComponent={<p>Oops, something went wrong</p>} 
-      containerStyles={{ 
-        width: '90%', height: '100%' 
-      }}/>
+    <Video
+      name={name}
+      room={room}
+      password={password}
+      post={user.role === 'PARENT'}
+    />
   ) : (
     <Wrapper>
         <Title>{"Start a Meeting"}</Title>
@@ -153,7 +209,7 @@ const VideoConferencePage = ({ user }) => {
               
             <div>
                 <br />
-                {`${user.role === "PARENT" ? 
+                {user.role === "PARENT" ? 
                   <select id='child' placeholder='Child Name' onChange={updateRoomConfig}>
                     <option value="default">Select One</option>
                     {childList.map((name, index) => 
@@ -162,7 +218,7 @@ const VideoConferencePage = ({ user }) => {
                   </select>
               
                 :
-                "" }`}
+                <div/>}
             </div>
 
             <br /> <br />

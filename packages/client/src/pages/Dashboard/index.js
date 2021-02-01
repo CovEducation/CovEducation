@@ -98,7 +98,7 @@ const DashboardPage = () => {
         <SidenavLink to={`${url}/mentors`} active={location.pathname.endsWith('mentors')}>Find a Mentor</SidenavLink>
         <SidenavLink to={`${url}/speaker-series`} active={location.pathname.endsWith('speaker-series')}>Speaker Series</SidenavLink>
         <SidenavLink to={`${url}/requests`} active={location.pathname.endsWith('requests')}>Requests</SidenavLink>
-        <SidenavLink to={`${url}/videoconference`} active={location.pathname.endsWith('videoconference')}>VideoConference</SidenavLink>
+        <SidenavLink to={`${url}/videoconference`} active={location.pathname.endsWith('videoconference')}>Video Conference</SidenavLink>
       </DashboardSidenav>
       <DashboardContent>
         <Route path={`${path}/profile`} exact>
