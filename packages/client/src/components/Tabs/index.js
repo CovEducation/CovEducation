@@ -96,7 +96,6 @@ export default function HTabs(props) {
     const handleChange = (_, newValue) => {
         setValue(newValue);
     };
-
     return (
         <div className={classes.root}>
             <AppBar position="static" color="default">
@@ -108,7 +107,7 @@ export default function HTabs(props) {
             </AppBar>
             {props.texts.map((text, index) => (
                 <TabPanel value={value} index={index} key={index}>
-                    {text}
+                 {text}
                 </TabPanel>
             ))}
         </div>

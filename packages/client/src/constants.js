@@ -10,6 +10,7 @@ export const COLORS = {
   lightorange: '#FFF6DE',
   lightblue: '#E7F2FB',
   black: '#000000',
+  red: '#ff003b'
 };
 
 export const FONTS = {
@@ -322,3 +323,31 @@ export const subjects = [
 
 export const tags = ["Early Childhood Learning", "Preschool", "Elementary School", "Middle School", "High School"]
   .map(k => { return { label: k, value: k } });
+
+
+  export const proNouns = [
+    {
+      value: "mr",
+      pronoun: "Mr."
+    },
+    {
+      value: "mrs",
+      pronoun: "Mrs."
+    },
+    {
+      value: "miss",
+      pronoun: "Miss."
+    },
+    {
+      value: "dr",
+      pronoun: "Dr."
+    },
+    {
+      value: "ca",
+      pronoun: "CA"
+    },
+    {
+      value: "er",
+      pronoun: "Er."
+    },
+  ]

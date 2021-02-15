@@ -1,0 +1,59 @@
+ [
+    {
+        "_id" : 0,
+        "name" : "Johan Cervantes",
+        "designation" : "Developer",
+        "position" : "MIT '21",
+        "team": "Engineering"
+    },
+    {
+      "_id" : 1,
+      "name" : "Alex Portan",
+      "designation" : "Graphic Designer",
+      "position" : "UCLA '21",
+      "team": "Coordinators"
+    },
+    {
+      "_id" : 2,
+      "name" : "Remo Malek",
+      "designation" : "Designer",
+      "position" : "UCLA '21",
+      "team": "Public Relations"
+    },
+    {
+      "_id" : 3,
+      "name" : "Luis Jonas",
+      "designation" : "Business Development Manager",
+      "position" : "UCLA '21",
+      "team": "Outreach"
+    },
+    {
+      "_id" : 4,
+      "name" : "Rasmin Jacks",
+      "designation" : "Business Development Analyst",
+      "position" : "UCLA '21",
+      "team": "Speaker Series"
+    },
+    {
+      "_id" : 5,
+      "name" : "Jonas Pluks",
+      "designation" : "Business Manager",
+      "position" : "UCLA '21",
+      "team": "Speaker Series"
+    },
+
+    {
+      "_id" : 6,
+      "name" : "Loke Gabriel",
+      "designation" : "Graphic Designer",
+      "position" : "UCLA '21",
+      "team": "Technology Team"
+    },
+    {
+      "_id" : 7,
+      "name" : "Rose Gabriel",
+      "designation" : "Graphic Designer",
+      "position" : "UCLA '21",
+      "team": "Technology Team"
+    }
+  ]

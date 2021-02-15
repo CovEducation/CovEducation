@@ -29,9 +29,19 @@ const generateMentorMessage = (mentorFirstName, parentName, studentName, message
 };
 
 const textMentorRequest = async (mentor, parent, student, parentMessage) => {
-  const message = generateMentorMessage(mentor.name, parent.email, student.name, parentMessage);
+  const message = generateMentorMessage(mentor.name, parent.email, (student.length > 0)?student[0]:parent.name, parentMessage);
   return sendTextMessage(mentor.phone, message);
 };
+
+const textParentRequest = async (mentor, parent, studentName, status) => {
+  const message = `Hello ${parent.name}, requested mentor ${mentor.name} have ${status} your request for student ${studentName}.`;
+  return sendTextMessage(parent.phone, message);
+}
+
+const textMentorReplyRequest = async (mentor, parent, studentName, status) => {
+  const message = `Hello ${mentor.name}, mantee ${parent.name} have ${status} a membership for student ${studentName}.`;
+  return sendTextMessage(mentor.phone, message);
+}
 
 const textGuardianConfirmation = () => { throw new Error('Not implemented yet.'); };
 
@@ -41,4 +51,6 @@ module.exports = {
   textMentorRequest,
   textGuardianConfirmation,
   textPrivacyReminder,
+  textParentRequest,
+  textMentorReplyRequest
 };

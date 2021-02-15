@@ -22,7 +22,8 @@
     "algoliasearch": "^4.4.0",
     "eslint-config-airbnb": "^18.2.0",
     "firebase-admin": "^9.2.0",
-    "react-instantsearch-dom": "^6.7.0",
+    "moment": "^2.29.1",
+    "react-instantsearch-dom": "^6.8.2",
     "redoc-cli": "^0.9.12",
     "supertest": "^5.0.0",
     "yup": "^0.29.3"

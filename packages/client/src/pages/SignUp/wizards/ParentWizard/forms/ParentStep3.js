@@ -55,6 +55,7 @@ const ParentStep3 = (props) => {
 
     return (
         <div>
+            <label>Student Information</label>
             <WizardInput>
                 <TextField
                     fullWidth

@@ -10,6 +10,10 @@ import ParentStep4 from './forms/ParentStep4.js';
 import { createParentModel } from '../../../../models';
 import useAuth from '../../../../providers/AuthProvider';
 
+
+
+var a = "";
+
 const SignUpChildWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -33,6 +37,7 @@ let parentWizardSignUpData = {
     username: undefined,
     password1: undefined,
     password2: undefined,
+    userType: undefined,
 
     //Page 2
     parentName: undefined,
@@ -66,8 +71,10 @@ const updateRegisteredChild = (index, data) => {
 const FirstPage = () => {
 
     const [state, setState] = useState({});
+    
 
     const handleChange = (event) => {
+        a = event.target.value;
         setState({ ...state, [event.target.name]: event.target.value });
         updateParentWizardSignUpData({ [event.target.name]: event.target.value });
     };
@@ -177,11 +184,10 @@ const ParentWizard = () => {
             form: <FourthPage />
         }
     ];
-
+    const [state1, setState1] = useState({});
     const handleSubmit = () => {
         console.log(JSON.stringify(parentWizardSignUpData));
     };
-
     return <Stepper steps={children} handleSubmit={handleSubmit}/>;
 }
 

@@ -15,7 +15,11 @@ const ParentStep4 = (props) => {
     const isDisabled = !(props.data.agreedTermsOfService && props.data.agreedPrivacyPolicy)
 
     return (
+        <div>
+            <br />
+        <label>Terms and conditions</label>
         <AgreementCheckboxWrapper>
+            
             <FormControlLabel
                 control={
                     <Checkbox
@@ -40,6 +44,7 @@ const ParentStep4 = (props) => {
                 onClick={props.onClick}
             />
         </AgreementCheckboxWrapper>
+        </div>
     )
 
 }

@@ -6,8 +6,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
-import { tags, subjects } from '../../../../../constants.js';
+import { tags, subjects, proNouns } from '../../../../../constants.js';
 
 const WizardInput = styled.div`
     margin-bottom: 1em;
@@ -47,6 +50,12 @@ const MentorStep2 = (props) => {
         </MenuItem>
     ));
 
+
+    const proNounsMenuItems = proNouns.map(item => {
+        return <MenuItem key={item.value} value={item.pronoun}>{item.pronoun}</MenuItem>;
+    });
+
+
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.value });
         props.handleChange(event);
@@ -54,6 +63,24 @@ const MentorStep2 = (props) => {
 
     return (
         <div>
+            <br />
+            <label>Mentor Information</label>
+             <WizardInput>
+                <br />
+                <InputLabel id="wizard-pronouns" required>Pronouns</InputLabel>
+                <Select
+                    children={proNounsMenuItems}
+                    displayEmpty
+                    fullWidth
+                    labelId="wizard-pronoun"
+                    MenuProps={SelectMenuProps}
+                    name="pronouns"
+                    onChange={props.handleChange}
+                    renderValue={(selected) => selected}
+                    value={props.data.pronouns}
+                    required
+                />
+            </WizardInput>
             <WizardInput>
                 <TextField
                     fullWidth
@@ -103,6 +130,14 @@ const MentorStep2 = (props) => {
                     required
                 />
             </WizardInput>
+            <WizardInput>
+                <InputLabel id="wizard-notification-preference">Notification preference</InputLabel>
+                <RadioGroup row name="notificationPreference" defaultValue="phone">
+                    <FormControlLabel value="phone" control={<Radio color="primary" />} label="Phone"  onChange={handleChange}/>
+                    <FormControlLabel value="email" control={<Radio color="primary" />} label="Email" onChange={handleChange}/>
+                </RadioGroup>
+            </WizardInput>
+
         </div>
     );
 }

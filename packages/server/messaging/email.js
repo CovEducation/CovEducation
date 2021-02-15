@@ -33,6 +33,14 @@ const signUpVerificationParentPath = path.join(__dirname, 'templates/signUpVerif
 const signUpVerificationParentSource = fs.readFileSync(signUpVerificationParentPath, 'utf-8').toString();
 const signUpVerificationParentTemplate = handlebars.compile(signUpVerificationParentSource);
 
+const requestFilepath = path.join(__dirname, 'templates/requestParentEmail.html');
+const requestSource = fs.readFileSync(requestFilepath, 'utf-8').toString();
+const requestTemplate = handlebars.compile(requestSource);
+
+const requestMFilepath = path.join(__dirname, 'templates/requestMentorEmail.html');
+const requestMSource = fs.readFileSync(requestMFilepath, 'utf-8').toString();
+const requestMTemplate = handlebars.compile(requestMSource);
+
 /**
  * Sends an email to a mentor based on the CovEd match template.
  * @param {string} email - Email address of the mentor
@@ -45,7 +53,7 @@ async function emailMentorRequest(mentor, parent, student, message) {
     mentorfirst: mentor.name,
     parentname: parent.name,
     parentemail: parent.email,
-    studentname: student.name,
+    studentname: (student.length > 0)?student[0]:parent.name,
     message,
   };
   const htmlToSend = matchTemplate(replacements);
@@ -67,7 +75,7 @@ async function emailGuardianConfirmation(mentor, parent, student) {
   const replacements = {
     parentname: parent.name,
     mentorname: mentor.name,
-    studentname: student.name,
+    studentname: (student.length > 0)?student[0]:parent.name,
   };
   const htmlToSend = verificationTemplate(replacements);
   const mailOptions = {
@@ -116,9 +124,49 @@ async function emailSignUpVerification(user, link) {
   await transactionalTransporter.sendMail(mailOptions);
 }
 
+/**
+ * Sends a email to parents or mentee after mentor accept or reject the request.
+ * @param {Object} user A Mentor or Parent object.
+ */
+async function sentParentARequestReplyEmail(mentorName, parentName, studentName, status, parentEmail) {
+  const replacements = {
+    name: parentName,
+    mentorname: mentorName,
+    status: status,
+    studentname: studentName
+  };
+  const htmlToSend = requestTemplate(replacements);
+  const mailOptions = {
+    from: 'CovEd <coved@coved.org>',
+    to: parentEmail,
+    subject: 'CovEd Mentor Request',
+    html: htmlToSend,
+  };
+  await transactionalTransporter.sendMail(mailOptions);
+}
+
+async function sentMentorARequestReplyEmail(mentorName, parentName, studentName, status, mentorEmail) {
+  const replacements = {
+    name: mentorName,
+    parentname: parentName,
+    status: status,
+    studentname: studentName
+  };
+  const htmlToSend = requestMTemplate(replacements);
+  const mailOptions = {
+    from: 'CovEd <coved@coved.org>',
+    to: mentorEmail,
+    subject: 'CovEd Mentor Request',
+    html: htmlToSend,
+  };
+  await transactionalTransporter.sendMail(mailOptions);
+}
+
 module.exports = {
   emailMentorRequest,
   emailGuardianConfirmation,
   sendPrivacyReminderEmail,
   emailSignUpVerification,
+  sentParentARequestReplyEmail,
+  sentMentorARequestReplyEmail
 };

@@ -1,15 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
 import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const WizardInput = styled.div`
     margin-bottom: 1em;
     min-width: 120px;
 `;
 
+const userType = [
+    {
+        value: 'PARENT',
+        label: 'PARENT',
+    },
+    {
+        value: 'MENTOR',
+        label: 'MENTOR',
+    }
+];
+
 const ParentStep1 = (props) => {
+    const [userTypeSelect, setuserTypeSelect] = React.useState('PARENT');
+
+    const handleChange = (event) => {
+        setuserTypeSelect(event.target.value);
+    };
     return (
         <div>
+            <label>Login Information</label>
             <WizardInput>
                 <TextField
                     fullWidth

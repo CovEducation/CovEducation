@@ -40,6 +40,8 @@ const MentorStep4 = (props) => {
 
     return (
         <div>
+            <br />
+            <label>Terms and conditions</label>
             <FormGroup>
                 {termsOfServiceControl}
                 {privacyPolicyControl}

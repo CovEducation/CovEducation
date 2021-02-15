@@ -31,6 +31,7 @@ const ModalTitle = withStyles(styles)(props => {
           aria-label="close"
           className={classes.closeButton}
           onClick={onClose}
+          id="modalCloseButtons"
         >
           <CloseIcon />
         </IconButton>
