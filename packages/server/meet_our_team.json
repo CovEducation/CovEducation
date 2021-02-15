@@ -1,10 +1,10 @@
  [
     {
         "_id" : 0,
-        "name" : "John Davic",
+        "name" : "Johan Cervantes",
         "designation" : "Developer",
-        "position" : "UCLA '21",
-        "team": "Management"
+        "position" : "MIT '21",
+        "team": "Engineering"
     },
     {
       "_id" : 1,

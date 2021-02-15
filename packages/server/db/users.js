@@ -1,6 +1,6 @@
-const firebase = require('firebase-admin');
-const Schemas = require('./schemas');
-const algoliasearch = require('algoliasearch');
+const firebase = require("firebase-admin");
+const Schemas = require("./schemas");
+const algoliasearch = require("algoliasearch");
 
 const ALGOLIA_API_KEY = process.env.REACT_APP_ALGOLIA_API_KEY;
 const ALGOLIA_APP_ID = process.env.REACT_APP_ALGOLIA_APP_ID;
@@ -12,13 +12,13 @@ const { mentorSchema, parentSchema, studentSchema } = Schemas;
 const db = firebase.firestore();
 db.settings({ ignoreUndefinedProperties: true });
 
-const usersCollectionRef = db.collection('users');
-const mentorsCollectionRef = db.collection('mentors');
-const parentsCollectionRef = db.collection('parents');
-const messageCollectionRef = db.collection('requests');
+const usersCollectionRef = db.collection("users");
+const mentorsCollectionRef = db.collection("mentors");
+const parentsCollectionRef = db.collection("parents");
+const messageCollectionRef = db.collection("requests");
 
-const MENTOR = 'MENTOR';
-const PARENT = 'PARENT';
+const MENTOR = "MENTOR";
+const PARENT = "PARENT";
 
 const getDoc = async (collection, uid) => {
   const obj = await db.collection(collection).doc(uid).get();
@@ -42,7 +42,7 @@ const parseMentor = async (body) => {
     subjects: body.subjects,
     gradeLevels: body.gradeLevels,
     timezone: body.timezone,
-    notificationPreference: body.notificationPreference
+    notificationPreference: body.notificationPreference,
   };
 
   return mentorSchema.isValid(mentor).then(() => mentor);
@@ -56,7 +56,7 @@ const parseParent = async (body) => {
     pronouns: body.pronouns,
     avatar: body.avatar,
     timezone: body.timezone,
-    notificationPreference: body.notificationPreference
+    notificationPreference: body.notificationPreference,
   };
 
   return parentSchema.isValid(parent).then(() => parent);
@@ -75,21 +75,24 @@ const parseStudent = async (body) => {
 
 // These are the three main methods to interact with the user schemas
 const getUser = async (uid) => {
-  const userDoc = await getDoc('users', uid);
+  const userDoc = await getDoc("users", uid);
   let user;
   if (userDoc.role === MENTOR) {
-    user = await getDoc('mentors', uid);
+    user = await getDoc("mentors", uid);
   } else if (userDoc.role === PARENT) {
-    user = await getDoc('parents', uid);
-    const studentSnapshot = await parentsCollectionRef.doc(uid).collection('students').get();
+    user = await getDoc("parents", uid);
+    const studentSnapshot = await parentsCollectionRef
+      .doc(uid)
+      .collection("students")
+      .get();
     user.students = studentSnapshot.docs.map((s) => {
       const data = s.data();
       const id = s.id;
       return {
-        id, ...data
-      }
+        id,
+        ...data,
+      };
     });
-
   }
   user.role = userDoc.role;
   return user;
@@ -98,14 +101,17 @@ const getUser = async (uid) => {
 //Get user details using email address
 const getUserByEmail = async (emailAddress) => {
   let user;
-  return firebase.auth().getUserByEmail(emailAddress).then((userRecord) => {
+  return firebase
+    .auth()
+    .getUserByEmail(emailAddress)
+    .then((userRecord) => {
       // See the UserRecord reference doc for the contents of userRecord.
       user = userRecord;
       return user;
-  })
-  .catch((error) => {
-      console.log('Error fetching user data:', error);
-  })
+    })
+    .catch((error) => {
+      console.log("Error fetching user data:", error);
+    });
 
   //return user;
 };
@@ -122,12 +128,14 @@ const createUser = async (uid, body) => {
       throw new Error(`Unable to parse mentor: ${err}`);
     });
     const data = [mentor];
-   index.saveObjects(data, { autoGenerateObjectIDIfNotExist: true })
+    index
+      .saveObjects(data, { autoGenerateObjectIDIfNotExist: true })
       .then(({ objectIDs }) => {
-        console.log('objectIDs',objectIDs);
-      }).catch((error) => {
-        console.log('Error fetching user data:', error);
-    });
+        console.log("objectIDs", objectIDs);
+      })
+      .catch((error) => {
+        console.log("Error fetching user data:", error);
+      });
     batch.set(mentorsCollectionRef.doc(uid), mentor);
   } else if (user.role === PARENT) {
     const parent = await parseParent(body).catch((err) => {
@@ -139,10 +147,12 @@ const createUser = async (uid, body) => {
       const newStudent = await parseStudent(student).catch((err) => {
         throw new Error(`Unable to parse student: ${err}`);
       });
-      const newStudentRef = parentsCollectionRef.doc(uid).collection('students').doc();
+      const newStudentRef = parentsCollectionRef
+        .doc(uid)
+        .collection("students")
+        .doc();
       batch.set(newStudentRef, newStudent);
     }
-
   } else {
     throw new Error(`Unexpected role: ${body.role}`);
   }
@@ -150,99 +160,111 @@ const createUser = async (uid, body) => {
   return batch.commit();
 };
 
-const addMessageToDB = async (mentorUID, parentUID, studentUID, studentName, message) => {
-  if (!mentorUID) throw new Error('mentorUID not provided.');
-  if (!parentUID) throw new Error('parentUID not provided.');
-  if (!studentUID) throw new Error('studentUID not provided.');
-  if (!message) throw new Error('message not provided.');
+const addMessageToDB = async (
+  mentorUID,
+  parentUID,
+  studentUID,
+  studentName,
+  message
+) => {
+  if (!mentorUID) throw new Error("mentorUID not provided.");
+  if (!parentUID) throw new Error("parentUID not provided.");
+  if (!studentUID) throw new Error("studentUID not provided.");
+  if (!message) throw new Error("message not provided.");
   const requestStatus = "Pending";
   const createdDate = new Date().toISOString();
   const sessionHours = 0;
   const sessionDate = new Date().toISOString();
   const meetingUrl = mentorUID.concat(studentUID);
   const newMessage = {
-    mentorUID, parentUID, studentUID,studentName,sessionHours,requestStatus,createdDate,sessionDate, message,meetingUrl
+    mentorUID,
+    parentUID,
+    studentUID,
+    studentName,
+    sessionHours,
+    requestStatus,
+    createdDate,
+    sessionDate,
+    message,
+    meetingUrl,
   };
   const newMessageRef = await messageCollectionRef.add(newMessage);
 
-    // let query = await messageCollectionRef.where('studentUID', '==', studentUID).where('mentorUID', '==', mentorUID).get();
-
-    // if (query.empty) {
-    //   console.log('No matching documents.');
-    //   return;
-    // }  
-    // if (!query.exists) {
-    //   console.log('No such document!');
-    // } else {
-    //   console.log('Document data:', query.data());
-    // }
-  
-    return mentorsCollectionRef.doc(mentorUID).update({
-      requests: firebase.firestore.FieldValue.arrayUnion(newMessageRef.id),
-    });
+  return mentorsCollectionRef.doc(mentorUID).update({
+    requests: firebase.firestore.FieldValue.arrayUnion(newMessageRef.id),
+  });
 };
 
 const saveUserDetails = async (uid, data) => {
   data = JSON.parse(data);
-  console.log("data", data);
-  var user = await getUser(uid);
-  
-  if(user.role == "MENTOR")
-  {
-    var basicDetailsSave = mentorsCollectionRef.doc(uid).update({
-      "name": data.mentorName,
-      "pronouns":data.pronouns,
-      "notificationPreference": data.notificationPreference,
-      "major": data.major,
-      "bio": data.introduction,
-      "subjects": data.selectedSubjects,
-      "gradeLevels": data.selectedGradeLevels
+  let user = undefined;
+  if (user.role == "MENTOR") {
+    await mentorsCollectionRef.doc(uid).update({
+      name: data.mentorName,
+      pronouns: data.pronouns,
+      notificationPreference: data.notificationPreference,
+      major: data.major,
+      bio: data.introduction,
+      subjects: data.selectedSubjects,
+      gradeLevels: data.selectedGradeLevels,
     });
-    var user = await getUser(uid);
-  }
-  else {
-    var basicDetailsSave = parentsCollectionRef.doc(uid).update({
-      "name": data.parentName,
-      "phone": data.parentPhoneNumber,
-      "pronouns":data.parentPronouns,
-      "timezone":data.timeZone,
-      "notificationPreference": data.notificationPreference
+    user = await getUser(uid);
+  } else {
+    await parentsCollectionRef.doc(uid).update({
+      name: data.parentName,
+      phone: data.parentPhoneNumber,
+      pronouns: data.parentPronouns,
+      timezone: data.timeZone,
+      notificationPreference: data.notificationPreference,
     });
 
-    if(data.registeredChildren.length > 0)
-    {
-      for(var i = 0; i < data.registeredChildren.length; i++)
-      {
-        var a = await parentsCollectionRef.doc(uid).collection('students').where("email", "==", data.registeredChildren[i].email).get()
-        .then(async (querySnapshot) => {
-          if(querySnapshot.docs.length > 0)
-          {
-            querySnapshot.docs.forEach(async (doc) => {
-              console.log(doc.id);
-              console.log(doc.data());
-              await parentsCollectionRef.doc(uid).collection('students').doc(doc.id).update({
-                "gradeLevel": data.registeredChildren[i].gradeLevel,
-                "name": data.registeredChildren[i].name,
-                "subjects": data.registeredChildren[i].subjects
+    if (data.registeredChildren.length > 0) {
+      for (let i = 0; i < data.registeredChildren.length; i++) {
+        await parentsCollectionRef
+          .doc(uid)
+          .collection("students")
+          .where("email", "==", data.registeredChildren[i].email)
+          .get()
+          .then(async (querySnapshot) => {
+            if (querySnapshot.docs.length > 0) {
+              querySnapshot.docs.forEach(async (doc) => {
+                console.log(doc.id);
+                console.log(doc.data());
+                await parentsCollectionRef
+                  .doc(uid)
+                  .collection("students")
+                  .doc(doc.id)
+                  .update({
+                    gradeLevel: data.registeredChildren[i].gradeLevel,
+                    name: data.registeredChildren[i].name,
+                    subjects: data.registeredChildren[i].subjects,
+                  });
               });
-            });
-          }
-          else {
-            await parentsCollectionRef.doc(uid).collection('students').add({
-              "gradeLevel": data.registeredChildren[i].gradeLevel,
-              "name": data.registeredChildren[i].name,
-              "subjects": data.registeredChildren[i].subjects,
-              "email": data.registeredChildren[i].email
-            });
-          }
-        });
+            } else {
+              await parentsCollectionRef.doc(uid).collection("students").add({
+                gradeLevel: data.registeredChildren[i].gradeLevel,
+                name: data.registeredChildren[i].name,
+                subjects: data.registeredChildren[i].subjects,
+                email: data.registeredChildren[i].email,
+              });
+            }
+          });
       }
     }
-    var user = await getUser(uid);
+    user = await getUser(uid);
   }
-  
+
+  if (user === undefined) {
+    throw new Error(`Unable to save user details`);
+  }
 
   return user;
 };
 
-module.exports = { getUser, createUser, addMessageToDB, getUserByEmail, saveUserDetails };
+module.exports = {
+  getUser,
+  createUser,
+  addMessageToDB,
+  getUserByEmail,
+  saveUserDetails,
+};

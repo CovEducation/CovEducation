@@ -7,3 +7,5 @@ packages/server/node_modules
 packages/client/node_modules
 .firebase
 .log
+.env
+service_account.json

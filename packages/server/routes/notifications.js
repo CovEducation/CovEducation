@@ -1,19 +1,19 @@
-const express = require('express');
-const authMiddleware = require('../middleware/auth');
+const express = require("express");
+const authMiddleware = require("../middleware/auth");
 const {
   textMentorRequest,
   textGuardianConfirmation,
   emailMentorRequest,
   emailGuardianConfirmation,
-} = require('../messaging');
-const db = require('../db/users');
-const { addMessageToDB } = require('../db/users');
+} = require("../messaging");
+const db = require("../db/users");
+const { addMessageToDB } = require("../db/users");
 
 const router = express.Router();
 
 const NOTIFICATION_PREFERENCES = {
-  SMS: 'SMS',
-  EMAIL: 'EMAIL',
+  SMS: "SMS",
+  EMAIL: "EMAIL",
 };
 
 /**
@@ -25,7 +25,7 @@ const NOTIFICATION_PREFERENCES = {
  *  studentUID - The FirebaseUID of the student who needs mentorship.
  *  message - The message the parent wants to send the mentor.
  */
-router.post('/requestMentor', authMiddleware, async (req, res) => {
+router.post("/requestMentor", authMiddleware, async (req, res) => {
   // Get the mentor's preference.
   const { mentorUID, studentUID, message } = req.body;
   const parentUID = req.user.uid;
@@ -38,7 +38,8 @@ router.post('/requestMentor', authMiddleware, async (req, res) => {
   await addMessageToDB(mentorUID, parentUID, studentUID, message);
 
   // Default to email if preference not specify
-  const mentorPreference = mentor.communicationPref || NOTIFICATION_PREFERENCES.EMAIL;
+  const mentorPreference =
+    mentor.communicationPref || NOTIFICATION_PREFERENCES.EMAIL;
   if (mentorPreference === NOTIFICATION_PREFERENCES.EMAIL) {
     emailMentorRequest(mentor, parent, student, message)
       .then(emailGuardianConfirmation(mentor, parent, student))
